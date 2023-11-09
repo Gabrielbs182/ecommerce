@@ -1,0 +1,493 @@
+@extends('layouts.app')
+
+@section('scriptjs')
+    <script>
+        function buscarProduto(id) {
+            var asset = $('#asset').val();
+            $.getJSON('/produto/' + id, function(produto) {
+                console.log(produto)
+                var foto = '<img class="w-100 h-100" src="' + asset +
+                    '/' + produto[0].id + '.png" alt="Image">';
+                var foto2 = '<img class="w-100 h-100" src="' + asset +
+                    '/' + produto[0].id + '_2.png" alt="Image">';
+                $('#primeiroCarrosel').empty();
+                $('#segundoCarrosel').empty();
+                $('#nomeProdModal').empty();
+                $('#valorProdModal').empty();
+                $('#comprar').empty();
+                $('#comprarButton').empty();
+                $('#idProduto').empty();
+                $('#idProduto').val(produto[0].id);
+                $('#primeiroCarrosel').append(foto);
+                $('#segundoCarrosel').append(foto2);
+                $('#nomeProdModal').append(produto[0].nome);
+                var val = produto[0].valor.replace('.', ',');
+                var valor = 'R$ ' + val;
+                $('#valorProdModal').append(valor);
+                $('#exampleModalCenter').modal('show');
+                $.getJSON('/estoque/' + id, function(estoque) {
+                    var testeTamanho = true;
+                    estoque.forEach(function(item) {
+                        if (item.quantidade > 0) {
+                            if (testeTamanho) {
+                                testeTamanho = false;
+                                var comprar =
+                                    '<div class="form-row">' +
+                                    '<div class="form-group col-md-6">' +
+                                    '<label for="tamanhoModal">Tamanho</label>' +
+                                    '<select id="tamanhoModal" class="form-control" disabled onchange="buscarEstoque()" required>' +
+                                    '<option selected></option>' +
+                                    '</select>' +
+                                    '</div>' +
+                                    '<div class="form-group col-md-6" id="inputZipDiv">' +
+                                    '<label for="inputZip">Quantidade</label>' +
+                                    '<input type="number" class="form-control" id="inputZip" required>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</form>' +
+                                    '<div id="comprarButton">' +
+                                    '<button type="button" class="btn btn-primary"' +
+                                    'onclick="adicionarCarrinho(' + produto[0].id +
+                                    ')">Comprar</button>' +
+                                    '</div>';
+                                $('#comprar').append(comprar);
+                            }
+                            var tamanho = '<option value="' + item.numero + '">' + item.numero +
+                                '</option>';
+                            $('#tamanhoModal').append(tamanho);
+                            $("#tamanhoModal").prop("disabled", false);
+                        }
+                    });
+                    if (testeTamanho) {
+                        var aviso = '<h1 class="font-weight-light text-center">Produto Esgotado</h1>';
+                        $('#comprar').append(aviso);
+                    }
+                });
+            });
+        }
+
+        function buscarEstoque() {
+            console.log('teste');
+            var numero = $('#tamanhoModal').val()
+            var idProduto = $('#idProduto').val()
+            $.getJSON('/estoque/' + idProduto + '/' + numero, function(estoque) {
+                $('#estoque').val(estoque[0].quantidade);
+
+            });
+        };
+
+        function removerProdutoCarrinho(id) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                type: 'POST',
+                url: '/' + id + '/excluirCarrinho',
+                context: this,
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                success: function() {
+                    console.log('item excluido')
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+            $.getJSON('/buscarCarrinho', function(data) {
+                var total = 0;
+                var indice = 0;
+                $('#modalCarrinhoLista').empty();
+                if (data.length === 0) {
+                    carregarCarrinho();
+                    $('#modalCarrinho').modal('hide');
+                } else {
+                    carregarCarrinho();
+                }
+            });
+        }
+
+        function carregarCarrinho() {
+            $.getJSON('/buscarCarrinho', function(data) {
+                var total = 0;
+                var indice = 0;
+                $('#modalCarrinhoLista').empty();
+                data.forEach(function(item) {
+                    var asset = $('#asset').val();
+                    total += item.quantidade * item.valor;
+                    var itemCarrinho =
+                        '<tr>' +
+                        '<td class="w-20 align-middle text-center">' +
+                        '<img src="' + asset +
+                        '/' + item.id +
+                        '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
+                        'alt="Produto" >' + item.nome + ' x ' + item.quantidade + '</td>' +
+                        '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
+                        '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
+                        '</td>' +
+                        '<td class="align-middle text-center">' +
+                        '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
+                        indice + ')">' +
+                        '<i class="fa fa-times"></i>' +
+                        '</a>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#modalCarrinhoLista').append(itemCarrinho);
+                    indice++
+                });
+                $('#totalCarrinho').empty();
+                $('#totalCarrinho').append(total);
+            });
+            $.get('/atualizar-quantidade-carrinho', function(data) {
+                // Atualize a quantidade na página
+                if (data && data.quantidadeCarrinho !== undefined) {
+                    $('#quantidade-carrinho').text(data.quantidadeCarrinho);
+                }
+            });
+        };
+
+        function abrirCarrinho() {
+            $.getJSON('/buscarCarrinho', function(data) {
+                var total = 0;
+                var indice = 0;
+                $('#modalCarrinhoLista').empty();
+                if (data.length === 0) {
+                    $('#modalCarrinhoVazio').modal('show');
+                } else {
+                    carregarCarrinho();
+                    $('#modalCarrinho').modal('show');
+                }
+            });
+        };
+
+        function adicionarCarrinho(id) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            var estoque = $('#estoque').val();
+            var quantidade = $('#inputZip').val();
+            if (quantidade > estoque) {
+                console.log('Não tem estoque');
+                $('#inputZipDiv').empty();
+                var alerta =
+                    '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
+                    'Estoque insuficiente, tente uma quantidade menor.' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>' +
+                    '</div>';
+                $('#modalAlert').append(alerta);
+            } else {
+                console.log('Tem estoque');
+
+                $.getJSON('/produto/' + id, function(produto) {
+                    var quantidade = $('#inputZip').val()
+                    var token = $('meta[name="csrf-token"]').attr('content');
+                    $.ajax({
+                        type: 'POST',
+                        url: '/carrinho/adicionar/' + id + '/' + quantidade,
+                        context: this,
+                        headers: {
+                            'X-CSRF-TOKEN': token
+                        },
+                        success: function() {
+                            $.get('/atualizar-quantidade-carrinho', function(data) {
+                                // Atualize a quantidade na página
+                                if (data && data.quantidadeCarrinho !== undefined) {
+                                    $('#quantidade-carrinho').text(data.quantidadeCarrinho);
+                                }
+                            });
+                            $('#exampleModalCenter').modal('hide');
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            };
+        };
+    </script>
+@endsection
+
+@section('content')
+    {{-- Asset --}}
+    <input type="hidden" value="{{ asset('images') }}" id="asset">
+    <input type="hidden" value="" id="estoque">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    {{-- Modais --}}
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content" id="modalbody">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid" id="modalAlert">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner border">
+                                        <div class="carousel-item active" id="primeiroCarrosel">
+                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}" alt="Image">
+                                        </div>
+                                        <div class="carousel-item" id="segundoCarrosel">
+                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                                        <i class="fa fa-2x fa-angle-left text-dark"></i>
+                                    </a>
+                                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                                        <i class="fa fa-2x fa-angle-right text-dark"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ml-auto">
+                                <form>
+                                    <input type="hidden" value="" id="idProduto">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <h1 class="display-4 font-weight-light" id="nomeProdModal">Tenis X</h1>
+                                            <p class="h4 font-weight-bold" id="valorProdModal">R$ 246,00</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <label for="descricaoProdModal">Descrição:</label>
+                                            <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou escrevendo
+                                                um grande texto para testar.</p>
+                                        </div>
+                                    </div>
+                                    <div id="comprar">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="tamanhoModal">Tamanho</label>
+                                                <select id="tamanhoModal" class="form-control" disabled
+                                                    onchange="buscarEstoque()" required>
+                                                    <option selected>Produto Esgotado</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-6" id="inputZipDiv">
+                                                <label for="inputZip">Quantidade</label>
+                                                <input type="number" class="form-control" id="inputZip" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div id="comprarButton">
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="adicionarCarrinho()">Comprar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- carrinho -->
+
+    <div class="modal fade" id="modalCarrinho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Carrinho
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="carrinhoModal">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Produto</th>
+                                <th scope="col" class="text-center">Preço</th>
+                                <th scope="col" class="text-center">Total</th>
+                                <th scope="col" class="text-center">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modalCarrinhoLista">
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <p>Total: R$<span id="totalCarrinho"></span></p>
+                    </div>
+                </div>
+                <div class="modal-footer border-top-0 d-flex justify-content-right">
+                    <form action="{{ route('ver_carrinho') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- carrinho vazio -->
+
+    <div class="modal fade" id="modalCarrinhoVazio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
+            <div class="modal-content">
+                <div class="container-fluid  mt-100">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-body cart">
+                                <div class="col-sm-12 empty-cart-cls text-center">
+                                    <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130"
+                                        class="img-fluid mb-4 mr-3">
+                                    <h3><strong>Seu carrinho está vazio</strong></h3>
+                                    <h4>Adicione alguns produtos para que possa seguir com a compra :)</h4>
+                                    <a href="#" class="btn btn-primary cart-btn-transform m-3" data-abc="true"
+                                        data-dismiss="modal">Continuar Comprando</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- partial -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid mb-5">
+        <div class="row border-top px-xl-5">
+            {{-- DESKTOP --}}
+            <div class="col-lg-3 d-none d-lg-block">
+                <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100"
+                    data-toggle="collapse" href="#navbar-vertical"
+                    style="height: 65px; margin-top: -1px; padding: 0 30px;">
+                    <h6 class="m-0" style="color: #e63412;">Categorias</h6>
+                    <i class="fa fa-angle-down text-dark"></i>
+                </a>
+                <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
+                    id="navbar-vertical">
+                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">Casual <i
+                                    class="fa fa-angle-down float-right mt-1"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a href="" class="dropdown-item">Masculino</a>
+                                <a href="" class="dropdown-item">Feminino</a>
+                                <a href="" class="dropdown-item">Infantil</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link" data-toggle="dropdown">Esportivo <i
+                                    class="fa fa-angle-down float-right mt-1"></i></a>
+                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
+                                <a href="" class="dropdown-item">Masculino</a>
+                                <a href="" class="dropdown-item">Feminino</a>
+                                <a href="" class="dropdown-item">Infantil</a>
+                            </div>
+                        </div>
+                        <a href="" class="nav-item nav-link">Skate</a>
+                        <a href="" class="nav-item nav-link">Sandalias</a>
+                        <a href="" class="nav-item nav-link">Salto</a>
+                        <a href="" class="nav-item nav-link">Tenis</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-lg-9">
+
+                {{-- SMARTPHONE --}}
+                <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                    <a href="" class="text-decoration-none d-block d-lg-none">
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><span
+                                class="text-primary font-weight-bold border px-3 mr-1">E</span>Urbeat</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                            <a href="contact.html" class="nav-item nav-link">Contato</a>
+                        </div>
+                        <div class="navbar-nav ml-auto py-0">
+                            @guest
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Minha
+                                        Conta</a>
+                                    <div class="dropdown-menu rounded-0 m-0">
+                                        <a href="{{ route('logar') }}" class="dropdown-item">Login</a>
+                                        <a href="{{ route('cadastrar') }}" class="dropdown-item">Cadastro</a>
+                                    </div>
+                                </div>
+                            @endguest
+                            @auth
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle"
+                                        data-toggle="dropdown">{{ Auth::user()->nome }}</a>
+                                    <div class="dropdown-menu rounded-0 m-0">
+                                        <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas Compras</a>
+                                        <a href="{{ route('sair') }}" class="dropdown-item">Sair</a>
+                                    </div>
+                                </div>
+                            @endauth
+                        </div>
+                    </div>
+                </nav>
+                <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" style="height: 410px;">
+                            <img class="img-fluid" src="img/carousel-1.png" alt="Imagem">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em
+                                        Seu
+                                        Primeiro Pedido</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Tenis Fashion</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Compre Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="img/carousel-2.png" alt="Imagem">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em
+                                        Seu
+                                        Primeiro Pedido</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Preço Razoável</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Compre Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Products Start -->
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Produtos</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            @include('layouts._produtos', ['lista' => $lista])
+        </div>
+    </div>
+    </div>
+@endsection
