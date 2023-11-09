@@ -1,0 +1,223 @@
+@php
+    $carrinho = session('cart', []);
+    if ($carrinho > 0) {
+        $quantidadeCarrinho = count($carrinho);
+    }
+@endphp
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Urbeat</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <!-- Favicon -->
+    <link href="{{ asset('img/favicon.ico') }}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- Scripts -->
+    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    @yield('scriptjs')
+
+</head>
+
+<body>
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        @if ($message = Session::get('err'))
+            <div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">
+                {{ $message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if ($message = Session::get('ok'))
+            <div class="alert alert-success alert-dismissible fade show text-center fixed-top" role="alert">
+                {{ $message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <div class="row bg-secondary py-2 px-xl-5">
+
+            <div class="col-lg-6 d-none d-lg-block">
+
+            </div>
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-dark px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-dark px-2" href="https://instagram.com/use_mulherurbana?igshid=MzRlODBiNWFlZA==">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-dark pl-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center py-3 px-xl-5">
+            <div class="col-lg-3 d-none d-lg-block">
+                <a href="{{ route('home') }}" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
+                            class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
+                </a>
+            </div>
+
+            <div class="col-lg-6 col-6 text-left">
+                @if (Route::is('home'))
+                    <form action="">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Buscar...">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent text-primary">
+                                    <i class="fa fa-search" style="color: #e63412;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                @endif
+            </div>
+
+
+            <div class="col-lg-3 col-6 text-right">
+                @if (Route::is('home'))
+                    <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
+                            style="color: #e63412;"></i>
+                        <span class="badge" id="quantidade-carrinho">
+                            @if (isset($quantidadeCarrinho))
+                                {{ $quantidadeCarrinho }}
+                            @else
+                                0
+                            @endif
+                        </span></a>
+                @endif
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+    @yield('content')
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-dark mt-5 pt-5">
+        <div class="row px-xl-5 pt-5">
+            <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
+                <a href="" class="text-decoration-none">
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
+                            class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
+                </a>
+                <p>Dolore erat dolor sit lorem vero amet. Sed sit lorem magna, ipsum no sit erat lorem et magna ipsum
+                    dolore amet erat.</p>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>AV. Nossa Senhora, SN, Vitória
+                </p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>contato@urbeat.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>27 99888-7766</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Links Rápidos</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <a class="text-dark mb-2" href="index.html"><i
+                                    class="fa fa-angle-right mr-2"></i>Início</a>
+                            <a class="text-dark mb-2" href="shop.html"><i class="fa fa-angle-right mr-2"></i>Nossa
+                                Loja</a>
+                            <a class="text-dark mb-2" href="detail.html"><i
+                                    class="fa fa-angle-right mr-2"></i>Detalhes
+                                da Loja</a>
+                            <a class="text-dark mb-2" href="cart.html"><i class="fa fa-angle-right mr-2"></i>Carrinho
+                                de
+                                Compras</a>
+                            <a class="text-dark mb-2" href="checkout.html"><i
+                                    class="fa fa-angle-right mr-2"></i>Finalizar Compra</a>
+                            <a class="text-dark" href="contact.html"><i class="fa fa-angle-right mr-2"></i>Fale
+                                Conosco</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <h5 class="font-weight-bold text-dark mb-4">Contato</h5>
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control border-0 py-4" placeholder="Seu Nome"
+                                    required="required" />
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control border-0 py-4" placeholder="Seu Email"
+                                    required="required" />
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-block border-0 py-3" type="submit">Inscreva-se
+                                    Agora</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row border-top border-light mx-xl-5 py-4">
+        <div class="col-md-6 px-xl-0">
+            <p class="mb-md-0 text-center text-md-left text-dark">
+                &copy; <a class="text-dark font-weight-semi-bold" href="#">Urbeat</a>. All Rights Reserved.
+                Designed
+                by
+                GB Consultoria</a><br>
+            </p>
+        </div>
+        <div class="col-md-6 px-xl-0 text-center text-md-right">
+            <img class="img-fluid" src="{{ asset('img/payments.png') }}" alt="">
+        </div>
+    </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
