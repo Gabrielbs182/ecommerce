@@ -5,4 +5,3 @@ RewriteCond %{HTTPS} !=on
 RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
-</IfModule>
