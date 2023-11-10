@@ -30,7 +30,7 @@
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="https://urbeatstore.com.br/css/style.css" rel="stylesheet">
 
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
