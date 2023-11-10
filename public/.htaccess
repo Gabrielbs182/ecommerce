@@ -1,12 +1,8 @@
 # Redirect HTTP to HTTPS
-<ifModule mod_rewrite.c>
+<IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</ifModule>
-
-# Redirect to public
-<ifModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteRule ^(.*)$ public/$1 [L]
-</ifModule>
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+SetEnvIf X-Forwarded-Proto "^https$" HTTPS=on
+</IfModule>
