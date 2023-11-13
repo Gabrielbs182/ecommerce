@@ -17,6 +17,10 @@ use App\Http\Controllers\CidadeControllador;
 |
 */
 
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
+
 // API'S
 Route::get('/cidades/{idCidade}', [ CidadeControllador::class, 'buscarCidades'])
 ->name('buscarCidades');
