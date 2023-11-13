@@ -5,6 +5,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CidadeControllador;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,10 @@ use App\Http\Controllers\CidadeControllador;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
 
 // API'S
 Route::get('/cidades/{idCidade}', [ CidadeControllador::class, 'buscarCidades'])
