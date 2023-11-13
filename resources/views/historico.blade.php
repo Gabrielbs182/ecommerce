@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scriptjs')
-    <script src="{{ URL::asset('js/jquery.js') }}"></script>
+    <script src="{{ secure_asset('js/jquery.js') }}"></script>
     <script>
         $.ajaxSetup({
             headers: {

@@ -207,7 +207,7 @@
 
 @section('content')
     {{-- Asset --}}
-    <input type="hidden" value="{{ asset('images') }}" id="asset">
+    <input type="hidden" value="{{ secure_asset('images') }}" id="asset">
     <input type="hidden" value="" id="estoque">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -228,10 +228,10 @@
                                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner border">
                                         <div class="carousel-item active" id="primeiroCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}" alt="Image">
+                                            <img class="w-100 h-100" src="{{ secure_asset('images/2.png') }}" alt="Image">
                                         </div>
                                         <div class="carousel-item" id="segundoCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
+                                            <img class="w-100 h-100" src="{{ secure_asset('images/2_2.png') }}" alt="Image">
                                         </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">

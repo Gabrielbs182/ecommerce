@@ -1,4 +1,4 @@
-@php include({{asset('snippet.php')}}); @endphp
+@php include({{secure_asset('snippet.php')}}); @endphp
 <html>
 
 <head>
