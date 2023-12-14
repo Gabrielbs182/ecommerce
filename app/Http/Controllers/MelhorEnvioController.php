@@ -56,8 +56,10 @@ class MelhorEnvioController extends Controller
             ],
         ]);
 
+        dd($response);
+
         // Obter e retornar a resposta JSON
-        return json_decode($response->getBody(), true);
+        // return json_decode($response->getBody(), true);
     }
 
     public function teste()
