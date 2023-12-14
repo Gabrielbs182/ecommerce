@@ -110,7 +110,7 @@ class MelhorEnvioController extends Controller
     {
 
         // Obter o token do .env
-        $token = config('app.AUTHORIZATION_CODE'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
+        $token = env('Authorization'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
 
         // Verificar se o token está presente
         if (!$token) {
