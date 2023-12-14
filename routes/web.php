@@ -5,6 +5,7 @@ use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CidadeControllador;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
