@@ -27,19 +27,21 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
-    
+
 
     public function getToken2(Request $request)
     {
         $client = new \GuzzleHttp\Client();
 
+        $code = env('AUTHORIZATION_CODE');
+        echo $code;
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'client_id' => 3946,
                 'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
                 'redirect_uri' => 'https://urbeatstore.com.br/melhorenvio/getAuthorization',
-                'code' => 'REMOVIDO_AUTH_CODE', // Certifique-se de ajustar conforme necessário
+                'code' => $code, // Certifique-se de ajustar conforme necessário
             ],
             'headers' => [
                 'Accept' => 'application/json',
@@ -61,7 +63,6 @@ class MelhorEnvioController extends Controller
     public function getAuthorization(Request $request)
     {
         // Verifique se o código de autorização está presente na solicitação
-        dd($request);
         if ($request->has('code')) {
             // Obtenha o código de autorização da solicitação
             $authorizationCode = $request->input('code');
