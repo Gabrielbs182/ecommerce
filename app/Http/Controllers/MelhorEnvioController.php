@@ -27,42 +27,11 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
-    public function getToken(Request $request)
-    {
-        // Verificar se a solicitação contém os parâmetros necessários
-        $this->validate($request, [
-            'client_id' => 'required',
-            'client_secret' => 'required',
-            'redirect_uri' => 'required',
-            'code' => 'required',
-            'grant_type' => 'required',
-        ]);
-
-        // Fazer solicitação HTTP para obter o token
-        $client = new Client();
-        $response = $client->post('https://sandbox.melhorenvio.com.br/oauth/token', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/json',
-                'User-Agent' => 'email@exemplo.com',
-            ],
-            'json' => [
-                'grant_type' => $request->input('grant_type'),
-                'client_id' => $request->input('client_id'),
-                'client_secret' => $request->input('client_secret'),
-                'redirect_uri' => $request->input('redirect_uri'),
-                'code' => $request->input('code'),
-                // Adicione outros parâmetros conforme necessário
-            ],
-        ]);
-
-        // Obter e retornar a resposta JSON
-        return json_decode($response->getBody(), true);
-    }
-
-    public function getToken2(Request $request)
+    public function getToken()
     {
         $client = new \GuzzleHttp\Client();
+
+        $code = env("MELHORENVIO_CODE");
 
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
@@ -70,7 +39,7 @@ class MelhorEnvioController extends Controller
                 'client_id' => 3946,
                 'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
                 'redirect_uri' => 'https://urbeatstore.com.br/melhorenvio/getAuthorization',
-                'code' => 'REMOVIDO_AUTH_CODE', // Certifique-se de ajustar conforme necessário
+                'code' => $code, // Certifique-se de ajustar conforme necessário
             ],
             'headers' => [
                 'Accept' => 'application/json',
