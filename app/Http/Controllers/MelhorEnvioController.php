@@ -27,13 +27,13 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
-    public function getToken2(Request $request)
+    public function getToken(Request $request)
     {
         $client = new \GuzzleHttp\Client();
 
         $code = env('AUTHORIZATION_CODE');
         echo $code;
-        
+
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
                 'grant_type' => 'authorization_code',
@@ -68,6 +68,7 @@ class MelhorEnvioController extends Controller
 
             // Salve o código de autorização no arquivo .env
             $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
 
             // Verifique se o arquivo .env existe
             if (File::exists($envPath)) {
@@ -75,20 +76,17 @@ class MelhorEnvioController extends Controller
                 $envContent = File::get($envPath);
 
                 // Adicione ou atualize a variável de ambiente do código de autorização
-                if (Str::contains($envContent, 'AUTHORIZATION_CODE')) {
-                    // Atualize o valor se já existir
-                    $envContent = Str::replaceFirst(
-                        'AUTHORIZATION_CODE=' . config('app.AUTHORIZATION_CODE'),
-                        'AUTHORIZATION_CODE=' . $authorizationCode,
-                        $envContent
-                    );
+                // Verificar se a variável de ambiente AUTHORIZATION_CODE já existe
+                if (strpos($envContent, 'AUTHORIZATION_CODE') !== false) {
+                    // Atualizar o valor se já existir
+                    $envContent = preg_replace('/(AUTHORIZATION_CODE)=(.*)/', 'AUTHORIZATION_CODE=' . $authorizationCode, $envContent);
                 } else {
-                    // Adicione a variável se não existir
+                    // Adicionar a variável se não existir
                     $envContent .= "\nAUTHORIZATION_CODE=" . $authorizationCode;
                 }
 
                 // Salve as alterações no arquivo .env
-                File::put($envPath, $envContent);
+                file_put_contents($envPath, $envContent);
 
                 // Informe ao usuário que o código de autorização foi armazenado com sucesso
                 // Agora, chame a função getToken
