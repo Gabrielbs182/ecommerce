@@ -10,51 +10,11 @@ use Illuminate\Support\Str;
 
 class MelhorEnvioController extends Controller
 {
-
-
     // public function authorize()
     // {
     //     // Redirecionar para a URL de autorização do Melhor Envio
     //     // Isso geralmente envolve redirecionar o usuário para a URL fornecida pelo Melhor Envio com os parâmetros apropriados
     // }
-
-    public function getToken2(Request $request)
-    {
-        $baseUrl = 'https://sandbox.melhorenvio.com.br/oauth/token';
-
-        // Parâmetros necessários para obter o token
-        $params = [
-            'grant_type'    => 'refresh_token',
-            'client_id'     => '3946',
-            'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
-            'redirect_uri'  => 'https://urbeatstore.com.br',
-            'code'          => $request->input('code'), // Este código é fornecido após a autorização
-        ];
-
-        // Configuração do cliente Guzzle
-        $client = new Client();
-
-        try {
-            // Faça uma solicitação POST para obter o token
-            $response = $client->post($baseUrl, [
-                'form_params' => $params,
-                'headers' => [
-                    'Accept'       => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'User-Agent'   => 'SUA-APLICACAO-USER-AGENT', // Substitua por um nome relevante
-                ],
-            ]);
-
-            // Decodifique a resposta JSON
-            $data = json_decode($response->getBody(), true);
-
-            // Aqui você pode manipular os dados da resposta conforme necessário
-            dd($data);
-        } catch (\Exception $e) {
-            // Trate qualquer erro que possa ocorrer durante a solicitação
-            dd($e->getMessage());
-        }
-    }
 
     public function redirectToAuthorization()
     {
@@ -104,7 +64,6 @@ class MelhorEnvioController extends Controller
         return view('teste');
     }
 
-
     public function getAuthorization(Request $request)
     {
         // Verifique se o código de autorização está presente na solicitação
@@ -137,7 +96,12 @@ class MelhorEnvioController extends Controller
                 File::put($envPath, $envContent);
 
                 // Informe ao usuário que o código de autorização foi armazenado com sucesso
-                return "Código de autorização armazenado com sucesso!";
+                // Agora, chame a função getToken
+                $tokenResponse = $this->getToken($request);
+
+                // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
+
+                return $tokenResponse; // ou alguma mensagem personalizada
             } else {
                 // Informe ao usuário que o arquivo .env não foi encontrado
                 return "Erro: Arquivo .env não encontrado!";
