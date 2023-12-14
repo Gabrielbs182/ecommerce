@@ -27,11 +27,11 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
-    public function getToken()
+    
+
+    public function getToken2(Request $request)
     {
         $client = new \GuzzleHttp\Client();
-
-        $code = env("MELHORENVIO_CODE");
 
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [

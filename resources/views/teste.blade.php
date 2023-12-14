@@ -1,4 +1,4 @@
-<form action="{{ route('getToken') }}" method="post">
+<form action="{{ route('getToken2') }}" method="post">
     @csrf
     <input type="text" name="grant_type" value="authorization_code">
     <input type="text" name="client_id" value="3946">
