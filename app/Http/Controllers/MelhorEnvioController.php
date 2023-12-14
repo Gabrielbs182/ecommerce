@@ -48,7 +48,46 @@ class MelhorEnvioController extends Controller
             ],
         ]);
 
-        echo $response->getBody();
+        // Obter e retornar a resposta JSON
+        $responseJson = json_decode($response->getBody(), true);
+
+        // Verifique se os tokens foram obtidos com sucesso
+        if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
+            // Salvar o access token no .env
+            $envPath = base_path('.env');
+            $envContent = File::get($envPath);
+
+            // Atualizar ou adicionar a variável de ambiente do access token
+            if (Str::contains($envContent, 'MELHORENVIO_ACCESS_TOKEN')) {
+                $envContent = Str::replaceFirst(
+                    'MELHORENVIO_ACCESS_TOKEN=' . config('app.MELHORENVIO_ACCESS_TOKEN'),
+                    'MELHORENVIO_ACCESS_TOKEN=' . $responseJson['access_token'],
+                    $envContent
+                );
+            } else {
+                $envContent .= "\nMELHORENVIO_ACCESS_TOKEN=" . $responseJson['access_token'];
+            }
+
+            // Salvar o refresh token no .env
+            if (Str::contains($envContent, 'MELHORENVIO_REFRESH_TOKEN')) {
+                $envContent = Str::replaceFirst(
+                    'MELHORENVIO_REFRESH_TOKEN=' . config('app.MELHORENVIO_REFRESH_TOKEN'),
+                    'MELHORENVIO_REFRESH_TOKEN=' . $responseJson['refresh_token'],
+                    $envContent
+                );
+            } else {
+                $envContent .= "\nMELHORENVIO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
+            }
+
+            // Salvar as alterações no arquivo .env
+            File::put($envPath, $envContent);
+
+            // Informar ao usuário que os tokens foram armazenados com sucesso
+            return "Tokens armazenados com sucesso!";
+        } else {
+            // Informar ao usuário que houve um problema ao obter os tokens
+            return "Erro: Tokens não foram obtidos com sucesso.";
+        }
     }
 
 
