@@ -83,6 +83,22 @@ class MelhorEnvioController extends Controller
             File::put($envPath, $envContent);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'Authorization') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(Authorization)=(.*)/', 'Authorization=' . json_encode($responseJson), $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $envContent .= "\nAuthorization=" . json_encode($responseJson);
+            }
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent);
+
+            // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Tokens armazenados com sucesso!";
         } else {
             // Informar ao usuário que houve um problema ao obter os tokens
