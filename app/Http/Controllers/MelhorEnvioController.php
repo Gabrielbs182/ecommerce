@@ -50,7 +50,7 @@ class MelhorEnvioController extends Controller
                 'grant_type' => $request->input('grant_type'),
                 'client_id' => $request->input('client_id'),
                 'client_secret' => $request->input('client_secret'),
-                'redirect_uri' => 'https://urbeatstore.com.br',
+                'redirect_uri' => $request->input('redirect_uri'),
                 'code' => $request->input('code'),
                 // Adicione outros parâmetros conforme necessário
             ],
