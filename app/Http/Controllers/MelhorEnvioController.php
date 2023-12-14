@@ -31,7 +31,7 @@ class MelhorEnvioController extends Controller
     {
         $client = new \GuzzleHttp\Client();
 
-        $code = env("MELHORENVIO_CODE");
+        $code = env("AUTHORIZATION_CODE");
 
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
