@@ -110,30 +110,32 @@ class MelhorEnvioController extends Controller
     {
 
         // Obter o token do .env
-        $token = env('Authorization'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
-
-        echo $token;
+        $token = env('MELHORENVIO_ACCESS_TOKEN'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
         // Verificar se o token está presente
-        if (!$token) {
-            return response()->json(['error' => 'Token não encontrado.']);
-        }
+        $url = 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings';
 
-        // Fazer a solicitação à API
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $token,
+            'User-Agent' => 'Urbeat (email@exemplo.com',
+        ];
+
         try {
-            $response = Http::withHeaders([
-                'Accept' => 'application/json',
-                'Authorization' => $token,
-                'User-Agent' => 'Urbeat (email@exemplo.com)'
-            ])->get('https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings');
+            $resposta = Http::withHeaders($headers)->get($url);
 
-            // Retornar os dados da resposta da API
-            return $response->json();
+            // Verifica se a requisição foi bem-sucedida (código de status 200)
+            if ($resposta->successful()) {
+                $dados = $resposta->json();
+                // Faça algo com os dados aqui
+                dd($dados);
+            } else {
+                // Exibe detalhes do erro
+                dd("Erro na requisição: {$resposta->status()} - {$resposta->body()}");
+            }
         } catch (\Exception $e) {
-            // Lidar com erros de solicitação
-            return response()->json(['error' => 'Erro ao fazer a solicitação à API: ' . $e->getMessage()]);
+            // Exibe detalhes do erro
+            dd("Erro ao fazer a requisição: {$e->getMessage()}");
         }
-
-        // return view('melhorInfo');
     }
 
     public function getAuthorization(Request $request)
