@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class MelhorEnvioController extends Controller
@@ -107,10 +106,33 @@ class MelhorEnvioController extends Controller
     }
 
 
-    public function teste()
+    public function melhorInfo()
     {
 
-        return view('teste');
+        // Obter o token do .env
+        $token = config('app.AUTHORIZATION_CODE'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
+
+        // Verificar se o token está presente
+        if (!$token) {
+            return response()->json(['error' => 'Token não encontrado.']);
+        }
+
+        // Fazer a solicitação à API
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $token,
+                'User-Agent' => 'Aplicação (email para contato)',
+            ])->get('https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings');
+
+            // Retornar os dados da resposta da API
+            return $response->json();
+        } catch (\Exception $e) {
+            // Lidar com erros de solicitação
+            return response()->json(['error' => 'Erro ao fazer a solicitação à API: ' . $e->getMessage()]);
+        }
+
+        // return view('melhorInfo');
     }
 
     public function getAuthorization(Request $request)

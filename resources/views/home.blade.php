@@ -436,6 +436,8 @@
                                         @if (Auth::user()->isAdmin == 1)
                                             <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
                                                 envio</a>
+                                            <a href="{{ route('melhorInfo') }}" class="dropdown-item">Melhor
+                                                envio - Informações</a>
                                         @endif
                                         <a href="{{ route('sair') }}" class="dropdown-item">Sair</a>
                                     </div>

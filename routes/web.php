@@ -34,10 +34,8 @@ Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
 Route::get('/estoque/{idProduto}/{numero}', [ProdutoController::class, 'buscarEstoqueQuantidade'])
     ->name('buscarEstoqueQuantidade');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('authorize');
-// Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken');
-Route::get('/melhorenvio/teste', [MelhorEnvioController::class, 'teste']);
+Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo');
 Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken');
-Route::post('/melhorenvio/token2', [MelhorEnvioController::class, 'getToken2'])->name('getToken2');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
 
