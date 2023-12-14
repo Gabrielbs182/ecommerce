@@ -60,6 +60,23 @@ class MelhorEnvioController extends Controller
         return json_decode($response->getBody(), true);
     }
 
+    public function getToken2(Request $request)
+    {
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
+            'body' => '{"grant_type":"authorization_code","client_id":3946,"client_secret":"REMOVIDO_MELHORENVIO_CLIENT_SECRET","redirect_uri":"https://urbeatstore.com.br/melhorenvio/getAuthorization","code":"REMOVIDO_AUTH_CODE"}',
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'User-Agent' => 'Aplicação (email para contato técnico)',
+            ],
+        ]);
+
+        echo $response->getBody();
+    }
+
+
     public function teste()
     {
 
