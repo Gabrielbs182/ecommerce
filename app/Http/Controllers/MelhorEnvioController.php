@@ -92,6 +92,7 @@ class MelhorEnvioController extends Controller
     public function getAuthorization(Request $request)
     {
         // Verifique se o código de autorização está presente na solicitação
+        dd($request);
         if ($request->has('code')) {
             // Obtenha o código de autorização da solicitação
             $authorizationCode = $request->input('code');
