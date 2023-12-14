@@ -99,11 +99,7 @@ class MelhorEnvioController extends Controller
 
                 // Informe ao usuário que o código de autorização foi armazenado com sucesso
                 // Agora, chame a função getToken
-                $tokenResponse = $this->getToken($request);
-
-                // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
-
-                return $tokenResponse; // ou alguma mensagem personalizada
+                return redirect('/melhorenvio/teste');
             } else {
                 // Informe ao usuário que o arquivo .env não foi encontrado
                 return "Erro: Arquivo .env não encontrado!";
