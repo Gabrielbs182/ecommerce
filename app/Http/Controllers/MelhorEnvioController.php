@@ -112,27 +112,28 @@ class MelhorEnvioController extends Controller
         // Obter o token do .env
         $token = env('Authorization'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
 
-        // Verificar se o token está presente
-        if (!$token) {
-            return response()->json(['error' => 'Token não encontrado.']);
-        }
+        echo $token;
+        // // Verificar se o token está presente
+        // if (!$token) {
+        //     return response()->json(['error' => 'Token não encontrado.']);
+        // }
 
-        // Fazer a solicitação à API
-        try {
-            $response = Http::withHeaders([
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $token,
-                'User-Agent' => 'Aplicação (email para contato)',
-            ])->get('https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings');
+        // // Fazer a solicitação à API
+        // try {
+        //     $response = Http::withHeaders([
+        //         'Accept' => 'application/json',
+        //         'Authorization' => 'Bearer ' . $token,
+        //         'User-Agent' => 'Aplicação (email para contato)',
+        //     ])->get('https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings');
 
-            // Retornar os dados da resposta da API
-            return $response->json();
-        } catch (\Exception $e) {
-            // Lidar com erros de solicitação
-            return response()->json(['error' => 'Erro ao fazer a solicitação à API: ' . $e->getMessage()]);
-        }
+        //     // Retornar os dados da resposta da API
+        //     return $response->json();
+        // } catch (\Exception $e) {
+        //     // Lidar com erros de solicitação
+        //     return response()->json(['error' => 'Erro ao fazer a solicitação à API: ' . $e->getMessage()]);
+        // }
 
-        // return view('melhorInfo');
+        // // return view('melhorInfo');
     }
 
     public function getAuthorization(Request $request)
