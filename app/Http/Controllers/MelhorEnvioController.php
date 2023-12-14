@@ -69,7 +69,7 @@ class MelhorEnvioController extends Controller
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-                'User-Agent' => 'Aplicação (email para contato técnico)',
+                'User-Agent' => 'Aplicação email@exemplo.com',
             ],
         ]);
 
