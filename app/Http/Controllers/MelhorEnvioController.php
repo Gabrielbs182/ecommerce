@@ -55,6 +55,17 @@ class MelhorEnvioController extends Controller
         }
     }
 
+    public function redirectToAuthorization()
+    {
+        $client_id = '3946';
+        $redirect_uri = 'https://urbeatstore.com.br/melhorenvio/getAuthorization';
+        $scope = 'cart-read'; // Adicione outras permissões conforme necessário
+        $authorizationUrl = "https://sandbox.melhorenvio.com.br/oauth/authorize?";
+        $authorizationUrl .= "client_id={$client_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$scope}";
+
+        return redirect()->away($authorizationUrl);
+    }
+
     public function getToken(Request $request)
     {
         // Verificar se a solicitação contém os parâmetros necessários
