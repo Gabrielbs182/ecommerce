@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client;
 
 class MelhorEnvioController extends Controller
 {
@@ -109,32 +109,36 @@ class MelhorEnvioController extends Controller
     public function melhorInfo()
     {
 
-        // Obter o token do .env
-        $token = env('MELHORENVIO_ACCESS_TOKEN'); // Supondo que você tenha armazenado o token como AUTHORIZATION_CODE
-        // Verificar se o token está presente
-        $url = 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings';
+        // Substitua 'seu_token_aqui' pelo seu token de acesso real
+        $accessToken = 
+        
+        'REMOVIDO_JWT';
 
-        $headers = [
-            'Accept' => 'application/json',
-            'Authorization' => 'Bearer REMOVIDO_JWT',
-            'User-Agent' => 'Urbeat (email@exemplo.com',
-        ];
+        $client = new Client();
 
         try {
-            $resposta = Http::withHeaders($headers)->get($url);
+            $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $accessToken,
+                    'User-Agent' => 'Urbeat (email@exemplo.com)',
+                ],
+            ]);
 
-            // Verifica se a requisição foi bem-sucedida (código de status 200)
-            if ($resposta->successful()) {
-                $dados = $resposta->json();
+            $statusCode = $response->getStatusCode();
+
+            // Verifique se a solicitação foi bem-sucedida (código de status 200)
+            if ($statusCode === 200) {
+                $data = json_decode($response->getBody(), true);
                 // Faça algo com os dados aqui
-                dd($dados);
+                var_dump($data);
             } else {
-                // Exibe detalhes do erro
-                dd("Erro na requisição: {$resposta->status()} - {$resposta->body()}");
+                // Exiba detalhes do erro
+                echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
             }
         } catch (\Exception $e) {
-            // Exibe detalhes do erro
-            dd("Erro ao fazer a requisição: {$e->getMessage()}");
+            // Exiba detalhes do erro
+            echo "Erro ao fazer a requisição: {$e->getMessage()}";
         }
     }
 
