@@ -116,7 +116,7 @@ class MelhorEnvioController extends Controller
 
         $headers = [
             'Accept' => 'application/json',
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer REMOVIDO_JWT',
             'User-Agent' => 'Urbeat (email@exemplo.com',
         ];
 
