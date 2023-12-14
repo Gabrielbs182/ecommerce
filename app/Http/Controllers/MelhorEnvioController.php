@@ -31,10 +31,11 @@ class MelhorEnvioController extends Controller
     {
         // Verificar se a solicitação contém os parâmetros necessários
         $this->validate($request, [
-            'grant_type' => 'required',
             'client_id' => 'required',
             'client_secret' => 'required',
             'redirect_uri' => 'required',
+            'code' => 'required',
+            'grant_type' => 'required',
         ]);
 
         // Fazer solicitação HTTP para obter o token
@@ -49,7 +50,8 @@ class MelhorEnvioController extends Controller
                 'grant_type' => $request->input('grant_type'),
                 'client_id' => $request->input('client_id'),
                 'client_secret' => $request->input('client_secret'),
-                'redirect_uri' => $request->input('redirect_uri'),
+                'redirect_uri' => 'https://urbeatstore.com.br',
+                'code' => $request->input('code'),
                 // Adicione outros parâmetros conforme necessário
             ],
         ]);
