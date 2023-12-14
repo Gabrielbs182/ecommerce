@@ -20,9 +20,7 @@ use App\Http\Controllers\MelhorEnvioController;
 |
 */
 
-if (env('APP_ENV') === 'production') {
-    URL::forceSchema('https');
-}
+
 
 // API'S
 Route::get('/cidades/{idCidade}', [CidadeControllador::class, 'buscarCidades'])
