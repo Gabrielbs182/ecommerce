@@ -30,36 +30,34 @@ class MelhorEnvioController extends Controller
     public function getToken(Request $request)
     {
         // Verificar se a solicitação contém os parâmetros necessários
-        // $this->validate($request, [
-        //     'client_id' => 'required',
-        //     'client_secret' => 'required',
-        //     'redirect_uri' => 'required',
-        //     'code' => 'required',
-        //     'grant_type' => 'required',
-        // ]);
+        $this->validate($request, [
+            'client_id' => 'required',
+            'client_secret' => 'required',
+            'redirect_uri' => 'required',
+            'code' => 'required',
+            'grant_type' => 'required',
+        ]);
 
-        // // Fazer solicitação HTTP para obter o token
-        // $client = new Client();
-        // $response = $client->post('https://sandbox.melhorenvio.com.br/oauth/token', [
-        //     'headers' => [
-        //         'Accept' => 'application/json',
-        //         'Content-Type' => 'application/json',
-        //         'User-Agent' => 'email@exemplo.com',
-        //     ],
-        //     'json' => [
-        //         'grant_type' => $request->input('grant_type'),
-        //         'client_id' => $request->input('client_id'),
-        //         'client_secret' => $request->input('client_secret'),
-        //         'redirect_uri' => $request->input('redirect_uri'),
-        //         'code' => $request->input('code'),
-        //         // Adicione outros parâmetros conforme necessário
-        //     ],
-        // ]);
-
-        dd($request);
+        // Fazer solicitação HTTP para obter o token
+        $client = new Client();
+        $response = $client->post('https://sandbox.melhorenvio.com.br/oauth/token', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'User-Agent' => 'email@exemplo.com',
+            ],
+            'json' => [
+                'grant_type' => $request->input('grant_type'),
+                'client_id' => $request->input('client_id'),
+                'client_secret' => $request->input('client_secret'),
+                'redirect_uri' => $request->input('redirect_uri'),
+                'code' => $request->input('code'),
+                // Adicione outros parâmetros conforme necessário
+            ],
+        ]);
 
         // Obter e retornar a resposta JSON
-        // return json_decode($response->getBody(), true);
+        return json_decode($response->getBody(), true);
     }
 
     public function teste()
