@@ -35,22 +35,22 @@ class MelhorEnvioController extends Controller
 
         $code = env('AUTHORIZATION_CODE');
         echo $code;
-        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
-            'form_params' => [
-                'grant_type' => 'authorization_code',
-                'client_id' => 3946,
-                'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
-                'redirect_uri' => 'https://urbeatstore.com.br/melhorenvio/getAuthorization',
-                'code' => $code, // Certifique-se de ajustar conforme necessário
-            ],
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'User-Agent' => 'Urbeat (email@exemplo.com)',
-            ],
-        ]);
+        // $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
+        //     'form_params' => [
+        //         'grant_type' => 'authorization_code',
+        //         'client_id' => 3946,
+        //         'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
+        //         'redirect_uri' => 'https://urbeatstore.com.br/melhorenvio/getAuthorization',
+        //         'code' => $code, // Certifique-se de ajustar conforme necessário
+        //     ],
+        //     'headers' => [
+        //         'Accept' => 'application/json',
+        //         'Content-Type' => 'application/x-www-form-urlencoded',
+        //         'User-Agent' => 'Urbeat (email@exemplo.com)',
+        //     ],
+        // ]);
 
-        echo $response->getBody();
+        // echo $response->getBody();
     }
 
 
