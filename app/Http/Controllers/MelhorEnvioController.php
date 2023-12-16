@@ -15,19 +15,14 @@ class MelhorEnvioController extends Controller
     //     // Isso geralmente envolve redirecionar o usuário para a URL fornecida pelo Melhor Envio com os parâmetros apropriados
     // }
 
+
+    //FUNÇÕES PASSIVAS
+
     public function Authorization()
     {
         $apiResponse = ENV('AUTHORIZATION');
-
         $responseData = json_decode($apiResponse, true);
-
-        return $responseData
-
-        // echo 'Acess Token:<br>';
-        // echo $responseData['access_token'];
-        // echo '<br>';
-        // echo 'Refresh Token:<br>';
-        // echo $responseData['refresh_token'];
+        return $responseData;
     }
 
     public function redirectToAuthorization()
@@ -45,8 +40,10 @@ class MelhorEnvioController extends Controller
     {
         $client = new \GuzzleHttp\Client();
 
+        //buscando o código de autorização obtino no getAuthorization
         $code = env('AUTHORIZATION_CODE');
 
+        //montando a requisição
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
                 'grant_type' => 'authorization_code',
@@ -68,6 +65,7 @@ class MelhorEnvioController extends Controller
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
 
+            //Buscando o conteudo do .env
             $envPath = base_path('.env');
             $envContent = file_get_contents($envPath);
 
@@ -88,40 +86,6 @@ class MelhorEnvioController extends Controller
         } else {
             // Informar ao usuário que houve um problema ao obter os tokens
             return "Erro: Tokens não foram obtidos com sucesso.";
-        }
-    }
-
-
-    public function melhorInfo()
-    {
-        // Substitua 'seu_token_aqui' pelo seu token de acesso real
-        $responseData = Authorization();
-
-        $client = new Client();
-
-        try {
-            $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $responseData['access_token'],
-                    'User-Agent' => ENV('USER_AGENT'),
-                ],
-            ]);
-
-            $statusCode = $response->getStatusCode();
-
-            // Verifique se a solicitação foi bem-sucedida (código de status 200)
-            if ($statusCode === 200) {
-                $data = json_decode($response->getBody(), true);
-                // Faça algo com os dados aqui
-                var_dump($data);
-            } else {
-                // Exiba detalhes do erro
-                echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
-            }
-        } catch (\Exception $e) {
-            // Exiba detalhes do erro
-            echo "Erro ao fazer a requisição: {$e->getMessage()}";
         }
     }
 
@@ -168,6 +132,43 @@ class MelhorEnvioController extends Controller
         } else {
             // Informe ao usuário que o código de autorização não foi encontrado na solicitação
             return "Erro: Código de autorização não encontrado na solicitação!";
+        }
+    }
+
+    //funções ativas
+
+    public function melhorInfo()
+    {
+        // Função para imprimir opções de configuração do melhor envio
+
+        //buscando autorização
+        $responseData = $this->Authorization();
+        
+        $client = new Client();
+
+        try {
+            $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'User-Agent' => ENV('USER_AGENT'),
+                ],
+            ]);
+
+            $statusCode = $response->getStatusCode();
+
+            // Verifique se a solicitação foi bem-sucedida (código de status 200)
+            if ($statusCode === 200) {
+                $data = json_decode($response->getBody(), true);
+                // Faça algo com os dados aqui
+                var_dump($data);
+            } else {
+                // Exiba detalhes do erro
+                echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
+            }
+        } catch (\Exception $e) {
+            // Exiba detalhes do erro
+            echo "Erro ao fazer a requisição: {$e->getMessage()}";
         }
     }
 }
