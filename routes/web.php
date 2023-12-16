@@ -36,6 +36,7 @@ Route::get('/estoque/{idProduto}/{numero}', [ProdutoController::class, 'buscarEs
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('authorize');
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo');
 Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken');
+Route::get('/melhorenvio/teste', [MelhorEnvioController::class, 'teste'])->name('teste');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
 

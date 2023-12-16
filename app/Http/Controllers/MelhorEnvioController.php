@@ -15,11 +15,26 @@ class MelhorEnvioController extends Controller
     //     // Isso geralmente envolve redirecionar o usuário para a URL fornecida pelo Melhor Envio com os parâmetros apropriados
     // }
 
+    public function Authorization()
+    {
+        $apiResponse = ENV('AUTHORIZATION');
+
+        $responseData = json_decode($apiResponse, true);
+
+        return $responseData
+
+        // echo 'Acess Token:<br>';
+        // echo $responseData['access_token'];
+        // echo '<br>';
+        // echo 'Refresh Token:<br>';
+        // echo $responseData['refresh_token'];
+    }
+
     public function redirectToAuthorization()
     {
-        $client_id = '3946';
+        $client_id = env('CLIENT_ID');
         $redirect_uri = 'https://urbeatstore.com.br/melhorenvio/getAuthorization';
-        $scope = 'cart-read'; // Adicione outras permissões conforme necessário
+        $scope = env('SCOPE'); // Adicione outras permissões conforme necessário
         $authorizationUrl = "https://sandbox.melhorenvio.com.br/oauth/authorize?";
         $authorizationUrl .= "client_id={$client_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$scope}";
 
@@ -35,15 +50,15 @@ class MelhorEnvioController extends Controller
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
                 'grant_type' => 'authorization_code',
-                'client_id' => 3946,
-                'client_secret' => 'REMOVIDO_MELHORENVIO_CLIENT_SECRET',
+                'client_id' => env('CLIENT_ID'),
+                'client_secret' => env('CLIENT_SECRET'),
                 'redirect_uri' => 'https://urbeatstore.com.br/melhorenvio/getAuthorization',
                 'code' => $code, // Certifique-se de ajustar conforme necessário
             ],
             'headers' => [
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
-                'User-Agent' => 'Urbeat (email@exemplo.com)',
+                'User-Agent' => ENV('USER_AGENT'),
             ],
         ]);
 
@@ -52,46 +67,17 @@ class MelhorEnvioController extends Controller
 
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
-            // Salvar o access token no .env
-            $envPath = base_path('.env');
-            $envContent = File::get($envPath);
 
-            // Atualizar ou adicionar a variável de ambiente do access token
-            if (Str::contains($envContent, 'MELHORENVIO_ACCESS_TOKEN')) {
-                $envContent = Str::replaceFirst(
-                    'MELHORENVIO_ACCESS_TOKEN=' . config('app.MELHORENVIO_ACCESS_TOKEN'),
-                    'MELHORENVIO_ACCESS_TOKEN=' . $responseJson['access_token'],
-                    $envContent
-                );
-            } else {
-                $envContent .= "\nMELHORENVIO_ACCESS_TOKEN=" . $responseJson['access_token'];
-            }
-
-            // Salvar o refresh token no .env
-            if (Str::contains($envContent, 'MELHORENVIO_REFRESH_TOKEN')) {
-                $envContent = Str::replaceFirst(
-                    'MELHORENVIO_REFRESH_TOKEN=' . config('app.MELHORENVIO_REFRESH_TOKEN'),
-                    'MELHORENVIO_REFRESH_TOKEN=' . $responseJson['refresh_token'],
-                    $envContent
-                );
-            } else {
-                $envContent .= "\nMELHORENVIO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            File::put($envPath, $envContent);
-
-            // Informar ao usuário que os tokens foram armazenados com sucesso
             $envPath = base_path('.env');
             $envContent = file_get_contents($envPath);
 
             // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'Authorization') !== false) {
+            if (strpos($envContent, 'AUTHORIZATION') !== false) {
                 // Atualizar o valor se já existir
-                $envContent = preg_replace('/(Authorization)=(.*)/', 'Authorization=' . json_encode($responseJson), $envContent);
+                $envContent = preg_replace('/(AUTHORIZATION)=(.*)/', 'AUTHORIZATION=' . json_encode($responseJson), $envContent);
             } else {
                 // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\nAuthorization=" . json_encode($responseJson);
+                $envContent .= "\AUTHORIZATION=" . json_encode($responseJson);
             }
 
             // Salvar as alterações no arquivo .env
@@ -108,11 +94,8 @@ class MelhorEnvioController extends Controller
 
     public function melhorInfo()
     {
-
         // Substitua 'seu_token_aqui' pelo seu token de acesso real
-        $accessToken = 
-        
-        'REMOVIDO_JWT';
+        $responseData = Authorization();
 
         $client = new Client();
 
@@ -120,8 +103,8 @@ class MelhorEnvioController extends Controller
             $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Authorization' => 'Bearer ' . $accessToken,
-                    'User-Agent' => 'Urbeat (email@exemplo.com)',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'User-Agent' => ENV('USER_AGENT'),
                 ],
             ]);
 
