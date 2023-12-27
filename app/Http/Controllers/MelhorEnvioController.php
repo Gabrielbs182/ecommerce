@@ -30,7 +30,6 @@ class MelhorEnvioController extends Controller
     {
         //buscando autorização
         $responseData = $this->Authorization();
-        $userAgent = ENV('USER_AGENT');
 
         $client = new \GuzzleHttp\Client();
 
@@ -40,9 +39,8 @@ class MelhorEnvioController extends Controller
                 'Accept' => 'application/json',
                 'Authorization' => 'Bearer ' . $responseData['access_token'],
                 'Content-Type' => 'application/json',
-                'User-Agent' => 'Urbeat (email@exemplo.com)',
+                'User-Agent' => ENV('USER_AGENT'),
             ],
-
         ]);
 
         echo $response->getBody();
