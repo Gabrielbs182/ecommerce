@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Http;
 
 class MelhorEnvioController extends Controller
 {
@@ -23,6 +24,28 @@ class MelhorEnvioController extends Controller
         $apiResponse = ENV('AUTHORIZATION');
         $responseData = json_decode($apiResponse, true);
         return $responseData;
+    }
+
+    public function calcularFrete(Request $request)
+    {
+        //buscando autorização
+        $responseData = $this->Authorization();
+        $userAgent = ENV('USER_AGENT');
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+            'body' => '{"from":{"postal_code":"96020360"},"to":{"postal_code":"01018020"},"options":{"receipt":true,"own_hand":true},"products":[{"id":"x","width":11,"height":17,"length":11,"weight":0.3,"insurance_value":10.1,"quantity":1}]}',
+            'headers' => [
+                'Accept' => 'application/json',
+                'Authorization' => 'Bearer ' . $responseData['access_token'],
+                'Content-Type' => 'application/json',
+                'User-Agent' => 'Urbeat (email@exemplo.com)',
+            ],
+
+        ]);
+
+        echo $response->getBody();
     }
 
     public function redirectToAuthorization()
@@ -143,7 +166,7 @@ class MelhorEnvioController extends Controller
 
         //buscando autorização
         $responseData = $this->Authorization();
-        
+
         $client = new Client();
 
         try {
