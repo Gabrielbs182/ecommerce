@@ -40,6 +40,7 @@ Route::get('/melhorenvio/teste', [MelhorEnvioController::class, 'teste'])->name(
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
 Route::get('/melhorenvio/calcularFrete', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete')->middleware('IsAdmin');
+Route::get('/melhorenvio/lancarFrete', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete')->middleware('IsAdmin');
 
 
 //REDIRECIONAMENTO

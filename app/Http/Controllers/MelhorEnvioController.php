@@ -25,12 +25,109 @@ class MelhorEnvioController extends Controller
         return $responseData;
     }
 
+    public function lancarFrete(Request $request)
+    {
+
+        //buscando autorização
+        $responseData = $this->Authorization();
+
+        // Criar uma instância do GuzzleHttp\Client
+        $client = new Client();
+
+        // Dados para a requisição
+        $requestData = [
+            'from' => [
+                'name' => 'Michely',
+                'phone' => '27999999999',
+                'email' => 'email@exemplo.com',
+                'document' => '00000000000',
+                'state_register' => 'ES',
+                'address' => 'Rua santa alguma coisa',
+                'complement' => 'Casa',
+                'number' => '786',
+                'district' => 'Centro',
+                'city' => 'Vitoria',
+                'country_id' => '55',
+                'postal_code' => '29160104',
+                'state_abbr' => 'ES',
+                'note' => 'Teste',
+            ],
+            'to' => [
+                'name' => 'Teste',
+                'phone' => '27999999999',
+                'email' => 'email@exemplo.com',
+                'document' => '00000000000',
+                'address' => 'Rua santa monica',
+                'complement' => 'Casa',
+                'number' => '65',
+                'district' => 'Carapina',
+                'city' => 'Serra',
+                'country_id' => '55',
+                'postal_code' => '29160044',
+                'state_abbr' => 'ES',
+                'note' => 'teste',
+            ],
+            'options' => [
+                'receipt' => true,
+                'own_hand' => true,
+                'reverse' => true,
+                'non_commercial' => true,
+                'insurance_value' => 180,
+                'tags' => [
+                    [
+                        'tag' => '187723',
+                        'Url' => 'https://urbeatstore.com.br',
+                    ],
+                ],
+            ],
+            'service' => 1,
+            'agency' => 2,
+            'products' => [
+                [
+                    'name' => 'Tenis',
+                    'quantity' => '2',
+                    'unitary_value' => '50',
+                ],
+                [
+                    'name' => 'Sandalia',
+                    'quantity' => '4',
+                    'unitary_value' => '20',
+                ],
+            ],
+            'volumes' => [
+                [
+                    'height' => 50,
+                    'width' => 50,
+                    'length' => 50,
+                    'weight' => 3000,
+                ],
+            ],
+        ];
+
+        // Headers da requisição
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $responseData['access_token'],
+            'Content-Type' => 'application/json',
+            'User-Agent' => env('USER_AGENT'),
+        ];
+
+        // Fazer a requisição POST
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+            'json' => $requestData,
+            'headers' => $headers,
+        ]);
+
+        // Retornar a resposta da API
+        return $response->getBody();
+    }
+
     public function calcularFrete(Request $request)
     {
 
         //buscando autorização
         $responseData = $this->Authorization();
-        
+
         // Criar uma instância do GuzzleHttp\Client
         $client = new Client();
 
