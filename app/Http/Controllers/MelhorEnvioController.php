@@ -99,7 +99,7 @@ class MelhorEnvioController extends Controller
                     'height' => 50,
                     'width' => 50,
                     'length' => 50,
-                    'weight' => 3000,
+                    'weight' => 1,
                 ],
             ],
         ];
