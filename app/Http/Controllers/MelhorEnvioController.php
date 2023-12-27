@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Http;
 
 class MelhorEnvioController extends Controller
 {
@@ -28,22 +27,46 @@ class MelhorEnvioController extends Controller
 
     public function calcularFrete(Request $request)
     {
+
         //buscando autorização
         $responseData = $this->Authorization();
+        
+        // Criar uma instância do GuzzleHttp\Client
+        $client = new Client();
 
-        $client = new \GuzzleHttp\Client();
+        // Parâmetros para a requisição
+        $postData = [
+            'from' => ['postal_code' => '96020360'],
+            'to' => ['postal_code' => '01018020'],
+            'options' => ['receipt' => true, 'own_hand' => true],
+            'products' => [
+                [
+                    'id' => 'x',
+                    'width' => 11,
+                    'height' => 17,
+                    'length' => 11,
+                    'weight' => 0.3,
+                    'insurance_value' => 10.1,
+                    'quantity' => 1
+                ]
+            ]
+        ];
 
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $responseData['access_token'],
+            'Content-Type' => 'application/json',
+            'User-Agent' => ENV('USER_AGENT'),
+        ];
+
+        // Fazer a requisição POST
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
-            'body' => '{"from":{"postal_code":"96020360"},"to":{"postal_code":"01018020"},"options":{"receipt":true,"own_hand":true},"products":[{"id":"x","width":11,"height":17,"length":11,"weight":0.3,"insurance_value":10.1,"quantity":1}]}',
-            'headers' => [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $responseData['access_token'],
-                'Content-Type' => 'application/json',
-                'User-Agent' => ENV('USER_AGENT'),
-            ],
+            'json' => $postData,
+            'headers' => $headers,
         ]);
 
-        echo $response->getBody();
+        // Retornar a resposta da API
+        return $response->getBody();
     }
 
     public function redirectToAuthorization()
