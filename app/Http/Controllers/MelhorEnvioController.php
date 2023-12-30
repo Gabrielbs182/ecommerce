@@ -125,44 +125,44 @@ class MelhorEnvioController extends Controller
     public function calcularFrete(Str $cep)
     {
 
-        // //buscando autorização
-        // $responseData = $this->Authorization();
+        //buscando autorização
+        $responseData = $this->Authorization();
 
-        // // Criar uma instância do GuzzleHttp\Client
-        // $client = new Client();
+        // Criar uma instância do GuzzleHttp\Client
+        $client = new Client();
 
-        // $prods = session('cart', []);
+        $prods = session('cart', []);
 
-        // // Inicializar a lista de produtos
-        // $products = [];
+        // Inicializar a lista de produtos
+        $products = [];
 
-        // foreach ($prods as $prod) {
-        //     // Adicionar cada produto à lista 'products'
-        //     $products[] = [
-        //         'id' => $prod['id'],
-        //         'width' => $prod['largura'],
-        //         'height' => $prod['altura'],
-        //         'length' => $prod['comprimento'],
-        //         'weight' => $prod['peso'] / 1000,
-        //         'insurance_value' => $prod['valor'] * $prod['quantidade'],
-        //         'quantity' => $prod['quantidade'],
-        //     ];
-        // }
+        foreach ($prods as $prod) {
+            // Adicionar cada produto à lista 'products'
+            $products[] = [
+                'id' => $prod['id'],
+                'width' => $prod['largura'],
+                'height' => $prod['altura'],
+                'length' => $prod['comprimento'],
+                'weight' => $prod['peso'] / 1000,
+                'insurance_value' => $prod['valor'] * $prod['quantidade'],
+                'quantity' => $prod['quantidade'],
+            ];
+        }
 
-        // // Parâmetros para a requisição
-        // $postData = [
-        //     'from' => ['postal_code' => '96020360'],
-        //     'to' => ['postal_code' => $cep],
-        //     'options' => ['receipt' => true, 'own_hand' => true],
-        //     'products' => $products
-        // ];
+        // Parâmetros para a requisição
+        $postData = [
+            'from' => ['postal_code' => '96020360'],
+            'to' => ['postal_code' => $cep],
+            'options' => ['receipt' => true, 'own_hand' => true],
+            'products' => $products
+        ];
 
-        // $headers = [
-        //     'Accept' => 'application/json',
-        //     'Authorization' => 'Bearer ' . $responseData['access_token'],
-        //     'Content-Type' => 'application/json',
-        //     'User-Agent' => ENV('USER_AGENT'),
-        // ];
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $responseData['access_token'],
+            'Content-Type' => 'application/json',
+            'User-Agent' => ENV('USER_AGENT'),
+        ];
 
         // // Fazer a requisição POST
         // $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
@@ -172,7 +172,7 @@ class MelhorEnvioController extends Controller
 
         // Retornar a resposta da API
         // return $response->getBody();
-        return $cep;
+        return $postData;
     }
 
     public function redirectToAuthorization()
