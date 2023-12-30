@@ -172,7 +172,7 @@ class MelhorEnvioController extends Controller
 
         // Retornar a resposta da API
         // return $response->getBody();
-        return $postData;
+        return response()->json($postData);
     }
 
     public function redirectToAuthorization()
