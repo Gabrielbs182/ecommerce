@@ -66,6 +66,17 @@
             });
         }
 
+        function montarLinhaEnvio(transportadora) {
+            linha =
+
+                '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
+                '<label class="form-check-label" for="flexRadioDefault1">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' (via Melhor Envio)' +
+                '<br>' +
+                'Preço: ' + transportadora.price '</label>' +
+                '</div>'
+        }
+
         function buscarEstoque() {
             console.log('teste');
             var numero = $('#tamanhoModal').val()
@@ -156,6 +167,94 @@
                     $('#modalCarrinho').modal('show');
                 }
             });
+        };
+
+        function calcularFrete() {
+            $("#loader-div").show();
+            // Obtenha o valor do CEP
+            var cepValue = document.getElementById("cep").value;
+
+            obterDadosCEP(cepValue);
+
+            // Verifique se o CEP é válido antes de fazer a requisição
+            if (validarCEP(cepValue)) {
+                // Faça a requisição para calcular o frete
+                $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
+                    console.log(frete);
+
+                    var envios = ''
+
+                    envios = '' +
+                        '<p>' +
+                        'Nossa loja:' +
+                        '</p>' +
+                        '<div class="form-check">' +
+                        '<input class="form-check-input" type="radio" name="flexRadioDefault"' +
+                        'id="flexRadioDefault1">' +
+                        '<label class="form-check-label" for="flexRadioDefault1">' +
+                        'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
+                        '</label>' +
+                        '</div>'
+
+                    for (var transportadora of frete) {
+                        if ('error' in transportadora) {
+                            console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
+                            console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
+                            console.log(transportadora.error);
+                        } else {
+                            linha = montarLinhaEnvio(transportadora);
+                            envios.append(linha);
+                        }
+                        console.log(transportadora);
+                        console.log(transportadora.error);
+                    }
+
+                    var elemento = document.getElementById('envios');
+                    elemento.value = '';
+                    elemento.value = envios;
+
+                    // Verifique se o retorno indica um CEP inválido
+                    if (frete && frete.error) {
+                        // Exiba a mensagem de erro
+                        $("#cep-error-message").text("CEP inválido");
+
+                        // Adicione uma classe para destacar o campo em vermelho
+                        $("#cep-group").addClass("has-error");
+                    } else {
+                        // Se o CEP for válido, limpe a mensagem de erro e remova a classe de estilo
+                        $("#cep-error-message").text("");
+                        $("#cep-group").removeClass("has-error");
+                    }
+                });
+            } else {
+                // Exibir mensagem de erro para CEP inválido
+                $("#cep-error-message").text("CEP inválido");
+
+                // Adicionar classe para destacar o campo em vermelho
+                $("#cep-group").addClass("has-error");
+            }
+        };
+
+        function validarNumero(input) {
+            // Remover caracteres não numéricos
+            input.value = input.value.replace(/\D/g, '');
+
+            // Limitar o comprimento conforme o atributo maxlength
+            if (input.value.length > parseInt(input.getAttribute('maxlength'))) {
+                input.value = input.value.slice(0, input.getAttribute('maxlength'));
+            }
+        }
+
+        function validarCEP(cep) {
+            // Remover caracteres não numéricos
+            var cepNumerico = cep.replace(/\D/g, '');
+
+            // Verificar se o CEP tem exatamente 8 dígitos
+            if (cepNumerico.length === 8) {
+                return true;
+            } else {
+                return false;
+            }
         };
 
         function adicionarCarrinho(id) {
@@ -304,30 +403,35 @@
                     </button>
                 </div>
                 <div class="modal-body" id="carrinhoModal">
-                    <table class="table table-responsive">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center">Produto</th>
-                                <th scope="col" class="text-center">Preço</th>
-                                <th scope="col" class="text-center">Total</th>
-                                <th scope="col" class="text-center">Excluir</th>
-                            </tr>
-                        </thead>
-                        <tbody id="modalCarrinhoLista">
-                        </tbody>
-                    </table>
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-center">
                         <p>Subtotal (sem frete): R$<span id="totalCarrinho"></span></p>
                     </div>
-                    <div class="d-flex justify-content-center">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Produto</th>
+                                        <th scope="col" class="text-center">Preço</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                        <th scope="col" class="text-center">Excluir</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalCarrinhoLista">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex">
                         <p>
                             Meios de envio:
                         </p>
-                        <div class="col-md-6 form-group" id="cep-group">
-                            <label>CEP</label>
-                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
-                                maxlength="10" oninput="validarNumero(this)">
-                        </div>
+                    </div>
+                    <div class="col-md-6 form-group" id="cep-group">
+                        <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
+                            onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                    </div>
+                    <div id="envios">
                         <p>
                             Nossa loja:
                         </p>
