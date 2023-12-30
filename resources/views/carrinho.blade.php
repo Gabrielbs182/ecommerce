@@ -111,11 +111,7 @@
                     console.log(frete);
 
                     for (var transportadora of frete) {
-                        if transportadora.error{
-                        }else{
-                            console.log(transportadora);
-                        }
-                        
+                        console.log(transportadora);
                     }
 
                     // Verifique se o retorno indica um CEP inválido
