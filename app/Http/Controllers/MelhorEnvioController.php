@@ -125,7 +125,6 @@ class MelhorEnvioController extends Controller
     public function calcularFrete(string $cep)
     {
 
-        dd($cep);
         //buscando autorização
         $responseData = $this->Authorization();
 
@@ -165,15 +164,14 @@ class MelhorEnvioController extends Controller
             'User-Agent' => ENV('USER_AGENT'),
         ];
 
-        // // Fazer a requisição POST
-        // $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
-        //     'json' => $postData,
-        //     'headers' => $headers,
-        // ]);
+        // Fazer a requisição POST
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+            'json' => $postData,
+            'headers' => $headers,
+        ]);
 
-        // Retornar a resposta da API
-        // return $response->getBody();
-        return response()->json($postData);
+        //Retornar a resposta da API
+        return $response->getBody();
     }
 
     public function redirectToAuthorization()
