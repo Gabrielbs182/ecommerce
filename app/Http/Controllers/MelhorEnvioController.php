@@ -152,7 +152,7 @@ class MelhorEnvioController extends Controller
         // Parâmetros para a requisição
         $postData = [
             'from' => ['postal_code' => '96020360'],
-            'to' => ['postal_code' => $cep],
+            'to' => ['postal_code' => strval($cep)],
             'options' => ['receipt' => true, 'own_hand' => true],
             'products' => $products
         ];
