@@ -133,39 +133,28 @@ class MelhorEnvioController extends Controller
 
         $prods = session('cart', []);
 
+        // Inicializar a lista de produtos
+        $products = [];
 
         foreach ($prods as $prod) {
             // Adicionar cada produto à lista 'products'
             $products[] = [
                 'id' => $prod['id'],
-                'width' => $prod['width'],
-                'height' => $prod['height'],
-                'length' => $prod['length'],
-                'weight' => $prod['weight'],
-                'insurance_value' => $prod['valor']*$prod['quantidade'],
+                'width' => $prod['largura'],
+                'height' => $prod['altura'],
+                'length' => $prod['comprimento'],
+                'weight' => $prod['peso'] / 1000,
+                'insurance_value' => $prod['valor'] * $prod['quantidade'],
                 'quantity' => $prod['quantidade'],
             ];
         }
-
-        // Inicializar a lista de produtos
-        $products = [];
 
         // Parâmetros para a requisição
         $postData = [
             'from' => ['postal_code' => '96020360'],
             'to' => ['postal_code' => $cep],
             'options' => ['receipt' => true, 'own_hand' => true],
-            'products' => [
-                [
-                    'id' => 'x',
-                    'width' => 11,
-                    'height' => 17,
-                    'length' => 11,
-                    'weight' => 0.3,
-                    'insurance_value' => 10.1,
-                    'quantity' => 1
-                ]
-            ]
+            'products' => $products
         ];
 
         $headers = [

@@ -2,6 +2,9 @@
 
 @section('content')
     <!-- Checkout Start -->
+    <!-- Adicione uma div para mostrar a mensagem de erro -->
+    <div id="cep-error-message" class="text-danger"></div>
+
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
             <div class="col-lg-8">
@@ -24,9 +27,9 @@
                             <label>UF</label>
                             <input class="form-control" type="text" required>
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-6 form-group" id="cep-group">
                             <label>CEP</label>
-                            <input class="form-control" type="text" required>
+                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()">
                         </div>
                     </div>
                 </div>
@@ -92,79 +95,53 @@
     </div>
     </div>
 
-
-
-    
-    <!-- Checkout End -->
-
-    {{-- <h3>Carrinho</h3>
-
-    @if (isset($cart) && count($cart) > 0)
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Foto</th>
-                    <th>Valor</th>
-                    <th>Descrição</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php $total = 0; @endphp
-                @foreach ($cart as $indice => $p)
-                    <tr>
-                        <td>{{ $p->nome }}</td>
-                        <td><img src="{{ asset($p->foto) }}" alt="" height="50"></td>
-                        <td>{{ $p->valor }}</td>
-                        <td>{{ $p->descricao }}</td>
-                        <td>
-                            <a href="{{ route('excluirCarrinho', ['indice' => $indice]) }}" class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    @php $total += $p->valor; @endphp
-                @endforeach
-            </tbody>
-            <tFoot>
-                <tr>
-                    <td colspan="5">Total do carrinho: R$ {{ $total }}</td>
-                </tr>
-            </tFoot>
-        </table>
-
-        <form action="{{ route('pagar') }}" method="POST">
-            @csrf
-            <input type="submit" value="Finalizar Compra" class="btn btn-lg btn-success">
-        </form>
-    @else
-        <p>Nenhum item no carrinho</p>
-    @endif --}}
 @endsection
 
 @section('scripts')
-
-<script>
-    function calcularFrete() {
+    <script>
+        function calcularFrete() {
             $("#loader-div").show();
-            $.getJSON('/api/pedido/' + document.getElementById("pedidoId").value, function(pedido) {
-                console.log(pedido[0]);
-                pedido[0].vlrtot = document.getElementById("totalPedido").value;
-                $.ajax({
-                    type: 'PUT',
-                    url: '/api/pedido/' + document.getElementById("pedidoId").value,
-                    context: this,
-                    data: pedido[0],
-                    success: function() {
-                        $("#loader-div").hide();
-                        window.location.reload();
-                    },
-                    error: function(error) {
-                        console.log(error);
-                        $("#loader-div").hide();
+            // Obtenha o valor do CEP
+            var cepValue = document.getElementById("cep").value;
+
+            // Verifique se o CEP é válido antes de fazer a requisição
+            if (validarCEP(cepValue)) {
+                // Faça a requisição para calcular o frete
+                $.getJSON('/melhorenvio/calcularFrete' + cepValue, function(frete) {
+                    console.log(frete);
+
+                    // Verifique se o retorno indica um CEP inválido
+                    if (frete && frete.error) {
+                        // Exiba a mensagem de erro
+                        $("#cep-error-message").text("CEP inválido");
+
+                        // Adicione uma classe para destacar o campo em vermelho
+                        $("#cep-group").addClass("has-error");
+                    } else {
+                        // Se o CEP for válido, limpe a mensagem de erro e remova a classe de estilo
+                        $("#cep-error-message").text("");
+                        $("#cep-group").removeClass("has-error");
                     }
                 });
-            });
+            } else {
+                // Exibir mensagem de erro para CEP inválido
+                $("#cep-error-message").text("CEP inválido");
+
+                // Adicionar classe para destacar o campo em vermelho
+                $("#cep-group").addClass("has-error");
+            }
         };
-</script>
+
+        function validarCEP(cep) {
+            // Remover caracteres não numéricos
+            var cepNumerico = cep.replace(/\D/g, '');
+
+            // Verificar se o CEP tem exatamente 8 dígitos
+            if (cepNumerico.length === 8) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+    </script>
 @endsection
