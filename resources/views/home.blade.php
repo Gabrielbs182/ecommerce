@@ -317,9 +317,30 @@
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-end">
-                        <p>Total: R$<span id="totalCarrinho"></span></p>
+                        <p>Subtotal (sem frete): R$<span id="totalCarrinho"></span></p>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p>
+                            Meios de envio:
+                        </p>
+                        <div class="col-md-6 form-group" id="cep-group">
+                            <label>CEP</label>
+                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
+                                maxlength="10" oninput="validarNumero(this)">
+                        </div>
+                        <p>
+                            Nossa loja:
+                        </p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
+                            </label>
+                        </div>
                     </div>
                 </div>
+
                 <div class="modal-footer border-top-0 d-flex justify-content-right">
                     <form action="{{ route('ver_carrinho') }}" method="POST">
                         @csrf
