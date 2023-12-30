@@ -125,6 +125,7 @@ class MelhorEnvioController extends Controller
     public function calcularFrete(Str $cep)
     {
 
+        dd($cep);
         //buscando autorização
         $responseData = $this->Authorization();
 
