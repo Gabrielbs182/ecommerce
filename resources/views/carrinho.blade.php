@@ -97,7 +97,7 @@
 
 @endsection
 
-@section('scripts')
+@section('scriptjs')
     <script>
         function calcularFrete() {
             $("#loader-div").show();
