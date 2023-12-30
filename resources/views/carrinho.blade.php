@@ -91,6 +91,10 @@
         </div>
     </div>
     </div>
+
+
+
+    
     <!-- Checkout End -->
 
     {{-- <h3>Carrinho</h3>
@@ -136,4 +140,31 @@
     @else
         <p>Nenhum item no carrinho</p>
     @endif --}}
+@endsection
+
+@section('scripts')
+
+<script>
+    function calcularFrete() {
+            $("#loader-div").show();
+            $.getJSON('/api/pedido/' + document.getElementById("pedidoId").value, function(pedido) {
+                console.log(pedido[0]);
+                pedido[0].vlrtot = document.getElementById("totalPedido").value;
+                $.ajax({
+                    type: 'PUT',
+                    url: '/api/pedido/' + document.getElementById("pedidoId").value,
+                    context: this,
+                    data: pedido[0],
+                    success: function() {
+                        $("#loader-div").hide();
+                        window.location.reload();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        $("#loader-div").hide();
+                    }
+                });
+            });
+        };
+</script>
 @endsection

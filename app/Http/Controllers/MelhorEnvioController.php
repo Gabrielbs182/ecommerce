@@ -122,7 +122,7 @@ class MelhorEnvioController extends Controller
         return $response->getBody();
     }
 
-    public function calcularFrete(Request $request)
+    public function calcularFrete(Str $cep)
     {
 
         //buscando autorização
@@ -131,10 +131,29 @@ class MelhorEnvioController extends Controller
         // Criar uma instância do GuzzleHttp\Client
         $client = new Client();
 
+        $prods = session('cart', []);
+
+
+        foreach ($prods as $prod) {
+            // Adicionar cada produto à lista 'products'
+            $products[] = [
+                'id' => $prod['id'],
+                'width' => $prod['width'],
+                'height' => $prod['height'],
+                'length' => $prod['length'],
+                'weight' => $prod['weight'],
+                'insurance_value' => $prod['valor']*$prod['quantidade'],
+                'quantity' => $prod['quantidade'],
+            ];
+        }
+
+        // Inicializar a lista de produtos
+        $products = [];
+
         // Parâmetros para a requisição
         $postData = [
             'from' => ['postal_code' => '96020360'],
-            'to' => ['postal_code' => '01018020'],
+            'to' => ['postal_code' => $cep],
             'options' => ['receipt' => true, 'own_hand' => true],
             'products' => [
                 [

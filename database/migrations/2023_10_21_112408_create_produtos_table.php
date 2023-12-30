@@ -18,6 +18,10 @@ return new class extends Migration
             $table->string("nome");
             $table->string("descricao")->nullable();
             $table->decimal("valor",10,2);
+            $table->integer("peso");
+            $table->integer("largura");
+            $table->integer("altura");
+            $table->integer("comprimento");
             $table->bigInteger("categoria_id")->unsigned();
 
             $table->timestamps();
