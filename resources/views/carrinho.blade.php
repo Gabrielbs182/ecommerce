@@ -15,6 +15,10 @@
                             <label>Logradouro</label>
                             <input class="form-control" type="text" id="logradouro" name="logradouro" disabled>
                         </div>
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Bairro</label>
+                            <input class="form-control" type="text" id="bairro" name="bairro" disabled>
+                        </div>
                         <div class="col-md-6 form-group" id="numero-group">
                             <label>Numero</label>
                             <input class="form-control" type="text" id="numero" name="numero">
@@ -29,7 +33,8 @@
                         </div>
                         <div class="col-md-6 form-group" id="cep-group">
                             <label>CEP</label>
-                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
+                                maxlength="10" oninput="validarNumero(this)">
                         </div>
                     </div>
                 </div>
@@ -116,6 +121,11 @@
                 .then(data => {
                     // Manipular os dados obtidos
                     console.log(data);
+                    document.getElementById("logradouro").value = data.logradouro;
+                    document.getElementById("bairro").value = data.bairro;
+                    document.getElementById("cidade").value = data.localidade;
+                    document.getElementById("uf").value = data.uf;
+
                     // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
                 })
                 .catch(error => {
