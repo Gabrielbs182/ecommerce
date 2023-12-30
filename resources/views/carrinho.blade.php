@@ -110,6 +110,14 @@
                 $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
                     console.log(frete);
 
+                    for (var transportadora of frete) {
+                        if transportadora.error{
+                        }else{
+                            console.log(transportadora);
+                        }
+                        
+                    }
+
                     // Verifique se o retorno indica um CEP inválido
                     if (frete && frete.error) {
                         // Exiba a mensagem de erro
