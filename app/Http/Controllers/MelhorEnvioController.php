@@ -122,7 +122,7 @@ class MelhorEnvioController extends Controller
         return $response->getBody();
     }
 
-    public function calcularFrete(Str $cep)
+    public function calcularFrete(string $cep)
     {
 
         dd($cep);
