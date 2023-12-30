@@ -11,25 +11,25 @@
                 <div class="mb-4">
                     <h4 class="font-weight-semi-bold mb-4">Endereço de entrega</h4>
                     <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Endereço 1</label>
-                            <input class="form-control" type="text" required>
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Logradouro</label>
+                            <input class="form-control" type="text" id="logradouro" name="logradouro" disabled>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>Endereço 2</label>
-                            <input class="form-control" type="text" required>
+                        <div class="col-md-6 form-group" id="numero-group">
+                            <label>Numero</label>
+                            <input class="form-control" type="text" id="numero" name="numero">
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-6 form-group" id="cidade-group">
                             <label>Cidade</label>
-                            <input class="form-control" type="text" required>
+                            <input class="form-control" type="text" id="cidade" name="cidade" disabled>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label>UF</label>
-                            <input class="form-control" type="text" required>
+                        <div class="col-md-6 form-group" id="uf-group">
+                            <label>Uf</label>
+                            <input class="form-control" type="text" id="uf" name="uf" disabled>
                         </div>
                         <div class="col-md-6 form-group" id="cep-group">
                             <label>CEP</label>
-                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()">
+                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                         </div>
                     </div>
                 </div>
@@ -174,6 +174,16 @@
                 $("#cep-group").addClass("has-error");
             }
         };
+
+        function validarNumero(input) {
+            // Remover caracteres não numéricos
+            input.value = input.value.replace(/\D/g, '');
+
+            // Limitar o comprimento conforme o atributo maxlength
+            if (input.value.length > parseInt(input.getAttribute('maxlength'))) {
+                input.value = input.value.slice(0, input.getAttribute('maxlength'));
+            }
+        }
 
         function validarCEP(cep) {
             // Remover caracteres não numéricos
