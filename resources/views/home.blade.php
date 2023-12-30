@@ -66,16 +66,108 @@
             });
         }
 
-        function montarLinhaEnvio(transportadora) {
-            linha =
+        function obterDadosCEP(cep) {
+            // Montar a URL com o CEP fornecido
+            var url = `https://viacep.com.br/ws/${cep}/json`;
 
-                '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
-                '<label class="form-check-label" for="flexRadioDefault1">' +
-                transportadora.company.name + ' - ' + transportadora.name + ' (via Melhor Envio)' +
-                '<br>' +
-                'Preço: ' + transportadora.price '</label>' +
-                '</div>'
+            // Fazer a requisição usando a API fetch
+            fetch(url)
+                .then(response => {
+                    // Verificar se a resposta da requisição está OK (código 200)
+                    if (!response.ok) {
+                        throw new Error(`Erro na requisição: ${response.status}`);
+                    }
+                    // Parsear a resposta JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Manipular os dados obtidos
+                    console.log(data);
+                    document.getElementById("logradouro").value = data.logradouro;
+                    document.getElementById("bairro").value = data.bairro;
+                    document.getElementById("cidade").value = data.localidade;
+                    document.getElementById("uf").value = data.uf;
+
+                    // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        };
+
+        function calcularFrete() {
+            $("#loader-div").show();
+            // Obtenha o valor do CEP
+            var cepValue = document.getElementById("cep").value;
+
+            obterDadosCEP(cepValue);
+
+            // Verifique se o CEP é válido antes de fazer a requisição
+            if (validarCEP(cepValue)) {
+                // Faça a requisição para calcular o frete
+                $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
+                    console.log(frete);
+
+                    for (var transportadora of frete) {
+                        if ('error' in transportadora) {
+                            console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
+                            console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
+                            console.log(transportadora.error);
+                        } else {
+                            console.log('ID = ' + transportadora.company.id);
+                            console.log('Transportadora = ' + transportadora.company.name);
+                            console.log('Logo = ' + transportadora.company.picture);
+                            console.log('Tipo envio = ' + transportadora.name);
+                            console.log('Preço = ' + transportadora.price);
+                        }
+                        console.log(transportadora);
+                        console.log(transportadora.error);
+
+                    }
+
+                    // Verifique se o retorno indica um CEP inválido
+                    if (frete && frete.error) {
+                        // Exiba a mensagem de erro
+                        $("#cep-error-message").text("CEP inválido");
+
+                        // Adicione uma classe para destacar o campo em vermelho
+                        $("#cep-group").addClass("has-error");
+                    } else {
+                        // Se o CEP for válido, limpe a mensagem de erro e remova a classe de estilo
+                        $("#cep-error-message").text("");
+                        $("#cep-group").removeClass("has-error");
+                    }
+                });
+            } else {
+                // Exibir mensagem de erro para CEP inválido
+                $("#cep-error-message").text("CEP inválido");
+
+                // Adicionar classe para destacar o campo em vermelho
+                $("#cep-group").addClass("has-error");
+            }
+        };
+
+        function validarNumero(input) {
+            // Remover caracteres não numéricos
+            input.value = input.value.replace(/\D/g, '');
+
+            // Limitar o comprimento conforme o atributo maxlength
+            if (input.value.length > parseInt(input.getAttribute('maxlength'))) {
+                input.value = input.value.slice(0, input.getAttribute('maxlength'));
+            }
         }
+
+        function validarCEP(cep) {
+            // Remover caracteres não numéricos
+            var cepNumerico = cep.replace(/\D/g, '');
+
+            // Verificar se o CEP tem exatamente 8 dígitos
+            if (cepNumerico.length === 8) {
+                return true;
+            } else {
+                return false;
+            }
+        };
 
         function buscarEstoque() {
             console.log('teste');
@@ -167,94 +259,6 @@
                     $('#modalCarrinho').modal('show');
                 }
             });
-        };
-
-        function calcularFrete() {
-            $("#loader-div").show();
-            // Obtenha o valor do CEP
-            var cepValue = document.getElementById("cep").value;
-
-            obterDadosCEP(cepValue);
-
-            // Verifique se o CEP é válido antes de fazer a requisição
-            if (validarCEP(cepValue)) {
-                // Faça a requisição para calcular o frete
-                $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
-                    console.log(frete);
-
-                    var envios = ''
-
-                    envios = '' +
-                        '<p>' +
-                        'Nossa loja:' +
-                        '</p>' +
-                        '<div class="form-check">' +
-                        '<input class="form-check-input" type="radio" name="flexRadioDefault"' +
-                        'id="flexRadioDefault1">' +
-                        '<label class="form-check-label" for="flexRadioDefault1">' +
-                        'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
-                        '</label>' +
-                        '</div>'
-
-                    for (var transportadora of frete) {
-                        if ('error' in transportadora) {
-                            console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
-                            console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
-                            console.log(transportadora.error);
-                        } else {
-                            linha = montarLinhaEnvio(transportadora);
-                            envios.append(linha);
-                        }
-                        console.log(transportadora);
-                        console.log(transportadora.error);
-                    }
-
-                    var elemento = document.getElementById('envios');
-                    elemento.value = '';
-                    elemento.value = envios;
-
-                    // Verifique se o retorno indica um CEP inválido
-                    if (frete && frete.error) {
-                        // Exiba a mensagem de erro
-                        $("#cep-error-message").text("CEP inválido");
-
-                        // Adicione uma classe para destacar o campo em vermelho
-                        $("#cep-group").addClass("has-error");
-                    } else {
-                        // Se o CEP for válido, limpe a mensagem de erro e remova a classe de estilo
-                        $("#cep-error-message").text("");
-                        $("#cep-group").removeClass("has-error");
-                    }
-                });
-            } else {
-                // Exibir mensagem de erro para CEP inválido
-                $("#cep-error-message").text("CEP inválido");
-
-                // Adicionar classe para destacar o campo em vermelho
-                $("#cep-group").addClass("has-error");
-            }
-        };
-
-        function validarNumero(input) {
-            // Remover caracteres não numéricos
-            input.value = input.value.replace(/\D/g, '');
-
-            // Limitar o comprimento conforme o atributo maxlength
-            if (input.value.length > parseInt(input.getAttribute('maxlength'))) {
-                input.value = input.value.slice(0, input.getAttribute('maxlength'));
-            }
-        }
-
-        function validarCEP(cep) {
-            // Remover caracteres não numéricos
-            var cepNumerico = cep.replace(/\D/g, '');
-
-            // Verificar se o CEP tem exatamente 8 dígitos
-            if (cepNumerico.length === 8) {
-                return true;
-            } else {
-                return false;
-            }
         };
 
         function adicionarCarrinho(id) {
