@@ -107,7 +107,7 @@
             // Verifique se o CEP é válido antes de fazer a requisição
             if (validarCEP(cepValue)) {
                 // Faça a requisição para calcular o frete
-                $.getJSON('/melhorenvio/calcularFrete' + cepValue, function(frete) {
+                $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
                     console.log(frete);
 
                     // Verifique se o retorno indica um CEP inválido
