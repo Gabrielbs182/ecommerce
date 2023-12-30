@@ -99,10 +99,36 @@
 
 @section('scriptjs')
     <script>
+        function obterDadosCEP(cep) {
+            // Montar a URL com o CEP fornecido
+            var url = `https://viacep.com.br/ws/${cep}/json`;
+
+            // Fazer a requisição usando a API fetch
+            fetch(url)
+                .then(response => {
+                    // Verificar se a resposta da requisição está OK (código 200)
+                    if (!response.ok) {
+                        throw new Error(`Erro na requisição: ${response.status}`);
+                    }
+                    // Parsear a resposta JSON
+                    return response.json();
+                })
+                .then(data => {
+                    // Manipular os dados obtidos
+                    console.log(data);
+                    // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
+
         function calcularFrete() {
             $("#loader-div").show();
             // Obtenha o valor do CEP
             var cepValue = document.getElementById("cep").value;
+
+            obterDadosCEP(cepValue);
 
             // Verifique se o CEP é válido antes de fazer a requisição
             if (validarCEP(cepValue)) {
