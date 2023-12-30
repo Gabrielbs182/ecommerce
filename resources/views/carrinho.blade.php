@@ -111,7 +111,20 @@
                     console.log(frete);
 
                     for (var transportadora of frete) {
+                        if ('error' in transportadora) {
+                            console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
+                            console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
+                            console.log(transportadora.error);
+                        } else {
+                            console.log('ID = ' + transportadora.company.id);
+                            console.log('Transportadora = ' + transportadora.company.name);
+                            console.log('Logo = ' + transportadora.company.picture);
+                            console.log('Tipo envio = ' + transportadora.name);
+                            console.log('Preço = ' + transportadora.price);
+                        }
                         console.log(transportadora);
+                        console.log(transportadora.error);
+
                     }
 
                     // Verifique se o retorno indica um CEP inválido
