@@ -121,7 +121,7 @@
                 .catch(error => {
                     console.error('Erro:', error);
                 });
-        }
+        };
 
         function calcularFrete() {
             $("#loader-div").show();
