@@ -100,9 +100,10 @@
 
             // Verifique se o CEP é válido antes de fazer a requisição
             if (validarCEP(cepValue)) {
-                console.log('teste');
+                console.log('Cep é valido');
                 // Faça a requisição para calcular o frete
                 $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
+                    console.log('iniciou calculo do frete.');
                     console.log(frete);
 
                     for (var transportadora of frete) {
@@ -122,11 +123,10 @@
             } else {
                 // Exibir mensagem de erro para CEP inválido
                 $("#cep-error-message").text("CEP inválido");
-
+                console.log('Cep é invalido');
                 // Adicionar classe para destacar o campo em vermelho
                 $("#cep-group").addClass("has-error");
             }
-            console.log('teste 2');
         };
 
         function validarNumero(input) {
