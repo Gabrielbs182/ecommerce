@@ -104,7 +104,6 @@
                 // Faça a requisição para calcular o frete
                 $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
                     console.log('iniciou calculo do');
-                    console.log(frete);
 
                     linhas = '<p>' +
                         'Nossa loja:' +
@@ -118,7 +117,7 @@
                             console.log(transportadora.error);
                         } else {
                             linha = montarLinhaEnvio(transportadora);
-                            linhas.append(linha);
+                            linhas += linha;
                         }
                     }
 
