@@ -106,19 +106,23 @@
                     console.log('iniciou calculo do');
                     console.log(frete);
 
+                    linhas = '<p>' +
+                        'Nossa loja:' +
+                        '</p>' +
+                        '<div class="form-check" id="enviosRadio">';
+
                     for (var transportadora of frete) {
                         if ('error' in transportadora) {
                             console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
                             console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
                             console.log(transportadora.error);
                         } else {
-                            console.log('ID = ' + transportadora.company.id);
-                            console.log('Transportadora = ' + transportadora.company.name);
-                            console.log('Logo = ' + transportadora.company.picture);
-                            console.log('Tipo envio = ' + transportadora.name);
-                            console.log('Preço = ' + transportadora.price);
+                            linha = montarLinhaEnvio(transportadora);
+                            linhas.append(linha);
                         }
                     }
+
+                    document.getElementById("envios").value = linhas;
                 });
             } else {
                 // Exibir mensagem de erro para CEP inválido
@@ -150,6 +154,15 @@
                 return false;
             }
         };
+
+        function montarLinhaEnvio(transportadora) {
+
+            '<div class = "form-check" >' +
+            '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
+            '<label class = "form-check-label" for = "flexRadioDefault1" >' +
+            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
+                '</label> </div>'
+        }
 
         function buscarEstoque() {
             var numero = $('#tamanhoModal').val()
@@ -417,10 +430,13 @@
                             onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                     </div>
                     <div id="envios">
+
+                    </div>
+                    <div>
                         <p>
                             Nossa loja:
                         </p>
-                        <div class="form-check">
+                        <div class="form-check" id="enviosRadio">
                             <input class="form-check-input" type="radio" name="flexRadioDefault"
                                 id="flexRadioDefault1">
                             <label class="form-check-label" for="flexRadioDefault1">
