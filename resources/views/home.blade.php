@@ -432,35 +432,37 @@
                             </table>
                         </div>
                     </div>
-                    <div class="d-flex">
-                        <p>
-                            Meios de envio:
-                        </p>
-                    </div>
-                    <div class="col-md-6 form-group" id="cep-group">
-                        <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
-                            onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
-                    </div>
-                    <div>
-                        <div class="form-check" id="enviosRadio">
-                            <div id="envios">
-                                <p>
-                                    Nossa loja:
-                                </p>
-                                <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                    Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
-                                </label>
+                    <form action="{{ route('ver_carrinho') }}" method="POST">
+                        @csrf
+                        <div class="d-flex">
+                            <p>
+                                Meios de envio:
+                            </p>
+                        </div>
+                        <div class="col-md-6 form-group" id="cep-group">
+                            <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
+                                onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                        </div>
+                        <div>
+                            <div class="form-check" id="enviosRadio">
+                                <div id="envios">
+                                    <p>
+                                        Nossa loja:
+                                    </p>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                        id="flexRadioDefault1">
+                                    <label class="form-check-label" for="flexRadioDefault1">
+                                        Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
+                                    </label>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="modal-footer border-top-0 d-flex justify-content-right">
-                    <form action="{{ route('ver_carrinho') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>
+
+                    <button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>
                     </form>
                 </div>
             </div>
