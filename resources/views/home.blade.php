@@ -98,6 +98,8 @@
 
             obterDadosCEP(cepValue);
 
+            console.log('teste');
+
             // Verifique se o CEP é válido antes de fazer a requisição
             if (validarCEP(cepValue)) {
                 // Faça a requisição para calcular o frete
@@ -127,6 +129,7 @@
                 // Adicionar classe para destacar o campo em vermelho
                 $("#cep-group").addClass("has-error");
             }
+            console.log('teste 2');
         };
 
         function validarNumero(input) {
