@@ -98,7 +98,6 @@
 
             obterDadosCEP(cepValue);
 
-
             // Verifique se o CEP é válido antes de fazer a requisição
             if (validarCEP(cepValue)) {
                 console.log('teste');
@@ -153,7 +152,6 @@
         };
 
         function buscarEstoque() {
-            console.log('teste');
             var numero = $('#tamanhoModal').val()
             var idProduto = $('#idProduto').val()
             $.getJSON('/estoque/' + idProduto + '/' + numero, function(estoque) {
