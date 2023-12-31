@@ -107,10 +107,11 @@
 
                     document.getElementById("envios").innerHTML = '';
 
-                    linhas = '<p>' +
+                    linhas =
+                        '<div class="form-check" id="enviosRadio">' +
+                        '<p>' +
                         'Envio a domicílio:' +
-                        '</p>' +
-                        '<div class="form-check" id="enviosRadio">';
+                        '</p>';
 
                     for (var transportadora of frete) {
                         if ('error' in transportadora) {
