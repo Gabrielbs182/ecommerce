@@ -108,7 +108,6 @@
                     document.getElementById("envios").innerHTML = '';
 
                     linhas =
-                        '<div class="form-check" id="enviosRadio">' +
                         '<p>' +
                         'Envio a domicílio:' +
                         '</p>';
@@ -126,11 +125,12 @@
 
                     linhas += '<p>' +
                         'Nossa loja:' +
+                        '<div class="custom-control custom-checkbox mb-3">' +
                         '</p>' +
                         '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
                         '<label class="form-check-label" for="flexRadioDefault1">' +
                         'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
-                        '</label>';
+                        '</label></div>';
 
                     console.log(linhas);
                     document.getElementById("envios").innerHTML = linhas;
@@ -169,10 +169,11 @@
         function montarLinhaEnvio(transportadora) {
 
             linha =
+                '<div class="custom-control custom-checkbox mb-3">' +
                 '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
                 '<label class = "form-check-label" for = "flexRadioDefault1" >' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-                '</label>';
+                '</label></div>';
             return linha;
         }
 
@@ -439,7 +440,7 @@
                                 Meios de envio:
                             </p>
                         </div>
-                        <div class="col-md-6 form-group" id="cep-group">
+                        <div class="d-flex col-md-6 form-group" id="cep-group">
                             <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
                                 onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                         </div>
