@@ -106,7 +106,7 @@
                     console.log('iniciou calculo do');
 
                     linhas = '<p>' +
-                        'Nossa loja:' +
+                        'Envio a domicílio:' +
                         '</p>' +
                         '<div class="form-check" id="enviosRadio">';
 
@@ -157,11 +157,13 @@
 
         function montarLinhaEnvio(transportadora) {
 
-            '<div class = "form-check" >' +
+            linha = '<div class = "form-check" >' +
             '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
             '<label class = "form-check-label" for = "flexRadioDefault1" >' +
             transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-                '</label> </div>'
+                '</label> </div>';
+
+            return linha;
         }
 
         function buscarEstoque() {
