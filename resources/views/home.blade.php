@@ -83,10 +83,6 @@
                 .then(data => {
                     // Manipular os dados obtidos
                     console.log(data);
-                    document.getElementById("logradouro").value = data.logradouro;
-                    document.getElementById("bairro").value = data.bairro;
-                    document.getElementById("cidade").value = data.localidade;
-                    document.getElementById("uf").value = data.uf;
 
                     // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
                 })
@@ -120,22 +116,6 @@
                             console.log('Tipo envio = ' + transportadora.name);
                             console.log('Preço = ' + transportadora.price);
                         }
-                        console.log(transportadora);
-                        console.log(transportadora.error);
-
-                    }
-
-                    // Verifique se o retorno indica um CEP inválido
-                    if (frete && frete.error) {
-                        // Exiba a mensagem de erro
-                        $("#cep-error-message").text("CEP inválido");
-
-                        // Adicione uma classe para destacar o campo em vermelho
-                        $("#cep-group").addClass("has-error");
-                    } else {
-                        // Se o CEP for válido, limpe a mensagem de erro e remova a classe de estilo
-                        $("#cep-error-message").text("");
-                        $("#cep-group").removeClass("has-error");
                     }
                 });
             } else {
