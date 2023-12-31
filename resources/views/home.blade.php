@@ -103,7 +103,7 @@
                 console.log('Cep é valido');
                 // Faça a requisição para calcular o frete
                 $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
-                    console.log('iniciou calculo do frete.');
+                    console.log('iniciou calculo do');
                     console.log(frete);
 
                     for (var transportadora of frete) {
