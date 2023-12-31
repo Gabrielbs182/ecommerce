@@ -105,6 +105,8 @@
                 $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function(frete) {
                     console.log('iniciou calculo do');
 
+                    document.getElementById("envios").innerHTML = '';
+
                     linhas = '<p>' +
                         'Envio a domicílio:' +
                         '</p>' +
@@ -120,6 +122,14 @@
                             linhas += linha;
                         }
                     }
+
+                    linhas += '<p>' +
+                        'Nossa loja:' +
+                        '</p>' +
+                        '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
+                        '<label class="form-check-label" for="flexRadioDefault1">' +
+                        'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
+                        '</label>';
 
                     console.log(linhas);
                     document.getElementById("envios").innerHTML = linhas;
@@ -157,12 +167,11 @@
 
         function montarLinhaEnvio(transportadora) {
 
-            linha = '<div class = "form-check" >' +
-            '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
-            '<label class = "form-check-label" for = "flexRadioDefault1" >' +
-            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-                '</label> </div>';
-
+            linha =
+                '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
+                '<label class = "form-check-label" for = "flexRadioDefault1" >' +
+                transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
+                '</label>';
             return linha;
         }
 
@@ -431,19 +440,18 @@
                         <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
                             onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                     </div>
-                    <div id="envios">
-
-                    </div>
                     <div>
-                        <p>
-                            Nossa loja:
-                        </p>
                         <div class="form-check" id="enviosRadio">
-                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                id="flexRadioDefault1">
-                            <label class="form-check-label" for="flexRadioDefault1">
-                                Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
-                            </label>
+                            <div id="envios">
+                                <p>
+                                    Nossa loja:
+                                </p>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
