@@ -121,7 +121,8 @@
                         }
                     }
 
-                    document.getElementById("envios").value = linhas;
+                    console.log(linhas);
+                    document.getElementById("envios").innerHTML = linhas;
                 });
             } else {
                 // Exibir mensagem de erro para CEP inválido
