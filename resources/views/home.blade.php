@@ -122,6 +122,8 @@
                 // Exibir mensagem de erro para CEP inválido
                 $("#cep-error-message").text("CEP inválido");
 
+                console.log('CEP invalido');
+
                 // Adicionar classe para destacar o campo em vermelho
                 $("#cep-group").addClass("has-error");
             }
