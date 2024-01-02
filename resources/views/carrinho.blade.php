@@ -139,7 +139,9 @@
                 });
         };
 
-        window.onload = obterDadosCEP({{$cep}});
+        @if (isset($cep))
+            window.onload = obterDadosCEP({{ $cep }});
+        @endif
 
         function calcularFrete() {
             $("#loader-div").show();
