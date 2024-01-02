@@ -108,9 +108,7 @@
                     document.getElementById("envios").innerHTML = '';
 
                     linhas =
-                        '<p>' +
-                        'Envio a domicílio:' +
-                        '</p>';
+                        '<legend class="col-form-label col-sm-2 pt-0">Envio a domicílio</legend>';
 
                     for (var transportadora of frete) {
                         if ('error' in transportadora) {
@@ -123,15 +121,17 @@
                         }
                     }
 
-                    linhas += '<p>' +
-                        'Nossa loja:' +
-                        '</p>' +
+                    linhas +=
+                        '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
+                        '<div class="col-sm-10">' +
                         '<div class="form-check">' +
                         '<input class="form-check-input" type="radio" name="gridRadios"' +
-                        'id="gridRadios1" value="option1">' +
+                        'id="gridRadios1" value="option1" checked>' +
                         '<label class="form-check-label" for="gridRadios1">' +
-                        'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
-                        '</label></div>';
+                        'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
+                        '</label>' +
+                        '</div>' +
+                        '</div>';
 
                     console.log(linhas);
                     document.getElementById("envios").innerHTML = linhas;
@@ -170,12 +170,15 @@
         function montarLinhaEnvio(transportadora) {
 
             linha =
+
+                '<div class="col-sm-10">' +
                 '<div class="form-check">' +
                 '<input class="form-check-input" type="radio" name="gridRadios"' +
-                'id="gridRadios1" value="option1">' +
+                'id="gridRadios1" value="option1" checked>' +
                 '<label class="form-check-label" for="gridRadios1">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
+                '</div>' +
                 '</div>';
             return linha;
         }
@@ -462,28 +465,14 @@
                             </div>
                         </div> --}}
                         <fieldset class="form-group">
-                            <div class="row">
+                            <div class="row" id="envios">
                                 <legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gridRadios"
                                             id="gridRadios1" value="option1" checked>
                                         <label class="form-check-label" for="gridRadios1">
-                                            First radio
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridRadios2" value="option2">
-                                        <label class="form-check-label" for="gridRadios2">
-                                            Second radio
-                                        </label>
-                                    </div>
-                                    <div class="form-check disabled">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridRadios3" value="option3" disabled>
-                                        <label class="form-check-label" for="gridRadios3">
-                                            Third disabled radio
+                                            Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis
                                         </label>
                                     </div>
                                 </div>
