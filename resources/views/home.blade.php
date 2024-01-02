@@ -487,6 +487,30 @@
                                         </label>
                                     </div>
                                 </div>
+                                <legend class="col-form-label col-sm-2 pt-0">A Domicilio</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="gridRadios1">
+                                            First radio
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridRadios2" value="option2">
+                                        <label class="form-check-label" for="gridRadios2">
+                                            Second radio
+                                        </label>
+                                    </div>
+                                    <div class="form-check disabled">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridRadios3" value="option3" disabled>
+                                        <label class="form-check-label" for="gridRadios3">
+                                            Third disabled radio
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
