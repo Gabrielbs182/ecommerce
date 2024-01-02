@@ -130,7 +130,7 @@ class ProdutoController extends Controller
 
     public function verCarrinho(Request $request)
     {
-        $transporte = explode("/", $request('frete'));
+        $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
         $data = ['cart' => $carrinho, 'frete' => $transporte];
         return view("carrinho", $data);
