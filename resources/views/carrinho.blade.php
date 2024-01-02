@@ -43,8 +43,6 @@
             @if (isset($frete) && count($frete) > 0)
                 @php
                     echo $frete[0];
-                    echo $frete[1];
-                    echo $frete[2];
                 @endphp
             @endif
 
