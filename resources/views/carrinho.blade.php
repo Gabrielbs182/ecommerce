@@ -40,6 +40,10 @@
                 </div>
             </div>
 
+            @if (isset($frete) && count($frete) > 0)
+            @php echo $frete; @endphp
+            @endif
+
             @if (isset($cart) && count($cart) > 0)
                 <div class="col-lg-4">
                     <div class="card border-secondary mb-5">
