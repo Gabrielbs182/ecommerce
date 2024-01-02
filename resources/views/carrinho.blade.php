@@ -188,7 +188,7 @@
                     }
                 });
             } else {
-                if (document.getElementById("cep").value < > '') {
+                if (document.getElementById("cep").value <> '') {
                     // Exibir mensagem de erro para CEP inválido
                     $("#cep-error-message").text("CEP inválido");
 
