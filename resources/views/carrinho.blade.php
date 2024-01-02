@@ -41,9 +41,9 @@
             </div>
 
             @if (isset($frete) && count($frete) > 0)
-                @php
-                    echo $frete[0];
-                @endphp
+                @foreach ($frete as $f)
+                    {{ $f }}
+                @endforeach
             @endif
 
             @if (isset($cart) && count($cart) > 0)
