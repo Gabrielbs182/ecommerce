@@ -139,6 +139,8 @@
                 });
         };
 
+        window.onload = obterDadosCEP({{$cep}});
+
         function calcularFrete() {
             $("#loader-div").show();
             // Obtenha o valor do CEP

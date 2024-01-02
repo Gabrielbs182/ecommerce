@@ -132,7 +132,9 @@ class ProdutoController extends Controller
     {
         $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
-        $data = ['cart' => $carrinho, 'frete' => $transporte];
+        $data = ['cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+        'nomeFrete' => $transporte[1],'valor' => $transporte[2]
+    ];
         return view("carrinho", $data);
     }
 
