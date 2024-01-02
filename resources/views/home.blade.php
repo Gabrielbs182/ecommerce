@@ -443,11 +443,11 @@
                                 Meios de envio:
                             </p>
                         </div>
-                        {{-- <div class="d-flex col-md-6 form-group" id="cep-group">
+                        <div class="d-flex col-md-6 form-group" id="cep-group">
                             <input placeholder="Seu Cep" class="form-control" type="text" id="cep"
                                 onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                         </div>
-                        <div>
+                        {{-- <div>
                             <div id="envios">
                                 <p>
                                     Nossa loja:
