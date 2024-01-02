@@ -127,10 +127,18 @@
                         'Nossa loja:' +
                         '<div class="custom-control custom-checkbox mb-3">' +
                         '</p>' +
+                        '<div class="form-check">'+
                         '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
                         '<label class="form-check-label" for="flexRadioDefault1">' +
                         'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988' +
                         '</label></div>';
+
+                        '<div class="form-check">'
+          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+          <label class="form-check-label" for="gridRadios1">
+            First radio
+          </label>
+        </div>
 
                     console.log(linhas);
                     document.getElementById("envios").innerHTML = linhas;
@@ -169,11 +177,12 @@
         function montarLinhaEnvio(transportadora) {
 
             linha =
+                '<div class="form-check">'+
                 '<div class="custom-control custom-checkbox mb-3">' +
                 '<input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">' +
                 '<label class = "form-check-label" for = "flexRadioDefault1" >' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-                '</label></div>';
+                '</label></div></div>';
             return linha;
         }
 
