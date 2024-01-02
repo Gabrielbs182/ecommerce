@@ -108,7 +108,8 @@
                     document.getElementById("envios").innerHTML = '';
 
                     linhas =
-                        '<legend class="col-form-label col-sm-2 pt-0">Envio a domicílio</legend>';
+                        '<legend class="col-form-label col-sm-2 pt-0">Envio a domicílio</legend>' +
+                        '<div class="col-sm-10">';
 
                     for (var transportadora of frete) {
                         if ('error' in transportadora) {
@@ -122,6 +123,7 @@
                     }
 
                     linhas +=
+                        '</div>' +
                         '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
                         '<div class="col-sm-10">' +
                         '<div class="form-check">' +
@@ -170,15 +172,12 @@
         function montarLinhaEnvio(transportadora) {
 
             linha =
-
-                '<div class="col-sm-10">' +
                 '<div class="form-check">' +
                 '<input class="form-check-input" type="radio" name="gridRadios"' +
                 'id="gridRadios1" value="option1" checked>' +
                 '<label class="form-check-label" for="gridRadios1">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
-                '</div>' +
                 '</div>';
             return linha;
         }
