@@ -461,11 +461,9 @@
                                 </div>
                             </div>
                         </div> --}}
-                        <fieldset class="form-group" id="envios">
+                        <fieldset class="form-group">
                             <div class="row">
-                                <p>
-                                    Nossa loja:
-                                </p>
+                                <legend class="col-form-label col-sm-2 pt-0">A domicilio</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gridRadios"
@@ -484,6 +482,20 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios"
+                                            id="gridRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gridRadios"
