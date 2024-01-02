@@ -10,41 +10,37 @@
             <div class="col-lg-8">
                 <div class="mb-4">
                     <h4 class="font-weight-semi-bold mb-4">Endereço de entrega</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group" id="logradouro-group">
-                            <label>Logradouro</label>
-                            <input class="form-control" type="text" id="logradouro" name="logradouro" disabled>
+                    <form action="{{ route('pagar') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-6 form-group" id="logradouro-group">
+                                <label>Logradouro</label>
+                                <input class="form-control" type="text" id="logradouro" name="logradouro" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="logradouro-group">
+                                <label>Bairro</label>
+                                <input class="form-control" type="text" id="bairro" name="bairro" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="numero-group">
+                                <label>Numero</label>
+                                <input class="form-control" type="text" id="numero" name="numero" required>
+                            </div>
+                            <div class="col-md-6 form-group" id="cidade-group">
+                                <label>Cidade</label>
+                                <input class="form-control" type="text" id="cidade" name="cidade" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="uf-group">
+                                <label>Uf</label>
+                                <input class="form-control" type="text" id="uf" name="uf" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="cep-group">
+                                <label>CEP</label>
+                                <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
+                                    maxlength="10" oninput="validarNumero(this)">
+                            </div>
                         </div>
-                        <div class="col-md-6 form-group" id="logradouro-group">
-                            <label>Bairro</label>
-                            <input class="form-control" type="text" id="bairro" name="bairro" disabled>
-                        </div>
-                        <div class="col-md-6 form-group" id="numero-group">
-                            <label>Numero</label>
-                            <input class="form-control" type="text" id="numero" name="numero">
-                        </div>
-                        <div class="col-md-6 form-group" id="cidade-group">
-                            <label>Cidade</label>
-                            <input class="form-control" type="text" id="cidade" name="cidade" disabled>
-                        </div>
-                        <div class="col-md-6 form-group" id="uf-group">
-                            <label>Uf</label>
-                            <input class="form-control" type="text" id="uf" name="uf" disabled>
-                        </div>
-                        <div class="col-md-6 form-group" id="cep-group">
-                            <label>CEP</label>
-                            <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
-                                maxlength="10" oninput="validarNumero(this)">
-                        </div>
-                    </div>
                 </div>
             </div>
-
-            @if (isset($frete) && count($frete) > 0)
-                @foreach ($frete as $f)
-                    {{ $f }}
-                @endforeach
-            @endif
 
             @if (isset($cart) && count($cart) > 0)
                 <div class="col-lg-4">
@@ -80,15 +76,6 @@
                         </div>
                     </div>
 
-                    @auth
-                        <div class="card-footer border-secondary bg-transparent">
-                            <form action="{{ route('pagar') }}" method="POST">
-                                @csrf
-                                <input type="submit" value="Finalizar Compra"
-                                    class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                            </form>
-                        </div>
-                    @endauth
                     @guest
                         <p>Para finalizar a compra você precisa se cadastrar, cadastre-se agora é muito pratico.</p>
                         <div class="card-footer border-secondary bg-transparent">
@@ -99,7 +86,13 @@
                             </form>
                         </div>
                     @endguest
-                @else
+
+                    <div class="card-footer border-secondary bg-transparent">
+                        <input type="submit" value="Finalizar Compra"
+                            class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+                        </form>
+                    </div>
+            @else
                     <p>Nenhum item no carrinho</p>
             @endif
         </div>
