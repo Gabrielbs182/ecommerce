@@ -128,8 +128,8 @@
                         '<div class="col-sm-10">' +
                         '<div class="form-check">' +
                         '<input class="form-check-input" type="radio" name="tipoFrete"' +
-                        'id="' + 0 + '" value="' + 0 + '" checked>' +
-                        '<label class="form-check-label" for="' + gratis + '">' +
+                        'id="gratis" value="' + 0 + '" checked>' +
+                        '<label class="form-check-label" for="gratis">' +
                         'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
                         '</label>' +
                         '</div>' +
