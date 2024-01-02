@@ -41,7 +41,11 @@
             </div>
 
             @if (isset($frete) && count($frete) > 0)
-            @php echo $frete; @endphp
+                @php
+                    echo $frete[0];
+                    echo $frete[1];
+                    echo $frete[2];
+                @endphp
             @endif
 
             @if (isset($cart) && count($cart) > 0)
