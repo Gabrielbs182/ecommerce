@@ -445,17 +445,15 @@
                                 onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
                         </div>
                         <div>
-                            <div class="form-check" id="enviosRadio">
-                                <div id="envios">
-                                    <p>
-                                        Nossa loja:
-                                    </p>
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
-                                    </label>
-                                </div>
+                            <div class="form-check" id="envios">
+                                <p>
+                                    Nossa loja:
+                                </p>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="flexRadioDefault1">
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
+                                </label>
                             </div>
                         </div>
                     </form>
