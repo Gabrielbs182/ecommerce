@@ -173,13 +173,8 @@
 
             linha =
                 '<div class="form-check">' +
-                '<input class="form-check-input" type="radio" name="tipoFrete"' +
-                'id="' + transportadora.id + '" value="' +
-                transportadora.price +
-                '/' +
-                transportadora.id +
-                '/' +
-                transportadora.name '" >' +
+                '<input class="form-check-input" type="radio" name="tipoFrete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.price + '/' + transportadora.id + '/' + transportadora.name '" >' +
                 '<label class="form-check-label" for="' + transportadora.id + '">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
