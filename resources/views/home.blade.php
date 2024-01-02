@@ -172,9 +172,9 @@
         function montarLinhaEnvio(transportadora) {
 
             linha =
-                '<div class="form-check">'
-                +
-                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' + transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
                 '<label class="form-check-label" for="' + transportadora.id + '">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
@@ -446,8 +446,10 @@
                             </p>
                         </div>
                         <div class="d-flex col-md-6 form-group" id="cep-group">
-                            <input placeholder="Seu Cep"  name="cep" class="form-control" type="text" id="cep"
-                                onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                            <input placeholder="Seu Cep" name="cep" class="form-control" type="text"
+                                id="cep" maxlength="10" oninput="validarNumero(this)">
+                            <button type="button" class="btn btn-primary" onclick="calcularFrete()">Calcular
+                                Frete</button>
                         </div>
                         {{-- <div>
                             <div id="envios">
