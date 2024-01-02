@@ -174,7 +174,7 @@
             linha =
                 '<div class="form-check">'
                 +
-                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' + transportadora.price  + '" >' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' + transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
                 '<label class="form-check-label" for="' + transportadora.id + '">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
