@@ -127,7 +127,6 @@
                         'Nossa loja:' +
                         '</p>' +
                         '<div class="form-check">' +
-
                         '<input class="form-check-input" type="radio" name="gridRadios"' +
                         'id="gridRadios1" value="option1">' +
                         '<label class="form-check-label" for="gridRadios1">' +
@@ -464,11 +463,8 @@
                         </div> --}}
                         <fieldset class="form-group">
                             <div class="row">
-                                <legend class="col-form-label col-sm-2 pt-0">Forma de envio</legend>
+                                <legend class="col-form-label col-sm-2 pt-0">Nossa loja: </legend>
                                 <div class="col-sm-10" id="envios">
-                                    <p>
-                                        Nossa loja:
-                                    </p>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="gridRadios"
                                             id="gridRadios1" value="option1" checked>
