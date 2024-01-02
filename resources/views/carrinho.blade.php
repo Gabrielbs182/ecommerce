@@ -131,6 +131,7 @@
                     document.getElementById("bairro").value = data.bairro;
                     document.getElementById("cidade").value = data.localidade;
                     document.getElementById("uf").value = data.uf;
+                    document.getElementById("cep").value = cep;
 
                     // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
                 })
@@ -187,11 +188,13 @@
                     }
                 });
             } else {
-                // Exibir mensagem de erro para CEP inválido
-                $("#cep-error-message").text("CEP inválido");
+                if (document.getElementById("cep").value < > '') {
+                    // Exibir mensagem de erro para CEP inválido
+                    $("#cep-error-message").text("CEP inválido");
 
-                // Adicionar classe para destacar o campo em vermelho
-                $("#cep-group").addClass("has-error");
+                    // Adicionar classe para destacar o campo em vermelho
+                    $("#cep-group").addClass("has-error");
+                }
             }
         };
 
