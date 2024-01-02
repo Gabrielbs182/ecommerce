@@ -132,7 +132,8 @@ class ProdutoController extends Controller
     {
         $carrinho = session('cart', []);
         $data = ['cart' => $carrinho];
-        return view("carrinho", $data);
+        dd($request);
+        // return view("carrinho", $data);
     }
 
     public function excluirCarrinho($indice, Request $request)
