@@ -80,11 +80,11 @@
                         <div class="row">
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Nome</label>
-                                <input class="form-control" type="text" id="nome" name="nome" disabled>
+                                <input class="form-control" type="text" id="nome" name="nome" required>
                             </div>
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Sobrenome</label>
-                                <input class="form-control" type="text" id="Sobrenome" name="Sobrenome" disabled>
+                                <input class="form-control" type="text" id="Sobrenome" name="Sobrenome" required>
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Cpf</label>
@@ -92,7 +92,7 @@
                             </div>
                             <div class="col-md-6 form-group" id="cidade-group">
                                 <label>Telefone</label>
-                                <input class="form-control" type="text" id="telefone" name="telefone" disabled>
+                                <input class="form-control" type="text" id="telefone" name="telefone" required>
                             </div>
                         </div>
                     @endguest
