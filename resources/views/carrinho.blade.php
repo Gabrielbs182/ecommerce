@@ -69,13 +69,13 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Frete</h6>
-                                <h6 class="font-weight-medium">R$10</h6>
+                                <h6 class="font-weight-medium">R$ {{ $valor }}</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">R$ {{ $total + 10 }}</h5>
+                                <h5 class="font-weight-bold">R$ {{ $total + $valor }}</h5>
                             </div>
                         </div>
                     </div>
