@@ -77,13 +77,23 @@
                     </div>
 
                     @guest
-                        <p>Para finalizar a compra você precisa se cadastrar, cadastre-se agora é muito pratico.</p>
-                        <div class="card-footer border-secondary bg-transparent">
-                            <form action="{{ route('cadastrar') }}" method="GET">
-                                @csrf
-                                <input type="submit" value="Cadastrar"
-                                    class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                            </form>
+                        <div class="row">
+                            <div class="col-md-6 form-group" id="logradouro-group">
+                                <label>Nome</label>
+                                <input class="form-control" type="text" id="nome" name="nome" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="logradouro-group">
+                                <label>Sobrenome</label>
+                                <input class="form-control" type="text" id="Sobrenome" name="Sobrenome" disabled>
+                            </div>
+                            <div class="col-md-6 form-group" id="numero-group">
+                                <label>Cpf</label>
+                                <input class="form-control" type="text" id="cpf" name="cpf" required>
+                            </div>
+                            <div class="col-md-6 form-group" id="cidade-group">
+                                <label>Telefone</label>
+                                <input class="form-control" type="text" id="telefone" name="telefone" disabled>
+                            </div>
                         </div>
                     @endguest
 
@@ -92,7 +102,7 @@
                             class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
                         </form>
                     </div>
-            @else
+                @else
                     <p>Nenhum item no carrinho</p>
             @endif
         </div>
