@@ -127,9 +127,9 @@
                         '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
                         '<div class="col-sm-10">' +
                         '<div class="form-check">' +
-                        '<input class="form-check-input" type="radio" name="gridRadios"' +
-                        'id="gridRadios1" value="option1" checked>' +
-                        '<label class="form-check-label" for="gridRadios1">' +
+                        '<input class="form-check-input" type="radio" name="tipoFrete"' +
+                        'id="' + 0 + '" value="' + 0 + '" checked>' +
+                        '<label class="form-check-label" for="' + gratis + '">' +
                         'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
                         '</label>' +
                         '</div>' +
@@ -173,9 +173,9 @@
 
             linha =
                 '<div class="form-check">' +
-                '<input class="form-check-input" type="radio" name="gridRadios"' +
-                'id="gridRadios1" value="option1" checked>' +
-                '<label class="form-check-label" for="gridRadios1">' +
+                '<input class="form-check-input" type="radio" name="tipoFrete"' +
+                'id="' + transportadora.id + '" value="' + transportadora.price + '" checked>' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
                 transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
                 '</label>' +
                 '</div>';
