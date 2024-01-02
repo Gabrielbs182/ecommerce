@@ -445,14 +445,17 @@
                                 Meios de envio:
                             </p>
                         </div>
-                        <div class="d-flex col-md-6 form-group" id="cep-group">
-                            <input placeholder="Seu Cep" name="cep" class="form-control" type="text"
-                                id="cep" maxlength="10" oninput="validarNumero(this)">
+                        <div class="row">
+                            <div class="d-flex col-md-6 form-group" id="cep-group">
+                                <input placeholder="Seu Cep" name="cep" class="form-control" type="text"
+                                    id="cep" maxlength="10" oninput="validarNumero(this)">
+                            </div>
+                            <div class="d-flex col-md-6 form-group">
+                                <button type="button" class="btn btn-primary" onclick="calcularFrete()">Calcular
+                                    Frete</button>
+                            </div>
                         </div>
-                        <div class="modal-footer border-top-0 d-flex justify-content-right">
-                            <button type="button" class="btn btn-primary" onclick="calcularFrete()">Calcular
-                                Frete</button>
-                        </div>
+
                         {{-- <div>
                             <div id="envios">
                                 <p>
