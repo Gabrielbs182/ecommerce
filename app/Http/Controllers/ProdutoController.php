@@ -154,6 +154,8 @@ class ProdutoController extends Controller
         dd($request);
     }
 
+    use GuzzleHttp\Client;
+
     public function postToPagseguro(Request $request)
     {
         $vlrFrete = $request->input('valorFrete');
@@ -173,16 +175,15 @@ class ProdutoController extends Controller
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
-            'shipping: addressRequired' => 'False',
-            'shipping: cost' => $vlrFrete,
-            'sender: name' => $nomeCliente,
-            'sender: email' => $emailCliente,
-            'sender: phoneareaCode' => $ddd,
-            'sender: phonenumber' => $telefone,
-            'sender: documentstype' => 'CPF',
-            'sender: documentsvalue' => $cpf,
+            'shippingAddressRequired' => 'False',
+            'shippingCost' => $vlrFrete,
+            'senderName' => $nomeCliente,
+            'senderEmail' => $emailCliente,
+            'senderAreaCode' => $ddd,
+            'senderPhone' => $telefone,
+            'senderCPF' => $cpf,
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-            'receiveremail' => $email,
+            'receiverEmail' => $email,
             'timetout' => '20'
         ];
 
@@ -199,10 +200,9 @@ class ProdutoController extends Controller
 
         $response = $client->post($url, [
             'headers' => [
-                'accept' => 'application/xml',
-                'content-type' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
             ],
-            'json' => $formParams,
+            'form_params' => $formParams,
         ]);
 
         $responseBody = $response->getBody()->getContents();
@@ -213,6 +213,7 @@ class ProdutoController extends Controller
 
         return view('pagar', $data);
     }
+
 
 
 
