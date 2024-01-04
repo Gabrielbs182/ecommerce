@@ -173,18 +173,42 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
+        // $formParams = [
+        //     'email' => $email,
+        //     'token' => $token,
+        //     'currency' => 'BRL',
+        //     'shippingAddressRequired' => 'True',
+        //     'shippingCost' => $vlrFrete,
+        //     'sender: name' => $nomeCliente,
+        //     'sender: email' => $emailCliente,
+        //     'sender: phoneareaCode' => $ddd,
+        //     'sender: phonenumber' => $telefone,
+        //     'sender: documentstype' => 'CPF',
+        //     'sender: documentsvalue' => $cpf,
+        //     'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+        //     'receiveremail' => $email,
+        //     'timetout' => '20'
+        // ];
+
         $formParams = [
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
             'shippingAddressRequired' => 'True',
             'shippingCost' => $vlrFrete,
-            'sender: name' => $nomeCliente,
-            'sender: email' => $emailCliente,
-            'sender: phoneareaCode' => $ddd,
-            'sender: phonenumber' => $telefone,
-            'sender: documentstype' => 'CPF',
-            'sender: documentsvalue' => $cpf,
+            'senderName' => $nomeCliente,
+            'senderEmail' => $emailCliente,
+            'senderAreaCode' => $ddd,
+            'senderPhone' => $telefone,
+            'senderCPF' => $cpf,
+            'shippingAddressStreet' => 'Rua Exemplo', // Substitua com a rua real
+            'shippingAddressNumber' => '123', // Substitua com o número real
+            'shippingAddressComplement' => 'Casa', // Substitua com o complemento real
+            'shippingAddressDistrict' => 'Bairro', // Substitua com o bairro real
+            'shippingAddressCity' => 'Cidade', // Substitua com a cidade real
+            'shippingAddressState' => 'ES', // Substitua com o estado real
+            'shippingAddressCountry' => 'BRA',
+            'shippingAddressPostalCode' => '29160044', // Substitua com o CEP real
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
             'receiveremail' => $email,
             'timetout' => '20'
