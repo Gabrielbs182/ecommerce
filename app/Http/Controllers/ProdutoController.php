@@ -160,7 +160,7 @@ class ProdutoController extends Controller
         // dd($request);
 
         $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome');
+        $nomeCliente = $request->input('nome') . $request->input('sobrenome');
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
         $emailCliente = $request->input('email');
@@ -212,6 +212,8 @@ class ProdutoController extends Controller
         $data = [];
         $data["code"] = $code;
         return view('pagar', $data);
+
+        var_dump($formParams);
     }
 
 
