@@ -90,7 +90,11 @@
                                 <label>Cpf</label>
                                 <input class="form-control" type="cpf" id="cpf" name="cpf" required>
                             </div>
-                            <div class="col-md-6 form-group" id="cidade-group">
+                            <div class="col-md-1 form-group" id="cidade-group">
+                                <label>ddd</label>
+                                <input class="form-control" type="text" id="ddd" name="ddd" required>
+                            </div>
+                            <div class="col-md-1 form-group" id="cidade-group">
                                 <label>Telefone</label>
                                 <input class="form-control" type="text" id="telefone" name="telefone" required>
                             </div>
