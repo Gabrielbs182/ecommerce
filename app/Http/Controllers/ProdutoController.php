@@ -176,17 +176,25 @@ class ProdutoController extends Controller
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
-            'shippingAddressRequired' => False,
             'shippingCost' => $vlrFrete,
             'senderName' => $nomeCliente,
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
             'senderEmail' => $emailCliente,
             'extraAmount' => '0.00',
-            'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
             'receiverEmail' => $email,
+            // Adicione detalhes do endereço do comprador se necessário
+            'addressRequired' => True,  // Ajuste para True se endereço do comprador for necessário
+            'shippingAddressStreet' => 'Rua do Comprador',
+            'shippingAddressNumber' => '456',
+            'shippingAddressComplement' => 'Complemento Comprador',
+            'shippingAddressDistrict' => 'Bairro Comprador',
+            'shippingAddressPostalCode' => '54321-098',
+            'shippingAddressCity' => 'Cidade Comprador',
+            'shippingAddressState' => 'UF Comprador',
+            'shippingAddressCountry' => 'BRA',
         ];
 
         foreach ($carrinho as $index => $item) {
@@ -202,7 +210,7 @@ class ProdutoController extends Controller
 
         $response = $client->post($url, [
             'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
             ],
             'form_params' => $formParams,
         ]);
