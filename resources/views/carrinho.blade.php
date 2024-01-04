@@ -12,6 +12,7 @@
                     <h4 class="font-weight-semi-bold mb-4">Endereço de entrega</h4>
                     <form action="{{ route('pagar') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="valorFrete" value="{{ $valor }}">
                         <div class="row">
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Logradouro</label>

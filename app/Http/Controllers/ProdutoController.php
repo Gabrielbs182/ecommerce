@@ -158,52 +158,52 @@ class ProdutoController extends Controller
     {
 
         dd($request);
-        // $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        // $email = env('PAGSEGURO_EMAIL');
-        // $token = env('PAGSEGURO_TOKEN');
+        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        $email = env('PAGSEGURO_EMAIL');
+        $token = env('PAGSEGURO_TOKEN');
 
-        // $carrinho = session('cart', []);
+        $carrinho = session('cart', []);
 
-        // $formParams = [
-        //     'email' => $email,
-        //     'token' => $token,
-        //     'currency' => 'BRL',
-        //     'addressRequired' => False,
-        //     'shippingCost' => $vlrfrete,
-        //     'senderName' => $nomeCliente,
-        //     'senderAreaCode' => $ddd,
-        //     'senderPhone' => $telefone,
-        //     'senderEmail' => $emailCliente,
-        //     'extraAmount' => '0.00',
-        //     'senderCPF' => 'CPF',
-        //     'senderCPF' => '00000000000',
-        //     'redirectURL' => 'http://localhost:8000',
-        // ];
+        $formParams = [
+            'email' => $email,
+            'token' => $token,
+            'currency' => 'BRL',
+            'addressRequired' => False,
+            'shippingCost' => $vlrfrete,
+            'senderName' => $nomeCliente,
+            'senderAreaCode' => $ddd,
+            'senderPhone' => $telefone,
+            'senderEmail' => $emailCliente,
+            'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
+            'senderCPF' => $cpf,
+            'redirectURL' => 'http://localhost:8000',
+        ];
 
-        // foreach ($carrinho as $index => $item) {
-        //     $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-        //     $formParams["itemId{$index+1}"] = $item['id'];
-        //     $formParams["itemDescription{$index+1}"] = $produto['nome'];
-        //     $formParams["itemAmount{$index+1}"] = $item['valor'];
-        //     $formParams["itemQuantity{$index+1}"] = $item['quantidade'];
-        //     $formParams["itemWeight{$index+1}"] = $produto['peso'];
-        // }
+        foreach ($carrinho as $index => $item) {
+            $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+            $formParams["itemId" . $index+1 . ""] = $item['id'];
+            $formParams["itemDescription" . $index+1 . ""] = $produto['nome'];
+            $formParams["itemAmount" . $index+1 . ""] = $item['valor'];
+            $formParams["itemQuantity" . $index+1 . ""] = $item['quantidade'];
+            $formParams["itemWeight" . $index+1 . ""] = $produto['peso'];
+        }
 
-        // $client = new Client();
+        $client = new Client();
 
-        // $response = $client->post($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => $formParams,
-        // ]);
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => $formParams,
+        ]);
 
-        // $responseBody = $response->getBody()->getContents();
-        // $xml = new SimpleXMLElement($responseBody);
-        // $code = (string)$xml->code;
-        // $data = [];
-        // $data["code"] = $code;
-        // return view('pagar', $data);
+        $responseBody = $response->getBody()->getContents();
+        $xml = new SimpleXMLElement($responseBody);
+        $code = (string)$xml->code;
+        $data = [];
+        $data["code"] = $code;
+        return view('pagar', $data);
     }
 
 
