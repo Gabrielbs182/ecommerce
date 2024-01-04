@@ -156,9 +156,6 @@ class ProdutoController extends Controller
 
     public function postToPagseguro(Request $request)
     {
-
-        // dd($request);
-
         $vlrFrete = $request->input('valorFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
@@ -202,9 +199,10 @@ class ProdutoController extends Controller
 
         $response = $client->post($url, [
             'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
+                'accept' => 'application/xml',
+                'content-type' => 'application/json',
             ],
-            'form_params' => $formParams,
+            'json' => $formParams,
         ]);
 
         $responseBody = $response->getBody()->getContents();
@@ -212,8 +210,10 @@ class ProdutoController extends Controller
         $code = (string)$xml->code;
         $data = [];
         $data["code"] = $code;
+
         return view('pagar', $data);
     }
+
 
 
 
