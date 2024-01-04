@@ -186,6 +186,7 @@ class ProdutoController extends Controller
             'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+            'receiverEmail' => $email,
         ];
 
         foreach ($carrinho as $index => $item) {
