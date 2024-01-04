@@ -214,7 +214,7 @@ class ProdutoController extends Controller
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=email&token=token-sandbox?email=email%40exemplo.com&token-sandbox=REMOVIDO_PAGSEGURO_TOKEN",
+            CURLOPT_URL => "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=email&token=token-sandbox?email=" . $email . "&token-sandbox=" . $token . "",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
