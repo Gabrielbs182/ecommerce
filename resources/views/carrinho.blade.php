@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Cpf</label>
-                                <input class="form-control" type="text" id="cpf" name="cpf" required>
+                                <input class="form-control" type="cpf" id="CPF" name="cpf" required>
                             </div>
                             <div class="col-md-6 form-group" id="cidade-group">
                                 <label>Telefone</label>
@@ -112,6 +112,11 @@
 @endsection
 
 @section('scriptjs')
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
             $('#cep').on('input', function() {
@@ -130,7 +135,7 @@
                 $(this).val(cep);
             });
         });
-        
+
         $(document).ready(function() {
             $('#cpf').on('input', function() {
                 // Remove todos os caracteres não numéricos
