@@ -39,7 +39,7 @@ class ProdutoController extends Controller
 
     public function buscarCarrinho()
     {
-        $carrinho = session('cart', []);        
+        $carrinho = session('cart', []);
         return $carrinho;
     }
 
@@ -132,9 +132,10 @@ class ProdutoController extends Controller
     {
         $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
-        $data = ['cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-        'nomeFrete' => $transporte[1],'valor' => $transporte[2]
-    ];
+        $data = [
+            'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+            'nomeFrete' => $transporte[1], 'valor' => $transporte[2]
+        ];
         return view("carrinho", $data);
     }
 
@@ -148,54 +149,64 @@ class ProdutoController extends Controller
         return redirect()->route("ver_carrinho");
     }
 
-    public function postToPagseguro()
+    public function posPagar(Request $request)
     {
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        $email = env('PAGSEGURO_EMAIL');
-        $token = env('PAGSEGURO_TOKEN');
-
-        $client = new Client();
-
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => [
-                'email' => $email,
-                'token' => $token,
-                'currency' => 'BRL',
-                'itemId1' => '001',
-                'itemDescription1' => 'Item 1',
-                'itemAmount1' => '169.90',
-                'itemQuantity1' => '1',
-                'itemWeight1' => '300',
-                'shippingAddressStreet' => 'Rua Santa Catarina',
-                'shippingAddressNumber' => '198',
-                'shippingAddressComplement' => 'Casa',
-                'shippingAddressDistrict' => 'Carapina',
-                'shippingAddressCity' => 'Serra',
-                'shippingAddressState' => 'ES',
-                'shippingAddressCountry' => 'BRA',
-                'shippingAddressPostalCode' => '29160044',
-                'shippingType' => 1,
-                'reference' => '124665c23f7896adff508377925',
-                'senderName' => 'Gabriel Bremenkamp',
-                'senderAreaCode' => '51',
-                'senderPhone' => '988888888',
-                'senderEmail' => 'teste@pagseguro.com.br',
-                'extraAmount' => '0.00',
-                'senderCPF' => 'CPF',
-                'senderCPF' => '00000000000',
-                'redirectURL' => 'http://localhost:8000'
-            ],
-        ]);
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
-        return view('pagar', $data);
+        dd($request);
     }
+
+    public function postToPagseguro(Request $request)
+    {
+
+        dd($request);
+        // $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        // $email = env('PAGSEGURO_EMAIL');
+        // $token = env('PAGSEGURO_TOKEN');
+
+        // $carrinho = session('cart', []);
+
+        // $formParams = [
+        //     'email' => $email,
+        //     'token' => $token,
+        //     'currency' => 'BRL',
+        //     'addressRequired' => False,
+        //     'shippingCost' => $vlrfrete,
+        //     'senderName' => $nomeCliente,
+        //     'senderAreaCode' => $ddd,
+        //     'senderPhone' => $telefone,
+        //     'senderEmail' => $emailCliente,
+        //     'extraAmount' => '0.00',
+        //     'senderCPF' => 'CPF',
+        //     'senderCPF' => '00000000000',
+        //     'redirectURL' => 'http://localhost:8000',
+        // ];
+
+        // foreach ($carrinho as $index => $item) {
+        //     $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+        //     $formParams["itemId{$index+1}"] = $item['id'];
+        //     $formParams["itemDescription{$index+1}"] = $produto['nome'];
+        //     $formParams["itemAmount{$index+1}"] = $item['valor'];
+        //     $formParams["itemQuantity{$index+1}"] = $item['quantidade'];
+        //     $formParams["itemWeight{$index+1}"] = $produto['peso'];
+        // }
+
+        // $client = new Client();
+
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
+
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [];
+        // $data["code"] = $code;
+        // return view('pagar', $data);
+    }
+
+
 
     public function finalizar(Request $request)
     {
