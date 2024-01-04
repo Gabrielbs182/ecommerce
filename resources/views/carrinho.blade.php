@@ -88,7 +88,7 @@
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Cpf</label>
-                                <input class="form-control" type="cpf" id="CPF" name="cpf" required>
+                                <input class="form-control" type="cpf" id="cpf" name="cpf" required>
                             </div>
                             <div class="col-md-6 form-group" id="cidade-group">
                                 <label>Telefone</label>
