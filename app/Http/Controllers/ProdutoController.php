@@ -154,8 +154,6 @@ class ProdutoController extends Controller
         dd($request);
     }
 
-    use GuzzleHttp\Client;
-
     public function postToPagseguro(Request $request)
     {
         $vlrFrete = $request->input('valorFrete');
