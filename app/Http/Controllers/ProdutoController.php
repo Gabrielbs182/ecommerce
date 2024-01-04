@@ -164,7 +164,7 @@ class ProdutoController extends Controller
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
         $emailCliente = $request->input('email');
-        $cpf  = str_replace('.', '-', $request->input('cpf'));
+        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
 
         $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
         $email = env('PAGSEGURO_EMAIL');
