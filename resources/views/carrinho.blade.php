@@ -15,11 +15,11 @@
                         <div class="row">
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Logradouro</label>
-                                <input class="form-control" type="text" id="logradouro" name="logradouro" disabled>
+                                <input class="form-control" type="text" id="logradouro" name="logradouro" readonly>
                             </div>
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Bairro</label>
-                                <input class="form-control" type="text" id="bairro" name="bairro" disabled>
+                                <input class="form-control" type="text" id="bairro" name="bairro" readonly>
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Numero</label>
@@ -27,11 +27,11 @@
                             </div>
                             <div class="col-md-6 form-group" id="cidade-group">
                                 <label>Cidade</label>
-                                <input class="form-control" type="text" id="cidade" name="cidade" disabled>
+                                <input class="form-control" type="text" id="cidade" name="cidade" readonly>
                             </div>
                             <div class="col-md-6 form-group" id="uf-group">
                                 <label>Uf</label>
-                                <input class="form-control" type="text" id="uf" name="uf" disabled>
+                                <input class="form-control" type="text" id="uf" name="uf" readonly>
                             </div>
                             <div class="col-md-6 form-group" id="cep-group">
                                 <label>CEP</label>
