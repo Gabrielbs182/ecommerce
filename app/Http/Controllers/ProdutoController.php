@@ -186,7 +186,7 @@ class ProdutoController extends Controller
             'sender: documentsvalue' => $cpf,
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
             'receiveremail' => $email,
-            'enableRecover' => 'False',
+            'enableRecover' => 'false',
             'timetout' => '20'
         ];
 
