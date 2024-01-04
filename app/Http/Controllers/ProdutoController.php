@@ -169,47 +169,101 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-        $formParams = [
-            'email' => $email,
-            'token' => $token,
-            'currency' => 'BRL',
-            'shippingAddressRequired' => false,
-            'shippingCost' => $vlrFrete,
-            'senderName' => $nomeCliente,
-            'senderEmail' => $emailCliente,
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderCPF' => $cpf,
-            'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-            'receiverEmail' => $email,
-            'timetout' => '20'
-        ];
+        // $formParams = [
+        //     'email' => $email,
+        //     'token' => $token,
+        //     'currency' => 'BRL',
+        //     'shippingAddressRequired' => False,
+        //     'shippingCost' => $vlrFrete,
+        //     'senderName' => $nomeCliente,
+        //     'senderEmail' => $emailCliente,
+        //     'senderAreaCode' => $ddd,
+        //     'senderPhone' => $telefone,
+        //     'senderCPF' => $cpf,
+        //     'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+        //     'receiverEmail' => $email,
+        //     'timetout' => '20'
+        // ];
 
-        foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']);
-            $formParams["itemId" . ($index + 1)] = $item['id'];
-            $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
-            $formParams["itemAmount" . ($index + 1)] = $item['valor'];
-            $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
-            $formParams["itemWeight" . ($index + 1)] = $produto['peso'];
-        }
+        // foreach ($carrinho as $index => $item) {
+        //     $produto = Produto::find($item['id']);
+        //     $formParams["itemId" . ($index + 1)] = $item['id'];
+        //     $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
+        //     $formParams["itemAmount" . ($index + 1)] = $item['valor'];
+        //     $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
+        //     $formParams["itemWeight" . ($index + 1)] = $produto['peso'];
+        // }
 
-        $client = new Client();
+        // $client = new Client();
 
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
+
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [];
+        // $data["code"] = $code;
+
+        // return view('pagar', $data);
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=email&token=token-sandbox?email=email%40exemplo.com&token-sandbox=REMOVIDO_PAGSEGURO_TOKEN",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode([
+                'currency' => 'BRL',
+                'item: id' => '1',
+                'item: description' => 'teste',
+                'item: amount' => '30',
+                'item: quantity' => '2',
+                'item: weight' => '300',
+                'shipping: addressRequired' => 'False',
+                'shipping: cost' => '40',
+                'sender: name' => 'Gabriel Bremenkamp',
+                'sender: email' => 'email@exemplo.com',
+                'sender: phoneareaCode' => '27',
+                'sender: phonenumber' => '992437909',
+                'sender: documentstype' => 'CPF',
+                'sender: documentsvalue' => '00000000000',
+                'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+                'receiveremail' => 'email@exemplo.com',
+                'enableRecover' => 'False',
+                'timetout' => '20'
+            ]),
+            CURLOPT_HTTPHEADER => [
+                "accept: application/xml",
+                "content-type: application/json"
             ],
-            'form_params' => $formParams,
         ]);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-        return view('pagar', $data);
+        curl_close($curl);
+
+        if ($err) {
+            return response("cURL Error #:" . $err, 500);
+        } else {
+            return response($response);
+            // $responseBody = $response->getBody()->getContents();
+            // $xml = new SimpleXMLElement($responseBody);
+            // $code = (string)$xml->code;
+            // $data = [];
+            // $data["code"] = $code;
+
+            // return view('pagar', $data);
+        }
     }
 
 
