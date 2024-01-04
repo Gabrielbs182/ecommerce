@@ -64,6 +64,8 @@ Route::match(['get', 'post'], '/keyController', [ProdutoController::class, 'keyC
     ->name('keyController');
 Route::match(['get', 'post'], '/envio/autorizar', [ProdutoController::class, 'autorizarEnvio'])
     ->name('autorizarEnvio');
+Route::match(['get', 'post'], '/posPagar', [ProdutoController::class, 'posPagar'])
+    ->name('posPagar');
 
 //METODOS
 Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])

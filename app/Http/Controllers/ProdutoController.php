@@ -157,7 +157,15 @@ class ProdutoController extends Controller
     public function postToPagseguro(Request $request)
     {
 
-        dd($request);
+        // dd($request);
+
+        $vlrFrete = $request->input('valorFrete');
+        $nomeCliente = $request->input('nome');
+        $ddd = $request->input('ddd');
+        $telefone = $request->input('telefone');
+        $emailCliente = $request->input('email');
+        $cpf  = str_replace('.', '-', $request->input('cpf'));
+
         $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
         $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
@@ -169,7 +177,7 @@ class ProdutoController extends Controller
             'token' => $token,
             'currency' => 'BRL',
             'addressRequired' => False,
-            'shippingCost' => $vlrfrete,
+            'shippingCost' => $vlrFrete,
             'senderName' => $nomeCliente,
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
@@ -177,16 +185,16 @@ class ProdutoController extends Controller
             'extraAmount' => '0.00',
             'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
-            'redirectURL' => 'http://localhost:8000',
+            'redirectURL' => 'https://urbeatstore.com.br/posPagar',
         ];
 
         foreach ($carrinho as $index => $item) {
             $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-            $formParams["itemId" . $index+1 . ""] = $item['id'];
-            $formParams["itemDescription" . $index+1 . ""] = $produto['nome'];
-            $formParams["itemAmount" . $index+1 . ""] = $item['valor'];
-            $formParams["itemQuantity" . $index+1 . ""] = $item['quantidade'];
-            $formParams["itemWeight" . $index+1 . ""] = $produto['peso'];
+            $formParams["itemId" . $index + 1 . ""] = $item['id'];
+            $formParams["itemDescription" . $index + 1 . ""] = $produto['nome'];
+            $formParams["itemAmount" . $index + 1 . ""] = $item['valor'];
+            $formParams["itemQuantity" . $index + 1 . ""] = $item['quantidade'];
+            $formParams["itemWeight" . $index + 1 . ""] = $produto['peso'];
         }
 
         $client = new Client();
