@@ -227,7 +227,7 @@ class ProdutoController extends Controller
 
         $response = $client->post($url, [
             'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
+                'Content-Type' => 'application/x-www-form-urlencoded;',
             ],
             'form_params' => $formParams,
         ]);
