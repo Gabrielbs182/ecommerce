@@ -113,6 +113,40 @@
 
 @section('scriptjs')
     <script>
+        $(document).ready(function() {
+            $('#cep').on('input', function() {
+                // Remove todos os caracteres não numéricos
+                var cep = $(this).val().replace(/\D/g, '');
+
+                // Aplica a máscara "99999-999"
+                if (cep.length >= 5) {
+                    cep = cep.substring(0, 5) + '-' + cep.substring(5, 8);
+                }
+
+                // Limita o tamanho a 9 caracteres
+                cep = cep.substring(0, 9);
+
+                // Atualiza o valor do campo
+                $(this).val(cep);
+            });
+        });
+        
+        $(document).ready(function() {
+            $('#cpf').on('input', function() {
+                // Remove todos os caracteres não numéricos
+                var cpf = $(this).val().replace(/\D/g, '');
+
+                // Aplica a máscara de CPF
+                if (cpf.length >= 11) {
+                    cpf = cpf.substring(0, 11); // Limita o CPF a 11 dígitos
+                    cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Aplica a máscara
+                }
+
+                // Atualiza o valor do campo
+                $(this).val(cpf);
+            });
+        });
+
         function obterDadosCEP(cep) {
             // Montar a URL com o CEP fornecido
             var url = `https://viacep.com.br/ws/${cep}/json`;
