@@ -187,7 +187,7 @@ class ProdutoController extends Controller
             'redirectURL' => 'https://urbeatstore.com.br/posPagar',
             'receiveremail' => $email,
             'enableRecover' => 'False',
-            'timetout' => '20',
+            'timetout' => '20'
         ];
 
         foreach ($carrinho as $index => $item) {
