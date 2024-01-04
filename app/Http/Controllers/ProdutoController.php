@@ -213,7 +213,7 @@ class ProdutoController extends Controller
         // $data["code"] = $code;
         // return view('pagar', $data);
 
-        echo $formParams;
+        var_dump($formParams);
     }
 
 
