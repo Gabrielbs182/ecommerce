@@ -199,19 +199,19 @@ class ProdutoController extends Controller
 
         $client = new Client();
 
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => $formParams,
-        ]);
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
-        return view('pagar', $data);
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [];
+        // $data["code"] = $code;
+        // return view('pagar', $data);
 
         var_dump($formParams);
     }
