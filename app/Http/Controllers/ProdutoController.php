@@ -160,7 +160,7 @@ class ProdutoController extends Controller
         // dd($request);
 
         $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome') . $request->input('Sobrenome');
+        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
         $emailCliente = $request->input('email');
@@ -199,21 +199,19 @@ class ProdutoController extends Controller
 
         $client = new Client();
 
-        // $response = $client->post($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => $formParams,
-        // ]);
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => $formParams,
+        ]);
 
-        // $responseBody = $response->getBody()->getContents();
-        // $xml = new SimpleXMLElement($responseBody);
-        // $code = (string)$xml->code;
-        // $data = [];
-        // $data["code"] = $code;
-        // return view('pagar', $data);
-
-        var_dump($formParams);
+        $responseBody = $response->getBody()->getContents();
+        $xml = new SimpleXMLElement($responseBody);
+        $code = (string)$xml->code;
+        $data = [];
+        $data["code"] = $code;
+        return view('pagar', $data);
     }
 
 
