@@ -173,7 +173,7 @@ class ProdutoController extends Controller
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
-            'shippingAddressRequired' => 'False',
+            'shippingAddressRequired' => false,
             'shippingCost' => $vlrFrete,
             'senderName' => $nomeCliente,
             'senderEmail' => $emailCliente,
