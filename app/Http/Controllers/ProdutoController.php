@@ -189,33 +189,29 @@ class ProdutoController extends Controller
         ];
 
         foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['produto_id']);
-            // $formParams["itemId" . ($index + 1)] = $item['id'];
-            // $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
-            // $formParams["itemAmount" . ($index + 1)] = $item['valor'];
-            // $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
-            // $formParams["itemWeight" . ($index + 1)] = $produto['peso'];
-            echo $index;
-            echo "<br>";
-            echo $item;
-            echo "<br>";
+            $produto = Produto::find($item['id']);
+            $formParams["itemId" . ($index + 1)] = $item['id'];
+            $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
+            $formParams["itemAmount" . ($index + 1)] = $item['valor'];
+            $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
+            $formParams["itemWeight" . ($index + 1)] = $produto['peso'];
         }
 
-        // $client = new Client();
+        $client = new Client();
 
-        // $response = $client->post($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => $formParams,
-        // ]);
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => $formParams,
+        ]);
 
-        // $responseBody = $response->getBody()->getContents();
-        // $xml = new SimpleXMLElement($responseBody);
-        // $code = (string)$xml->code;
-        // $data = [];
-        // $data["code"] = $code;
-        // return view('pagar', $data);
+        $responseBody = $response->getBody()->getContents();
+        $xml = new SimpleXMLElement($responseBody);
+        $code = (string)$xml->code;
+        $data = [];
+        $data["code"] = $code;
+        return view('pagar', $data);
     }
 
 
