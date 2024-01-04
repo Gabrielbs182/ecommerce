@@ -15,6 +15,7 @@ use App\Models\Usuario;
 use PagSeguro\Configuration\Configure;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ProdutoController extends Controller
 {
@@ -200,19 +201,21 @@ class ProdutoController extends Controller
 
         $client = new Client();
 
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
-            ],
-            'form_params' => $formParams,
-        ]);
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded; charset=ISO-8859-1',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
-        return view('pagar', $data);
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [];
+        // $data["code"] = $code;
+        // return view('pagar', $data);
+
+        var_dump($formParams);
     }
 
 
