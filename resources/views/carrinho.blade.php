@@ -22,7 +22,8 @@
                                 </div>
                                 <div class="col-md-6 form-group" value="Carapina" id="logradouro-group">
                                     <label>Bairro</label>
-                                    <input class="form-control" value="Carapembas" type="text" id="bairro" name="bairro" readonly>
+                                    <input class="form-control" value="Carapembas" type="text" id="bairro"
+                                        name="bairro" readonly>
                                 </div>
                                 <div class="col-md-6 form-group" id="numero-group">
                                     <label>Numero</label>
@@ -96,14 +97,14 @@
                         @foreach ($cart as $indice => $p)
                             <div class="d-flex justify-content-between">
                                 <p>{{ $p->nome }} x {{ $p->quantidade }}</p>
-                                <p>{{ $p->valor * $p->quantidade }}</p>
+                                <p>{{ number_format($p->valor * $p->quantidade, 2, ',', '.') }}</p>
                             </div>
                             @php $total += ($p->valor*$p->quantidade); @endphp
                         @endforeach
                         <hr class="mt-0">
                         <div class="d-flex justify-content-between mb-3 pt-1">
                             <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">R$ {{ $total }}</h6>
+                            <h6 class="font-weight-medium">R$ {{ number_format($total, 2, ',', '.') }}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Frete</h6>
@@ -111,7 +112,7 @@
                                 @if ($valor == 0)
                                     Grátis
                                 @else
-                                    R$ {{ $valor }}
+                                    R$ {{ number_format($valor, 2, ',', '.') }}
                                 @endif
 
                             </h6>
@@ -120,7 +121,7 @@
                     <div class="card-footer border-secondary bg-transparent">
                         <div class="d-flex justify-content-between mt-2">
                             <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">R$ {{ $total + $valor }}</h5>
+                            <h5 class="font-weight-bold">R$ {{ number_format($total + $valor, 2, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>
