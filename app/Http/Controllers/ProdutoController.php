@@ -176,10 +176,30 @@ class ProdutoController extends Controller
         $cep = $request->input('cep');
         $emailCliente2 = 'teste@pagseguro.com.br';
 
-        var_dump($emailCliente2);
-        var_dump($emailCliente);
-
         $carrinho = session('cart', []);
+
+        $formParams2 = [
+            'email' => $email,
+            'token' => $token,
+            'currency' => 'BRL',
+            'shippingAddressStreet' => $logradouro,
+            'shippingAddressNumber' => $numero,
+            'shippingAddressComplement' => 'Casa',
+            'shippingAddressDistrict' => $bairro,
+            'shippingAddressCity' => $cidade,
+            'shippingAddressState' => $uf,
+            'shippingAddressCountry' => 'BRA',
+            'shippingAddressPostalCode' => $cep,
+            'shippingType' => 3,
+            'reference' => '124665c23f7896adff508377925',
+            'senderName' => $nomeCliente,
+            'senderAreaCode' => $ddd,
+            'senderPhone' => $telefone,
+            'senderEmail' => $emailCliente,
+            'extraAmount' => $vlrFrete,
+            'senderCPF' => $cpf,
+            'redirectURL' => 'http://localhost:8000',
+        ];
 
         $formParams = [
             'email' => $email,
@@ -212,6 +232,18 @@ class ProdutoController extends Controller
             $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
             $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
+
+        foreach ($carrinho as $index => $item) {
+            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+            $formParams2["itemId" . ($index + 1) . ""] = $item['id'];
+            $formParams2["itemDescription" . ($index + 1) . ""] = $produto['nome'];
+            $formParams2["itemAmount" . ($index + 1) . ""] = $item['valor'];
+            $formParams2["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+            $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
+        }
+
+        var_dump($formParams);
+        var_dump($formParams2);
 
         $client = new Client();
 
