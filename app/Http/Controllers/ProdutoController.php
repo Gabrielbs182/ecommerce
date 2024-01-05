@@ -176,53 +176,33 @@ class ProdutoController extends Controller
         $cep = $request->input('cep');
         $emailCliente2 = 'teste@pagseguro.com.br';
 
+        var_dump($emailCliente2);
+        var_dump($emailCliente);
+
         $carrinho = session('cart', []);
 
         $formParams = [
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
-            'shippingAddressStreet' => $logradouro,
-            'shippingAddressNumber' => $numero,
+            'shippingAddressStreet' => 'Rua Santa Catarina',
+            'shippingAddressNumber' => '198',
             'shippingAddressComplement' => 'Casa',
-            'shippingAddressDistrict' => $bairro,
-            'shippingAddressCity' => $cidade,
-            'shippingAddressState' => $uf,
+            'shippingAddressDistrict' => 'Carapina',
+            'shippingAddressCity' => 'Serra',
+            'shippingAddressState' => 'ES',
             'shippingAddressCountry' => 'BRA',
-            'shippingAddressPostalCode' => $cep,
+            'shippingAddressPostalCode' => '29160044',
             'shippingType' => 3,
             'reference' => '124665c23f7896adff508377925',
-            'senderName' => $nomeCliente,
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderEmail' => $emailCliente,
-            'extraAmount' => $vlrFrete,
-            'senderCPF' => $cpf,
+            'senderName' => 'Gabriel Bremenkamp',
+            'senderAreaCode' => '51',
+            'senderPhone' => '988888888',
+            'senderEmail' => $emailCliente2,
+            'extraAmount' => '0.00',
+            'senderCPF' => '00000000000',
             'redirectURL' => 'http://localhost:8000',
         ];
-
-        // $formParams = [
-        //     'email' => $email,
-        //     'token' => $token,
-        //     'currency' => 'BRL',
-        //     'shippingAddressStreet' => 'Rua Santa Catarina',
-        //     'shippingAddressNumber' => '198',
-        //     'shippingAddressComplement' => 'Casa',
-        //     'shippingAddressDistrict' => 'Carapina',
-        //     'shippingAddressCity' => 'Serra',
-        //     'shippingAddressState' => 'ES',
-        //     'shippingAddressCountry' => 'BRA',
-        //     'shippingAddressPostalCode' => '29160044',
-        //     'shippingType' => 3,
-        //     'reference' => '124665c23f7896adff508377925',
-        //     'senderName' => 'Gabriel Bremenkamp',
-        //     'senderAreaCode' => '51',
-        //     'senderPhone' => '988888888',
-        //     'senderEmail' => $emailCliente2,
-        //     'extraAmount' => '0.00',
-        //     'senderCPF' => '00000000000',
-        //     'redirectURL' => 'http://localhost:8000',
-        // ];
 
         foreach ($carrinho as $index => $item) {
             $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
@@ -232,20 +212,6 @@ class ProdutoController extends Controller
             $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
             $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
-
-        // foreach ($carrinho as $index => $item) {
-        //     $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-        //     $formParams2["itemId" . ($index + 1) . ""] = $item['id'];
-        //     $formParams2["itemDescription" . ($index + 1) . ""] = $produto['nome'];
-        //     $formParams2["itemAmount" . ($index + 1) . ""] = $item['valor'];
-        //     $formParams2["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-        //     $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
-        // }
-
-        // echo "<h1>Params Fixos</h1><br>";
-        // var_dump($formParams);
-        // echo "<br><h1>Params Dinamicos</h1><br>";
-        // var_dump($formParams2);
 
         $client = new Client();
 
