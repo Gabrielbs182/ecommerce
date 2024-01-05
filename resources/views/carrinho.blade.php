@@ -158,7 +158,7 @@
                         <div class="row">
                             @php
                                 $nomeCompleto = explode(' ', auth()->nome);
-                                if count($nomeCompleto) == 2{
+                                if (count($nomeCompleto) == 2){
                                     $nome = $nomeCompleto[0];
                                     $sobrenome = $nomeCompleto[1];
                                 }else{
