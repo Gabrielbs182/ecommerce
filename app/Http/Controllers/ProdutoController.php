@@ -145,9 +145,11 @@ class ProdutoController extends Controller
         $carrinho = session('cart', []);
         if (isset($carrinho[$indice])) {
             unset($carrinho[$indice]);
+            session(["cart" => $carrinho]);
+            return $carrinho;
+        }else{
+            return $carrinho;
         }
-        session(["cart" => $carrinho]);
-        return redirect()->route("home");
     }
 
     public function posPagar(Request $request)
