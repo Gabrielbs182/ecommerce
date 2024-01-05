@@ -202,22 +202,23 @@
                 },
                 success: function() {
                     console.log('item excluido')
+                    $.getJSON('/buscarCarrinho', function(data) {
+                        var total = 0;
+                        var indice = 0;
+                        $('#modalCarrinhoLista').empty();
+                        if (data.length === 0) {
+                            carregarCarrinho();
+                            $('#modalCarrinho').modal('hide');
+                        } else {
+                            carregarCarrinho();
+                        }
+                    });
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
-            $.getJSON('/buscarCarrinho', function(data) {
-                var total = 0;
-                var indice = 0;
-                $('#modalCarrinhoLista').empty();
-                if (data.length === 0) {
-                    carregarCarrinho();
-                    $('#modalCarrinho').modal('hide');
-                } else {
-                    carregarCarrinho();
-                }
-            });
+
         }
 
         function carregarCarrinho() {
