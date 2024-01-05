@@ -190,11 +190,14 @@ class ProdutoController extends Controller
             'shippingAddressCountry' => 'BRA',
             'shippingAddressPostalCode' => $cep,
             'shippingType' => 3,
+            'reference' => '124665c23f7896adff508377925',
             'senderName' => 'Gabriel Bremenkamp',
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderEmail' => 'email@exemplo.com',
-            'senderCPF' => $cpf,
+            'senderAreaCode' => '51',
+            'senderPhone' => '988888888',
+            'senderEmail' => 'teste@pagseguro.com.br',
+            'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
+            'senderCPF' => '00000000000',
             'redirectURL' => 'http://localhost:8000',
         ];
 
@@ -204,6 +207,7 @@ class ProdutoController extends Controller
             $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
             $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
             $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
         $client = new Client();
