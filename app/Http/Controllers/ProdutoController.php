@@ -157,9 +157,17 @@ class ProdutoController extends Controller
 
     public function postToPagseguro(Request $request)
     {
+
         $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
         $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
+
+        $vlrFrete = $request->input('valorFrete');
+        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
+        $ddd = $request->input('ddd');
+        $telefone = $request->input('telefone');
+        $emailCliente = $request->input('email');
+        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
 
         $carrinho = session('cart', []);
 
