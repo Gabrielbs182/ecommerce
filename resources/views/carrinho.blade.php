@@ -76,9 +76,9 @@
                             </div>
                         @endif
 
-                        <div class="card-footer border-secondary bg-transparent">
-                            <input type="button" href="{{ route('home') }}" value="Cancelar"
-                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+
+                        <a class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" href="{{ route('home') }}"
+                            role="button">Cancelar</a>
                     </form>
                 </div>
             </div>
