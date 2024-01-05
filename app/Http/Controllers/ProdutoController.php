@@ -178,52 +178,68 @@ class ProdutoController extends Controller
         $carrinho = session('cart', []);
 
 
-        $curl = curl_init();
+        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        $email = env('PAGSEGURO_EMAIL');
+        $token = env('PAGSEGURO_TOKEN');
 
-        curl_setopt_array($curl, [
-            CURLOPT_URL => "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=email&token=token-sandbox?email=email%40exemplo.com&token-sandbox=REMOVIDO_PAGSEGURO_TOKEN",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => json_encode([
-                'currency' => 'BRL',
-                'item: id' => '1',
-                'item: description' => 'TESTE1',
-                'item: amount' => '30',
-                'item: quantity' => '2',
-                'item: weight' => '200',
-                'shipping: addressRequired' => 'FALSE',
-                'shipping: cost' => '40',
-                'sender: name' => 'TESTE TESTE',
-                'sender: email' => 'teste@teste.com.br',
-                'sender: phoneareaCode' => '27',
-                'sender: phonenumber' => '992437909',
-                'sender: documentstype' => 'CPF',
-                'sender: documentsvalue' => '00000000000',
-                'reference' => '124122451234',
-                'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-                'receiveremail' => 'teste@teste.com.br',
-                'enableRecover' => 'False',
-                'timetout' => '20'
-            ]),
-            CURLOPT_HTTPHEADER => [
-                "accept: application/xml",
-                "content-type: application/json"
-            ],
+        $vlrFrete = $request->input('valorFrete');
+        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
+        $ddd = $request->input('ddd');
+        $telefone = $request->input('telefone');
+        $emailCliente = $request->input('email');
+        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
+        $logradouro = $request->input('logradouro');
+        $bairro = $request->input('bairro');
+        $numero = $request->input('numero');
+        $cidade = $request->input('cidade');
+        $uf = $request->input('uf');
+        $cep = $request->input('cep');
+
+        $carrinho = session('cart', []);
+
+        $queryParams = http_build_query([
+            'email' => $email,
+            'token' => $token,
         ]);
 
-        $response = curl_exec($curl);
-        $err = curl_error($curl);
+        $url .= '?' . $queryParams;
 
-        curl_close($curl);
+        $client = new Client();
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            echo $response;
+        try {
+            $response = $client->post($url, [
+                'headers' => [
+                    'accept' => 'application/xml',
+                    'content-type' => 'application/json',
+                ],
+                'json' => [
+                    'currency' => 'BRL',
+                    'item: id' => '1',
+                    'item: description' => 'TESTE1',
+                    'item: amount' => '30',
+                    'item: quantity' => '2',
+                    'item: weight' => '200',
+                    'shipping: addressRequired' => 'FALSE',
+                    'shipping: cost' => '40',
+                    'sender: name' => 'TESTE TESTE',
+                    'sender: email' => 'teste@teste.com.br',
+                    'sender: phoneareaCode' => '27',
+                    'sender: phonenumber' => '992437909',
+                    'sender: documentstype' => 'CPF',
+                    'sender: documentsvalue' => '00000000000',
+                    'reference' => '124122451234',
+                    'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+                    'receiveremail' => 'teste@teste.com.br',
+                    'enableRecover' => 'False',
+                    'timetout' => '20',
+                ],
+                'timeout' => 30,
+            ]);
+
+            $responseBody = $response->getBody()->getContents();
+            echo $responseBody;
+        } catch (\Exception $e) {
+            echo "Guzzle Error: " . $e->getMessage();
         }
 
         // $formParams = [
