@@ -157,16 +157,6 @@ class ProdutoController extends Controller
 
     public function postToPagseguro(Request $request)
     {
-
-        // dd($request);
-
-        $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
-        $ddd = $request->input('ddd');
-        $telefone = $request->input('telefone');
-        $emailCliente = $request->input('email');
-        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
-
         $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
         $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
@@ -177,47 +167,40 @@ class ProdutoController extends Controller
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
-            'shippingCost' => $vlrFrete,
-            'sender: name' => $nomeCliente,
-            'sender: email' => $emailCliente,
-            'sender: phoneareaCode' => $ddd,
-            'sender: phonenumber' => $telefone,
-            'sender: documentstype' => 'CPF',
-            'sender: documentsvalue' => $cpf,
-            'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-            'receiveremail' => $email,
-            'timetout' => '20'
+            'shippingAddressStreet' => 'Rua Santa Catarina',
+            'shippingAddressNumber' => '198',
+            'shippingAddressComplement' => 'Casa',
+            'shippingAddressDistrict' => 'Carapina',
+            'shippingAddressCity' => 'Serra',
+            'shippingAddressState' => 'ES',
+            'shippingAddressCountry' => 'BRA',
+            'shippingAddressPostalCode' => '29160044',
+            'shippingType' => 1,
+            'reference' => '124665c23f7896adff508377925',
+            'senderName' => 'Gabriel Bremenkamp',
+            'senderAreaCode' => '51',
+            'senderPhone' => '988888888',
+            'senderEmail' => 'teste@pagseguro.com.br',
+            'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
+            'senderCPF' => '00000000000',
+            'redirectURL' => 'http://localhost:8000',
         ];
 
-        // $formParams = [
-        //     'email' => $email,
-        //     'token' => $token,
-        //     'currency' => 'BRL',
-        //     'shippingAddressRequired' => "True",
-        //     'shippingCost' => $vlrFrete,
-        //     'senderName' => $nomeCliente,
-        //     'senderEmail' => $emailCliente,
-        //     'senderAreaCode' => $ddd,
-        //     'senderPhone' => $telefone,
-        //     'senderCPF' => $cpf,
-        //     'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-        //     'receiveremail' => $email,
-        //     'timetout' => '20',
-        // ];
-
         foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']);
-            $formParams["itemId" . ($index + 1)] = $item['id'];
-            $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
-            $formParams["itemAmount" . ($index + 1)] = $item['valor'];
-            $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
+            $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+            $formParams["itemId" . ($index + 1) . ""] = $item['id'];
+            $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
+            $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
+            $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
         $client = new Client();
 
         $response = $client->post($url, [
             'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded;',
+                'Content-Type' => 'application/x-www-form-urlencoded',
             ],
             'form_params' => $formParams,
         ]);
@@ -225,11 +208,11 @@ class ProdutoController extends Controller
         $responseBody = $response->getBody()->getContents();
         $xml = new SimpleXMLElement($responseBody);
         $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
-        return view('pagar', $data);
+        $data = [
+            "code" => $code,
+        ];
 
-        // var_dump($formParams);
+        return view('pagar', $data);
     }
 
 
