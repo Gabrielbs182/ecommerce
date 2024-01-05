@@ -176,6 +176,9 @@ class ProdutoController extends Controller
         $cep = $request->input('cep');
         $emailCliente2 = 'teste@pagseguro.com.br';
 
+        var_dump($emailCliente2);
+        var_dump($emailCliente);
+
         $carrinho = session('cart', []);
 
         $formParams = [
@@ -212,21 +215,21 @@ class ProdutoController extends Controller
 
         $client = new Client();
 
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => $formParams,
-        ]);
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [
-            "code" => $code,
-        ];
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [
+        //     "code" => $code,
+        // ];
 
-        return view('pagar', $data);
+        // return view('pagar', $data);
     }
 
 
