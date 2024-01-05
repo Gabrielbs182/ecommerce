@@ -120,7 +120,10 @@ class ProdutoController extends Controller
 
     public function verCarrinho(Request $request)
     {
+
+
         $transporte = explode("/", $request->input("frete"));
+        dd($transporte);
         $carrinho = session('cart', []);
 
         if ($transporte[0] != 0) {
