@@ -242,7 +242,9 @@ class ProdutoController extends Controller
             $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
+        echo "<h1>Params Fixos</h1><br>";
         var_dump($formParams);
+        echo "<br><h1>Params Dinamicos</h1><br>";
         var_dump($formParams2);
 
         $client = new Client();
