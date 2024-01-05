@@ -407,7 +407,8 @@
 
     <div class="modal fade" id="modalCarrinho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable justify-content-center col-sm-12 col-md-8 col-lg-6" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="exampleModalLabel">
