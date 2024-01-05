@@ -157,7 +157,7 @@
                 @auth
                     <div class="row">
                         @php
-                            $nomeCompleto = explode(' ', auth()->nome);
+                            $nomeCompleto = explode(' ', Auth::user()->nome);
                             if (count($nomeCompleto) == 2) {
                                 $nome = $nomeCompleto[0];
                                 $sobrenome = $nomeCompleto[1];
@@ -179,12 +179,12 @@
                         </div>
                         <div class="col-md-6 form-group" id="numero-group">
                             <label>Email</label>
-                            <input class="form-control" value="{{ auth()->email }}" type="text" id="email"
+                            <input class="form-control" value="{{ Auth::user()->email }}" type="text" id="email"
                                 name="email" required>
                         </div>
                         <div class="col-md-6 form-group" id="numero-group">
                             <label>Cpf</label>
-                            <input class="form-control" value="{{ auth()->cpf }}" type="cpf" id="cpf"
+                            <input class="form-control" value="{{ Auth::user()->cpf }}" type="cpf" id="cpf"
                                 name="cpf" required>
                         </div>
                         <div class="col-md-2 form-group" id="cidade-group">
