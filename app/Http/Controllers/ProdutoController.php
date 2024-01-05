@@ -177,56 +177,105 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-        $formParams = [
-            'email' => $email,
-            'token' => $token,
-            'currency' => 'BRL',
-            'shippingAddressStreet' => $logradouro,
-            'shippingAddressNumber' => $numero,
-            'shippingAddressComplement' => 'Casa',
-            'shippingAddressDistrict' => $bairro,
-            'shippingAddressCity' => $cidade,
-            'shippingAddressState' => $uf,
-            'shippingAddressCountry' => 'BRA',
-            'shippingAddressPostalCode' => $cep,
-            'shippingType' => 3,
-            'reference' => '124665c23f7896adff508377925',
-            'senderName' => $nomeCliente,
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderEmail' => $emailCliente,
-            'extraAmount' => '0.00',
-            'senderCPF' => 'CPF',
-            'senderCPF' => $cpf,
-            'redirectURL' => 'http://localhost:8000',
-        ];
 
-        foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-            $formParams["itemId" . ($index + 1) . ""] = $item['id'];
-            $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
-            $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
-            $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
-        }
+        $curl = curl_init();
 
-        $client = new Client();
-
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/email=email&token=token-sandbox?email=email%40exemplo.com&token-sandbox=REMOVIDO_PAGSEGURO_TOKEN",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => json_encode([
+                'currency' => 'BRL',
+                'item: id' => '1',
+                'item: description' => 'TESTE1',
+                'item: amount' => '30',
+                'item: quantity' => '2',
+                'item: weight' => '200',
+                'shipping: addressRequired' => 'FALSE',
+                'shipping: cost' => '40',
+                'sender: name' => 'TESTE TESTE',
+                'sender: email' => 'teste@teste.com.br',
+                'sender: phoneareaCode' => '27',
+                'sender: phonenumber' => '992437909',
+                'sender: documentstype' => 'CPF',
+                'sender: documentsvalue' => '00000000000',
+                'reference' => '124122451234',
+                'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+                'receiveremail' => 'teste@teste.com.br',
+                'enableRecover' => 'False',
+                'timetout' => '20'
+            ]),
+            CURLOPT_HTTPHEADER => [
+                "accept: application/xml",
+                "content-type: application/json"
             ],
-            'form_params' => $formParams,
         ]);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [
-            "code" => $code,
-        ];
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
 
-        return view('pagar', $data);
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+
+        // $formParams = [
+        //     'email' => $email,
+        //     'token' => $token,
+        //     'currency' => 'BRL',
+        //     'shippingAddressStreet' => $logradouro,
+        //     'shippingAddressNumber' => $numero,
+        //     'shippingAddressComplement' => 'Casa',
+        //     'shippingAddressDistrict' => $bairro,
+        //     'shippingAddressCity' => $cidade,
+        //     'shippingAddressState' => $uf,
+        //     'shippingAddressCountry' => 'BRA',
+        //     'shippingAddressPostalCode' => $cep,
+        //     'shippingType' => 3,
+        //     'reference' => '124665c23f7896adff508377925',
+        //     'senderName' => $nomeCliente,
+        //     'senderAreaCode' => $ddd,
+        //     'senderPhone' => $telefone,
+        //     'senderEmail' => $emailCliente,
+        //     'extraAmount' => '0.00',
+        //     'senderCPF' => 'CPF',
+        //     'senderCPF' => $cpf,
+        //     'redirectURL' => 'http://localhost:8000',
+        // ];
+
+        // foreach ($carrinho as $index => $item) {
+        //     $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+        //     $formParams["itemId" . ($index + 1) . ""] = $item['id'];
+        //     $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
+        //     $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
+        //     $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+        //     $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
+        // }
+
+        // $client = new Client();
+
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
+
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [
+        //     "code" => $code,
+        // ];
+
+        // return view('pagar', $data);
     }
 
 
