@@ -189,7 +189,7 @@ class ProdutoController extends Controller
             'shippingAddressState' => $uf,
             'shippingAddressCountry' => 'BRA',
             'shippingAddressPostalCode' => $cep,
-            'shippingCost' => $vlrFrete,
+            // 'shippingCost' => $vlrFrete,
             'shippingType' => 3,
             'senderName' => $nomeCliente,
             'senderAreaCode' => $ddd,
