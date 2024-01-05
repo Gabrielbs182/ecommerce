@@ -177,26 +177,6 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        $email = env('PAGSEGURO_EMAIL');
-        $token = env('PAGSEGURO_TOKEN');
-
-        $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
-        $ddd = $request->input('ddd');
-        $telefone = $request->input('telefone');
-        $emailCliente = $request->input('email');
-        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
-        $logradouro = $request->input('logradouro');
-        $bairro = $request->input('bairro');
-        $numero = $request->input('numero');
-        $cidade = $request->input('cidade');
-        $uf = $request->input('uf');
-        $cep = $request->input('cep');
-
-        $carrinho = session('cart', []);
-
         $queryParams = http_build_query([
             'email' => $email,
             'token' => $token,
@@ -210,9 +190,9 @@ class ProdutoController extends Controller
             $response = $client->post($url, [
                 'headers' => [
                     'accept' => 'application/xml',
-                    'content-type' => 'application/json',
+                    'content-type' => 'application/x-www-form-urlencoded',
                 ],
-                'json' => [
+                'form_params' => [
                     'currency' => 'BRL',
                     'item: id' => '1',
                     'item: description' => 'TESTE1',
