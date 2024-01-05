@@ -194,10 +194,11 @@ class ProdutoController extends Controller
             'senderName' => $nomeCliente,
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
-            'senderEmail' => $emailCliente,
-            'extraAmount' => $vlrFrete,
+            'senderEmail' => 'email@exemplo.com',
+            'extraAmount' => '0.00',
             'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
+            'shippingCost' => $vlrFrete,
             'redirectURL' => 'http://localhost:8000',
         ];
 
