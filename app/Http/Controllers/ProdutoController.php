@@ -205,7 +205,6 @@ class ProdutoController extends Controller
             $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
             $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
             $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
         $client = new Client();
