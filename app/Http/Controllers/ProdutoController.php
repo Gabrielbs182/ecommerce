@@ -188,7 +188,7 @@ class ProdutoController extends Controller
         ];
 
         foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['produto_id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
             $formParams["itemId" . ($index + 1) . ""] = $item['id'];
             $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
             $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
