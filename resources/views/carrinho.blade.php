@@ -70,8 +70,8 @@
                                 </div>
                                 <div class="col-md-6 form-group" id="cep-group">
                                     <label>CEP</label>
-                                    <input class="form-control" name="cep" type="text" id="cep"
-                                         maxlength="10" readonly>
+                                    <input class="form-control" name="cep" type="text" id="cep" maxlength="10"
+                                        readonly>
                                 </div>
                             </div>
                         @endif
@@ -79,130 +79,134 @@
                         <div class="card-footer border-secondary bg-transparent">
                             <input type="button" href="{{ route('home') }}" value="Cancelar"
                                 class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                            </form>
-                        </div>
+                    </form>
                 </div>
             </div>
-
-            @if (isset($cart) && count($cart) > 0)
-                <div class="col-lg-4">
-                    <div class="card border-secondary mb-5">
-                        <div class="card-header bg-secondary border-0">
-                            <h4 class="font-weight-semi-bold m-0">Total do pedido</h4>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="font-weight-medium mb-3">Produtos</h5>
-                            @php $total = 0; @endphp
-                            @foreach ($cart as $indice => $p)
-                                <div class="d-flex justify-content-between">
-                                    <p>{{ $p->nome }} x {{ $p->quantidade }}</p>
-                                    <p>{{ $p->valor * $p->quantidade }}</p>
-                                </div>
-                                @php $total += ($p->valor*$p->quantidade); @endphp
-                            @endforeach
-                            <hr class="mt-0">
-                            <div class="d-flex justify-content-between mb-3 pt-1">
-                                <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium">R$ {{ $total }}</h6>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Frete</h6>
-                                <h6 class="font-weight-medium">
-                                    @if ($valor == 0)
-                                        Grátis
-                                    @else
-                                        R$ {{ $valor }}
-                                    @endif
-
-                                </h6>
-                            </div>
-                        </div>
-                        <div class="card-footer border-secondary bg-transparent">
-                            <div class="d-flex justify-content-between mt-2">
-                                <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">R$ {{ $total + $valor }}</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    @guest
-                        <div class="row">
-                            <div class="col-md-6 form-group" id="logradouro-group">
-                                <label>Nome</label>
-                                <input class="form-control" type="text" id="nome" name="nome" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="logradouro-group">
-                                <label>Sobrenome</label>
-                                <input class="form-control" type="text" id="Sobrenome" name="Sobrenome" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="numero-group">
-                                <label>Email</label>
-                                <input class="form-control" type="text" id="email" name="email" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="numero-group">
-                                <label>Cpf</label>
-                                <input class="form-control" type="cpf" id="cpf" name="cpf" required>
-                            </div>
-                            <div class="col-md-2 form-group" id="cidade-group">
-                                <label>ddd</label>
-                                <input class="form-control" type="text" id="ddd" name="ddd" required>
-                            </div>
-                            <div class="col-md-4 form-group" id="cidade-group">
-                                <label>Telefone</label>
-                                <input class="form-control" type="text" id="telefone" name="telefone" required>
-                            </div>
-                        </div>
-                    @endguest
-
-                    @auth
-                        <div class="row">
-                            @php
-                                $nomeCompleto = explode(' ', auth()->nome);
-                                if (count($nomeCompleto) == 2){
-                                    $nome = $nomeCompleto[0];
-                                    $sobrenome = $nomeCompleto[1];
-                                }else{
-                                    $nome = $nomeCompleto[0];
-                                    $sobrenome = " ";
-                                }
-                                
-                            @endphp
-                            <div class="col-md-6 form-group" id="logradouro-group">
-                                <label>Nome</label>
-                                <input class="form-control" value="{{$nome}}" type="text" id="nome" name="nome" required>
-                            </div>
-                            <div class="col-md-6 form-group"  id="logradouro-group">
-                                <label>Sobrenome</label>
-                                <input class="form-control" value="{{$sobrenome}}" type="text" id="Sobrenome" name="Sobrenome" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="numero-group">
-                                <label>Email</label>
-                                <input class="form-control" value="{{auth()->email}}"  type="text" id="email" name="email" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="numero-group">
-                                <label>Cpf</label>
-                                <input class="form-control" value="{{auth()->cpf}}" type="cpf" id="cpf" name="cpf" required>
-                            </div>
-                            <div class="col-md-2 form-group" id="cidade-group">
-                                <label>ddd</label>
-                                <input class="form-control" type="text" id="ddd" name="ddd" required>
-                            </div>
-                            <div class="col-md-4 form-group" id="cidade-group">
-                                <label>Telefone</label>
-                                <input class="form-control" type="text" id="telefone" name="telefone" required>
-                            </div>
-                        </div>
-                    @endauth
-
-                    <div class="card-footer border-secondary bg-transparent">
-                        <input type="submit" value="Finalizar Compra"
-                            class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                        </form>
-                    </div>
-                @else
-                    <p>Nenhum item no carrinho</p>
-            @endif
         </div>
+
+        @if (isset($cart) && count($cart) > 0)
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Total do pedido</h4>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="font-weight-medium mb-3">Produtos</h5>
+                        @php $total = 0; @endphp
+                        @foreach ($cart as $indice => $p)
+                            <div class="d-flex justify-content-between">
+                                <p>{{ $p->nome }} x {{ $p->quantidade }}</p>
+                                <p>{{ $p->valor * $p->quantidade }}</p>
+                            </div>
+                            @php $total += ($p->valor*$p->quantidade); @endphp
+                        @endforeach
+                        <hr class="mt-0">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium">R$ {{ $total }}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Frete</h6>
+                            <h6 class="font-weight-medium">
+                                @if ($valor == 0)
+                                    Grátis
+                                @else
+                                    R$ {{ $valor }}
+                                @endif
+
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Total</h5>
+                            <h5 class="font-weight-bold">R$ {{ $total + $valor }}</h5>
+                        </div>
+                    </div>
+                </div>
+
+                @guest
+                    <div class="row">
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Nome</label>
+                            <input class="form-control" type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Sobrenome</label>
+                            <input class="form-control" type="text" id="Sobrenome" name="Sobrenome" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="numero-group">
+                            <label>Email</label>
+                            <input class="form-control" type="text" id="email" name="email" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="numero-group">
+                            <label>Cpf</label>
+                            <input class="form-control" type="cpf" id="cpf" name="cpf" required>
+                        </div>
+                        <div class="col-md-2 form-group" id="cidade-group">
+                            <label>ddd</label>
+                            <input class="form-control" type="text" id="ddd" name="ddd" required>
+                        </div>
+                        <div class="col-md-4 form-group" id="cidade-group">
+                            <label>Telefone</label>
+                            <input class="form-control" type="text" id="telefone" name="telefone" required>
+                        </div>
+                    </div>
+                @endguest
+
+                @auth
+                    <div class="row">
+                        @php
+                            $nomeCompleto = explode(' ', auth()->nome);
+                            if (count($nomeCompleto) == 2) {
+                                $nome = $nomeCompleto[0];
+                                $sobrenome = $nomeCompleto[1];
+                            } else {
+                                $nome = $nomeCompleto[0];
+                                $sobrenome = ' ';
+                            }
+
+                        @endphp
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Nome</label>
+                            <input class="form-control" value="{{ $nome }}" type="text" id="nome"
+                                name="nome" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Sobrenome</label>
+                            <input class="form-control" value="{{ $sobrenome }}" type="text" id="Sobrenome"
+                                name="Sobrenome" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="numero-group">
+                            <label>Email</label>
+                            <input class="form-control" value="{{ auth()->email }}" type="text" id="email"
+                                name="email" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="numero-group">
+                            <label>Cpf</label>
+                            <input class="form-control" value="{{ auth()->cpf }}" type="cpf" id="cpf"
+                                name="cpf" required>
+                        </div>
+                        <div class="col-md-2 form-group" id="cidade-group">
+                            <label>ddd</label>
+                            <input class="form-control" type="text" id="ddd" name="ddd" required>
+                        </div>
+                        <div class="col-md-4 form-group" id="cidade-group">
+                            <label>Telefone</label>
+                            <input class="form-control" type="text" id="telefone" name="telefone" required>
+                        </div>
+                    </div>
+                @endauth
+
+                <div class="card-footer border-secondary bg-transparent">
+                    <input type="submit" value="Finalizar Compra"
+                        class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+                    </form>
+                </div>
+            @else
+                <p>Nenhum item no carrinho</p>
+        @endif
+    </div>
     </div>
     </div>
 
