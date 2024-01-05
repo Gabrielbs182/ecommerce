@@ -198,9 +198,12 @@ class ProdutoController extends Controller
             'extraAmount' => '0.00',
             'senderCPF' => 'CPF',
             'senderCPF' => '00000000000',
-            'shippingCost' => $vlrFrete,
             'redirectURL' => 'http://localhost:8000',
         ];
+
+        if ($vlrFrete > 0) {
+            $formParams['shippingCost'] = $vlrFrete;
+        }
 
         foreach ($carrinho as $index => $item) {
             $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
