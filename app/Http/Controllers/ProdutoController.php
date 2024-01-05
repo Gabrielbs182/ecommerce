@@ -92,17 +92,6 @@ class ProdutoController extends Controller
         return view("categoria", $data);
     }
 
-    // public function adicionarCarrinho($id,$quantidade)
-    // {
-    //     $prod = Produto::find($id);
-    //     if ($prod) {
-    //         $carrinho = session('cart', []);
-    //         array_push($carrinho, $prod);
-    //         session(['cart' => $carrinho]);
-    //     }
-    //     return redirect()->route("home");
-    // }
-
     public function adicionarCarrinho($id, $quantidade)
     {
         $prod = Produto::find($id);
@@ -133,10 +122,18 @@ class ProdutoController extends Controller
     {
         $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
-        $data = [
-            'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-            'nomeFrete' => $transporte[1], 'valor' => $transporte[2]
-        ];
+        if ($transporte != 0) {
+            $data = [
+                'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+                'nomeFrete' => $transporte[1], 'valor' => $transporte[2]
+            ];
+        } else {
+            $valorFrete = 0;
+            $data = [
+                'cart' => $carrinho, 'idFrete' => $transporte, 'valor' => $valorFrete
+            ];
+        }
+
         return view("carrinho", $data);
     }
 

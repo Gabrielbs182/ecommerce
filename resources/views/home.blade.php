@@ -456,27 +456,13 @@
                             </div>
                         </div>
 
-                        {{-- <div>
-                            <div id="envios">
-                                <p>
-                                    Nossa loja:
-                                </p>
-                                <div class="form-check" id="enviosRadio">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                        id="flexRadioDefault1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988
-                                    </label>
-                                </div>
-                            </div>
-                        </div> --}}
                         <fieldset class="form-group">
                             <div class="row" id="envios">
                                 <legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>
                                 <div class="col-sm-10">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gridRadios"
-                                            id="gridRadios1" value="option1" checked>
+                                        <input class="form-check-input" type="radio" name="frete" id="gridRadios1"
+                                            value="0" checked>
                                         <label class="form-check-label" for="gridRadios1">
                                             Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis
                                         </label>
