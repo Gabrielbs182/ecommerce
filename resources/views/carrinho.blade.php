@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="col-md-6 form-group" value="Carapina" id="logradouro-group">
                                     <label>Bairro</label>
-                                    <input class="form-control" type="text" id="bairro" name="bairro" readonly>
+                                    <input class="form-control" value="Carapembas" type="text" id="bairro" name="bairro" readonly>
                                 </div>
                                 <div class="col-md-6 form-group" id="numero-group">
                                     <label>Numero</label>
