@@ -196,6 +196,8 @@ class ProdutoController extends Controller
             'senderPhone' => '988888888',
             'senderEmail' => 'teste@pagseguro.com.br',
             'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
+            'senderCPF' => '00000000000',
             'sender: documentstype' => 'CPF',
             'sender: documentsvalue' => '00000000000',
             'redirectURL' => 'http://localhost:8000',
