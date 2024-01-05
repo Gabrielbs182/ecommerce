@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-6 form-group" id="cep-group">
                                 <label>CEP</label>
-                                <input class="form-control" type="text" id="cep" onblur="calcularFrete()"
+                                <input class="form-control" name="cep" type="text" id="cep" onblur="calcularFrete()"
                                     maxlength="10" oninput="validarNumero(this)">
                             </div>
                         </div>

@@ -242,28 +242,28 @@ class ProdutoController extends Controller
             $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
-        echo "<h1>Params Fixos</h1><br>";
-        var_dump($formParams);
-        echo "<br><h1>Params Dinamicos</h1><br>";
-        var_dump($formParams2);
+        // echo "<h1>Params Fixos</h1><br>";
+        // var_dump($formParams);
+        // echo "<br><h1>Params Dinamicos</h1><br>";
+        // var_dump($formParams2);
 
         $client = new Client();
 
-        // $response = $client->post($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => $formParams,
-        // ]);
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => $formParams2,
+        ]);
 
-        // $responseBody = $response->getBody()->getContents();
-        // $xml = new SimpleXMLElement($responseBody);
-        // $code = (string)$xml->code;
-        // $data = [
-        //     "code" => $code,
-        // ];
+        $responseBody = $response->getBody()->getContents();
+        $xml = new SimpleXMLElement($responseBody);
+        $code = (string)$xml->code;
+        $data = [
+            "code" => $code,
+        ];
 
-        // return view('pagar', $data);
+        return view('pagar', $data);
     }
 
 
