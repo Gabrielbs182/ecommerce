@@ -174,10 +174,6 @@ class ProdutoController extends Controller
         $cidade = $request->input('cidade');
         $uf = $request->input('uf');
         $cep = $request->input('cep');
-        $emailCliente2 = 'teste@pagseguro.com.br';
-
-        var_dump($emailCliente2);
-        var_dump($emailCliente);
 
         $carrinho = session('cart', []);
 
@@ -198,8 +194,9 @@ class ProdutoController extends Controller
             'senderName' => 'Gabriel Bremenkamp',
             'senderAreaCode' => '51',
             'senderPhone' => '988888888',
-            'senderEmail' => $emailCliente2,
+            'senderEmail' => 'teste@pagseguro.com.br',
             'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
             'senderCPF' => '00000000000',
             'redirectURL' => 'http://localhost:8000',
         ];
