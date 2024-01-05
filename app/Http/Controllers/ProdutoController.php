@@ -158,78 +158,106 @@ class ProdutoController extends Controller
     public function postToPagseguro(Request $request)
     {
 
-        // dd($request);
-
-        $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
-        $ddd = $request->input('ddd');
-        $telefone = $request->input('telefone');
-        $emailCliente = $request->input('email');
-        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
-
         $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
         $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
 
-        $carrinho = session('cart', []);
+        $client = new Client();
+
+        try {
+            $response = $client->post($url, [
+                'headers' => [
+                    'accept' => 'application/xml',
+                    'content-type' => 'application/json',
+                ],
+                'query' => [
+                    'email' => $email,
+                    'token' => $token,
+                ],
+                'timeout' => 30,
+            ]);
+
+            $responseBody = $response->getBody()->getContents();
+            echo $responseBody;
+        } catch (\Exception $e) {
+            echo "Guzzle Error: " . $e->getMessage();
+        }
+
+
+
+        // // dd($request);
+
+        // $vlrFrete = $request->input('valorFrete');
+        // $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
+        // $ddd = $request->input('ddd');
+        // $telefone = $request->input('telefone');
+        // $emailCliente = $request->input('email');
+        // $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
+
+        // $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        // $email = env('PAGSEGURO_EMAIL');
+        // $token = env('PAGSEGURO_TOKEN');
+
+        // $carrinho = session('cart', []);
+
+        // // $formParams = [
+        // //     'email' => $email,
+        // //     'token' => $token,
+        // //     'currency' => 'BRL',
+        // //     'shippingAddressRequired' => 'True',
+        // //     'shippingCost' => $vlrFrete,
+        // //     'sender: name' => $nomeCliente,
+        // //     'sender: email' => $emailCliente,
+        // //     'sender: phoneareaCode' => $ddd,
+        // //     'sender: phonenumber' => $telefone,
+        // //     'sender: documentstype' => 'CPF',
+        // //     'sender: documentsvalue' => $cpf,
+        // //     'redirectURL' => 'https://urbeatstore.com.br/posPagar',
+        // //     'receiveremail' => $email,
+        // //     'timetout' => '20'
+        // // ];
 
         // $formParams = [
         //     'email' => $email,
         //     'token' => $token,
         //     'currency' => 'BRL',
-        //     'shippingAddressRequired' => 'True',
+        //     'shippingAddressRequired' => "True",
         //     'shippingCost' => $vlrFrete,
-        //     'sender: name' => $nomeCliente,
-        //     'sender: email' => $emailCliente,
-        //     'sender: phoneareaCode' => $ddd,
-        //     'sender: phonenumber' => $telefone,
-        //     'sender: documentstype' => 'CPF',
-        //     'sender: documentsvalue' => $cpf,
+        //     'senderName' => $nomeCliente,
+        //     'senderEmail' => $emailCliente,
+        //     'senderAreaCode' => $ddd,
+        //     'senderPhone' => $telefone,
+        //     'senderCPF' => $cpf,
         //     'redirectURL' => 'https://urbeatstore.com.br/posPagar',
         //     'receiveremail' => $email,
-        //     'timetout' => '20'
+        //     'timetout' => '20',
         // ];
 
-        $formParams = [
-            'email' => $email,
-            'token' => $token,
-            'currency' => 'BRL',
-            'shippingCost' => $vlrFrete,
-            'senderName' => $nomeCliente,
-            'senderEmail' => $emailCliente,
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderCPF' => $cpf,
-            'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-            'receiveremail' => $email,
-            'timetout' => '20',
-        ];
+        // foreach ($carrinho as $index => $item) {
+        //     $produto = Produto::find($item['id']);
+        //     $formParams["itemId" . ($index + 1)] = $item['id'];
+        //     $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
+        //     $formParams["itemAmount" . ($index + 1)] = $item['valor'];
+        //     $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
+        // }
 
-        foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']);
-            $formParams["itemId" . ($index + 1)] = $item['id'];
-            $formParams["itemDescription" . ($index + 1)] = $produto['nome'];
-            $formParams["itemAmount" . ($index + 1)] = $item['valor'];
-            $formParams["itemQuantity" . ($index + 1)] = $item['quantidade'];
-        }
+        // $client = new Client();
 
-        $client = new Client();
+        // $response = $client->post($url, [
+        //     'headers' => [
+        //         'Content-Type' => 'application/x-www-form-urlencoded;',
+        //     ],
+        //     'form_params' => $formParams,
+        // ]);
 
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded;',
-            ],
-            'form_params' => $formParams,
-        ]);
+        // $responseBody = $response->getBody()->getContents();
+        // $xml = new SimpleXMLElement($responseBody);
+        // $code = (string)$xml->code;
+        // $data = [];
+        // $data["code"] = $code;
+        // return view('pagar', $data);
 
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [];
-        $data["code"] = $code;
-        return view('pagar', $data);
-
-        // var_dump($formParams);
+        // // var_dump($formParams);
     }
 
 
