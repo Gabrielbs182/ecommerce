@@ -190,7 +190,7 @@ class ProdutoController extends Controller
             'shippingAddressCountry' => 'BRA',
             'shippingAddressPostalCode' => $cep,
             'shippingType' => 3,
-            'senderName' => $nomeCliente,
+            'senderName' => 'Gabriel Bremenkamp',
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
             'senderEmail' => 'email@exemplo.com',
