@@ -177,101 +177,56 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-        $queryParams = http_build_query([
+        $formParams = [
             'email' => $email,
             'token' => $token,
-        ]);
+            'currency' => 'BRL',
+            'shippingAddressStreet' => $logradouro,
+            'shippingAddressNumber' => $numero,
+            'shippingAddressComplement' => 'Casa',
+            'shippingAddressDistrict' => $bairro,
+            'shippingAddressCity' => $cidade,
+            'shippingAddressState' => $uf,
+            'shippingAddressCountry' => 'BRA',
+            'shippingAddressPostalCode' => $cep,
+            'shippingType' => 3,
+            'reference' => '124665c23f7896adff508377925',
+            'senderName' => $nomeCliente,
+            'senderAreaCode' => $ddd,
+            'senderPhone' => $telefone,
+            'senderEmail' => $emailCliente,
+            'extraAmount' => '0.00',
+            'senderCPF' => 'CPF',
+            'senderCPF' => $cpf,
+            'redirectURL' => 'http://localhost:8000',
+        ];
 
-        $url .= '?' . $queryParams;
+        foreach ($carrinho as $index => $item) {
+            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+            $formParams["itemId" . ($index + 1) . ""] = $item['id'];
+            $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
+            $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
+            $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
+        }
 
         $client = new Client();
 
-        try {
-            $response = $client->post($url, [
-                'headers' => [
-                    'accept' => 'application/xml',
-                    'content-type' => 'application/x-www-form-urlencoded',
-                ],
-                'form_params' => [
-                    'currency' => 'BRL',
-                    'item: id' => '1',
-                    'item: description' => 'TESTE1',
-                    'item: amount' => '30',
-                    'item: quantity' => '2',
-                    'item: weight' => '200',
-                    'shipping: addressRequired' => 'FALSE',
-                    'shipping: cost' => '40',
-                    'sender: name' => 'TESTE TESTE',
-                    'sender: email' => 'teste@teste.com.br',
-                    'sender: phoneareaCode' => '27',
-                    'sender: phonenumber' => '992437909',
-                    'sender: documentstype' => 'CPF',
-                    'sender: documentsvalue' => '00000000000',
-                    'reference' => '124122451234',
-                    'redirectURL' => 'https://urbeatstore.com.br/posPagar',
-                    'receiveremail' => 'teste@teste.com.br',
-                    'enableRecover' => 'False',
-                    'timetout' => '20',
-                ],
-                'timeout' => 30,
-            ]);
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            'form_params' => $formParams,
+        ]);
 
-            $responseBody = $response->getBody()->getContents();
-            echo $responseBody;
-        } catch (\Exception $e) {
-            echo "Guzzle Error: " . $e->getMessage();
-        }
+        $responseBody = $response->getBody()->getContents();
+        $xml = new SimpleXMLElement($responseBody);
+        $code = (string)$xml->code;
+        $data = [
+            "code" => $code,
+        ];
 
-        // $formParams = [
-        //     'email' => $email,
-        //     'token' => $token,
-        //     'currency' => 'BRL',
-        //     'shippingAddressStreet' => $logradouro,
-        //     'shippingAddressNumber' => $numero,
-        //     'shippingAddressComplement' => 'Casa',
-        //     'shippingAddressDistrict' => $bairro,
-        //     'shippingAddressCity' => $cidade,
-        //     'shippingAddressState' => $uf,
-        //     'shippingAddressCountry' => 'BRA',
-        //     'shippingAddressPostalCode' => $cep,
-        //     'shippingType' => 3,
-        //     'reference' => '124665c23f7896adff508377925',
-        //     'senderName' => $nomeCliente,
-        //     'senderAreaCode' => $ddd,
-        //     'senderPhone' => $telefone,
-        //     'senderEmail' => $emailCliente,
-        //     'extraAmount' => '0.00',
-        //     'senderCPF' => 'CPF',
-        //     'senderCPF' => $cpf,
-        //     'redirectURL' => 'http://localhost:8000',
-        // ];
-
-        // foreach ($carrinho as $index => $item) {
-        //     $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-        //     $formParams["itemId" . ($index + 1) . ""] = $item['id'];
-        //     $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
-        //     $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
-        //     $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-        //     $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
-        // }
-
-        // $client = new Client();
-
-        // $response = $client->post($url, [
-        //     'headers' => [
-        //         'Content-Type' => 'application/x-www-form-urlencoded',
-        //     ],
-        //     'form_params' => $formParams,
-        // ]);
-
-        // $responseBody = $response->getBody()->getContents();
-        // $xml = new SimpleXMLElement($responseBody);
-        // $code = (string)$xml->code;
-        // $data = [
-        //     "code" => $code,
-        // ];
-
-        // return view('pagar', $data);
+        return view('pagar', $data);
     }
 
 
