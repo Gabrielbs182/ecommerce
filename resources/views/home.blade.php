@@ -464,7 +464,7 @@
                                         <input class="form-check-input" type="radio" name="frete" id="gridRadios1"
                                             value="0" checked>
                                         <label class="form-check-label" for="gridRadios1">
-                                            Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis
+                                            Rua santa catarina2, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis
                                         </label>
                                     </div>
                                 </div>
