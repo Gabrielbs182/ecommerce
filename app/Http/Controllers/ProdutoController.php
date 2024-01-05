@@ -191,7 +191,7 @@ class ProdutoController extends Controller
             'shippingAddressPostalCode' => $cep,
             // 'shippingCost' => $vlrFrete,
             'shippingType' => 3,
-            'senderName' => $nomeCliente,
+            'senderName' => "email@exemplo.com",
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
             'senderEmail' => $emailCliente,
