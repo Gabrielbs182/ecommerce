@@ -194,7 +194,7 @@ class ProdutoController extends Controller
             'senderName' => $nomeCliente,
             'senderAreaCode' => $ddd,
             'senderPhone' => $telefone,
-            'senderEmail' => 'email@exemplo.com',
+            'senderEmail' => $emailCliente,
             'extraAmount' => '0.00',
             'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
