@@ -26,7 +26,7 @@
                                 </div>
                                 <div class="col-md-6 form-group" id="numero-group">
                                     <label>Numero</label>
-                                    <input class="form-control" value="SN" type="text" id="numero" name="numero"
+                                    <input class="form-control" value="0" type="text" id="numero" name="numero"
                                         readonly>
                                 </div>
                                 <div class="col-md-6 form-group" id="cidade-group">
@@ -170,22 +170,22 @@
                         <div class="col-md-6 form-group" id="logradouro-group">
                             <label>Nome</label>
                             <input class="form-control" value="{{ $nome }}" type="text" id="nome"
-                                name="nome" required>
+                                name="nome" required readonly>
                         </div>
                         <div class="col-md-6 form-group" id="logradouro-group">
                             <label>Sobrenome</label>
                             <input class="form-control" value="{{ $sobrenome }}" type="text" id="Sobrenome"
-                                name="Sobrenome" required>
+                                name="Sobrenome" required readonly>
                         </div>
                         <div class="col-md-6 form-group" id="numero-group">
                             <label>Email</label>
                             <input class="form-control" value="{{ Auth::user()->email }}" type="text" id="email"
-                                name="email" required>
+                                name="email" required readonly>
                         </div>
                         <div class="col-md-6 form-group" id="numero-group">
                             <label>Cpf</label>
                             <input class="form-control" value="{{ Auth::user()->cpf }}" type="cpf" id="cpf"
-                                name="cpf" required>
+                                name="cpf" required readonly>
                         </div>
                         <div class="col-md-2 form-group" id="cidade-group">
                             <label>ddd</label>
