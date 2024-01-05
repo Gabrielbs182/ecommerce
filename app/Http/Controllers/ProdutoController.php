@@ -198,6 +198,7 @@ class ProdutoController extends Controller
             'extraAmount' => '0.00',
             'senderCPF' => 'CPF',
             'senderCPF' => $cpf,
+            'shippingCost' => $vlrFrete,
             'redirectURL' => 'http://localhost:8000',
         ];
 
