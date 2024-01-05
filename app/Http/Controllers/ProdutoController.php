@@ -189,7 +189,7 @@ class ProdutoController extends Controller
             'shippingAddressState' => $uf,
             'shippingAddressCountry' => 'BRA',
             'shippingAddressPostalCode' => $cep,
-            'shippingType' => 3,
+            'shippingType' => 1,
             'reference' => '124665c23f7896adff508377925',
             'senderName' => 'Gabriel Bremenkamp',
             'senderAreaCode' => '51',
