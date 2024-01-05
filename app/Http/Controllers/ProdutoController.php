@@ -178,7 +178,7 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-        $formParams2 = [
+        $formParams = [
             'email' => $email,
             'token' => $token,
             'currency' => 'BRL',
@@ -201,28 +201,28 @@ class ProdutoController extends Controller
             'redirectURL' => 'http://localhost:8000',
         ];
 
-        $formParams = [
-            'email' => $email,
-            'token' => $token,
-            'currency' => 'BRL',
-            'shippingAddressStreet' => 'Rua Santa Catarina',
-            'shippingAddressNumber' => '198',
-            'shippingAddressComplement' => 'Casa',
-            'shippingAddressDistrict' => 'Carapina',
-            'shippingAddressCity' => 'Serra',
-            'shippingAddressState' => 'ES',
-            'shippingAddressCountry' => 'BRA',
-            'shippingAddressPostalCode' => '29160044',
-            'shippingType' => 3,
-            'reference' => '124665c23f7896adff508377925',
-            'senderName' => 'Gabriel Bremenkamp',
-            'senderAreaCode' => '51',
-            'senderPhone' => '988888888',
-            'senderEmail' => $emailCliente2,
-            'extraAmount' => '0.00',
-            'senderCPF' => '00000000000',
-            'redirectURL' => 'http://localhost:8000',
-        ];
+        // $formParams = [
+        //     'email' => $email,
+        //     'token' => $token,
+        //     'currency' => 'BRL',
+        //     'shippingAddressStreet' => 'Rua Santa Catarina',
+        //     'shippingAddressNumber' => '198',
+        //     'shippingAddressComplement' => 'Casa',
+        //     'shippingAddressDistrict' => 'Carapina',
+        //     'shippingAddressCity' => 'Serra',
+        //     'shippingAddressState' => 'ES',
+        //     'shippingAddressCountry' => 'BRA',
+        //     'shippingAddressPostalCode' => '29160044',
+        //     'shippingType' => 3,
+        //     'reference' => '124665c23f7896adff508377925',
+        //     'senderName' => 'Gabriel Bremenkamp',
+        //     'senderAreaCode' => '51',
+        //     'senderPhone' => '988888888',
+        //     'senderEmail' => $emailCliente2,
+        //     'extraAmount' => '0.00',
+        //     'senderCPF' => '00000000000',
+        //     'redirectURL' => 'http://localhost:8000',
+        // ];
 
         foreach ($carrinho as $index => $item) {
             $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
@@ -233,14 +233,14 @@ class ProdutoController extends Controller
             $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
         }
 
-        foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-            $formParams2["itemId" . ($index + 1) . ""] = $item['id'];
-            $formParams2["itemDescription" . ($index + 1) . ""] = $produto['nome'];
-            $formParams2["itemAmount" . ($index + 1) . ""] = $item['valor'];
-            $formParams2["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-            $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
-        }
+        // foreach ($carrinho as $index => $item) {
+        //     $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
+        //     $formParams2["itemId" . ($index + 1) . ""] = $item['id'];
+        //     $formParams2["itemDescription" . ($index + 1) . ""] = $produto['nome'];
+        //     $formParams2["itemAmount" . ($index + 1) . ""] = $item['valor'];
+        //     $formParams2["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
+        //     $formParams2["itemWeight" . ($index + 1) . ""] = $produto['peso'];
+        // }
 
         // echo "<h1>Params Fixos</h1><br>";
         // var_dump($formParams);
@@ -253,7 +253,7 @@ class ProdutoController extends Controller
             'headers' => [
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
-            'form_params' => $formParams2,
+            'form_params' => $formParams,
         ]);
 
         $responseBody = $response->getBody()->getContents();
