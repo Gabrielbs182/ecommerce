@@ -221,33 +221,50 @@
         }
 
         function carregarCarrinho() {
+
             $.getJSON('/buscarCarrinho', function(data) {
+
+                // O objeto retornado é um array
                 var total = 0;
                 var indice = 0;
                 $('#modalCarrinhoLista').empty();
-                data.forEach(function(item) {
-                    var asset = $('#asset').val();
-                    total += item.quantidade * item.valor;
-                    var itemCarrinho =
-                        '<tr>' +
-                        '<td class="w-20 align-middle text-center">' +
-                        '<img src="' + asset +
-                        '/' + item.id +
-                        '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
-                        'alt="Produto" >' + item.nome + ' x ' + item.quantidade + '</td>' +
-                        '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
-                        '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
-                        '</td>' +
-                        '<td class="align-middle text-center">' +
-                        '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
-                        indice + ')">' +
-                        '<i class="fa fa-times"></i>' +
-                        '</a>' +
-                        '</td>' +
-                        '</tr>';
-                    $('#modalCarrinhoLista').append(itemCarrinho);
-                    indice++
-                });
+
+                // Verificar se data é um objeto
+                if (typeof data === 'object' && data !== null) {
+                    // Iterar sobre as propriedades do objeto
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var item = data[key];
+
+                            var asset = $('#asset').val();
+                            total += item.quantidade * item.valor;
+                            var itemCarrinho =
+                                '<tr>' +
+                                '<td class="w-20 align-middle text-center">' +
+                                '<img src="' + asset +
+                                '/' + item.id +
+                                '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
+                                'alt="Produto" >' + item.nome + ' x ' + item.quantidade + '</td>' +
+                                '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
+                                '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
+                                '</td>' +
+                                '<td class="align-middle text-center">' +
+                                '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
+                                indice + ')">' +
+                                '<i class="fa fa-times"></i>' +
+                                '</a>' +
+                                '</td>' +
+                                '</tr>';
+                            $('#modalCarrinhoLista').append(itemCarrinho);
+                            indice++
+                        }
+                    }
+
+                    $('#totalCarrinho').empty();
+                    $('#totalCarrinho').append(total);
+                } else {
+                    console.error('O JSON retornado não é um array:', data);
+                }
                 $('#totalCarrinho').empty();
                 $('#totalCarrinho').append(total);
             });
@@ -329,7 +346,7 @@
     {{-- Modais --}}
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
             <div class="modal-content" id="modalbody">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -407,8 +424,8 @@
 
     <div class="modal fade" id="modalCarrinho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
-            role="document">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable justify-content-center" role="document">
+
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="exampleModalLabel">
