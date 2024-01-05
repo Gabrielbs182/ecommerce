@@ -207,7 +207,7 @@
                         var indice = 0;
                         $('#modalCarrinhoLista').empty();
                         if (data.length === 0) {
-                            // carregarCarrinho();
+                            carregarCarrinho();
                             $('#modalCarrinho').modal('hide');
                         } else {
                             carregarCarrinho();
