@@ -71,10 +71,16 @@
                                 <div class="col-md-6 form-group" id="cep-group">
                                     <label>CEP</label>
                                     <input class="form-control" name="cep" type="text" id="cep"
-                                        onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                                         maxlength="10" readonly>
                                 </div>
                             </div>
                         @endif
+
+                        <div class="card-footer border-secondary bg-transparent">
+                            <input type="button" href="{{ route('home') }}" value="Cancelar"
+                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+                            </form>
+                        </div>
                 </div>
             </div>
 
@@ -147,6 +153,46 @@
                             </div>
                         </div>
                     @endguest
+
+                    @auth
+                        <div class="row">
+                            @php
+                                $nomeCompleto = explode(' ', auth()->nome);
+                                if count($nomeCompleto) == 2{
+                                    $nome = $nomeCompleto[0];
+                                    $sobrenome = $nomeCompleto[1];
+                                }else{
+                                    $nome = $nomeCompleto[0];
+                                    $sobrenome = " ";
+                                }
+                                
+                            @endphp
+                            <div class="col-md-6 form-group" id="logradouro-group">
+                                <label>Nome</label>
+                                <input class="form-control" value="{{$nome}}" type="text" id="nome" name="nome" required>
+                            </div>
+                            <div class="col-md-6 form-group"  id="logradouro-group">
+                                <label>Sobrenome</label>
+                                <input class="form-control" value="{{$sobrenome}}" type="text" id="Sobrenome" name="Sobrenome" required>
+                            </div>
+                            <div class="col-md-6 form-group" id="numero-group">
+                                <label>Email</label>
+                                <input class="form-control" value="{{auth()->email}}"  type="text" id="email" name="email" required>
+                            </div>
+                            <div class="col-md-6 form-group" id="numero-group">
+                                <label>Cpf</label>
+                                <input class="form-control" value="{{auth()->cpf}}" type="cpf" id="cpf" name="cpf" required>
+                            </div>
+                            <div class="col-md-2 form-group" id="cidade-group">
+                                <label>ddd</label>
+                                <input class="form-control" type="text" id="ddd" name="ddd" required>
+                            </div>
+                            <div class="col-md-4 form-group" id="cidade-group">
+                                <label>Telefone</label>
+                                <input class="form-control" type="text" id="telefone" name="telefone" required>
+                            </div>
+                        </div>
+                    @endauth
 
                     <div class="card-footer border-secondary bg-transparent">
                         <input type="submit" value="Finalizar Compra"
