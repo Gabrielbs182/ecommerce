@@ -131,7 +131,7 @@ class ProdutoController extends Controller
         } else {
             $valorFrete = 0;
             $data = [
-                'cart' => $carrinho, 'idFrete' => $transporte, 'valor' => $valorFrete
+                'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
             ];
         }
 

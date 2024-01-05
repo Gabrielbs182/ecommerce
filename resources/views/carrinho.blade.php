@@ -13,33 +13,68 @@
                     <form action="{{ route('pagar') }}" method="POST">
                         @csrf
                         <input type="hidden" name="valorFrete" value="{{ $valor }}">
-                        <div class="row">
-                            <div class="col-md-6 form-group" id="logradouro-group">
-                                <label>Logradouro</label>
-                                <input class="form-control" type="text" id="logradouro" name="logradouro" readonly>
+                        @if ($idFrete == 'Gratis')
+                            <div class="row">
+                                <div class="col-md-6 form-group" id="logradouro-group">
+                                    <label>Logradouro</label>
+                                    <input class="form-control" value="Rua Santa alguma coisa" type="text"
+                                        id="logradouro" name="logradouro" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" value="Carapina" id="logradouro-group">
+                                    <label>Bairro</label>
+                                    <input class="form-control" type="text" id="bairro" name="bairro" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="numero-group">
+                                    <label>Numero</label>
+                                    <input class="form-control" value="SN" type="text" id="numero" name="numero"
+                                        readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="cidade-group">
+                                    <label>Cidade</label>
+                                    <input class="form-control" value="Serra" type="text" id="cidade" name="cidade"
+                                        readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="uf-group">
+                                    <label>Uf</label>
+                                    <input class="form-control" value="ES" type="text" id="uf" name="uf"
+                                        readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="cep-group">
+                                    <label>CEP</label>
+                                    <input class="form-control" value="29160887" name="cep" type="text"
+                                        id="cep" onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)"
+                                        readonly>
+                                </div>
                             </div>
-                            <div class="col-md-6 form-group" id="logradouro-group">
-                                <label>Bairro</label>
-                                <input class="form-control" type="text" id="bairro" name="bairro" readonly>
+                        @else
+                            <div class="row">
+                                <div class="col-md-6 form-group" id="logradouro-group">
+                                    <label>Logradouro</label>
+                                    <input class="form-control" type="text" id="logradouro" name="logradouro" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="logradouro-group">
+                                    <label>Bairro</label>
+                                    <input class="form-control" type="text" id="bairro" name="bairro" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="numero-group">
+                                    <label>Numero</label>
+                                    <input class="form-control" type="text" id="numero" name="numero" required>
+                                </div>
+                                <div class="col-md-6 form-group" id="cidade-group">
+                                    <label>Cidade</label>
+                                    <input class="form-control" type="text" id="cidade" name="cidade" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="uf-group">
+                                    <label>Uf</label>
+                                    <input class="form-control" type="text" id="uf" name="uf" readonly>
+                                </div>
+                                <div class="col-md-6 form-group" id="cep-group">
+                                    <label>CEP</label>
+                                    <input class="form-control" name="cep" type="text" id="cep"
+                                        onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)">
+                                </div>
                             </div>
-                            <div class="col-md-6 form-group" id="numero-group">
-                                <label>Numero</label>
-                                <input class="form-control" type="text" id="numero" name="numero" required>
-                            </div>
-                            <div class="col-md-6 form-group" id="cidade-group">
-                                <label>Cidade</label>
-                                <input class="form-control" type="text" id="cidade" name="cidade" readonly>
-                            </div>
-                            <div class="col-md-6 form-group" id="uf-group">
-                                <label>Uf</label>
-                                <input class="form-control" type="text" id="uf" name="uf" readonly>
-                            </div>
-                            <div class="col-md-6 form-group" id="cep-group">
-                                <label>CEP</label>
-                                <input class="form-control" name="cep" type="text" id="cep" onblur="calcularFrete()"
-                                    maxlength="10" oninput="validarNumero(this)">
-                            </div>
-                        </div>
+                        @endif
                 </div>
             </div>
 
@@ -66,7 +101,14 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Frete</h6>
-                                <h6 class="font-weight-medium">R$ {{ $valor }}</h6>
+                                <h6 class="font-weight-medium">
+                                    @if ($valor == 0)
+                                        Grátis
+                                    @else
+                                        R$ {{ $valor }}
+                                    @endif
+
+                                </h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
