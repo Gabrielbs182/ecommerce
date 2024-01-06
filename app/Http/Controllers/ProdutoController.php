@@ -169,7 +169,44 @@ class ProdutoController extends Controller
             ],
         ]);
 
-        echo $response->getBody();
+        $responseJson = json_decode($response->getBody(), true);
+
+        // Verifique se os tokens foram obtidos com sucesso
+        if (isset($responseJson['client_id']) && isset($responseJson['client_secret'])) {
+
+            //Buscando o conteudo do .env
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'PAGSEGURO_CLIENT_ID') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(PAGSEGURO_CLIENT_ID)=(.*)/', 'client_id=' . json_encode($responseJson), $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $client_id = "\client_id=" . json_encode($responseJson);
+                $envContent .= "\PAGSEGURO_CLIENT_ID=" . $client_id;
+            }
+
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'PAGSEGURO_CLIENT_SECRET') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(PAGSEGURO_CLIENT_SECRET)=(.*)/', 'client_secret=' . json_encode($responseJson), $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $client_id = "\client_secret=" . json_encode($responseJson);
+                $envContent .= "\PAGSEGURO_CLIENT_SECRET=" . $client_id;
+            }
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent);
+
+            // Informar ao usuário que os tokens foram armazenados com sucesso
+            return "Aplicativo criado com sucesso.";
+        } else {
+            // Informar ao usuário que houve um problema ao obter os tokens
+            return "Erro: Aplicativo não foi criado.";
+        }
     }
 
     public function posPagar(Request $request)
