@@ -185,6 +185,8 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
+    
+
     public function getToken()
     {
         $client = new \GuzzleHttp\Client();

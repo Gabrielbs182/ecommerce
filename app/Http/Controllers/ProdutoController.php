@@ -15,7 +15,6 @@ use App\Models\Usuario;
 use PagSeguro\Configuration\Configure;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ProdutoController extends Controller
 {
@@ -147,9 +146,30 @@ class ProdutoController extends Controller
             unset($carrinho[$indice]);
             session(["cart" => $carrinho]);
             return $carrinho;
-        }else{
+        } else {
             return $carrinho;
         }
+    }
+
+    public function PagSeguroCriarApp()
+    {
+
+        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        $email = env('PAGSEGURO_EMAIL');
+        $token = env('PAGSEGURO_TOKEN');
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/application', [
+            'body' => '{"name":"Urbeat","site":"https://urbeatstore.com.br","redirect_uri":"https://urbeatstore.com.br/pagbank/auth"}',
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+            ],
+        ]);
+
+        echo $response->getBody();
     }
 
     public function posPagar(Request $request)
