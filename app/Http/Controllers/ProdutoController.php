@@ -203,10 +203,9 @@ class ProdutoController extends Controller
 
 
 
-    public function PagSeguroGetToken(Request $request)
+    public function PagSeguroGetToken(String $code)
     {
 
-        $code = env('PAGSEGURO_CODE');
         $token = env('PAGSEGURO_TOKEN');
         $clientId = env('PAGSEGURO_CLIENT_ID');
         $clientSecret = env('PAGSEGURO_CLIENT_SECRET');
@@ -255,10 +254,13 @@ class ProdutoController extends Controller
             // Verifique se os tokens foram obtidos com sucesso
             if (isset($code)) {
 
-                $this->AtualizarVariaveisAmbiente('PAGSEGURO_CODE', $code);
+                // Informe ao usuário que o código de autorização foi armazenado com sucesso
+                // Agora, chame a função getToken
+                $tokenResponse = $this->PagSeguroGetToken($code);
 
-                // Informar ao usuário que os tokens foram armazenados com sucesso
-                return "Código de autorização salvo.";
+                // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
+
+                return $tokenResponse; // ou alguma mensagem personalizada
             } else {
                 // Informar ao usuário que houve um problema ao obter os tokens
                 return "Erro: algo deu errado.";
