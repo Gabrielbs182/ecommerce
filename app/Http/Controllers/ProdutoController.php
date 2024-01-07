@@ -192,6 +192,11 @@ class ProdutoController extends Controller
         }
     }
 
+    public function PagSeguroAuth(Request $request){
+
+        var_dump($request);
+    }
+
 
     public function posPagar(Request $request)
     {
