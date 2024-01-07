@@ -279,25 +279,33 @@ class ProdutoController extends Controller
             // Verifique se os tokens foram obtidos com sucesso
             if (isset($code)) {
 
-                // Buscando o conteúdo do .env
-                $envPath = base_path('.env');
-                $envContent = file_get_contents($envPath);
+                // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
+                $dotenv = Dotenv\Dotenv::createImmutable(base_path());
+                $dotenv->load();
 
-                // Verificar se a chave Authorization já existe
-                if (strpos($envContent, 'PAGSEGURO_CODE') !== false) {
-                    // Atualizar o valor se já existir
-                    $envContent = preg_replace('/(PAGSEGURO_CODE)=(.*)/', 'PAGSEGURO_CODE=' . $code, $envContent);
-                } else {
-                    // Adicionar uma nova linha com a chave Authorization e os tokens
-                    $envContent .= "\PAGSEGURO_CODE=" . $code;
-                }
+                // Atualize as variáveis de ambiente
+                $dotenv->setKey('PAGSEGURO_CODE', $code);
 
-                // Salvar as alterações no arquivo .env
-                file_put_contents($envPath, $envContent, FILE_APPEND);
 
-                // Lê o arquivo .env
-                $envFile = app()->environmentFilePath();
-                $envContent = file_get_contents($envFile);
+                // // Buscando o conteúdo do .env
+                // $envPath = base_path('.env');
+                // $envContent = file_get_contents($envPath);
+
+                // // Verificar se a chave Authorization já existe
+                // if (strpos($envContent, 'PAGSEGURO_CODE') !== false) {
+                //     // Atualizar o valor se já existir
+                //     $envContent = preg_replace('/(PAGSEGURO_CODE)=(.*)/', 'PAGSEGURO_CODE=' . $code, $envContent);
+                // } else {
+                //     // Adicionar uma nova linha com a chave Authorization e os tokens
+                //     $envContent .= "\PAGSEGURO_CODE=" . $code;
+                // }
+
+                // // Salvar as alterações no arquivo .env
+                // file_put_contents($envPath, $envContent, FILE_APPEND);
+
+                // // Lê o arquivo .env
+                // $envFile = app()->environmentFilePath();
+                // $envContent = file_get_contents($envFile);
 
                 // Informar ao usuário que os tokens foram armazenados com sucesso
                 return "Código de autorização salvo.";
