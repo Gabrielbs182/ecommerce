@@ -167,7 +167,7 @@ class ProdutoController extends Controller
         }
 
         // Salvar as alterações no arquivo .env
-        file_put_contents($envPath, $envContent, FILE_APPEND);
+        file_put_contents($envPath, $envContent);
     }
 
     public function PagSeguroCriarApp()
