@@ -15,6 +15,7 @@ use App\Models\Usuario;
 use PagSeguro\Configuration\Configure;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
+use Dotenv\Dotenv;
 
 class ProdutoController extends Controller
 {
@@ -248,47 +249,23 @@ class ProdutoController extends Controller
 
         $responseJson = json_decode($response->getBody(), true);
 
-        // Verifique se os tokens foram obtidos com sucesso
-        if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
+        // Verifique se a resposta contém o array esperado
+        if (isset($responseJson['access_token'], $responseJson['refresh_token'], $responseJson['account_id'])) {
+            // Tokens obtidos com sucesso
 
-            // Buscando o conteúdo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
+            // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
+            $dotenv = Dotenv\Dotenv::createImmutable(base_path());
+            $dotenv->load();
 
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_ACCESS_TOKEN') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_ACCESS_TOKEN)=(.*)/', 'PAGSEGURO_ACCESS_TOKEN=' . $responseJson['access_token'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\PAGSEGURO_ACCESS_TOKEN=" . $responseJson['access_token'];
-            }
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_REFRESH_TOKEN') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_REFRESH_TOKEN)=(.*)/', 'PAGSEGURO_REFRESH_TOKEN=' . $responseJson['refresh_token'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\PAGSEGURO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
-            }
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_ACCOUNT_ID') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_ACCOUNT_ID)=(.*)/', 'PAGSEGURO_ACCOUNT_ID=' . $responseJson['account_id'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\PAGSEGURO_ACCOUNT_ID=" . $responseJson['account_id'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent, FILE_APPEND);
+            // Atualize as variáveis de ambiente
+            $dotenv->setKey('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
+            $dotenv->setKey('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
+            $dotenv->setKey('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Tokens salvos com sucesso";
         } else {
-            // Informar ao usuário que houve um problema ao obter os tokens
+            // Erro: Tokens não vieram
             return "Erro: Tokens não vieram.";
         }
     }
