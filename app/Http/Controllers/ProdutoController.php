@@ -17,17 +17,6 @@ class ProdutoController extends Controller
 {
     //
 
-    private $_configs;
-
-    public function __construct()
-    {
-        $this->_configs = new Configure();
-        $this->_configs->setCharset("UTF-8");
-        $this->_configs->setAccountCredentials(env('PAGSEGURO_EMAIL'), env('PAGSEGURO_TOKEN'));
-        $this->_configs->setEnvironment(env('PAGSEGURO_AMBIENTE'));
-        $this->_configs->setLog(true, storage_path('logs/pagseguro_' . date('Ymd') . '.log'));
-    }
-
     public function buscarProduto($id)
     {
         $produto = Produto::where('id', '=', $id)->get();
