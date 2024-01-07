@@ -203,10 +203,53 @@ class ProdutoController extends Controller
         }
     }
 
+
+
     public function PagSeguroGetToken(Request $request)
     {
 
-        echo $request->getBody();
+        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        $code = env('PAGSEGURO_CODE');
+        $token = env('PAGSEGURO_TOKEN');
+        $clientId = env('PAGSEGURO_CLIENT_ID');
+        $clientSecret = env('PAGSEGURO_CLIENT_SECRET');
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/token', [
+            'body' => '{"grant_type":"authorization_code","code":' . $code . ',"redirect_uri":"https://urbeatstore.com.br/pagbank/auth"}',
+            'headers' => [
+                'Authorization' => 'Bearer ' . $token,
+                'X_CLIENT_ID' => $clientId,
+                'X_CLIENT_SECRET' => $clientSecret,
+                'accept' => 'application/json',
+                'content-type' => 'application/json',
+            ],
+        ]);
+
+        $responseJson = json_decode($response->getBody(), true);
+
+        // Verifique se os tokens foram obtidos com sucesso
+        if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
+
+            // Buscando o conteúdo do .env
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Atualizar ou adicionar as chaves no arquivo .env
+            $envContent .= "\nPAGSEGURO_ACCESS_TOKEN=" . $responseJson['access_token'];
+            $envContent .= "\nPAGSEGURO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
+            $envContent .= "\nPAGSEGURO_ACCOUNT_ID=" . $responseJson['account_id'];
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent, FILE_APPEND);
+
+            // Informar ao usuário que os tokens foram armazenados com sucesso
+            return "Tokens salvos com sucesso";
+        } else {
+            // Informar ao usuário que houve um problema ao obter os tokens
+            return "Erro: Tokens não vieram.";
+        }
     }
 
     public function PagSeguroAuth(Request $request)
