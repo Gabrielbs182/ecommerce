@@ -15,7 +15,6 @@ use App\Models\Usuario;
 use PagSeguro\Configuration\Configure;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
-use Dotenv;
 
 class ProdutoController extends Controller
 {
@@ -254,7 +253,7 @@ class ProdutoController extends Controller
             // Tokens obtidos com sucesso
 
             // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
-            $dotenv = Dotenv::createImmutable(base_path());
+            $dotenv = Dotenv\Dotenv::createImmutable(base_path());
             $dotenv->load();
 
             // Atualize as variáveis de ambiente
@@ -280,7 +279,7 @@ class ProdutoController extends Controller
             if (isset($code)) {
 
                 // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
-                $dotenv = Dotenv::createImmutable(base_path());
+                $dotenv = Dotenv\Dotenv::createImmutable(base_path());
                 $dotenv->load();
 
                 // Atualize as variáveis de ambiente
