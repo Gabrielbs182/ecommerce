@@ -203,6 +203,12 @@ class ProdutoController extends Controller
         }
     }
 
+    public function PagSeguroGetToken(Request $request)
+    {
+
+        echo $request->getBody();
+    }
+
     public function PagSeguroAuth(Request $request)
     {
         // Verifica se o código está presente na URL
