@@ -205,8 +205,34 @@ class ProdutoController extends Controller
 
     public function PagSeguroAuth(Request $request)
     {
+        // Verifica se o código está presente na URL
+        if ($request->has('code')) {
+            $code = $request->input('code');
 
-        var_dump($request);
+            // Verifique se os tokens foram obtidos com sucesso
+            if (isset($code)) {
+
+                // Buscando o conteúdo do .env
+                $envPath = base_path('.env');
+                $envContent = file_get_contents($envPath);
+
+                // Atualizar ou adicionar as chaves no arquivo .env
+                $envContent .= "\nPAGSEGURO_CODE=" . $code;
+
+                // Salvar as alterações no arquivo .env
+                file_put_contents($envPath, $envContent, FILE_APPEND);
+
+                // Lê o arquivo .env
+                $envFile = app()->environmentFilePath();
+                $envContent = file_get_contents($envFile);
+
+                // Informar ao usuário que os tokens foram armazenados com sucesso
+                return "Código de autorização salvo.";
+            } else {
+                // Informar ao usuário que houve um problema ao obter os tokens
+                return "Erro: algo deu errado.";
+            }
+        }
     }
 
 
