@@ -5,14 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produto;
 use App\Models\Estoque;
-use App\Models\Tamanho;
 use App\Models\Categoria;
 use App\Models\ItensPedido;
 use App\Models\Pedido;
 use App\Services\VendaService;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Usuario;
-use PagSeguro\Configuration\Configure;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 
@@ -75,12 +72,7 @@ class ProdutoController extends Controller
         return $estoque;
     }
 
-    public function getCredential()
-    {
-        return $this->_configs->getAccountCredentials();
-    }
-
-    public function index(Request $request)
+    public function index()
     {
         $data = [];
         $listaProdutos = Produto::all();
@@ -88,7 +80,7 @@ class ProdutoController extends Controller
         return view("home", $data);
     }
 
-    public function categoria($idcategoria = 0, Request $request)
+    public function categoria($idcategoria = 0)
     {
         $data = [];
         $listaCategorias = Categoria::all();
@@ -162,10 +154,35 @@ class ProdutoController extends Controller
         }
     }
 
+    public function AtualizarVariaveisAmbiente(String $chave, String $valor)
+    {
+
+        // Verificações de parâmetros
+        if (empty($chave) || empty($valor)) {
+            // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo
+            return "Erro: Chave ou valor vazios.";
+        }
+
+        // Buscando o conteúdo do .env
+        $envPath = base_path('.env');
+        $envContent = file_get_contents($envPath);
+
+        // Atualizar ou adicionar as chaves no arquivo .env
+        if (strpos($envContent, $chave) !== false) {
+
+            // Atualizar o valor se já existir
+            $envContent = preg_replace('/(' . $chave . ')=(.*)/', '' . $chave . '=' . $valor, $envContent);
+        } else {
+            // Adicionar uma nova linha com a chave Authorization e os tokens
+            $envContent .= "\n" . $chave . "=" . $valor;
+        }
+
+        // Salvar as alterações no arquivo .env
+        file_put_contents($envPath, $envContent, FILE_APPEND);
+    }
+
     public function PagSeguroCriarApp()
     {
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
 
         $client = new \GuzzleHttp\Client();
@@ -184,31 +201,8 @@ class ProdutoController extends Controller
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['client_id']) && isset($responseJson['client_secret'])) {
 
-            // Buscando o conteúdo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Atualizar ou adicionar as chaves no arquivo .env
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_CLIENT_ID') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_CLIENT_ID)=(.*)/', 'PAGSEGURO_CLIENT_ID=' . $responseJson['client_id'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\PAGSEGURO_CLIENT_ID=" . $responseJson['client_id'];
-            }
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_CLIENT_SECRET') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_CLIENT_SECRET)=(.*)/', 'PAGSEGURO_CLIENT_SECRET=' . $responseJson['client_secret'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\PAGSEGURO_CLIENT_SECRET=" . $responseJson['client_secret'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent, FILE_APPEND);
+            $this->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_ID', $responseJson['client_id']);
+            $this->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_SECRET', $responseJson['client_secret']);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Aplicativo criado com sucesso.";
@@ -251,53 +245,9 @@ class ProdutoController extends Controller
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
 
-            // Buscando o conteúdo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_ACCESS_TOKEN') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_ACCESS_TOKEN)=(.*)/', 'PAGSEGURO_ACCESS_TOKEN=' . $responseJson['access_token'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\nPAGSEGURO_ACCESS_TOKEN=" . $responseJson['access_token'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent, FILE_APPEND);
-
-            // Buscando o conteúdo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_REFRESH_TOKEN') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_REFRESH_TOKEN)=(.*)/', 'PAGSEGURO_REFRESH_TOKEN=' . $responseJson['refresh_token'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\nPAGSEGURO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent, FILE_APPEND);
-
-            // Buscando o conteúdo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'PAGSEGURO_ACCOUNT_ID') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(PAGSEGURO_ACCOUNT_ID)=(.*)/', 'PAGSEGURO_ACCOUNT_ID=' . $responseJson['account_id'], $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\nPAGSEGURO_ACCOUNT_ID=" . $responseJson['account_id'];
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent, FILE_APPEND);
+            $this->AtualizarVariaveisAmbiente('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
+            $this->AtualizarVariaveisAmbiente('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
+            $this->AtualizarVariaveisAmbiente('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Tokens salvos com sucesso";
@@ -316,21 +266,7 @@ class ProdutoController extends Controller
             // Verifique se os tokens foram obtidos com sucesso
             if (isset($code)) {
 
-                // Buscando o conteúdo do .env
-                $envPath = base_path('.env');
-                $envContent = file_get_contents($envPath);
-
-                // Verificar se a chave Authorization já existe
-                if (strpos($envContent, 'PAGSEGURO_CODE') !== false) {
-                    // Atualizar o valor se já existir
-                    $envContent = preg_replace('/(PAGSEGURO_CODE)=(.*)/', 'PAGSEGURO_CODE=' . $code, $envContent);
-                } else {
-                    // Adicionar uma nova linha com a chave Authorization e os tokens
-                    $envContent .= "\nPAGSEGURO_CODE=" . $code;
-                }
-
-                // Salvar as alterações no arquivo .env
-                file_put_contents($envPath, $envContent, FILE_APPEND);
+                $this->AtualizarVariaveisAmbiente('PAGSEGURO_CODE', $code);
 
                 // Informar ao usuário que os tokens foram armazenados com sucesso
                 return "Código de autorização salvo.";
