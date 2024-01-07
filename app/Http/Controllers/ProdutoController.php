@@ -170,6 +170,36 @@ class ProdutoController extends Controller
         file_put_contents($envPath, $envContent);
     }
 
+    public function PagSeguroCheckout()
+    {
+        $client = new \GuzzleHttp\Client();
+
+        $data = [
+            'items' => [
+                [
+                    'reference_id' => 'produto1',
+                    'name' => 'Produto 1',
+                    'description' => 'Descrição do Produto 1',
+                    'quantity' => 3,
+                    'unit_amount' => 3000,
+                    // Adicione outros campos conforme necessário
+                ],
+                // Adicione mais produtos se necessário
+            ],
+        ];
+
+        $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
+            'body' => json_encode($data),
+            'headers' => [
+                'Authorization' => 'Bearer REMOVIDO_PAGSEGURO_TOKEN',
+                'Content-type' => 'application/json',
+                'accept' => 'application/json',
+            ],
+        ]);
+
+        echo $response->getBody();
+    }
+
     public function PagSeguroCriarApp()
     {
         $token = env('PAGSEGURO_TOKEN');

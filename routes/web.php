@@ -45,6 +45,7 @@ Route::get('/pagseguro/criarapp', [ProdutoController::class, 'PagSeguroCriarApp'
 Route::get('/pagbank/authorize', [ProdutoController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
 Route::get('/pagbank/auth', [ProdutoController::class, 'PagSeguroAuth'])->name('pagseguro.auth');
 Route::get('/pagbank/gettoken', [ProdutoController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken');
+Route::get('/pagbank/checkout', [ProdutoController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
 
 
 //REDIRECIONAMENTO
