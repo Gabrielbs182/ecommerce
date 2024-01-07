@@ -203,25 +203,14 @@ class ProdutoController extends Controller
         // Verifique se o campo 'links' existe e se contém o link 'SELF'
         if (isset($data['links']) && is_array($data['links'])) {
             foreach ($data['links'] as $link) {
-                if (isset($link['rel']) && $link['rel'] === 'SELF' && isset($link['href'])) {
-                    $selfLink = $link['href'];
+                if (isset($link['rel']) && $link['rel'] === 'PAY' && isset($link['href'])) {
+                    $PAYlink = $link['href'];
+                    return redirect($PAYlink);
                     break;
                 }
             }
-        }
-
-        if (isset($selfLink)) {
-            // Agora você pode usar $selfLink para fazer uma solicitação GET
-            $response = $client->request('GET', $selfLink, [
-                'headers' => [
-                    'Authorization' => 'Bearer REMOVIDO_PAGSEGURO_TOKEN',
-                    'accept' => 'application/json',
-                ],
-            ]);
-
-            echo $response->getBody();
         } else {
-            echo 'Link "SELF" não encontrado na resposta.';
+            echo 'PagSeguro não respondeu.';
         }
     }
 
