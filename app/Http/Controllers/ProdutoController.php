@@ -43,6 +43,17 @@ class ProdutoController extends Controller
         return $carrinho;
     }
 
+    public function redirectToAuthorization()
+    {
+        $client_id = env('PAGSEGURO_CLIENT_ID');
+        $redirect_uri = 'https://urbeatstore.com.br/pagbank/auth';
+        $scope = env('PAGSEGURO_SCOPE'); // Adicione outras permissões conforme necessário
+        $authorizationUrl = "https://connect.sandbox.pagseguro.uol.com.br/oauth2/authorize?";
+        $authorizationUrl .= "response_type=code&client_id={$client_id}&redirect_uri={$redirect_uri}&scope={$scope}&state=xyz";
+
+        return redirect()->away($authorizationUrl);
+    }
+
     public function atualizarQuantidadeCarrinho()
     {
         $carrinho = session('cart', []);
@@ -192,7 +203,8 @@ class ProdutoController extends Controller
         }
     }
 
-    public function PagSeguroAuth(Request $request){
+    public function PagSeguroAuth(Request $request)
+    {
 
         var_dump($request);
     }
