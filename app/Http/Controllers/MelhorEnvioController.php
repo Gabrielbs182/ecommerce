@@ -174,6 +174,11 @@ class MelhorEnvioController extends Controller
         return $response->getBody();
     }
 
+    public function PagSeguroAuth(Request $request){
+
+        var_dump($request);
+    }
+
     public function redirectToAuthorization()
     {
         $client_id = env('CLIENT_ID');

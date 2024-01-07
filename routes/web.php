@@ -42,6 +42,7 @@ Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getA
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
 Route::get('/melhorenvio/lancarFrete', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete')->middleware('IsAdmin');
 Route::get('/pagseguro/criarapp', [ProdutoController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
+Route::get('/pagseguro/auth', [ProdutoController::class, 'PagSeguroAuth'])->name('pagseguro.auth');
 
 
 //REDIRECIONAMENTO
