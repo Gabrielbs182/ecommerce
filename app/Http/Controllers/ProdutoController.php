@@ -248,23 +248,61 @@ class ProdutoController extends Controller
 
         $responseJson = json_decode($response->getBody(), true);
 
-        // Verifique se a resposta contém o array esperado
-        if (isset($responseJson['access_token'], $responseJson['refresh_token'], $responseJson['account_id'])) {
-            // Tokens obtidos com sucesso
+        // Verifique se os tokens foram obtidos com sucesso
+        if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
 
-            // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
-            $dotenv = Dotenv\Dotenv::createImmutable(base_path());
-            $dotenv->load();
+            // Buscando o conteúdo do .env
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
 
-            // Atualize as variáveis de ambiente
-            $dotenv->setKey('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
-            $dotenv->setKey('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
-            $dotenv->setKey('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'PAGSEGURO_ACCESS_TOKEN') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(PAGSEGURO_ACCESS_TOKEN)=(.*)/', 'PAGSEGURO_ACCESS_TOKEN=' . $responseJson['access_token'], $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $envContent .= "\nPAGSEGURO_ACCESS_TOKEN=" . $responseJson['access_token'];
+            }
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent, FILE_APPEND);
+
+            // Buscando o conteúdo do .env
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'PAGSEGURO_REFRESH_TOKEN') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(PAGSEGURO_REFRESH_TOKEN)=(.*)/', 'PAGSEGURO_REFRESH_TOKEN=' . $responseJson['refresh_token'], $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $envContent .= "\nPAGSEGURO_REFRESH_TOKEN=" . $responseJson['refresh_token'];
+            }
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent, FILE_APPEND);
+
+            // Buscando o conteúdo do .env
+            $envPath = base_path('.env');
+            $envContent = file_get_contents($envPath);
+
+            // Verificar se a chave Authorization já existe
+            if (strpos($envContent, 'PAGSEGURO_ACCOUNT_ID') !== false) {
+                // Atualizar o valor se já existir
+                $envContent = preg_replace('/(PAGSEGURO_ACCOUNT_ID)=(.*)/', 'PAGSEGURO_ACCOUNT_ID=' . $responseJson['account_id'], $envContent);
+            } else {
+                // Adicionar uma nova linha com a chave Authorization e os tokens
+                $envContent .= "\nPAGSEGURO_ACCOUNT_ID=" . $responseJson['account_id'];
+            }
+
+            // Salvar as alterações no arquivo .env
+            file_put_contents($envPath, $envContent, FILE_APPEND);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Tokens salvos com sucesso";
         } else {
-            // Erro: Tokens não vieram
+            // Informar ao usuário que houve um problema ao obter os tokens
             return "Erro: Tokens não vieram.";
         }
     }
@@ -278,33 +316,21 @@ class ProdutoController extends Controller
             // Verifique se os tokens foram obtidos com sucesso
             if (isset($code)) {
 
-                // Use o pacote vlucas/phpdotenv para atualizar as variáveis de ambiente
-                $dotenv = Dotenv\Dotenv::createImmutable(base_path());
-                $dotenv->load();
+                // Buscando o conteúdo do .env
+                $envPath = base_path('.env');
+                $envContent = file_get_contents($envPath);
 
-                // Atualize as variáveis de ambiente
-                $dotenv->setKey('PAGSEGURO_CODE', $code);
+                // Verificar se a chave Authorization já existe
+                if (strpos($envContent, 'PAGSEGURO_CODE') !== false) {
+                    // Atualizar o valor se já existir
+                    $envContent = preg_replace('/(PAGSEGURO_CODE)=(.*)/', 'PAGSEGURO_CODE=' . $code, $envContent);
+                } else {
+                    // Adicionar uma nova linha com a chave Authorization e os tokens
+                    $envContent .= "\nPAGSEGURO_CODE=" . $code;
+                }
 
-
-                // // Buscando o conteúdo do .env
-                // $envPath = base_path('.env');
-                // $envContent = file_get_contents($envPath);
-
-                // // Verificar se a chave Authorization já existe
-                // if (strpos($envContent, 'PAGSEGURO_CODE') !== false) {
-                //     // Atualizar o valor se já existir
-                //     $envContent = preg_replace('/(PAGSEGURO_CODE)=(.*)/', 'PAGSEGURO_CODE=' . $code, $envContent);
-                // } else {
-                //     // Adicionar uma nova linha com a chave Authorization e os tokens
-                //     $envContent .= "\PAGSEGURO_CODE=" . $code;
-                // }
-
-                // // Salvar as alterações no arquivo .env
-                // file_put_contents($envPath, $envContent, FILE_APPEND);
-
-                // // Lê o arquivo .env
-                // $envFile = app()->environmentFilePath();
-                // $envContent = file_get_contents($envFile);
+                // Salvar as alterações no arquivo .env
+                file_put_contents($envPath, $envContent, FILE_APPEND);
 
                 // Informar ao usuário que os tokens foram armazenados com sucesso
                 return "Código de autorização salvo.";
