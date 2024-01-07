@@ -197,7 +197,32 @@ class ProdutoController extends Controller
             ],
         ]);
 
-        echo $response->getBody();
+        $jsonResponse = $response->getBody();
+        $data = json_decode($jsonResponse, true);
+
+        // Verifique se o campo 'links' existe e se contém o link 'SELF'
+        if (isset($data['links']) && is_array($data['links'])) {
+            foreach ($data['links'] as $link) {
+                if (isset($link['rel']) && $link['rel'] === 'SELF' && isset($link['href'])) {
+                    $selfLink = $link['href'];
+                    break;
+                }
+            }
+        }
+
+        if (isset($selfLink)) {
+            // Agora você pode usar $selfLink para fazer uma solicitação GET
+            $response = $client->request('GET', $selfLink, [
+                'headers' => [
+                    'Authorization' => 'Bearer REMOVIDO_PAGSEGURO_TOKEN',
+                    'accept' => 'application/json',
+                ],
+            ]);
+
+            echo $response->getBody();
+        } else {
+            echo 'Link "SELF" não encontrado na resposta.';
+        }
     }
 
     public function PagSeguroCriarApp()
