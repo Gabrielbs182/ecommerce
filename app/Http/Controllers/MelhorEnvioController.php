@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Dotenv\Dotenv;
 
 class MelhorEnvioController extends Controller
 {

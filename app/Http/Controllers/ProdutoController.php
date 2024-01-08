@@ -111,8 +111,6 @@ class ProdutoController extends Controller
 
     public function verCarrinho(Request $request)
     {
-
-
         $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
 
@@ -170,28 +168,93 @@ class ProdutoController extends Controller
         file_put_contents($envPath, $envContent);
     }
 
-    public function PagSeguroCheckout()
+    public function PagSeguroCheckout(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
 
-        $data = [
-            'items' => [
-                [
-                    'reference_id' => 'produto1',
-                    'name' => 'Produto 1',
-                    'description' => 'Descrição do Produto 1',
-                    'quantity' => 3,
-                    'unit_amount' => 3000,
-                    // Adicione outros campos conforme necessário
-                ],
-                // Adicione mais produtos se necessário
-            ],
+        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
+        $email = env('PAGSEGURO_EMAIL');
+        $token = env('PAGSEGURO_TOKEN');
+
+        $vlrFrete = $request->input('valorFrete');
+        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
+        $ddd = $request->input('ddd');
+        $telefone = $request->input('telefone');
+        $emailCliente = $request->input('email');
+        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
+        $logradouro = $request->input('logradouro');
+        $bairro = $request->input('bairro');
+        $numero = $request->input('numero');
+        $cidade = $request->input('cidade');
+        $uf = $request->input('uf');
+        $cep = $request->input('cep');
+
+        $carrinho = session('cart', []);
+
+        $customerPhone = [
+            'country' => '+55',
+            'area' => $ddd,
+            'number' => $telefone,
         ];
 
+        $customerName = $nomeCliente;
+        $customerEmail = $emailCliente;
+        $customerTaxId = $cpf;
+
+        $shippingAddress = [
+            'street' => $logradouro,
+            'number' => $numero,
+            'locality' => $bairro,
+            'city' => $cidade,
+            'region_code' => $uf,
+            'country' => 'BRA',
+            'postal_code' => $cep,
+        ];
+
+        $shippingAmount = $vlrFrete;
+
+        $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
+
+        // Construa o corpo dinamicamente usando as variáveis
+        $bodyData = [
+            'customer' => [
+                'phone' => $customerPhone,
+                'Name' => $customerName,
+                'email' => $customerEmail,
+                'tax_id' => $customerTaxId,
+            ],
+            'shipping' => [
+                'address' => $shippingAddress,
+                'type' => 'FIXED',
+                'address_modifiable' => false,
+                'amount' => $shippingAmount,
+            ],
+            'customer_modifiable' => false,
+            'redirect_url' => $redirectUrl,
+        ];
+
+        $bodyData = ['items' => []];
+
+        foreach ($carrinho as $item) {
+            $produto = Produto::find($item['id']);
+            $bodyData['items'][] = [
+                'reference_id' => $item['id'],
+                'name' => $produto['nome'],
+                'description' => $produto['nome'],
+                'quantity' => $item['quantidade'],
+                'unit_amount' => $item['valor'],
+                // Adicione outros campos conforme necessário
+            ];
+        }
+
+        // Converta o array em JSON para ser usado como corpo da requisição
+        $body = json_encode($bodyData);
+        $client = new \GuzzleHttp\Client();
+
+        // Substitua o corpo na sua chamada de requisição
         $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
-            'body' => json_encode($data),
+            'body' => $body,
             'headers' => [
-                'Authorization' => 'Bearer REMOVIDO_PAGSEGURO_TOKEN',
+                'Authorization' => 'Bearer ' . $token,
                 'Content-type' => 'application/json',
                 'accept' => 'application/json',
             ],
