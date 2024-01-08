@@ -232,11 +232,11 @@ class ProdutoController extends Controller
             'redirect_url' => $redirectUrl,
         ];
 
-        $bodyData = ['items' => []];
+        
 
         foreach ($carrinho as $item) {
             $produto = Produto::find($item['id']);
-            $bodyData['items'][] = [
+            $item = [
                 'reference_id' => $item['id'],
                 'name' => $produto['nome'],
                 'description' => $produto['nome'],
@@ -244,13 +244,14 @@ class ProdutoController extends Controller
                 'unit_amount' => $item['valor'],
                 // Adicione outros campos conforme necessário
             ];
+            $bodyData['items'][] = $item;
         }
 
         // Converta o array em JSON para ser usado como corpo da requisição
         $body = json_encode($bodyData);
 
         dd($body);
-        
+
         $client = new \GuzzleHttp\Client();
 
         // Substitua o corpo na sua chamada de requisição
