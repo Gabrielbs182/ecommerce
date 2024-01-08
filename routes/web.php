@@ -44,7 +44,7 @@ Route::get('/melhorenvio/lancarFrete', [MelhorEnvioController::class, 'lancarFre
 Route::get('/pagseguro/criarapp', [ProdutoController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
 Route::get('/pagbank/authorize', [ProdutoController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
 Route::get('/pagbank/auth', [ProdutoController::class, 'PagSeguroAuth'])->name('pagseguro.auth');
-Route::get('/pagbank/gettoken', [ProdutoController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken');
+Route::get('/pagbank/gettoken', [ProdutoController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
 Route::get('/pagbank/checkout', [ProdutoController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
 
 
