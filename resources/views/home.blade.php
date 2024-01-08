@@ -369,10 +369,10 @@
                                                 alt="Image">
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                                    <a class="carousel-control-prev align-middle" href="#product-carousel" data-slide="prev">
                                         <i class="fa fa-2x fa-angle-left text-dark"></i>
                                     </a>
-                                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                                    <a class="carousel-control-next align-middle" href="#product-carousel" data-slide="next">
                                         <i class="fa fa-2x fa-angle-right text-dark"></i>
                                     </a>
                                 </div>

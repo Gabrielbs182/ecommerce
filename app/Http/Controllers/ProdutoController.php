@@ -171,8 +171,6 @@ class ProdutoController extends Controller
     public function PagSeguroCheckout(Request $request)
     {
 
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
 
         $vlrFrete = ($request->input('valorFrete')*100);
@@ -382,85 +380,6 @@ class ProdutoController extends Controller
     {
         dd($request);
     }
-
-    public function postToPagseguro(Request $request)
-    {
-
-        $url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout';
-        $email = env('PAGSEGURO_EMAIL');
-        $token = env('PAGSEGURO_TOKEN');
-
-        $vlrFrete = $request->input('valorFrete');
-        $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
-        $ddd = $request->input('ddd');
-        $telefone = $request->input('telefone');
-        $emailCliente = $request->input('email');
-        $cpf = str_replace(['.', '-'], '', $request->input('cpf'));
-        $logradouro = $request->input('logradouro');
-        $bairro = $request->input('bairro');
-        $numero = $request->input('numero');
-        $cidade = $request->input('cidade');
-        $uf = $request->input('uf');
-        $cep = $request->input('cep');
-
-        $carrinho = session('cart', []);
-
-        $formParams = [
-            'email' => $email,
-            'token' => $token,
-            'currency' => 'BRL',
-            'shippingAddressStreet' => $logradouro,
-            'shippingAddressNumber' => $numero,
-            'shippingAddressComplement' => 'Casa',
-            'shippingAddressDistrict' => $bairro,
-            'shippingAddressCity' => $cidade,
-            'shippingAddressState' => $uf,
-            'shippingAddressCountry' => 'BRA',
-            'shippingAddressPostalCode' => $cep,
-            'shippingType' => 3,
-            'senderName' => $nomeCliente,
-            'senderAreaCode' => $ddd,
-            'senderPhone' => $telefone,
-            'senderEmail' => 'teste@sandbox.pagseguro.com.br',
-            'extraAmount' => '0.00',
-            'senderCPF' => 'CPF',
-            'senderCPF' => '00000000000',
-            'redirectURL' => 'http://localhost:8000',
-        ];
-
-        if ($vlrFrete > 0) {
-            $formParams['shippingCost'] = $vlrFrete;
-        }
-
-        foreach ($carrinho as $index => $item) {
-            $produto = Produto::find($item['id']); // Corrigi aqui, substituí "Produto.find" por "Produto::find"
-            $formParams["itemId" . ($index + 1) . ""] = $item['id'];
-            $formParams["itemDescription" . ($index + 1) . ""] = $produto['nome'];
-            $formParams["itemAmount" . ($index + 1) . ""] = $item['valor'];
-            $formParams["itemQuantity" . ($index + 1) . ""] = $item['quantidade'];
-            $formParams["itemWeight" . ($index + 1) . ""] = $produto['peso'];
-        }
-
-        $client = new Client();
-
-        $response = $client->post($url, [
-            'headers' => [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-            'form_params' => $formParams,
-        ]);
-
-        $responseBody = $response->getBody()->getContents();
-        $xml = new SimpleXMLElement($responseBody);
-        $code = (string)$xml->code;
-        $data = [
-            "code" => $code,
-        ];
-
-        return view('pagar', $data);
-    }
-
-
 
     public function finalizar(Request $request)
     {
