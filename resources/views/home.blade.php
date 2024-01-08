@@ -229,6 +229,8 @@
                 var total = 0;
                 var indice = 0;
                 $('#modalCarrinhoLista').empty();
+                console.log('carregarCarrinho');
+                console.log(data);
 
                 // Verificar se data é um objeto
                 if (typeof data === 'object' && data !== null) {
@@ -251,7 +253,7 @@
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
                                 '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
-                                indice + ')">' +
+                                key + ')">' +
                                 '<i class="fa fa-times"></i>' +
                                 '</a>' +
                                 '</td>' +
@@ -279,6 +281,8 @@
 
         function abrirCarrinho() {
             $.getJSON('/buscarCarrinho', function(data) {
+                console.log('Abrir carrinho:')
+                console.log(data);
                 var total = 0;
                 var indice = 0;
                 $('#modalCarrinhoLista').empty();
