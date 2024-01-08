@@ -358,7 +358,7 @@
                     <div class="container-fluid" id="modalAlert">
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                                <div id="product-carousel" class="carousel slide align-items-center" data-ride="carousel">
                                     <div class="carousel-inner border">
                                         <div class="carousel-item active" id="primeiroCarrosel">
                                             <img class="w-100 h-100" src="{{ secure_asset('images/2.png') }}"
@@ -369,10 +369,10 @@
                                                 alt="Image">
                                         </div>
                                     </div>
-                                    <a class="carousel-control-prev align-middle d-flex flex-column justify-content-center align-items-center" href="#product-carousel" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                                         <i class="fa fa-2x fa-angle-left text-dark"></i>
                                     </a>
-                                    <a class="carousel-control-next align-middle d-flex flex-column justify-content-center align-items-center" href="#product-carousel" data-slide="next">
+                                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
                                         <i class="fa fa-2x fa-angle-right text-dark"></i>
                                     </a>
                                 </div>
