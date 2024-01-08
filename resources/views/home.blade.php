@@ -340,7 +340,7 @@
 
 @section('content')
     {{-- Asset --}}
-    <input type="hidden" value="{{ secure_asset('images') }}" id="asset">
+    <input type="hidden" value="{{ asset('images') }}" id="asset">
     <input type="hidden" value="" id="estoque">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -358,7 +358,7 @@
                     <div class="container-fluid" id="modalAlert">
                         <div class="row">
                             <div class="col-md-6">
-                                <div id="product-carousel" class="carousel slide align-items-center h-100" data-ride="carousel">
+                                <div id="product-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner border">
                                         <div class="carousel-item active" id="primeiroCarrosel">
                                             <img class="w-100 h-100" src="{{ asset('images/2.png') }}"
@@ -573,7 +573,7 @@
                 {{-- SMARTPHONE --}}
                 <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                     <a href="" class="text-decoration-none d-block d-lg-none">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ secure_asset('URBEAT.png') }}"
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}"
                                 alt="..." class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat
                         </h1>
                     </a>
