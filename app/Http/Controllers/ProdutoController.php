@@ -218,7 +218,7 @@ class ProdutoController extends Controller
         $bodyData = [
             'customer' => [
                 'phone' => $customerPhone,
-                'Name' => $customerName,
+                'name' => $customerName,
                 'email' => $customerEmail,
                 'tax_id' => $customerTaxId,
             ],
@@ -249,8 +249,6 @@ class ProdutoController extends Controller
 
         // Converta o array em JSON para ser usado como corpo da requisição
         $body = json_encode($bodyData);
-
-        dd($body);
 
         $client = new \GuzzleHttp\Client();
 
