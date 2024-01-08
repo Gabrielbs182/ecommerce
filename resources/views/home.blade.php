@@ -361,11 +361,11 @@
                                 <div id="product-carousel" class="carousel slide align-items-center h-100" data-ride="carousel">
                                     <div class="carousel-inner border">
                                         <div class="carousel-item active" id="primeiroCarrosel">
-                                            <img class="w-100 h-100" src="{{ secure_asset('images/2.png') }}"
+                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}"
                                                 alt="Image">
                                         </div>
                                         <div class="carousel-item" id="segundoCarrosel">
-                                            <img class="w-100 h-100" src="{{ secure_asset('images/2_2.png') }}"
+                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}"
                                                 alt="Image">
                                         </div>
                                     </div>
