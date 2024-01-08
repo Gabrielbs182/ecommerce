@@ -46,6 +46,7 @@ Route::get('/pagbank/authorize', [ProdutoController::class, 'redirectToAuthoriza
 Route::get('/pagbank/auth', [ProdutoController::class, 'PagSeguroAuth'])->name('pagseguro.auth');
 Route::get('/pagbank/gettoken', [ProdutoController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
 Route::get('/pagbank/checkout', [ProdutoController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
+Route::get('/pagbank/pospagar', [ProdutoController::class, 'PosPagar'])->name('pagseguro.pospagar');
 
 
 //REDIRECIONAMENTO
@@ -69,8 +70,6 @@ Route::match(['get', 'post'], '/keyController', [ProdutoController::class, 'keyC
     ->name('keyController');
 Route::match(['get', 'post'], '/envio/autorizar', [ProdutoController::class, 'autorizarEnvio'])
     ->name('autorizarEnvio');
-Route::match(['get', 'post'], '/posPagar', [ProdutoController::class, 'posPagar'])
-    ->name('posPagar');
 
 //METODOS
 Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])
