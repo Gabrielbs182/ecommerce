@@ -175,7 +175,7 @@ class ProdutoController extends Controller
         $email = env('PAGSEGURO_EMAIL');
         $token = env('PAGSEGURO_TOKEN');
 
-        $vlrFrete = $request->input('valorFrete');
+        $vlrFrete = ($request->input('valorFrete')*100);
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
@@ -241,7 +241,7 @@ class ProdutoController extends Controller
                 'name' => $produto['nome'],
                 'description' => $produto['nome'],
                 'quantity' => $item['quantidade'],
-                'unit_amount' => $item['valor'],
+                'unit_amount' => ($item['valor']*100),
                 // Adicione outros campos conforme necessário
             ];
             $bodyData['items'][] = $item;
