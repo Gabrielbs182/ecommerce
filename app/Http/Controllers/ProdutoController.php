@@ -92,9 +92,6 @@ class ProdutoController extends Controller
             $produtoExistente = null;
             foreach ($carrinho as $key => $item) {
                 if ($item->id == $prod->id and $item->numero == $numero) {
-                    echo "Produto já existe no carrinho";
-                    echo "<br";
-                    echo "Produto = " . $prod->nome . ", numero = " . $numero;
                     $produtoExistente = $key;
                     break;
                 }
@@ -104,10 +101,6 @@ class ProdutoController extends Controller
                 $produtoCarrinho = $carrinho[$produtoExistente];
                 $produtoCarrinho->quantidade += $quantidade;
                 $estoque = $this->buscarEstoqueQuantidade($produtoCarrinho->id, $numero);
-                echo "Estoque do produto = " . $produtoCarrinho->nome;
-                echo "<br>";
-                echo $estoque;
-                $carrinho[$produtoExistente]->quantidade += $quantidade;
             } else {
                 // Caso contrário, adicione o produto ao carrinho
                 $prod->quantidade = $quantidade;
