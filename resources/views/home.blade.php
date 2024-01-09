@@ -307,55 +307,53 @@
             var numero = $('#tamanhoModal').val();
             $item = buscarEstoqueCarrinho(id);
             console.log($item);
-            var quantidade = "";
-            console.log("teste");
-            console.log(data);
-            if (data !== null) {
-                console.log("Item encontrado no carrinho");
-                quantidade += parseInt(data.quantidade);
+            if ($item == null) {
+                console.log('Item não existe no carrinho');
             } else {
-                console.log("Item não encontrado no carrinho");
-            }
-            if (quantidade > estoque) {
-                console.log('Não tem estoque');
-                $('#inputZipDiv').val() = "";
-                var alerta =
-                    '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
-                    'Estoque insuficiente, tente uma quantidade menor.' +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '<span aria-hidden="true">&times;</span>' +
-                    '</button>' +
-                    '</div>';
-                $('#modalAlert').append(alerta);
-            } else {
-                console.log('Tem estoque');
+                quantidade = $('#inputZipDiv').val();
+                quantidade += $item.quantidade;
+                console.log(quantidade);
+                if (quantidade > estoque) {
+                    console.log('Não tem estoque');
+                    $('#inputZipDiv').val() = "";
+                    var alerta =
+                        '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
+                        'Estoque insuficiente, tente uma quantidade menor.' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                        '<span aria-hidden="true">&times;</span>' +
+                        '</button>' +
+                        '</div>';
+                    $('#modalAlert').append(alerta);
+                } else {
+                    console.log('Tem estoque');
 
-                $.getJSON('/produto/' + id, function(produto) {
-                    var quantidade = $('#inputZip').val()
-                    var token = $('meta[name="csrf-token"]').attr('content');
-                    $.ajax({
-                        type: 'POST',
-                        url: '/carrinho/adicionar/' + id + '/' + quantidade + '/' + numero,
-                        context: this,
-                        headers: {
-                            'X-CSRF-TOKEN': token
-                        },
-                        success: function() {
-                            $.get('/atualizar-quantidade-carrinho', function(data) {
-                                // Atualize a quantidade na página
-                                if (data && data.quantidadeCarrinho !== undefined) {
-                                    $('#quantidade-carrinho').text(data
-                                        .quantidadeCarrinho);
-                                }
-                            });
-                            $('#exampleModalCenter').modal('hide');
-                        },
-                        error: function(error) {
-                            console.log(error);
-                        }
+                    $.getJSON('/produto/' + id, function(produto) {
+                        var quantidade = $('#inputZip').val()
+                        var token = $('meta[name="csrf-token"]').attr('content');
+                        $.ajax({
+                            type: 'POST',
+                            url: '/carrinho/adicionar/' + id + '/' + quantidade + '/' + numero,
+                            context: this,
+                            headers: {
+                                'X-CSRF-TOKEN': token
+                            },
+                            success: function() {
+                                $.get('/atualizar-quantidade-carrinho', function(data) {
+                                    // Atualize a quantidade na página
+                                    if (data && data.quantidadeCarrinho !== undefined) {
+                                        $('#quantidade-carrinho').text(data
+                                            .quantidadeCarrinho);
+                                    }
+                                });
+                                $('#exampleModalCenter').modal('hide');
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
                     });
-                });
-            };
+                };
+            }
         };
     </script>
 @endsection
