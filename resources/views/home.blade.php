@@ -319,13 +319,13 @@
                 } else {
                     console.log('Item existe no carrinho');
                     console.log(quantidade);
-                    quantidade += $item.quantidade;
+                    quantidade += parseInt($item.quantidade);
                     console.log(quantidade);
                 }
                 // Restante do seu código...
                 console.log(quantidade);
                 console.log(estoque);
-                if (quantidade > estoque) {
+                if (parseInt(quantidade) > parseInt(estoque)) {
                     console.log('Não tem estoque');
                     $('#inputZip').val('');
                     var alerta =
