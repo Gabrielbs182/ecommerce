@@ -83,7 +83,7 @@ class ProdutoController extends Controller
         return view("categoria", $data);
     }
 
-    public function adicionarCarrinho($id, $quantidade)
+    public function adicionarCarrinho($id, $quantidade, $numero)
     {
         $prod = Produto::find($id);
         if ($prod) {
@@ -91,22 +91,34 @@ class ProdutoController extends Controller
             // Verifique se o produto já está no carrinho
             $produtoExistente = null;
             foreach ($carrinho as $key => $item) {
-                if ($item->id == $prod->id) {
+                if ($item->id == $prod->id and $item->numero == $numero) {
+                    echo "Produto já existe no carrinho";
+                    echo "<br";
+                    echo "Produto = " . $prod->nome . ", numero = " . $numero;
                     $produtoExistente = $key;
                     break;
                 }
             }
             if ($produtoExistente !== null) {
                 // Se o produto já existe no carrinho, adicione a quantidade à quantidade existente
+                $produtoCarrinho = $carrinho[$produtoExistente];
+                $produtoCarrinho->quantidade += $quantidade;
+                $estoque = $this->buscarEstoqueQuantidade($produtoCarrinho->id, $numero);
+                echo "Estoque do produto = " . $produtoCarrinho->nome;
+                echo "<br>";
+                echo $estoque;
                 $carrinho[$produtoExistente]->quantidade += $quantidade;
             } else {
                 // Caso contrário, adicione o produto ao carrinho
                 $prod->quantidade = $quantidade;
+                $prod->numero = $numero;
                 array_push($carrinho, $prod);
             }
+            echo "<br>";
+            var_dump($carrinho);
             session(['cart' => $carrinho]);
         }
-        return redirect()->route("home");
+        //return redirect()->route("home");
     }
 
     public function verCarrinho(Request $request)
@@ -173,7 +185,9 @@ class ProdutoController extends Controller
 
         $token = env('PAGSEGURO_TOKEN');
 
-        $vlrFrete = ($request->input('valorFrete')*100);
+        $semEstoque = false;
+
+        $vlrFrete = ($request->input('valorFrete') * 100);
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
@@ -188,92 +202,112 @@ class ProdutoController extends Controller
 
         $carrinho = session('cart', []);
 
-        $customerPhone = [
-            'country' => '+55',
-            'area' => $ddd,
-            'number' => $telefone,
-        ];
-
-        $customerName = $nomeCliente;
-        $customerEmail = $emailCliente;
-        $customerTaxId = $cpf;
-
-        $shippingAddress = [
-            'street' => $logradouro,
-            'number' => $numero,
-            'locality' => $bairro,
-            'city' => $cidade,
-            'region_code' => $uf,
-            'country' => 'BRA',
-            'postal_code' => $cep,
-        ];
-
-        $shippingAmount = $vlrFrete;
-
-        $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
-
-        // Construa o corpo dinamicamente usando as variáveis
-        $bodyData = [
-            'customer' => [
-                'phone' => $customerPhone,
-                'name' => $customerName,
-                'email' => $customerEmail,
-                'tax_id' => $customerTaxId,
-            ],
-            'shipping' => [
-                'address' => $shippingAddress,
-                'type' => 'FIXED',
-                'address_modifiable' => false,
-                'amount' => $shippingAmount,
-            ],
-            'customer_modifiable' => false,
-            'redirect_url' => $redirectUrl,
-        ];
-
-        
+        $produtoSemEstoque = "";
 
         foreach ($carrinho as $item) {
-            $produto = Produto::find($item['id']);
-            $item = [
-                'reference_id' => $item['id'],
-                'name' => $produto['nome'],
-                'description' => $produto['nome'],
-                'quantity' => $item['quantidade'],
-                'unit_amount' => ($item['valor']*100),
-                // Adicione outros campos conforme necessário
-            ];
-            $bodyData['items'][] = $item;
-        }
-
-        // Converta o array em JSON para ser usado como corpo da requisição
-        $body = json_encode($bodyData);
-
-        $client = new \GuzzleHttp\Client();
-
-        // Substitua o corpo na sua chamada de requisição
-        $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
-            'body' => $body,
-            'headers' => [
-                'Authorization' => 'Bearer ' . $token,
-                'Content-type' => 'application/json',
-                'accept' => 'application/json',
-            ],
-        ]);
-
-        $jsonResponse = $response->getBody();
-        $data = json_decode($jsonResponse, true);
-
-        // Verifique se o campo 'links' existe e se contém o link 'SELF'
-        if (isset($data['links']) && is_array($data['links'])) {
-            foreach ($data['links'] as $link) {
-                if (isset($link['rel']) && $link['rel'] === 'PAY' && isset($link['href'])) {
-                    $PAYlink = $link['href'];
-                    return redirect($PAYlink);
-                    break;
-                }
+            $quantidadeCarrinho = $item['quantidade'];
+            $quantidadeEstoque = $this->buscarEstoqueQuantidade($item['id'], $item['numero']);
+            if ($quantidadeCarrinho > $quantidadeEstoque) {
+                $semEstoque = true;
+                $produtoSemEstoque = $item;
+                break;
             }
+        };
+
+        if ($semEstoque) {
+
+            echo "Quantidade do carrinho maior que a quantidade em estoque do produto " . $produtoSemEstoque['nome'];
+            echo "<br>";
+            echo "Numero = " . $produtoSemEstoque['numero'];
         } else {
-            echo 'PagSeguro não respondeu.';
+
+            $customerPhone = [
+                'country' => '+55',
+                'area' => $ddd,
+                'number' => $telefone,
+            ];
+
+            $customerName = $nomeCliente;
+            $customerEmail = $emailCliente;
+            $customerTaxId = $cpf;
+
+            $shippingAddress = [
+                'street' => $logradouro,
+                'number' => $numero,
+                'locality' => $bairro,
+                'city' => $cidade,
+                'region_code' => $uf,
+                'country' => 'BRA',
+                'postal_code' => $cep,
+            ];
+
+            $shippingAmount = $vlrFrete;
+
+            $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
+
+            // Construa o corpo dinamicamente usando as variáveis
+            $bodyData = [
+                'customer' => [
+                    'phone' => $customerPhone,
+                    'name' => $customerName,
+                    'email' => $customerEmail,
+                    'tax_id' => $customerTaxId,
+                ],
+                'shipping' => [
+                    'address' => $shippingAddress,
+                    'type' => 'FIXED',
+                    'address_modifiable' => false,
+                    'amount' => $shippingAmount,
+                ],
+                'customer_modifiable' => false,
+                'redirect_url' => $redirectUrl,
+            ];
+
+
+
+            foreach ($carrinho as $item) {
+                $produto = Produto::find($item['id']);
+                $item = [
+                    'reference_id' => $item['id'],
+                    'name' => $produto['nome'],
+                    'description' => $produto['nome'],
+                    'quantity' => $item['quantidade'],
+                    'unit_amount' => ($item['valor'] * 100),
+                    // Adicione outros campos conforme necessário
+                ];
+                $bodyData['items'][] = $item;
+            }
+
+            // Converta o array em JSON para ser usado como corpo da requisição
+            $body = json_encode($bodyData);
+
+            $client = new \GuzzleHttp\Client();
+
+            // Substitua o corpo na sua chamada de requisição
+            $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
+                'body' => $body,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                    'Content-type' => 'application/json',
+                    'accept' => 'application/json',
+                ],
+            ]);
+
+            $jsonResponse = $response->getBody();
+            $data = json_decode($jsonResponse, true);
+
+            // Verifique se o campo 'links' existe e se contém o link 'SELF'
+            if (isset($data['links']) && is_array($data['links'])) {
+                foreach ($data['links'] as $link) {
+                    if (isset($link['rel']) && $link['rel'] === 'PAY' && isset($link['href'])) {
+                        $PAYlink = $link['href'];
+                        return redirect($PAYlink);
+                        break;
+                    }
+                }
+            } else {
+                echo 'PagSeguro não respondeu.';
+            }
         }
     }
 

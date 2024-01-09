@@ -247,7 +247,7 @@
                                 '<img src="' + asset +
                                 '/' + item.id +
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
-                                'alt="Produto" >' + item.nome + ' x ' + item.quantidade + '</td>' +
+                                'alt="Produto" >' + item.nome + '/'+ item.numero + ' x ' + item.quantidade + '</td>' +
                                 '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
                                 '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
                                 '</td>' +
@@ -281,8 +281,6 @@
 
         function abrirCarrinho() {
             $.getJSON('/buscarCarrinho', function(data) {
-                console.log('Abrir carrinho:')
-                console.log(data);
                 var total = 0;
                 var indice = 0;
                 $('#modalCarrinhoLista').empty();
@@ -298,6 +296,7 @@
         function adicionarCarrinho(id) {
             var token = $('meta[name="csrf-token"]').attr('content');
             var estoque = $('#estoque').val();
+            var numero = $('#tamanhoModal').val();
             var quantidade = $('#inputZip').val();
             if (quantidade > estoque) {
                 console.log('Não tem estoque');
@@ -318,7 +317,7 @@
                     var token = $('meta[name="csrf-token"]').attr('content');
                     $.ajax({
                         type: 'POST',
-                        url: '/carrinho/adicionar/' + id + '/' + quantidade,
+                        url: '/carrinho/adicionar/' + id + '/' + quantidade + '/' + numero,
                         context: this,
                         headers: {
                             'X-CSRF-TOKEN': token

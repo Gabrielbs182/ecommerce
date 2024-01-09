@@ -78,7 +78,7 @@ Route::get('/sair', [UsuarioController::class, 'sair'])
     ->name('sair');
 Route::match(['get', 'post'], '/cliente/cadastrar', [ClienteController::class, 'cadastrarCliente'])
     ->name('cadastrar_cliente');
-Route::match(['get', 'post'], '/carrinho/adicionar/{idProduto}/{quantidade}', [ProdutoController::class, 'adicionarCarrinho'])
+Route::match(['get', 'post'], '/carrinho/adicionar/{idProduto}/{quantidade}/{numero}', [ProdutoController::class, 'adicionarCarrinho'])
     ->name('adicionar_carrinho');
 Route::match(['get', 'post'], '/{indice}/excluirCarrinho', [ProdutoController::class, 'excluirCarrinho'])
     ->name('excluirCarrinho');
