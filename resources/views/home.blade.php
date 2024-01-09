@@ -301,7 +301,9 @@
             var quantidade = "";
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
                 quantidade = parseInt($('#inputZip').val());
-                quantidade += parseInt(data.quantidade);
+                if (data != null) {
+                    quantidade += parseInt(data.quantidade);
+                }
                 if (quantidade > estoque) {
                     console.log('Não tem estoque');
                     $('#inputZipDiv').val() = "";
