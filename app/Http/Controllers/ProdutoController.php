@@ -87,7 +87,7 @@ class ProdutoController extends Controller
     {
         $carrinho = session('cart', []);
         // Verifique se o produto já está no carrinho
-        $produtoExistente = null;
+        $produtoExistente = 1;
 
         foreach ($carrinho as  $item) {
             if ($item->id == $id and $item->numero == $numero) {
