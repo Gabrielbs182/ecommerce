@@ -299,6 +299,7 @@
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
             var quantidade = "";
+            console.log("teste");
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
                 console.log(data);
                 quantidade = parseInt($('#inputZip').val());
