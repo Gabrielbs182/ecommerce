@@ -296,7 +296,10 @@
 
         function buscarEstoqueCarrinho(id) {
             var numero = $('#tamanhoModal').val();
+            console.log(numero);
+            console.log(id);
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
+                console.log(data);
                 return data;
             });
         }
