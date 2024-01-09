@@ -327,7 +327,7 @@
                 console.log(estoque);
                 if (quantidade > estoque) {
                     console.log('Não tem estoque');
-                    $('#inputZip').val() = "";
+                    $('#inputZip').val('');
                     var alerta =
                         '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
                         'Estoque insuficiente, tente uma quantidade menor.' +
