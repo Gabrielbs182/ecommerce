@@ -294,7 +294,7 @@
             });
         };
 
-        function buscarEstoqueCarrinho(id) {
+        function buscarEstoqueCarrinho(id,callback) {
             var numero = $('#tamanhoModal').val();
             console.log(numero);
             console.log(id);
