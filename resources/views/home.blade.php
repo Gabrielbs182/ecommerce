@@ -300,7 +300,7 @@
             console.log(id);
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
                 console.log(data);
-                return data;
+                callback(data); // Chama o callback com os dados recebidos
             });
         }
 
@@ -309,16 +309,20 @@
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
             quantidade = parseInt($('#inputZipDiv').val());
-            $item = buscarEstoqueCarrinho(id);
-            console.log($item);
-            if ($item == null) {
-                console.log('Item não existe no carrinho');
-            } else {
-                quantidade += $item.quantidade;
-            }
-            console.log(quantidade);
-            if (quantidade > estoque) {
-                console.log('Não tem estoque');
+
+            // Use uma função de callback para obter os dados assíncronos
+            buscarEstoqueCarrinho(id, function($item) {
+                console.log($item);
+                if ($item == null) {
+                    console.log('Item não existe no carrinho');
+                } else {
+                    quantidade += $item.quantidade;
+                }
+                console.log(quantidade);
+
+                // Restante do seu código...
+                if (quantidade > estoque) {
+                    console.log('Não tem estoque');
                 $('#inputZipDiv').val() = "";
                 var alerta =
                     '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
@@ -328,8 +332,8 @@
                     '</button>' +
                     '</div>';
                 $('#modalAlert').append(alerta);
-            } else {
-                console.log('Tem estoque');
+                } else {
+                    console.log('Tem estoque');
 
                 $.getJSON('/produto/' + id, function(produto) {
                     var quantidade = $('#inputZip').val()
@@ -356,7 +360,8 @@
                         }
                     });
                 });
-            };
+                }
+            });
         }
     </script>
 @endsection
