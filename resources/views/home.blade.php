@@ -185,7 +185,7 @@
         function buscarEstoque() {
             var numero = $('#tamanhoModal').val()
             var idProduto = $('#idProduto').val()
-            $.getJSON('/estoque/' + idProduto + '/' + numero, function(estoque) {
+            $.getJSON('/estoqueNumero/' + idProduto + '/' + numero, function(estoque) {
                 $('#estoque').val(estoque[0].quantidade);
 
             });

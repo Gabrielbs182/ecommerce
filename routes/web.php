@@ -31,7 +31,7 @@ Route::get('/buscarCarrinho', [ProdutoController::class, 'buscarCarrinho'])
     ->name('buscarCarrinho');
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
-Route::get('/estoque/{idProduto}/{numero}', [ProdutoController::class, 'buscarEstoqueQuantidade'])
+Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'buscarEstoqueQuantidade'])
     ->name('buscarEstoqueQuantidade');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('authorize');
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo');
