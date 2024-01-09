@@ -299,8 +299,7 @@
             console.log(numero);
             console.log(id);
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
-                console.log(data[0]);
-                return data[0];
+                console.log(data);
             });
         }
 
