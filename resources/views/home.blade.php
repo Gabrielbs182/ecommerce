@@ -323,6 +323,8 @@
                     console.log(quantidade);
                 }
                 // Restante do seu código...
+                console.log(quantidade);
+                console.log(estoque);
                 if (quantidade > estoque) {
                     console.log('Não tem estoque');
                     $('#inputZipDiv').val() = "";
