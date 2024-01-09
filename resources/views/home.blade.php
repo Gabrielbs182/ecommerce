@@ -298,18 +298,21 @@
             var token = $('meta[name="csrf-token"]').attr('content');
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
-            var quantidade = "";
-            console.log("teste");
+            var quantidade = parseInt($('#inputZip').val());
+
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
                 console.log(data);
-                quantidade = parseInt($('#inputZip').val());
-                if (data != null) {
-                    console.log("nulo");
+
+                if (data !== null) {
+                    console.log("Item encontrado no carrinho");
                     quantidade += parseInt(data.quantidade);
+                } else {
+                    console.log("Item não encontrado no carrinho");
                 }
+
                 if (quantidade > estoque) {
                     console.log('Não tem estoque');
-                    $('#inputZipDiv').val() = "";
+                    $('#inputZipDiv').val("");
                     var alerta =
                         '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
                         'Estoque insuficiente, tente uma quantidade menor.' +
@@ -322,7 +325,6 @@
                     console.log('Tem estoque');
 
                     $.getJSON('/produto/' + id, function(produto) {
-                        var quantidade = $('#inputZip').val()
                         var token = $('meta[name="csrf-token"]').attr('content');
                         $.ajax({
                             type: 'POST',
@@ -346,7 +348,7 @@
                             }
                         });
                     });
-                };
+                }
             });
         };
     </script>
