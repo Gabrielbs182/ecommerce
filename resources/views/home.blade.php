@@ -300,8 +300,8 @@
             var numero = $('#tamanhoModal').val();
             var quantidade = "";
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
-                quantidade = $('#inputZip').val();
-                quantidade += data.quantidade;
+                quantidade = parseInt($('#inputZip').val());
+                quantidade += parseInt(data.quantidade);
                 console.log(data);
                 console.log(quantidade);
             });
