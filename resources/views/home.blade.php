@@ -247,7 +247,8 @@
                                 '<img src="' + asset +
                                 '/' + item.id +
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
-                                'alt="Produto" >' + item.nome + '/'+ item.numero + ' x ' + item.quantidade + '</td>' +
+                                'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
+                                '</td>' +
                                 '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
                                 '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
                                 '</td>' +
@@ -297,12 +298,15 @@
             var token = $('meta[name="csrf-token"]').attr('content');
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
-            var quantidade = $('#inputZip').val();
+            var quantidade = "";
             $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function(data) {
-                var quantidade = data.quantidade;
+                quantidade = $('#inputZip').val();
+                quantidade += data.quantidade;
                 console.log(data);
                 console.log(quantidade);
             });
+            console.log("Quantidade");
+            console.log(quantidade);
             if (quantidade > estoque) {
                 console.log('Não tem estoque');
                 $('#inputZipDiv').val() = "";
@@ -369,12 +373,10 @@
                                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                                     <div class="carousel-inner border">
                                         <div class="carousel-item active" id="primeiroCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}"
-                                                alt="Image">
+                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}" alt="Image">
                                         </div>
                                         <div class="carousel-item" id="segundoCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}"
-                                                alt="Image">
+                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
                                         </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -433,7 +435,8 @@
 
     <div class="modal fade" id="modalCarrinho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center" role="document">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
 
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
