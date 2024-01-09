@@ -207,8 +207,7 @@ class ProdutoController extends Controller
         foreach ($carrinho as $item) {
             $quantidadeCarrinho = $item['quantidade'];
             $estoque = $this->buscarEstoqueQuantidade($item['id'], $item['numero']);
-            dd($estoque);
-            $quantidadeEstoque = $estoque->quantidade;
+            $quantidadeEstoque = $estoque[0]->quantidade;
             if ($quantidadeCarrinho > $quantidadeEstoque) {
                 $semEstoque = true;
                 $produtoSemEstoque = $item;
