@@ -308,7 +308,7 @@
             var token = $('meta[name="csrf-token"]').attr('content');
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
-            quantidade = parseInt($('#inputZipDiv').val());
+            quantidade = parseInt($('#inputZip').val());
 
             // Use uma função de callback para obter os dados assíncronos
             buscarEstoqueCarrinho(id, function($item) {
