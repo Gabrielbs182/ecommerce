@@ -83,6 +83,22 @@ class ProdutoController extends Controller
         return view("categoria", $data);
     }
 
+    public function buscarItemCarrinho($id, $numero)
+    {
+        $carrinho = session('cart', []);
+        // Verifique se o produto já está no carrinho
+        $produtoExistente = null;
+
+        foreach ($carrinho as  $item) {
+            if ($item->id == $id and $item->numero == $numero) {
+                $produtoExistente = $item;
+                break;
+            }
+        }
+
+        return $produtoExistente;
+    }
+
     public function adicionarCarrinho($id, $quantidade, $numero)
     {
         $prod = Produto::find($id);

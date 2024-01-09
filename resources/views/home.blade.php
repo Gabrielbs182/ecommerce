@@ -298,9 +298,14 @@
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
             var quantidade = $('#inputZip').val();
+            $.getJSON('/buscarItemCarrinho' + id + '/' + numero, function(data) {
+                var quantidade = data.quantidade;
+                console.log(data);
+                console.log(quantidade);
+            });
             if (quantidade > estoque) {
                 console.log('Não tem estoque');
-                $('#inputZipDiv').empty();
+                $('#inputZipDiv').val() = "";
                 var alerta =
                     '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
                     'Estoque insuficiente, tente uma quantidade menor.' +

@@ -89,3 +89,4 @@ Route::get('/compras/historico', [ProdutoController::class, 'historico'])
 Route::match(['get', 'post'], '/pagar', [ProdutoController::class, 'PagSeguroCheckout'])
     ->name('pagar');
 Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualizarQuantidadeCarrinho'])->name('atualizar_quantidade_carrinho');
+Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');
