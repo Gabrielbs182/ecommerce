@@ -213,7 +213,8 @@ class ProdutoController extends Controller
         $uf = $request->input('uf');
         $cep = $request->input('cep');
         $pedido = new Pedido;
-        $referenceId = uniqid('', true);
+        $uniqueId = uniqid('', true);
+        $referenceId = strtoupper(substr(str_replace(['.', '-'], '', $uniqueId), 0, 16));
 
         $carrinho = session('cart', []);
 
@@ -308,8 +309,6 @@ class ProdutoController extends Controller
 
             // Converta o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
-
-            dd($body);
 
             $client = new \GuzzleHttp\Client();
 
