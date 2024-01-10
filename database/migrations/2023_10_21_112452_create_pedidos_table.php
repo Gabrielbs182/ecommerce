@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("status");
             $table->string("status_pag")->nullable();
             $table->string("status_env")->nullable();
+            $table->string("reference_id")->nullable();
             $table->string("cod_checkout")->nullable();
             $table->string("cod_entrega")->nullable();
             $table->string("cod_rastreamento")->nullable();

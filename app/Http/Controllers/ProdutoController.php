@@ -287,6 +287,7 @@ class ProdutoController extends Controller
                 ],
                 'customer_modifiable' => false,
                 'redirect_url' => $redirectUrl,
+                'payment_notification_urls' => $payment_notification_urls,
             ];
 
 
@@ -369,7 +370,8 @@ class ProdutoController extends Controller
                         $dataHoraAtual = $dateTimeAtual->format('Y-m-d H:i:s');
                         $pedido->datapedido = $dataHoraAtual;
                         $pedido->status = 'Iniciado';
-                        $pedido->cod_checkout = $referenceId;
+                        $pedido->reference_id = $referenceId;
+                        $pedido->cod_checkout = $idCheckout;
                         $pedido->usuario_id = $usuarioPedido->id;
                         $pedido->endereco_id = $endereco->id;
                         $pedido->save();
