@@ -287,7 +287,7 @@ class ProdutoController extends Controller
                 ],
                 'customer_modifiable' => false,
                 'redirect_url' => $redirectUrl,
-                '$payment_notification_urls' => $payment_notification_urls,
+                'payment_notification_urls' => $payment_notification_urls,
                 'notification_urls' => $notification_urls,
             ];
 
