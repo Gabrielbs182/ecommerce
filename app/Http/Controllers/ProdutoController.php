@@ -309,6 +309,8 @@ class ProdutoController extends Controller
             // Converta o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
 
+            dd($body);
+
             $client = new \GuzzleHttp\Client();
 
             // Substitua o corpo na sua chamada de requisição
