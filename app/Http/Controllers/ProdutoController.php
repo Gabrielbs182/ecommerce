@@ -267,8 +267,10 @@ class ProdutoController extends Controller
             $shippingAmount = $vlrFrete;
 
             $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
-            $payment_notification_urls = 'https://urbeatstore.com.br/pagbank/handle';
-            $notification_urls = 'https://urbeatstore.com.br/pagbank/handle';
+            $notification_urls = [
+                'https://urbeatstore.com.br/pagbank/handle'
+                // Adicione mais URLs conforme necessário
+            ];
 
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
