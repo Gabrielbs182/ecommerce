@@ -213,8 +213,7 @@ class ProdutoController extends Controller
         $uf = $request->input('uf');
         $cep = $request->input('cep');
         $pedido = new Pedido;
-        $uniqueId = uniqid('', true);
-        $referenceId = strtoupper(substr(str_replace(['.', '-'], '', $uniqueId), 0, 16));
+        $referenceId = uniqid('', true);
 
         $carrinho = session('cart', []);
 
@@ -288,8 +287,6 @@ class ProdutoController extends Controller
                 ],
                 'customer_modifiable' => false,
                 'redirect_url' => $redirectUrl,
-                'payment_notification_urls' => $payment_notification_urls,
-                'notification_urls' => $notification_urls,
             ];
 
 
@@ -309,8 +306,6 @@ class ProdutoController extends Controller
 
             // Converta o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
-
-            dd($body);
 
             $client = new \GuzzleHttp\Client();
 
