@@ -213,6 +213,7 @@ class ProdutoController extends Controller
         $uf = $request->input('uf');
         $cep = $request->input('cep');
         $pedido = new Pedido;
+        $referenceId = uniqid('', true);
 
         $carrinho = session('cart', []);
 
@@ -241,7 +242,7 @@ class ProdutoController extends Controller
             $request->session()->flash("err", "Quantidade do carrinho maior que a quantidade em estoque do produto " . $produtoSemEstoque['nome'] . "/" . $produtoSemEstoque['numero']);
             return redirect()->route("home");
         } else {
-            
+
 
             $customerPhone = [
                 'country' => '+55',
@@ -266,10 +267,12 @@ class ProdutoController extends Controller
             $shippingAmount = $vlrFrete;
 
             $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
+            $payment_notification_urls = 'https://urbeatstore.com.br/pagbank/handle';
+            $notification_urls = 'https://urbeatstore.com.br/pagbank/handle';
 
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
-                'reference_id' => $pedido->id,
+                'reference_id' => $referenceId,
                 'customer' => [
                     'phone' => $customerPhone,
                     'name' => $customerName,
@@ -284,6 +287,8 @@ class ProdutoController extends Controller
                 ],
                 'customer_modifiable' => false,
                 'redirect_url' => $redirectUrl,
+                '$payment_notification_urls' => $payment_notification_urls,
+                'notification_urls' => $notification_urls,
             ];
 
 
@@ -366,7 +371,7 @@ class ProdutoController extends Controller
                         $dataHoraAtual = $dateTimeAtual->format('Y-m-d H:i:s');
                         $pedido->datapedido = $dataHoraAtual;
                         $pedido->status = 'Iniciado';
-                        $pedido->cod_checkout = $idCheckout;
+                        $pedido->cod_checkout = $referenceId;
                         $pedido->usuario_id = $usuarioPedido->id;
                         $pedido->endereco_id = $endereco->id;
                         $pedido->save();
@@ -387,14 +392,17 @@ class ProdutoController extends Controller
     {
         $payload = $request->all();
 
+
         // Aqui você pode validar a autenticidade da notificação, verificar as chaves de segurança, etc.
 
         // Exemplo de como acessar dados específicos do payload
         $referenceId = $payload['reference_id'];
         $status = $payload['charges'][0]['status'];
 
+        Log::info('Recebeu webhook', ['reference_id' => $referenceId, 'status' => $status]);
+
         // Agora, atualize o status de pagamento no seu sistema
-        $pedido = Pedido::find($referenceId);
+        $pedido = Pedido::where('cod_checkout', $referenceId)->first();
 
         if ($pedido) {
             // Atualize o status do pedido com base no status recebido do PagSeguro
