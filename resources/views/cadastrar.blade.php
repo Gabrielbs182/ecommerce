@@ -75,7 +75,7 @@
 
         function montarLinhaCidade(cidade) {
             var linha =
-                "<option value='" + cidade.id + "' name='cidade'>"+ cidade.nome + "</option>";
+                "<option value='" + cidade.id + "' name='cidade'>" + cidade.nome + "</option>";
             return linha;
         };
     </script>
@@ -101,6 +101,12 @@
                         </div>
                         <div class="col-6">
                             <div class="form-group">
+                                Sobrenome: <input type="text" name="sobrenome" class="form-control" minlength="10"
+                                    maxlength="40">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
                                 Email: <input type="email" name="email" class="form-control">
                             </div>
                         </div>
@@ -115,7 +121,7 @@
                                     maxlength="12">
                             </div>
                         </div>
-                        <div class="col-8">
+                        {{-- <div class="col-8">
                             <div class="form-group">
                                 Endereço: <input type="text" name="endereco" class="form-control" maxlength="80">
                             </div>
@@ -154,7 +160,7 @@
                             <div class="form-group">
                                 CEP: <input type="text" id="cep" name="cep" class="form-control">
                             </div>
-                        </div>
+                        </div> --}}
                         <input type="submit" value="cadastrar"
                             class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
                 </form>

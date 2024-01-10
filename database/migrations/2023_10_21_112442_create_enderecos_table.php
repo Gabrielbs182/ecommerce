@@ -15,20 +15,15 @@ return new class extends Migration
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
-            $table->string("logradouro")->nullable();
-            $table->string("numero")->nullable();
+            $table->string("logradouro");
+            $table->string("bairro");
+            $table->string("numero");
             $table->string("cep");
             $table->string("complemento")->nullable();
-            $table->bigInteger("usuario_id")->unsigned();
-            $table->bigInteger("cidade_id")->unsigned();
+            $table->string("cidade");
+            $table->string("uf");
 
             $table->timestamps();
-
-            $table->foreign("usuario_id")
-            ->references("id")->on("usuarios")
-            ->onDelete("cascade");
-            $table->foreign("cidade_id")
-            ->references("id")->on("cidade");
 
         });
     }

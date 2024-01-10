@@ -18,22 +18,18 @@ return new class extends Migration
             $table->integer("quantidade");
             $table->decimal("valor");
             $table->datetime("dt_item");
+            $table->string("numero");
             $table->bigInteger("produto_id")->unsigned();
             $table->bigInteger("pedido_id")->unsigned();
-            $table->bigInteger("estoque_id")->unsigned();
             $table->timestamps();
 
             $table->foreign("produto_id")
-            ->references("id")
-            ->on("produtos");
+                ->references("id")
+                ->on("produtos");
 
             $table->foreign("pedido_id")
-            ->references("id")
-            ->on("pedidos")->onDelete("cascade");
-
-            $table->foreign("estoque_id")
-            ->references("id")
-            ->on("estoque");
+                ->references("id")
+                ->on("pedidos")->onDelete("cascade");
         });
     }
 

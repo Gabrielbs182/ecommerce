@@ -8,7 +8,7 @@ class Usuario extends RModel implements Authenticatable
 {
 
     protected $table = "usuarios";
-    protected $fillable = ['email', 'cpf', 'password', 'nome', 'isAdmin'];
+    protected $fillable = ['email', 'cpf', 'password', 'nome', 'isAdmin', 'ativo'];
 
     public function getAuthIdentifierName()
     {

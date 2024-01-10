@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("password");
             $table->string("nome");
             $table->integer("isAdmin");
+            $table->integer("ativo");
             $table->timestamps();
         });
     }

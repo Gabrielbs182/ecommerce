@@ -17,11 +17,19 @@ return new class extends Migration
             $table->id();
             $table->datetime("datapedido");
             $table->string("status");
+            $table->string("status_pag")->nullable();
+            $table->string("status_env")->nullable();
+            $table->string("cod_checkout")->nullable();
+            $table->string("cod_entrega")->nullable();
+            $table->string("cod_rastreamento")->nullable();
             $table->bigInteger("usuario_id")->unsigned();
+            $table->bigInteger("endereco_id")->unsigned();
             $table->timestamps();
 
             $table->foreign("usuario_id")
-            ->references("id")->on("usuarios");
+                ->references("id")->on("usuarios");
+            $table->foreign("endereco_id")
+                ->references("id")->on("enderecos");
         });
     }
 

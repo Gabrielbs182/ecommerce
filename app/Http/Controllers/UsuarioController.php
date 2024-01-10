@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class UsuarioController extends Controller
 {
-    public function logar(Request $request){
+    public function logar(Request $request)
+    {
         $data = [];
 
-        if($request->isMethod("POST")){
+        if ($request->isMethod("POST")) {
             //Se entrar neste IF é porque o usuario clicou no bbotão logar.
 
             $credentials = $request->validate([
@@ -19,9 +20,14 @@ class UsuarioController extends Controller
                 'password' => ['required'],
             ]);
             //logar
-            if(Auth::attempt($credentials)){
-               return redirect()->route("home");
-            }else{
+            if (Auth::attempt($credentials)) {
+                if (Auth::user()->ativo == 1) {
+                    return redirect()->route("home");
+                } else {
+                    $request->session()->flash("err", "Usuario inativo, favor realizar o cadastro para ativar o usuario.");
+                    return redirect()->route("logar");
+                }
+            } else {
                 $request->session()->flash("err", "Usuario / Senha invalido");
                 return redirect()->route("logar");
             }
@@ -31,7 +37,8 @@ class UsuarioController extends Controller
         return view("logar", $data);
     }
 
-    public function sair(){
+    public function sair()
+    {
         Auth::logout();
         session()->forget('cart');
         return redirect()->route("home");

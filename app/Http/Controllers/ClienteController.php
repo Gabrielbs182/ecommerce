@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Cidade;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
-use App\Models\Endereco;
 use App\Models\Estado;
 use App\Services\ClienteService;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,38 +28,70 @@ class ClienteController extends Controller
     {
 
         //Pegar todos os valores do formulario
-        $values = $request->all();
-        $usuario = new Usuario($values);
-        $usuario->email = $request->input('email');
-        $senha = $request->input("password");
-        $usuario->password = HASH::make($senha);
-        $usuario->isAdmin = 0;
+        $usuarioGenerico = Usuario::where('cpf', $request->input('cpf'))->where('email',  $request->input('email'))->where('ativo', 0)->first();
+        if ($usuarioGenerico) {
+            $senha = $request->input("password");
+            $usuarioGenerico->password = HASH::make($senha);
 
-        $endereco = new Endereco($values);
-        $endereco->logradouro = $request->input("endereco", "");
-        $endereco->logradouro = $request->input("cidade_id", "");
+            $clienteService = new ClienteService();
+            $result = $clienteService->ativarUsuario($usuarioGenerico);
 
+            $message = $result["message"];
+            $status = $result["status"];
 
-        $clienteService = new ClienteService();
-        $result = $clienteService->salvarUsuario($usuario, $endereco);
+            $request->session()->flash($status, $message);
 
-        $message = $result["message"];
-        $status = $result["status"];
-
-        $request->session()->flash($status, $message);
-
-        if ($status == 'err') {
-            return redirect()->route('cadastrar');
-        } else {
-            Auth::login($usuario);
-
-            $carrinho = session('cart', []);
-            if (count($carrinho) > 0) {
-                if (Auth::check()) {
-                    return redirect()->route('ver_carrinho');
-                }
+            if ($status == 'err') {
+                return redirect()->route('cadastrar');
             } else {
-                return redirect()->route('home');
+                Auth::login($usuario);
+
+                $carrinho = session('cart', []);
+                if (count($carrinho) > 0) {
+                    if (Auth::check()) {
+                        return redirect()->route('ver_carrinho');
+                    }
+                } else {
+                    return redirect()->route('home');
+                }
+            }
+        } else {
+            $values = $request->all();
+            $usuario = new Usuario($values);
+            $usuario->email = $request->input('email');
+            $senha = $request->input("password");
+            $nome = $request->input("nome") . " " . $request->input("sobrenome");
+            $usuario->password = HASH::make($senha);
+            $usuario->nome = $nome;
+            $usuario->isAdmin = 0;
+            $usuario->ativo = 1;
+
+            // $endereco = new Endereco($values);
+            // $endereco->logradouro = $request->input("endereco", "");
+            // $endereco->logradouro = $request->input("cidade_id", "");
+
+
+            $clienteService = new ClienteService();
+            $result = $clienteService->salvarUsuario($usuario);
+
+            $message = $result["message"];
+            $status = $result["status"];
+
+            $request->session()->flash($status, $message);
+
+            if ($status == 'err') {
+                return redirect()->route('cadastrar');
+            } else {
+                Auth::login($usuario);
+
+                $carrinho = session('cart', []);
+                if (count($carrinho) > 0) {
+                    if (Auth::check()) {
+                        return redirect()->route('ver_carrinho');
+                    }
+                } else {
+                    return redirect()->route('home');
+                }
             }
         }
     }

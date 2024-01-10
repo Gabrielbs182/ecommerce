@@ -5,7 +5,7 @@ namespace App\Models;
 class Endereco extends RModel
 {
     protected $table = "enderecos";
-    protected $fillable = ['logradouro','numero', 'complemento', 'cep', 'cidade_id'];
+    protected $fillable = ['logradouro','bairro','numero', 'complemento', 'cep', 'cidade','uf'];
 
     public function setCepAttribute($cep)
     {

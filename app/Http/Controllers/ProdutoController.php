@@ -8,10 +8,14 @@ use App\Models\Estoque;
 use App\Models\Categoria;
 use App\Models\ItensPedido;
 use App\Models\Pedido;
+use App\Models\Endereco;
 use App\Services\VendaService;
 use Illuminate\Support\Facades\Auth;
-use GuzzleHttp\Client;
-use SimpleXMLElement;
+use App\Models\Usuario;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use DateTime;
 
 class ProdutoController extends Controller
 {
@@ -150,7 +154,7 @@ class ProdutoController extends Controller
         return view("carrinho", $data);
     }
 
-    public function excluirCarrinho($indice, Request $request)
+    public function excluirCarrinho($indice)
     {
         $carrinho = session('cart', []);
         if (isset($carrinho[$indice])) {
@@ -208,6 +212,7 @@ class ProdutoController extends Controller
         $cidade = $request->input('cidade');
         $uf = $request->input('uf');
         $cep = $request->input('cep');
+        $pedido = new Pedido;
 
         $carrinho = session('cart', []);
 
@@ -226,10 +231,17 @@ class ProdutoController extends Controller
 
         if ($semEstoque) {
 
-            echo "Quantidade do carrinho maior que a quantidade em estoque do produto " . $produtoSemEstoque['nome'];
-            echo "<br>";
-            echo "Numero = " . $produtoSemEstoque['numero'];
+            foreach ($carrinho as $key => $item) {
+                if ($item == $produtoSemEstoque) {
+                    unset($carrinho[$key]);
+                    session(["cart" => $carrinho]);
+                    break;
+                }
+            }
+            $request->session()->flash("err", "Quantidade do carrinho maior que a quantidade em estoque do produto " . $produtoSemEstoque['nome'] . "/" . $produtoSemEstoque['numero']);
+            return redirect()->route("home");
         } else {
+            
 
             $customerPhone = [
                 'country' => '+55',
@@ -257,6 +269,7 @@ class ProdutoController extends Controller
 
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
+                'reference_id' => $pedido->id,
                 'customer' => [
                     'phone' => $customerPhone,
                     'name' => $customerName,
@@ -305,11 +318,60 @@ class ProdutoController extends Controller
 
             $jsonResponse = $response->getBody();
             $data = json_decode($jsonResponse, true);
+            $idCheckout = $data['id'];
 
             // Verifique se o campo 'links' existe e se contém o link 'SELF'
             if (isset($data['links']) && is_array($data['links'])) {
                 foreach ($data['links'] as $link) {
                     if (isset($link['rel']) && $link['rel'] === 'PAY' && isset($link['href'])) {
+
+                        //criar Usuario, Pedido e enviar o usuario para o pagseguro
+                        //criar usuario
+                        $usuarioPedido = new Usuario;
+                        $usuarioCadastrado = Usuario::where('email',  $emailCliente)->first(); //buscando cadastro do usuario no sistema
+                        if ($usuarioCadastrado) {
+                            $usuarioPedido = $usuarioCadastrado;
+                        } else {
+                            try {
+                                $usuarioPedido->email = $emailCliente;
+                                $usuarioPedido->cpf = $cpf;
+                                $usuarioPedido->password = HASH::make($cpf);
+                                $usuarioPedido->nome = $nomeCliente;
+                                $usuarioPedido->isAdmin = 0;
+                                $usuarioPedido->ativo = 0;
+                                // Armazenando usuario na sessao
+                                $usuarioPedido->save();
+                                $request->session()->put('usuarioPedido', $usuarioPedido);
+                            } catch (\Exception $e) {
+                                Log::error("ERRO", ['file' => 'ProdutoController.salvarUsuario', 'message' => $e->getMessage()]);
+                                DB::rollback();
+                                $request->session()->flash(["status" => 'err', 'message' => 'erro ao tentar iniciar pagamento']);
+                                session()->forget('cart');
+                                return redirect()->route('home');
+                            }
+                        }
+                        //guardando endereço
+                        $endereco = new Endereco;
+                        $endereco->logradouro = $logradouro;
+                        $endereco->bairro = $bairro;
+                        $endereco->numero = $numero;
+                        $endereco->cidade = $cidade;
+                        $endereco->uf = $uf;
+                        $endereco->cep = $cep;
+                        $endereco->save();
+                        $request->session()->put('enderecoPedido', $endereco);
+
+                        //criar pedido
+                        $dateTimeAtual = new DateTime();
+                        $dataHoraAtual = $dateTimeAtual->format('Y-m-d H:i:s');
+                        $pedido->datapedido = $dataHoraAtual;
+                        $pedido->status = 'Iniciado';
+                        $pedido->cod_checkout = $idCheckout;
+                        $pedido->usuario_id = $usuarioPedido->id;
+                        $pedido->endereco_id = $endereco->id;
+                        $pedido->save();
+                        $request->session()->put('pedido', $pedido);
+
                         $PAYlink = $link['href'];
                         return redirect($PAYlink);
                         break;
@@ -319,6 +381,34 @@ class ProdutoController extends Controller
                 echo 'PagSeguro não respondeu.';
             }
         }
+    }
+
+    public function handle(Request $request)
+    {
+        $payload = $request->all();
+
+        // Aqui você pode validar a autenticidade da notificação, verificar as chaves de segurança, etc.
+
+        // Exemplo de como acessar dados específicos do payload
+        $referenceId = $payload['reference_id'];
+        $status = $payload['charges'][0]['status'];
+
+        // Agora, atualize o status de pagamento no seu sistema
+        $pedido = Pedido::find($referenceId);
+
+        if ($pedido) {
+            // Atualize o status do pedido com base no status recebido do PagSeguro
+            $pedido->status_pag = $status;
+            $pedido->save();
+
+            Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId, 'status' => $status]);
+
+
+            // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
+        }
+
+        // Responda para confirmar o recebimento do Webhook
+        return response()->json(['status' => 'Webhook recebido com sucesso']);
     }
 
     public function PagSeguroCriarApp()
@@ -420,9 +510,9 @@ class ProdutoController extends Controller
     }
 
 
-    public function posPagar(Request $request)
+    public function posPagar()
     {
-        dd($request);
+        return redirect()->route("home");
     }
 
     public function finalizar(Request $request)
