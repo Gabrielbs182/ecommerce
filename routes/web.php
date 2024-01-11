@@ -87,4 +87,4 @@ Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualiz
 Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');
 
 //WEBHOOKS
-Route::post('/webhook/pagbank', [ProdutoController::class, 'handle']);
+Route::post('/webhook/pagbank', [PagSeguroController::class, 'handle']);
