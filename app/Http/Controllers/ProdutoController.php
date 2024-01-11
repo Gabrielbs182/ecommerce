@@ -268,7 +268,7 @@ class ProdutoController extends Controller
 
             $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
             $notification_urls = [
-                'https://urbeatstore.com.br/pagbank/handle'
+                'https://urbeatstore.com.br/pagbank/webhook'
                 // Adicione mais URLs conforme necessário
             ];
 
@@ -404,7 +404,7 @@ class ProdutoController extends Controller
         Log::error('Recebeu webhook', ['reference_id' => $referenceId, 'status' => $status]);
 
         // Agora, atualize o status de pagamento no seu sistema
-        $pedido = Pedido::where('cod_checkout', $referenceId)->first();
+        $pedido = Pedido::where('reference_id', $referenceId)->first();
 
         if ($pedido) {
             // Atualize o status do pedido com base no status recebido do PagSeguro
