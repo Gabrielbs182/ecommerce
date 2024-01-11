@@ -75,10 +75,10 @@
                             </button>
                         </div>
                     </div>
-                    <button class="btn btn-primary px-3"><a
+                    {{-- <button class="btn btn-primary px-3"><a
                             href="{{ route('adicionar_carrinho', ['idproduto' => $produto[0]->id]) }}"
                             class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart mr-1"
-                                style="color:#e63412;"></i>Adicionar ao carrinho</a></button>
+                                style="color:#e63412;"></i>Adicionar ao carrinho</a></button> --}}
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Compartilhe:</p>
