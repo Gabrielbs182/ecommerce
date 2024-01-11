@@ -401,7 +401,7 @@ class ProdutoController extends Controller
         $referenceId = $payload['reference_id'];
         $status = $payload['charges'][0]['status'];
 
-        Log::info('Recebeu webhook', ['reference_id' => $referenceId, 'status' => $status]);
+        Log::error('Recebeu webhook', ['reference_id' => $referenceId, 'status' => $status]);
 
         // Agora, atualize o status de pagamento no seu sistema
         $pedido = Pedido::where('cod_checkout', $referenceId)->first();
