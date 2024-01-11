@@ -2,10 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\PagSeguroController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\CidadeControllador;
-use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\MelhorEnvioController;
 
 
@@ -23,30 +22,26 @@ use App\Http\Controllers\MelhorEnvioController;
 
 
 // API'S
-Route::get('/cidades/{idCidade}', [CidadeControllador::class, 'buscarCidades'])
-    ->name('buscarCidades');
 Route::get('/produto/{idProduto}', [ProdutoController::class, 'buscarProduto'])
     ->name('buscarProduto');
 Route::get('/buscarCarrinho', [ProdutoController::class, 'buscarCarrinho'])
     ->name('buscarCarrinho');
-Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
-    ->name('buscarEstoque');
 Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'buscarEstoqueQuantidade'])
     ->name('buscarEstoqueQuantidade');
-Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('authorize');
-Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo');
-Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken');
-Route::get('/melhorenvio/teste', [MelhorEnvioController::class, 'teste'])->name('teste');
+//Melhor Envio
+Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo')->middleware('IsAdmin');
+Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken')->middleware('IsAdmin');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
-Route::get('/melhorenvio/lancarFrete', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete')->middleware('IsAdmin');
-Route::get('/pagseguro/criarapp', [ProdutoController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
-Route::get('/pagbank/authorize', [ProdutoController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
-Route::get('/pagbank/auth', [ProdutoController::class, 'PagSeguroAuth'])->name('pagseguro.auth');
-Route::get('/pagbank/gettoken', [ProdutoController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
-Route::get('/pagbank/checkout', [ProdutoController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
-Route::get('/pagbank/pospagar', [ProdutoController::class, 'PosPagar'])->name('pagseguro.pospagar');
+Route::get('/melhorenvio/lancarFrete', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete');
+//PagSeguro
+Route::get('/pagseguro/criarapp', [PagSeguroController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
+Route::get('/pagbank/authorize', [PagSeguroController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
+Route::get('/pagbank/auth', [PagSeguroController::class, 'PagSeguroAuth'])->name('pagseguro.auth')->middleware('IsAdmin');
+Route::get('/pagbank/gettoken', [PagSeguroController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
+Route::get('/pagbank/checkout', [PagSeguroController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
+Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name('pagseguro.pospagar');
 
 
 //REDIRECIONAMENTO
@@ -60,12 +55,8 @@ Route::match(['get', 'post'], '/{idcategoria}/categoria', [ProdutoController::cl
     ->name('categoria_por_id');
 Route::match(['get', 'post'], '/carrinho', [ProdutoController::class, 'verCarrinho'])
     ->name('ver_carrinho');
-Route::post('/compras/detalhes', [ProdutoController::class, 'detalhes'])
-    ->name('compra_detalhes');
-Route::get('/compras/{idproduto}', [ProdutoController::class, 'detalhes'])
+Route::get('/compras/detalhes/{idproduto}', [ProdutoController::class, 'detalhes'])
     ->name('detalhes');
-Route::match(['get', 'post'], '/pagamento', [ProdutoController::class, 'pagamento'])
-    ->name('pagamento');
 Route::match(['get', 'post'], '/keyController', [ProdutoController::class, 'keyController'])
     ->name('keyController');
 Route::match(['get', 'post'], '/envio/autorizar', [ProdutoController::class, 'autorizarEnvio'])
@@ -86,7 +77,7 @@ Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])
     ->name('carrinho_finalizar');
 Route::get('/compras/historico', [ProdutoController::class, 'historico'])
     ->name('compra_historico');
-Route::match(['get', 'post'], '/pagar', [ProdutoController::class, 'PagSeguroCheckout'])
+Route::match(['get', 'post'], '/pagar', [PagSeguroController::class, 'PagSeguroCheckout'])
     ->name('pagar');
     Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consultarCheckout'])
     ->name('consultarCheckout');
