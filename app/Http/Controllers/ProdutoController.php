@@ -269,11 +269,11 @@ class ProdutoController extends Controller
 
             $redirectUrl = 'https://urbeatstore.com.br/pagbank/pospagar';
             $notification_urls = [
-                'https://urbeatstore.com.br/webhook/pagseguro'
+                'https://urbeatstore.com.br/webhook/pagbank'
                 // Adicione mais URLs conforme necessário
             ];
             $payment_notification_urls = [
-                'https://urbeatstore.com.br/webhook/pagseguro'
+                'https://urbeatstore.com.br/webhook/pagbank'
                 // Adicione mais URLs conforme necessário
             ];
 
