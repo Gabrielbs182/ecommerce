@@ -11,6 +11,7 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\ProdutoController;
 use DateTime;
 
 class PagSeguroController extends Controller
@@ -20,6 +21,7 @@ class PagSeguroController extends Controller
     public function PagSeguroCriarApp(Request $request)
     {
         $token = env('PAGSEGURO_TOKEN');
+        $produtoController = new ProdutoController;
 
         $client = new \GuzzleHttp\Client();
 
@@ -43,8 +45,8 @@ class PagSeguroController extends Controller
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['client_id']) && isset($responseJson['client_secret'])) {
 
-            $this->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_ID', $responseJson['client_id']);
-            $this->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_SECRET', $responseJson['client_secret']);
+            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_ID', $responseJson['client_id']);
+            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_SECRET', $responseJson['client_secret']);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Aplicativo criado com sucesso.";
@@ -71,6 +73,7 @@ class PagSeguroController extends Controller
         $token = env('PAGSEGURO_TOKEN');
         $clientId = env('PAGSEGURO_CLIENT_ID');
         $clientSecret = env('PAGSEGURO_CLIENT_SECRET');
+        $produtoController = new ProdutoController;
 
         $client = new \GuzzleHttp\Client();
 
@@ -100,9 +103,9 @@ class PagSeguroController extends Controller
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
 
-            $this->AtualizarVariaveisAmbiente('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
-            $this->AtualizarVariaveisAmbiente('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
-            $this->AtualizarVariaveisAmbiente('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
+            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
+            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
+            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
             return "Tokens salvos com sucesso";
@@ -185,6 +188,7 @@ class PagSeguroController extends Controller
         $referenceId = uniqid('', true);
         $carrinho = session('cart', []);
         $produtoSemEstoque = "";
+        $produtoController = new ProdutoController;
 
         //buscando inputs
         $vlrFrete = ($request->input('valorFrete') * 100);
@@ -203,7 +207,7 @@ class PagSeguroController extends Controller
         //testando estoque
         foreach ($carrinho as $item) {
             $quantidadeCarrinho = $item['quantidade'];
-            $estoque = $this->buscarEstoqueQuantidade($item['id'], $item['numero']);
+            $estoque = $produtoController->buscarEstoqueQuantidade($item['id'], $item['numero']);
             $quantidadeEstoque = $estoque[0]->quantidade;
             if ($quantidadeCarrinho > $quantidadeEstoque) {
                 $semEstoque = true;
