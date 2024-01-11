@@ -423,18 +423,18 @@ class PagSeguroController extends Controller
 
         if (isset($payload['reference_id'])) {
             $referenceId = $payload['reference_id'];
+            Log::info('Recebeu webhook', ['reference_id' => $referenceId]);
 
             // Verifica se 'charges' e 'status' existem antes de acessá-los
             if (isset($payload['charges'][0]['status'])) {
                 $status_pagamento = $payload['charges'][0]['status'];
+                Log::info('Recebeu webhook', ['reference_id' => $referenceId, 'status_pagamento' => $status_pagamento]);
             }
 
             // Verifica se 'status' existe antes de acessá-lo
             // if (isset($payload['status'])) {
             //     $status_checkout = $payload['status'];
             // }
-
-            Log::info('Recebeu webhook', ['reference_id' => $referenceId, 'status_pagamento' => $status_pagamento, 'status_checkout' => $status_checkout]);
 
             $pedido = Pedido::where('reference_id', $referenceId)->first();
 
@@ -446,7 +446,7 @@ class PagSeguroController extends Controller
                 if ($pedido->status_pag == 'DECLINED' or $pedido->status_pag == 'CANCELED') {
                     $pedido->status = 'Cancelado';
                     $pedido->save();
-                    $this->InativarCheckout($pedido->cod_checkout);
+                    // $this->InativarCheckout($pedido->cod_checkout);
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
                     //lançar frete
