@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cidade;
 use Illuminate\Http\Request;
 use App\Models\Usuario;
-use App\Models\Estado;
 use App\Services\ClienteService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -16,11 +14,7 @@ class ClienteController extends Controller
 
     public function cadastrar(Request $request)
     {
-        $cidades = Cidade::all();
-        $estados = Estado::all();
         $data = [];
-        $data["cidades"] = $cidades;
-        $data["estados"] = $estados;
         return view("cadastrar", $data);
     }
 
@@ -44,7 +38,7 @@ class ClienteController extends Controller
             if ($status == 'err') {
                 return redirect()->route('cadastrar');
             } else {
-                Auth::login($usuario);
+                Auth::login($usuarioGenerico);
 
                 $carrinho = session('cart', []);
                 if (count($carrinho) > 0) {
