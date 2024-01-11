@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use DateTime;
+use Illuminate\Support\Facades\Http;
 
 class ProdutoController extends Controller
 {
@@ -523,6 +524,18 @@ class ProdutoController extends Controller
     public function posPagar()
     {
         return redirect()->route("home");
+    }
+
+    public function consultarCheckout($checkoutId)
+    {
+        $token = env('PAGSEGURO_TOKEN'); // Substitua pela obtenção do seu token
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+            'Accept' => 'application/json',
+        ])->get('https://sandbox.api.pagseguro.com/checkouts/' . $checkoutId);
+
+        return response()->json($response->json(), $response->status());
     }
 
     public function finalizar(Request $request)
