@@ -155,8 +155,9 @@ class PagSeguroController extends Controller
         return response()->json($response->json(), $response->status());
     }
 
-    public function posPagar()
+    public function posPagar(Request $request)
     {
+        $request->session()->flash('ok', 'Compra realizada, um email de confirmação e o código de rastreamento do pacote sera enviado para você assim que o pagamento for confirmado.');
         return redirect()->route("home");
     }
 
@@ -373,7 +374,7 @@ class PagSeguroController extends Controller
                         } catch (\Exception $e) {
                             Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
                             DB::rollback();
-                            $request->session()->flash('err','erro ao tentar iniciar pagamento');
+                            $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                             session()->forget('cart');
                             return redirect()->route('home');
                         }
