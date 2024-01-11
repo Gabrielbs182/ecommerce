@@ -36,11 +36,11 @@ class ProdutoController extends Controller
     }
 
 
-    // public function buscarEstoque($id)
-    // {
-    //     $estoque = Estoque::where('produto_id', '=', $id)->get();
-    //     return $estoque;
-    // }
+    public function buscarEstoque($id)
+    {
+        $estoque = Estoque::where('produto_id', '=', $id)->get();
+        return $estoque;
+    }
 
     public function buscarEstoqueQuantidade($id, $numero)
     {

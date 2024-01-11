@@ -28,6 +28,8 @@ Route::get('/buscarCarrinho', [ProdutoController::class, 'buscarCarrinho'])
     ->name('buscarCarrinho');
 Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'buscarEstoqueQuantidade'])
     ->name('buscarEstoqueQuantidade');
+Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
+    ->name('buscarEstoque');
 //Melhor Envio
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo')->middleware('IsAdmin');
 Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken')->middleware('IsAdmin');
