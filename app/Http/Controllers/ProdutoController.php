@@ -17,7 +17,12 @@ class ProdutoController extends Controller
 
     public function itensPedido($id)
     {
-        $itens = ItensPedido::where('pedido_id', '=', $id)->get();
+
+        $itens = ItensPedido::join('produtos', 'itens_pedidos.produto_id', '=', 'produtos.id')
+            ->where('itens_pedidos.pedido_id', $id)
+            ->select('itens_pedidos.*', 'produtos.nome as nome_produto')
+            ->get();
+
         return $itens;
     }
 

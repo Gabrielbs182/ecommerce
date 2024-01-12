@@ -33,10 +33,10 @@
                                 '<img src="' + asset +
                                 '/' + item.id +
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
-                                'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
+                                'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item.quantidade +
                                 '</td>' +
-                                '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
-                                '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
+                                '<td class="align-middle text-center"> R$' + item.valor {{ number_format(item.valor, 2, ',', '.') }} + '</td>' +
+                                '<td class="align-middle text-center"> R$' + {{ number_format((item.quantidade * item.valor), 2, ',', '.') }} +
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
                                 '</td>' +
@@ -86,7 +86,7 @@
                                 <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
                                 <td>
                                     <a href="#" class="edit"
-                                        onclick="abrirCarrinho({{ $p->id }})">Detalhes</a>
+                                        onclick="abrirCarrinho({{ $p->id }})">Produtos</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -116,7 +116,7 @@
             <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Detalhes
+                        Produtos
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -126,6 +126,13 @@
                     <div class="row justify-content-center">
                         <div class="col-auto">
                             <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Produto</th>
+                                        <th scope="col" class="text-center">Preço</th>
+                                        <th scope="col" class="text-center">Total</th>
+                                    </tr>
+                                </thead>
                                 <tbody id="modalCarrinhoLista">
                                 </tbody>
                             </table>
