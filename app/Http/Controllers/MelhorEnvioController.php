@@ -41,9 +41,9 @@ class MelhorEnvioController extends Controller
             $pedido = Pedido::where('reference_id', $reference_id);
 
             if (isset($pedido)) {
-                $endereco = Endereco::where('id', $pedido->endereco_id);
-                $usuario = Usuario::where('id', $pedido->usuario_id);
-                $itens = ItensPedido::where('pedido_id', $pedido->id);
+                $endereco = Endereco::find($pedido->endereco_id);
+                $usuario = Usuario::find($pedido->usuario_id);
+                $itens = ItensPedido::where('pedido_id', $pedido->id)->get();
             }
 
             // Criar uma instância do GuzzleHttp\Client
