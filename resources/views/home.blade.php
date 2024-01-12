@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('scriptjs')
+    <script src="{{ asset('lib/urbeatFunctions/urbeat.js') }}"></script>
+@endsection
+
 @section('content')
     {{-- Asset --}}
     <input type="hidden" value="{{ asset('images') }}" id="asset">
