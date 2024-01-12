@@ -3,24 +3,7 @@
 @section('scriptjs')
     <script src="{{ secure_asset('js/jquery.js') }}"></script>
     <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            }
-        });
-
-        $(function() {
-            $(".infocompra").on('click', function() {
-                //ao clicar no link com class .infocompras esta funcção sera executada
-                let id = $(this).attr("data-value")
-                $.post('{{ route('compra_detalhes') }}', {
-                    idpedido: id
-                }, (result) => {
-                    //Função de callback -- retorno do ajax
-                    $("#conteudopedido").html(result)
-                })
-            })
-        })
+        
     </script>
 @endsection
 
