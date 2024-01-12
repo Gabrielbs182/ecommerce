@@ -35,7 +35,7 @@
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item.quantidade +
                                 '</td>' +
-                                '<td class="align-middle text-center"> R$' + item.valor {{ number_format(item.valor, 2, ',', '.') }} + '</td>' +
+                                '<td class="align-middle text-center"> R$' + {{ number_format(item.valor, 2, ',', '.') }} + '</td>' +
                                 '<td class="align-middle text-center"> R$' + {{ number_format((item.quantidade * item.valor), 2, ',', '.') }} +
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
