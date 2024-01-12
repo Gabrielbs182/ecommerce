@@ -117,8 +117,8 @@
                         </div>
                         <div class="col-2">
                             <div class="form-group">
-                                DDD: <input type="number" name="ddd" class="form-control" max="2"
-                                    maxlength="12">
+                                DDD: <input type="number" name="ddd" class="form-control" minlength="2"
+                                    maxlength="2">
                             </div>
                         </div>
                         <div class="col-4">
