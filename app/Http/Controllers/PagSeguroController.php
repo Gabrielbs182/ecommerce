@@ -482,7 +482,8 @@ class PagSeguroController extends Controller
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
                     //lançar frete
-                    $melhorEnvio->lancarFrete($referenceId);
+                    //$melhorEnvio->lancarFrete($referenceId);
+                    $pedido->status_env = 'Envio iniciado';
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
                 // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
