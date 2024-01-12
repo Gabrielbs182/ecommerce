@@ -99,7 +99,7 @@ class MelhorEnvioController extends Controller
             ];
 
             foreach ($itens as $item) {
-                $produto = Produto::find($item['id']);
+                $produto = Produto::find($item['produto_id']);
                 $product = [
                     'name' => $produto['nome'],
                     'quantity' => $item['quantidade'],
