@@ -343,6 +343,10 @@ class PagSeguroController extends Controller
                         $usuarioCadastrado = Usuario::where('email',  $emailCliente)->first(); //buscando cadastro do usuario no sistema
                         if ($usuarioCadastrado) {
                             $usuarioPedido = $usuarioCadastrado;
+                            $usuarioPedido->telefone = $telefone;
+                            DB::beginTransaction();
+                            $usuarioPedido->save();
+                            DB::commit();
                         } else {
                             try {
                                 $usuarioPedido->email = $emailCliente;
@@ -351,6 +355,7 @@ class PagSeguroController extends Controller
                                 $usuarioPedido->nome = $nomeCliente;
                                 $usuarioPedido->isAdmin = 0;
                                 $usuarioPedido->ativo = 0;
+                                $usuarioPedido->telefone = $telefone;
                                 DB::beginTransaction();
                                 $usuarioPedido->save();
                                 DB::commit();
@@ -406,7 +411,7 @@ class PagSeguroController extends Controller
                         }
 
                         //salvando itens
-                        foreach ($carrinho as $item){
+                        foreach ($carrinho as $item) {
                             $iten = new ItensPedido;
                             $iten->quantidade = $item['quantidade'];
                             $iten->numero = $item['numero'];
