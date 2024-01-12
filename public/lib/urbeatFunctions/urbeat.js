@@ -167,7 +167,7 @@ function montarLinhaEnvio(transportadora) {
         transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
         transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-        ' - Prazo ' + transportadora.delivery_time + ' dias.'
+        ' - Prazo ' + transportadora.delivery_time + ' dias.' +
     '</label>' +
         '</div>';
     return linha;
