@@ -178,6 +178,11 @@ class ProdutoController extends Controller
         return view('historico', $data);
     }
 
+    public function compra_detalhes($id)
+    {
+        return $id;
+    }
+
     public function detalhes($idproduto)
     {
         $produto = Produto::where('id', $idproduto)->get();
