@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('scriptjs')
+{{-- @section('scriptjs')
     <script>
         function buscarProduto(id) {
             var asset = $('#asset').val();
@@ -387,7 +387,7 @@
             });
         }
     </script>
-@endsection
+@endsection --}}
 
 @section('content')
     {{-- Asset --}}
