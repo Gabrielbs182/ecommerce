@@ -4,11 +4,11 @@
     <script src="{{ secure_asset('js/jquery.js') }}"></script>
     <script>
         function abrirCarrinho(id) {
-            carregarCarrinho(id);
+            carregarItens(id);
             $('#modalDetalhes').modal('show');
         };
 
-        function carregarCarrinho(id) {
+        function carregarItens(id) {
 
             $.getJSON('/itens/' + id, function(data) {
 
