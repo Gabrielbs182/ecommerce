@@ -12,6 +12,8 @@
 
             $.getJSON('/itens/' + id, function(data) {
 
+                console.log(id);
+
                 // O objeto retornado é um array
                 var total = 0;
                 var indice = 0;
