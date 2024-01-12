@@ -343,7 +343,7 @@ class PagSeguroController extends Controller
                         $usuarioCadastrado = Usuario::where('email',  $emailCliente)->first(); //buscando cadastro do usuario no sistema
                         if ($usuarioCadastrado) {
                             $usuarioPedido = $usuarioCadastrado;
-                            $usuarioPedido->telefone = $telefone;
+                            $usuarioPedido->telefone = $ddd . '' . $telefone;
                             DB::beginTransaction();
                             $usuarioPedido->save();
                             DB::commit();
@@ -355,7 +355,7 @@ class PagSeguroController extends Controller
                                 $usuarioPedido->nome = $nomeCliente;
                                 $usuarioPedido->isAdmin = 0;
                                 $usuarioPedido->ativo = 0;
-                                $usuarioPedido->telefone = $telefone;
+                                $usuarioPedido->telefone = $ddd . '' . $telefone;
                                 DB::beginTransaction();
                                 $usuarioPedido->save();
                                 DB::commit();
