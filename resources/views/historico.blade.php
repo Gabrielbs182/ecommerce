@@ -31,10 +31,10 @@
                         @foreach ($lista as $p)
                             <tr>
                                 <td>{{ $p->id }}</td>
-                                <td>{{ $p->datapedido }}</td>
+                                <td>{{ date('d/m/Y H:i', strtotime($p->datapedido)) }}</td>
                                 <td>{{ $p->status }}</td>
                                 <td>{{ $p->cod_rastreamento }}</td>
-                                <td>{{ $p->total }}</td>
+                                <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
                                 <td>
                                     <a href="{{ route('compra_detalhes', $p->id) }}">Detalhes</a>
                                 </td>
