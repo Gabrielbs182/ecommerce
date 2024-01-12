@@ -15,6 +15,12 @@ class ProdutoController extends Controller
 {
     //
 
+    public function itensPedido($id)
+    {
+        $itens = ItensPedido::where('pedido_id', '=', $id)->get();
+        return $itens;
+    }
+
     public function buscarProduto($id)
     {
         $produto = Produto::where('id', '=', $id)->get();
@@ -167,7 +173,7 @@ class ProdutoController extends Controller
         // Salvar as alterações no arquivo .env
         file_put_contents($envPath, $envContent);
     }
-    
+
     public function historico()
     {
         $data = [];
@@ -201,5 +207,4 @@ class ProdutoController extends Controller
 
         return view("detalhes", $data);
     }
-
 }

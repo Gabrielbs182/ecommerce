@@ -49,6 +49,8 @@ Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name(
 //REDIRECIONAMENTO
 Route::match(['get', 'post'], '/', [ProdutoController::class, 'index'])
     ->name('home');
+Route::match(['get', 'post'], '/itens/{id}', [ProdutoController::class, 'itensPedido'])
+    ->name('itensPedido');
 Route::match(['get', 'post'], '/categoria', [ProdutoController::class, 'categoria'])
     ->name('categoria');
 Route::match(['get', 'post'], '/cadastrar', [ClienteController::class, 'cadastrar'])
@@ -79,11 +81,11 @@ Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])
     ->name('carrinho_finalizar');
 Route::get('/compras/historico', [ProdutoController::class, 'historico'])
     ->name('compra_historico');
-    Route::get('/compras/detalhes/{id}', [ProdutoController::class, 'compra_detalhes'])
+Route::get('/compras/detalhes/{id}', [ProdutoController::class, 'compra_detalhes'])
     ->name('compra_detalhes');
 Route::match(['get', 'post'], '/pagar', [PagSeguroController::class, 'PagSeguroCheckout'])
     ->name('pagar');
-    Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consultarCheckout'])
+Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consultarCheckout'])
     ->name('consultarCheckout');
 Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualizarQuantidadeCarrinho'])->name('atualizar_quantidade_carrinho');
 Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');

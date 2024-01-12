@@ -2,7 +2,53 @@
 
 @section('scriptjs')
     <script src="{{ secure_asset('js/jquery.js') }}"></script>
-    <script></script>
+    <script>
+        function abrirCarrinho(id) {
+            carregarCarrinho(id);
+            $('#modalDetalhes').modal('show');
+        };
+
+        function carregarCarrinho(id) {
+
+            $.getJSON('/itens/' + id, function(data) {
+
+                // O objeto retornado é um array
+                var total = 0;
+                var indice = 0;
+                $('#modalCarrinhoLista').empty();
+
+                // Verificar se data é um objeto
+                if (typeof data === 'object' && data !== null) {
+                    // Iterar sobre as propriedades do objeto
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var item = data[key];
+
+                            var asset = $('#asset').val();
+                            var itemCarrinho =
+                                '<tr>' +
+                                '<td class="w-20 align-middle text-center">' +
+                                '<img src="' + asset +
+                                '/' + item.id +
+                                '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
+                                'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
+                                '</td>' +
+                                '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
+                                '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
+                                '</td>' +
+                                '<td class="align-middle text-center">' +
+                                '</td>' +
+                                '</tr>';
+                            $('#modalCarrinhoLista').append(itemCarrinho);
+                            indice++
+                        }
+                    }
+                } else {
+                    console.error('O JSON retornado não é um array:', data);
+                }
+            });
+        };
+    </script>
 @endsection
 
 @section('content')
@@ -36,7 +82,7 @@
                                 <td>{{ $p->cod_rastreamento }}</td>
                                 <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
                                 <td>
-                                    <a href="{{ route('compra_detalhes', $p->id) }}">Detalhes</a>
+                                    <a onclick="abrirCarrinho({{ $p->id }})">Detalhes</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -58,20 +104,29 @@
         @endif
     </div>
 
-    <div class="modal fade" id="modalcompra">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalcompraLabel">Detalhes da Compra</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="conteudopedido">
+    <div class="modal fade" id="modalCarrinho" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
 
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Detalhes
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <div class="modal-body" id="carrinhoModal">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-responsive">
+                                <tbody id="modalCarrinhoLista">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
