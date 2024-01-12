@@ -108,7 +108,6 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    console.log(transportadora);
                     linha = montarLinhaEnvio(transportadora);
                     linhas += linha;
                 }
@@ -168,7 +167,8 @@ function montarLinhaEnvio(transportadora) {
         transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
         transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
-        '</label>' +
+        ' - Prazo ' + transportadora.delivery_time + ' dias.'
+    '</label>' +
         '</div>';
     return linha;
 }
