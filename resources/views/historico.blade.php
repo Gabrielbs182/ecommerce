@@ -25,7 +25,7 @@
                     for (var key in data) {
                         if (data.hasOwnProperty(key)) {
                             var item = data[key];
-                            let valorItem = item.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                            let valorItem = (item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                             let valorTotal = (item.quantidade*item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                             var asset = $('#asset').val();
                             var itemCarrinho =
@@ -36,7 +36,7 @@
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item.quantidade +
                                 '</td>' +
-                                '<td class="align-middle text-center"> R$' + valorItem + '</td>' +
+                                '<td class="align-middle text-center"> ' + valorItem + '</td>' +
                                 '<td class="align-middle text-center"> ' + valorTotal +
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
