@@ -95,13 +95,13 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
-                                Nome: <input type="text" name="nome" class="form-control" minlength="10"
+                                Nome: <input type="text" name="nome" class="form-control" minlength="3"
                                     maxlength="40">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                Sobrenome: <input type="text" name="sobrenome" class="form-control" minlength="10"
+                                Sobrenome: <input type="text" name="sobrenome" class="form-control" minlength="5"
                                     maxlength="40">
                             </div>
                         </div>
