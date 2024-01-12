@@ -13,6 +13,7 @@
                     <form action="{{ route('pagar') }}" method="POST">
                         @csrf
                         <input type="hidden" name="valorFrete" value="{{ $valor }}">
+                        <input type="hidden" name="idFrete" value="{{ $idFrete }}">
                         @if ($idFrete == 'Gratis')
                             <div class="row">
                                 <div class="col-md-6 form-group" id="logradouro-group">
