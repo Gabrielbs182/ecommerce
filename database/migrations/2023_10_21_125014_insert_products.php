@@ -56,7 +56,7 @@ class InsertProducts extends Migration
         // Admin
         $pass = env('ADEMIR');
         $pass = bcrypt($pass);
-        $user = new Usuario(['email' => 'urbeat_adm@adm.com', 'cpf' => '12345678912', 'password' => $pass, 'nome' => 'Administrador Administrador', 'isAdmin' => 1, 'ativo' => 1]);
+        $user = new Usuario(['email' => 'urbeat_adm@adm.com', 'cpf' => '12345678912', 'password' => $pass, 'nome' => 'Administrador Administrador', 'isAdmin' => 1, 'ativo' => 1, 'telefone' => '27999999999']);
         $user->save();
     }
 
