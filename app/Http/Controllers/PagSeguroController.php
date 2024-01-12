@@ -449,6 +449,7 @@ class PagSeguroController extends Controller
                     // $this->InativarCheckout($pedido->cod_checkout);
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
+                    $pedido->save();
                     //lançar frete
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
