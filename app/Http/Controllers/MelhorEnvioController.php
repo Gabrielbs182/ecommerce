@@ -38,7 +38,7 @@ class MelhorEnvioController extends Controller
             $responseData = $this->Authorization();
 
             //buscando os dados
-            $pedido = Pedido::where('reference_id', $reference_id);
+            $pedido = Pedido::where('reference_id', $reference_id)->first();
 
             if (isset($pedido)) {
                 $endereco = Endereco::find($pedido->endereco_id);
