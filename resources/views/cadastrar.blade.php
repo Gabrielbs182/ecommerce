@@ -121,7 +121,7 @@
                                     maxlength="12">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
                             <div class="form-group">
                                 Telefone: <input type="number" name="telefone" class="form-control" minlength="9"
                                     maxlength="9">
