@@ -1,7 +1,6 @@
 function buscarProduto(id) {
     var asset = $('#asset').val();
     $.getJSON('/produto/' + id, function (produto) {
-        console.log(produto)
         var foto = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '.png" alt="Image">';
         var foto2 = '<img class="w-100 h-100" src="' + asset +
@@ -78,7 +77,6 @@ function obterDadosCEP(cep) {
         })
         .then(data => {
             // Manipular os dados obtidos
-            console.log(data);
 
             // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
         })
@@ -99,7 +97,6 @@ function calcularFrete() {
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
-            console.log('iniciou calculo do');
 
             document.getElementById("envios").innerHTML = '';
 
@@ -109,10 +106,9 @@ function calcularFrete() {
 
             for (var transportadora of frete) {
                 if ('error' in transportadora) {
-                    console.log("Tipo de envio " + transportadora.name + " Contem um erro:");
-                    console.log("Transportadora = " + transportadora.company.name + "Contem um erro:");
                     console.log(transportadora.error);
                 } else {
+                    console.log(transportadora);
                     linha = montarLinhaEnvio(transportadora);
                     linhas += linha;
                 }
@@ -131,7 +127,6 @@ function calcularFrete() {
                 '</div>' +
                 '</div>';
 
-            console.log(linhas);
             document.getElementById("envios").innerHTML = linhas;
         });
     } else {
@@ -197,7 +192,6 @@ function removerProdutoCarrinho(id) {
             'X-CSRF-TOKEN': token
         },
         success: function () {
-            console.log('item excluido')
             $.getJSON('/buscarCarrinho', function (data) {
                 var total = 0;
                 var indice = 0;
@@ -225,8 +219,6 @@ function carregarCarrinho() {
         var total = 0;
         var indice = 0;
         $('#modalCarrinhoLista').empty();
-        console.log('carregarCarrinho');
-        console.log(data);
 
         // Verificar se data é um objeto
         if (typeof data === 'object' && data !== null) {
@@ -308,10 +300,7 @@ function abrirCarrinho() {
 
 function buscarEstoqueCarrinho(id, callback) {
     var numero = $('#tamanhoModal').val();
-    console.log(numero);
-    console.log(id);
     $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function (data) {
-        console.log(data);
         callback(data); // Chama o callback com os dados recebidos
     });
 }
@@ -325,21 +314,14 @@ function adicionarCarrinho(id) {
 
     // Use uma função de callback para obter os dados assíncronos
     buscarEstoqueCarrinho(id, function ($item) {
-        console.log($item);
         if ($item == 1) {
             console.log('Item não existe no carrinho');
 
         } else {
-            console.log('Item existe no carrinho');
-            console.log(quantidade);
             quantidade += parseInt($item.quantidade);
-            console.log(quantidade);
         }
         // Restante do seu código...
-        console.log(quantidade);
-        console.log(estoque);
         if (parseInt(quantidade) > parseInt(estoque)) {
-            console.log('Não tem estoque');
             $('#inputZip').val('');
             var alerta =
                 '<div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">' +
@@ -350,7 +332,6 @@ function adicionarCarrinho(id) {
                 '</div>';
             $('#modalAlert').append(alerta);
         } else {
-            console.log('Tem estoque');
 
             $.getJSON('/produto/' + id, function (produto) {
                 var quantidade = $('#inputZip').val()
