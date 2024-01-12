@@ -115,6 +115,18 @@
                                 Cpf: <input type="cpf" id="CPF" name="cpf" class="form-control">
                             </div>
                         </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                DDD: <input type="number" name="ddd" class="form-control" max="2"
+                                    maxlength="12">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                Telefone: <input type="number" name="telefone" class="form-control" minlength="9"
+                                    maxlength="9">
+                            </div>
+                        </div>
                         <div class="col-6">
                             <div class="form-group">
                                 Senha: <input type="password" name="password" class="form-control" minlength="6"

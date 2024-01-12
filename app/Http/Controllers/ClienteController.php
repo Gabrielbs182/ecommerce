@@ -55,8 +55,10 @@ class ClienteController extends Controller
             $usuario->email = $request->input('email');
             $senha = $request->input("password");
             $nome = $request->input("nome") . " " . $request->input("sobrenome");
+            $telefone = $request->input("ddd") . " " . $request->input("telefone");
             $usuario->password = HASH::make($senha);
             $usuario->nome = $nome;
+            $usuario->telefone = $telefone;
             $usuario->isAdmin = 0;
             $usuario->ativo = 1;
 
