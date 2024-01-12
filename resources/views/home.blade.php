@@ -362,7 +362,7 @@
 
                                 document.getElementById("envios").innerHTML = '';
 
-                                linhas +=
+                                linhas =
                                     '</div>' +
                                     '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
                                     '<div class="col-sm-10">' +
