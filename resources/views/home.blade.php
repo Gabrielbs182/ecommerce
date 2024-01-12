@@ -212,22 +212,6 @@
                         } else {
                             carregarCarrinho();
                         }
-
-                        document.getElementById("envios").innerHTML = '';
-                        linha =
-                            '</div>' +
-                            '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
-                            '<div class="col-sm-10">' +
-                            '<div class="form-check">' +
-                            '<input class="form-check-input" type="radio" name="frete"' +
-                            'id="gratis" value="' + 0 + '" checked>' +
-                            '<label class="form-check-label" for="gratis">' +
-                            'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
-                            '</label>' +
-                            '</div>' +
-                            '</div>';
-
-                        document.getElementById("envios").innerHTML = linhas;
                     });
                 },
                 error: function(error) {
@@ -287,6 +271,22 @@
                 }
                 $('#totalCarrinho').empty();
                 $('#totalCarrinho').append(total);
+                document.getElementById("envios").innerHTML = '';
+
+                linha =
+                    '</div>' +
+                    '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
+                    '<div class="col-sm-10">' +
+                    '<div class="form-check">' +
+                    '<input class="form-check-input" type="radio" name="frete"' +
+                    'id="gratis" value="' + 0 + '" checked>' +
+                    '<label class="form-check-label" for="gratis">' +
+                    'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
+                    '</label>' +
+                    '</div>' +
+                    '</div>';
+
+                document.getElementById("envios").innerHTML = linha;
             });
             $.get('/atualizar-quantidade-carrinho', function(data) {
                 // Atualize a quantidade na página
@@ -376,22 +376,7 @@
                                 });
                                 $('#exampleModalCenter').modal('hide');
 
-                                document.getElementById("envios").innerHTML = '';
-
-                                linhas =
-                                    '</div>' +
-                                    '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
-                                    '<div class="col-sm-10">' +
-                                    '<div class="form-check">' +
-                                    '<input class="form-check-input" type="radio" name="frete"' +
-                                    'id="gratis" value="' + 0 + '" checked>' +
-                                    '<label class="form-check-label" for="gratis">' +
-                                    'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
-                                    '</label>' +
-                                    '</div>' +
-                                    '</div>';
-
-                                document.getElementById("envios").innerHTML = linhas;
+                                carregarCarrinho();
                             },
                             error: function(error) {
                                 console.log(error);
