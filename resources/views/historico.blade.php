@@ -54,6 +54,7 @@
 @endsection
 
 @section('content')
+    <input type="hidden" value="{{ asset('images') }}" id="asset">
 
     <div class="container">
         @if (count($lista) > 0)
@@ -84,7 +85,8 @@
                                 <td>{{ $p->cod_rastreamento }}</td>
                                 <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
                                 <td>
-                                    <a href="#" class="edit" onclick="abrirCarrinho({{ $p->id }})">Detalhes</a>
+                                    <a href="#" class="edit"
+                                        onclick="abrirCarrinho({{ $p->id }})">Detalhes</a>
                                 </td>
                             </tr>
                         @endforeach
