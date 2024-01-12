@@ -22,7 +22,7 @@ class ClienteController extends Controller
     {
 
         //Pegar todos os valores do formulario
-        $usuarioGenerico = Usuario::where('cpf', $request->input('cpf'))->where('email',  $request->input('email'))->where('ativo', 0)->first();
+        $usuarioGenerico = Usuario::where('email',  $request->input('email'))->where('ativo', 0)->first();
         if ($usuarioGenerico) {
             $senha = $request->input("password");
             $usuarioGenerico->password = HASH::make($senha);

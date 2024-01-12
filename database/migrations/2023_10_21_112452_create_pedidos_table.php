@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->id();
             $table->datetime("datapedido");
+            $table->double("total")->nullable();
             $table->string("status");
             $table->string("status_pag")->nullable();
             $table->string("status_env")->nullable();

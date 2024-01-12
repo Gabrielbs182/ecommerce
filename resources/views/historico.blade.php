@@ -2,38 +2,61 @@
 
 @section('scriptjs')
     <script src="{{ secure_asset('js/jquery.js') }}"></script>
-    <script>
-        
-    </script>
+    <script></script>
 @endsection
 
 @section('content')
-    <h3>Historico</h3>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Data da compra</th>
-                <th>Situação</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (isset($lista))
-                @foreach ($lista as $p)
-                    <tr>
-                        <td>{{ $p->datapedido }}</td>
-                        <td>{{ $p->status }}</td>
-                        <td>
-                            <a type="button" href="" data-value="{{ $p->id }}" class="btn btn-primary infocompra"
-                                data-bs-toggle="modal" data-bs-target="#modalcompra">
-                                <i class="fas fa-shopping-basket"></i>
-                            </a>
-                    </tr>
-                @endforeach
-            @endif
-        </tbody>
-    </table>
+    <div class="container">
+        @if (count($lista) > 0)
+            <div class="table-wrapper mt-5 mb-5">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Meus<b> Pedidos</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Data do pedido</th>
+                            <th>Status</th>
+                            <th>Código rastreamento</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($lista as $p)
+                            <tr>
+                                <td>{{ $p->id }}</td>
+                                <td>{{ $p->datapedido }}</td>
+                                <td>{{ $p->status }}</td>
+                                <td>{{ $p->cod_rastreamento }}</td>
+                                <td>{{ $p->total }}</td>
+                                <td>
+                                    <a href="{{ route('compra_detalhes', $p->id) }}">Detalhes</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        @else
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Meus<b> Pedidos</b></h2>
+                        </div>
+                    </div>
+                </div>
+                <h2 class="text-center">Nenhum pedido realizado em seu nome, aproveite e de um presente para quem ama :)
+                    </h1>
+            </div>
+        @endif
+    </div>
 
     <div class="modal fade" id="modalcompra">
         <div class="modal-dialog">

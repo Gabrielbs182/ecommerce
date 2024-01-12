@@ -198,6 +198,7 @@ class PagSeguroController extends Controller
 
         //buscando inputs
         $vlrFrete = ($request->input('valorFrete') * 100);
+        $total = $request->input('valorFrete');
         $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
@@ -295,6 +296,7 @@ class PagSeguroController extends Controller
 
             foreach ($carrinho as $item) {
                 $produto = Produto::find($item['id']);
+                $total += ($item['valor'] * $item['quantidade']);
                 $item = [
                     'reference_id' => $item['id'],
                     'name' => $produto['nome'],
@@ -398,6 +400,7 @@ class PagSeguroController extends Controller
                         $pedido->usuario_id = $usuarioPedido->id;
                         $pedido->endereco_id = $endereco->id;
                         $pedido->cod_entrega = $idFrete;
+                        $pedido->total = $total;
                         try {
                             DB::beginTransaction();
                             $pedido->save();
@@ -482,8 +485,19 @@ class PagSeguroController extends Controller
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
                     //lançar frete
-                    //$melhorEnvio->lancarFrete($referenceId);
-                    $pedido->status_env = 'Envio iniciado';
+                    $resposta = $melhorEnvio->lancarFrete($referenceId);
+
+                    // Verifique se a resposta é um JSON válido
+                    $respostaJson = json_decode($resposta);
+
+                    // Verifique se a decodificação do JSON foi bem-sucedida e se a chave "protocol" existe
+                    if ($respostaJson && isset($respostaJson->protocol)) {
+                        $pedido->cod_entrega = $respostaJson->protocol;
+                        $pedido->status_env = 'Envio iniciado';
+                        $pedido->save();
+                    } else {
+                        Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
+                    }
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
                 // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
