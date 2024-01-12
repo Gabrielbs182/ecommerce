@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Dotenv\Dotenv;
+use App\Models\Pedido;
+use App\Models\Endereco;
+use App\Models\ItensPedido;
+use App\Models\Usuario;
+use App\Models\Produto;
 
 class MelhorEnvioController extends Controller
 {
@@ -26,11 +29,20 @@ class MelhorEnvioController extends Controller
         return $responseData;
     }
 
-    public function lancarFrete(Request $request)
+    public function lancarFrete($reference_id)
     {
 
         //buscando autorização
         $responseData = $this->Authorization();
+
+        //buscando os dados
+        $pedido = Pedido::where('reference_id', $reference_id);
+
+        if (isset($pedido)) {
+            $endereco = Endereco::where('id', $pedido->endereco_id);
+            $usuario = Usuario::where('id', $pedido->usuario_id);
+            $itens = ItensPedido::where('pedido_id', $pedido->id);
+        }
 
         // Criar uma instância do GuzzleHttp\Client
         $client = new Client();
@@ -38,34 +50,34 @@ class MelhorEnvioController extends Controller
         // Dados para a requisição
         $requestData = [
             'from' => [
-                'name' => 'Michely',
-                'phone' => '27999999999',
-                'email' => 'email@exemplo.com',
-                'document' => '00000000000',
-                'state_register' => 'ES',
-                'address' => 'Rua santa alguma coisa',
-                'complement' => 'Casa',
-                'number' => '786',
-                'district' => 'Centro',
-                'city' => 'Vitoria',
+                'name' => ENV('MELHORENVIO_NAME'),
+                'phone' => ENV('MELHORENVIO_PHONE'),
+                'email' => ENV('MELHORENVIO_EMAIL'),
+                'document' => ENV('MELHORENVIO_DOCUMENT'),
+                'state_register' => ENV('MELHORENVIO_STATE_REGISTER'),
+                'address' => ENV('MELHORENVIO_ADDRESS'),
+                'complement' => ENV('MELHORENVIO_COMPLEMENT'),
+                'number' => ENV('MELHORENVIO_NUMBER'),
+                'district' => ENV('MELHORENVIO_DISTRICT'),
+                'city' => ENV('MELHORENVIO_CITY'),
                 'country_id' => 'BR',
-                'postal_code' => '29160104',
-                'state_abbr' => 'ES',
+                'postal_code' => ENV('MELHORENVIO_POSTAL_CODE'),
+                'state_abbr' => ENV('MELHORENVIO_STATE_ABBR'),
                 'note' => 'Teste',
             ],
             'to' => [
-                'name' => 'Teste',
-                'phone' => '27999999999',
-                'email' => 'email@exemplo.com',
-                'document' => '00000000000',
-                'address' => 'Rua sebastiao lopes da costa',
-                'complement' => 'Casa',
-                'number' => '415',
-                'district' => 'Vila Landinha',
-                'city' => 'Barra de sao francisco',
+                'name' => $usuario->nome,
+                'phone' => $usuario->telefone,
+                'email' => $usuario->email,
+                'document' => $usuario->cpf,
+                'address' => $endereco->logradouro,
+                'complement' => $endereco->complemento,
+                'number' => $endereco->numero,
+                'district' => $endereco->bairro,
+                'city' => $endereco->cidade,
                 'country_id' => 'BR',
-                'postal_code' => '29800000',
-                'state_abbr' => 'ES',
+                'postal_code' => $endereco->cep,
+                'state_abbr' => $endereco->uf,
                 'note' => 'teste',
             ],
             'options' => [
@@ -77,33 +89,29 @@ class MelhorEnvioController extends Controller
                 'tags' => [
                     [
                         'tag' => '187723',
-                        'Url' => 'https://urbeatstore.com.br',
+                        'Url' => 'https://urbeatstore.com.br/melhorenvio/posenvio',
                     ],
                 ],
             ],
-            'service' => 1,
-            'agency' => 2,
-            'products' => [
-                [
-                    'name' => 'Tenis',
-                    'quantity' => '2',
-                    'unitary_value' => '50',
-                ],
-                [
-                    'name' => 'Sandalia',
-                    'quantity' => '4',
-                    'unitary_value' => '20',
-                ],
-            ],
-            'volumes' => [
-                [
-                    'height' => 50,
-                    'width' => 50,
-                    'length' => 50,
-                    'weight' => 1,
-                ],
-            ],
+            'service' => $pedido->cod_entrega,
         ];
+
+        foreach ($itens as $item) {
+            $produto = Produto::find($item['id']);
+            $product = [
+                'name' => $produto['nome'],
+                'quantity' => $item['quantidade'],
+                'unitary_value' => $item['valor'],
+            ];
+            $requestData['products'][] = $product;
+            $volume = [
+                'height' => $produto->altura,
+                'width' => $produto->largura,
+                'length' => $produto->comprimento,
+                'weight' => $produto->peso,
+            ];
+            $requestData['volumes'][] = $volume;
+        }
 
         // Headers da requisição
         $headers = [
@@ -114,10 +122,16 @@ class MelhorEnvioController extends Controller
         ];
 
         // Fazer a requisição POST
-        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
-            'json' => $requestData,
-            'headers' => $headers,
-        ]);
+        try {
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+                'json' => $requestData,
+                'headers' => $headers,
+            ]);
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
+            $request->session()->flash('err', 'erro ao tentar lançar o frete');
+            return redirect()->route('home');
+        }
 
         // Retornar a resposta da API
         return $response->getBody();
@@ -175,7 +189,7 @@ class MelhorEnvioController extends Controller
         return $response->getBody();
     }
 
-    
+
 
     public function redirectToAuthorization()
     {
@@ -188,7 +202,7 @@ class MelhorEnvioController extends Controller
         return redirect()->away($authorizationUrl);
     }
 
-    
+
 
     public function getToken()
     {

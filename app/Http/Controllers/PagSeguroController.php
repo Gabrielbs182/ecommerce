@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Http;
 use App\Models\Pedido;
 use App\Models\Endereco;
 use App\Models\Usuario;
+use App\Models\ItensPedido;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\MelhorEnvioController;
 use DateTime;
 
 class PagSeguroController extends Controller
@@ -196,6 +198,7 @@ class PagSeguroController extends Controller
 
         //buscando inputs
         $vlrFrete = ($request->input('valorFrete') * 100);
+        $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
         $telefone = $request->input('telefone');
@@ -389,6 +392,7 @@ class PagSeguroController extends Controller
                         $pedido->cod_checkout = $idCheckout;
                         $pedido->usuario_id = $usuarioPedido->id;
                         $pedido->endereco_id = $endereco->id;
+                        $pedido->cod_entrega = $idFrete;
                         try {
                             DB::beginTransaction();
                             $pedido->save();
@@ -399,6 +403,27 @@ class PagSeguroController extends Controller
                             $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                             session()->forget('cart');
                             return redirect()->route('home');
+                        }
+
+                        //salvando itens
+                        foreach ($carrinho as $item){
+                            $iten = new ItensPedido;
+                            $iten->quantidade = $item['quantidade'];
+                            $iten->numero = $item['numero'];
+                            $iten->pedido_id = $pedido->id;
+                            $iten->produto_id = $item['id'];
+                            $iten->valor = $item['valor'];
+                            try {
+                                DB::beginTransaction();
+                                $iten->save();
+                                DB::commit();
+                            } catch (\Exception $e) {
+                                Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                                DB::rollback();
+                                $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
+                                session()->forget('cart');
+                                return redirect()->route('home');
+                            }
                         }
 
                         session()->forget('cart');
@@ -420,6 +445,7 @@ class PagSeguroController extends Controller
     public function handle(Request $request)
     {
         $payload = $request->all();
+        $melhorEnvio = new MelhorEnvioController;
 
         if (isset($payload['reference_id'])) {
             $referenceId = $payload['reference_id'];
@@ -451,6 +477,7 @@ class PagSeguroController extends Controller
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
                     //lançar frete
+                    $melhorEnvio->lancarFrete($referenceId);
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
                 // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
