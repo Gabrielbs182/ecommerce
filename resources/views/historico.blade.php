@@ -82,6 +82,7 @@
                                 <td>{{ $p->cod_rastreamento }}</td>
                                 <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
                                 <td>
+                                    <a href="#" class="edit">Detalhes</a>
                                     <a class="btn" onclick="abrirCarrinho({{ $p->id }})">Detalhes</a>
                                 </td>
                             </tr>
