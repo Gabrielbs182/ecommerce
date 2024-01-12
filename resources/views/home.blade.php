@@ -309,7 +309,7 @@
             var estoque = $('#estoque').val();
             var numero = $('#tamanhoModal').val();
 
-            $("#envios").empty();
+            document.getElementById("envios").innerHTML = '';
 
             linhas +=
                 '</div>' +
