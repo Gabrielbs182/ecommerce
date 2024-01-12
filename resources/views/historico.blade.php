@@ -37,7 +37,7 @@
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item.quantidade +
                                 '</td>' +
                                 '<td class="align-middle text-center"> R$' + valorItem + '</td>' +
-                                '<td class="align-middle text-center"> R$' + valorTotal +
+                                '<td class="align-middle text-center"> ' + valorTotal +
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
                                 '</td>' +
