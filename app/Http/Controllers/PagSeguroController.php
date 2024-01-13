@@ -45,6 +45,8 @@ class PagSeguroController extends Controller
             return redirect()->route('home');
         }
 
+        $teste = 1;
+
         $responseJson = json_decode($response->getBody(), true);
 
         // Verifique se os tokens foram obtidos com sucesso
