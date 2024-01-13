@@ -15,6 +15,17 @@ class ProdutoController extends Controller
 {
     //
 
+    public function teste()
+    {
+        return view('teste');
+    }
+
+    public function produtos()
+    {
+        $produtos = Produto::all();
+        return view('cadastrarProduto', $produtos);
+    }
+
     public function itensPedido($id)
     {
 
@@ -24,6 +35,12 @@ class ProdutoController extends Controller
             ->get();
 
         return $itens;
+    }
+
+    public function editarProduto($id)
+    {
+        $produto = Produto::find($id);
+        return view('cadastrarProduto', $produto);
     }
 
     public function buscarProduto($id)
