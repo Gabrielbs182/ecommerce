@@ -55,11 +55,11 @@
 @endsection
 
 @section('content')
-    <input type="hidden" value="{{ asset('images') }}" id="asset">
+    <input type="hidden" value="{{ url('/storage/images') }}" id="asset">
 
     <div class="container">
         @if (count($lista) > 0)
-            <div class="table-wrapper mt-5 mb-5">
+            <div class="table-wrapper mt-5 mb-5 table-responsive">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
@@ -95,7 +95,7 @@
                 </table>
             </div>
         @else
-            <div class="table-wrapper">
+            <div class="table-wrapper table-responsive">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">

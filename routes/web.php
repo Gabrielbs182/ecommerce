@@ -22,7 +22,7 @@ use App\Http\Controllers\MelhorEnvioController;
 
 
 // API'S
-Route::get('/produto/{idProduto}', [ProdutoController::class, 'buscarProduto'])
+Route::get('/produto/buscar/{idProduto}', [ProdutoController::class, 'buscarProduto'])
     ->name('buscarProduto');
 Route::get('/buscarCarrinho', [ProdutoController::class, 'buscarCarrinho'])
     ->name('buscarCarrinho');
@@ -30,8 +30,28 @@ Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'bu
     ->name('buscarEstoqueQuantidade');
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
-Route::get('/produto/editar/{id}', [ProdutoController::class, 'produto.editar'])->middleware('IsAdmin');;
-Route::get('/produtos', [ProdutoController::class, 'produtos'])->middleware('IsAdmin');;
+Route::get('/produtos', [ProdutoController::class, 'produtos'])->name('produtos')->middleware('IsAdmin');
+Route::get('/produto/editar/{id}', [ProdutoController::class, 'editarProduto'])
+    ->name('produto.editar')->middleware('IsAdmin');
+Route::get('/produto/excluir/{id}', [ProdutoController::class, 'delete'])
+    ->name('produto.excluir')->middleware('IsAdmin');
+Route::post('/produto/update', [ProdutoController::class, 'update'])
+    ->name('produto.update')->middleware('IsAdmin');
+Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrarProduto'])
+    ->name('produto.cadastrar')->middleware('IsAdmin');
+Route::post('/produto/store', [ProdutoController::class, 'store'])
+    ->name('produto.store')->middleware('IsAdmin');
+Route::get('/categorias', [ProdutoController::class, 'categorias'])->name('categorias')->middleware('IsAdmin');
+Route::get('/categoria/editar/{id}', [ProdutoController::class, 'editarCategoria'])
+    ->name('categoria.editar')->middleware('IsAdmin');
+Route::get('/categoria/excluir/{id}', [ProdutoController::class, 'deleteCategoria'])
+    ->name('categoria.excluir')->middleware('IsAdmin');
+Route::post('/categoria/update', [ProdutoController::class, 'updateCategoria'])
+    ->name('categoria.update')->middleware('IsAdmin');
+Route::post('/categoria/store', [ProdutoController::class, 'storeCategoria'])
+    ->name('categoria.store')->middleware('IsAdmin');
+Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
+    ->name('categoria.cadastrar')->middleware('IsAdmin');
 
 
 //Melhor Envio

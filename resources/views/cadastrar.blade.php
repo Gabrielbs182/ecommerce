@@ -81,103 +81,67 @@
     </script>
 @endsection
 @section('content')
-    <div class="col-12">
-        <div class="col-12 text-center">
-            <h2>Cadastrar</h2>
-        </div>
-        <div class="row">
-            <div class="col-2">
-
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card border shadow-lg p-3 mb-5 bg-white rounded mt-5">
+                    <div class="card-body">
+                        <h2 class="mt-2 mb-4">Cadastrar<b> conta</b></h2>
+                        <form action="{{ route('cadastrar_cliente') }}" method="POST">
+                            @csrf
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" name="email" class="form-control" id="inputEmail4"
+                                        placeholder="exemplo@exemplo.com">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Senha</label>
+                                    <input type="password" class="form-control" id="inputPassword4" name="password">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="nome">Nome</label>
+                                    <input type="text" name="nome" class="form-control" id="nome" minlength="5"
+                                        maxlength="10" placeholder="até 10 digitos, sem espaçamento">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="sobrenome">Sobrenome</label>
+                                    <input type="text" class="form-control" id="sobrenome" name="sobrenome"
+                                        minlength="5" maxlength="10" placeholder="até 10 digitos, sem espaçamento">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-2">
+                                    <label for="ddd">DDD</label>
+                                    <input type="number" name="ddd" class="form-control" id="ddd"
+                                        placeholder="Somente números">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="number" class="form-control" id="telefone" name="telefone"
+                                        placeholder="Somente números">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="cpf">Cpf</label>
+                                    <input type="text" class="form-control" id="CPF" name="cpf"
+                                        placeholder="11 digitos">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Concordo com todos os termos legais.
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="col-8">
-                <form action="{{ route('cadastrar_cliente') }}" method="post">
-                    @csrf
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="form-group">
-                                Nome: <input type="text" name="nome" class="form-control" minlength="3"
-                                    maxlength="40">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                Sobrenome: <input type="text" name="sobrenome" class="form-control" minlength="5"
-                                    maxlength="40">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                Email: <input type="email" name="email" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                Cpf: <input type="cpf" id="CPF" name="cpf" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group">
-                                DDD: <input type="number" name="ddd" class="form-control" minlength="2"
-                                    maxlength="2">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                Telefone: <input type="number" name="telefone" class="form-control" minlength="9"
-                                    maxlength="9">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-group">
-                                Senha: <input type="password" name="password" class="form-control" minlength="6"
-                                    maxlength="12">
-                            </div>
-                        </div>
-                        {{-- <div class="col-8">
-                            <div class="form-group">
-                                Endereço: <input type="text" name="endereco" class="form-control" maxlength="80">
-                            </div>
-                        </div>
-                        <div class="col-1">
-                            <div class="form-group">
-                                Numero: <input type="text" name="numero" class="form-control" id="numeroCasa"
-                                    maxlength="8">
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="form-group">
-                                Complemento: <input type="text" name="complemento" class="form-control" maxlength="40">
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                UF:
-                                <select class="form-control" aria-label="Default select example" id="estado">
-                                    <option selected></option>
-                                    @foreach ($estados as $e)
-                                        <option value="{{ $e->id }}" name="estado">{{ $e->sigla }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                Cidade:
-                                <select class="form-control" id="listaCidade" aria-label="Default select example" name="cidade_id" disabled>
-                                    <option selected>Cidade</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="form-group">
-                                CEP: <input type="text" id="cep" name="cep" class="form-control">
-                            </div>
-                        </div> --}}
-                        <input type="submit" value="cadastrar"
-                            class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                </form>
-            </div>
-            <div class="col-2"></div>
         </div>
     </div>
 @endsection

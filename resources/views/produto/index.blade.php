@@ -9,11 +9,14 @@
 
     <div class="container">
         @if (count($lista) > 0)
-            <div class="table-wrapper mt-5 mb-5">
+            <div class="table-wrapper mt-5 mb-5 table-responsive">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
                             <h2>Meus<b> Produtos</b></h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="{{ route('produto.cadastrar')}}" class="float-right mt-4">+ Novo</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +56,7 @@
                 </table>
             </div>
         @else
-            <div class="table-wrapper">
+            <div class="table-wrapper table-responsive" >
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">

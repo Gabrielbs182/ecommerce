@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("largura");
             $table->integer("altura");
             $table->integer("comprimento");
+            $table->integer("ativo");
             $table->bigInteger("categoria_id")->unsigned();
 
             $table->timestamps();

@@ -7,10 +7,11 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-item active">
-                            <img class="w-100 h-100" src="{{ secure_asset('images/' . $produto[0]->id) }}.png" alt="Image">
+                            <img class="w-100 h-100" src="{{ url('/storage/images/' . $produto[0]->id) }}.png" alt="Image">
                         </div>
                         <div class="carousel-item">
-                            <img class="w-100 h-100" src="{{ secure_asset('images/' . $produto[0]->id) }}_2.png" alt="Image">
+                            <img class="w-100 h-100" src="{{ url('/storage/images/' . $produto[0]->id) }}_2.png" alt="Image">
+                            
                         </div>
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -75,10 +76,6 @@
                             </button>
                         </div>
                     </div>
-                    {{-- <button class="btn btn-primary px-3"><a
-                            href="{{ route('adicionar_carrinho', ['idproduto' => $produto[0]->id]) }}"
-                            class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart mr-1"
-                                style="color:#e63412;"></i>Adicionar ao carrinho</a></button> --}}
                 </div>
                 <div class="d-flex pt-2">
                     <p class="text-dark font-weight-medium mb-0 mr-2">Compartilhe:</p>

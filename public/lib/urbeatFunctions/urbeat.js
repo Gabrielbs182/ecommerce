@@ -1,6 +1,6 @@
 function buscarProduto(id) {
     var asset = $('#asset').val();
-    $.getJSON('/produto/' + id, function (produto) {
+    $.getJSON('/produto/buscar/' + id, function (produto) {
         var foto = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '.png" alt="Image">';
         var foto2 = '<img class="w-100 h-100" src="' + asset +
@@ -333,7 +333,7 @@ function adicionarCarrinho(id) {
             $('#modalAlert').append(alerta);
         } else {
 
-            $.getJSON('/produto/' + id, function (produto) {
+            $.getJSON('/produto/buscar/' + id, function (produto) {
                 var quantidade = $('#inputZip').val()
                 var token = $('meta[name="csrf-token"]').attr('content');
                 $.ajax({

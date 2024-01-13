@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- Asset --}}
-    <input type="hidden" value="{{ asset('images') }}" id="asset">
+    <input type="hidden" value="{{ url('/storage/images') }}" id="asset">
     <input type="hidden" value="" id="estoque">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -252,14 +252,7 @@
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             @guest
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Minha
-                                        Conta</a>
-                                    <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="{{ route('logar') }}" class="dropdown-item">Login</a>
-                                        <a href="{{ route('cadastrar') }}" class="dropdown-item">Cadastro</a>
-                                    </div>
-                                </div>
+                                <a href="{{ route('logar') }}" class="nav-item nav-link">Logar</a>
                             @endguest
                             @auth
                                 <div class="nav-item dropdown">
@@ -268,6 +261,8 @@
                                     <div class="dropdown-menu rounded-0 m-0">
                                         <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas Compras</a>
                                         @if (Auth::user()->isAdmin == 1)
+                                            <a href="{{ route('produtos') }}" class="dropdown-item">Produtos</a>
+                                            <a href="{{ route('categorias') }}" class="dropdown-item">categorias</a>
                                             <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
                                                 envio</a>
                                             <a href="{{ route('melhorInfo') }}" class="dropdown-item">Melhor

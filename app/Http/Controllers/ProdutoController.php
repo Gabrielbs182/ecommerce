@@ -15,6 +15,240 @@ class ProdutoController extends Controller
 {
     //
 
+    public function delete($id, Request $request)
+    {
+        $itens = ItensPedido::where('produto_id', $id)->get();
+        $produto = Produto::find($id);
+        if ($itens->count() > 0) {
+            $message = 'Produto não pode ser deletado pois já teve movimentação, favor inativar o produto.';
+            $status = 'err';
+            $request->session()->flash($status, $message);
+            return redirect()->route('produtos');
+        } else {
+            $produto->delete();
+            $message = 'Produto deletado com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('produtos');
+        }
+    }
+
+    public function deleteCategoria($id, Request $request)
+    {
+        $produtos = Produto::where('categoria_id', $id)->get();
+        $categoria = Categoria::find($id);
+        if ($produtos->count() > 0) {
+            $message = 'Categoria não pode ser deletado pois já tem produto associados.';
+            $status = 'err';
+            $request->session()->flash($status, $message);
+            return redirect()->route('categorias');
+        } else {
+            $categoria->delete();
+            $message = 'Categoria deletada com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('categorias');
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $ativo = $request->has('ativo');
+        $produto = Produto::find($request->input('id'));
+        if ($ativo) {
+            $produto->ativo = 1;
+        } else {
+            $produto->ativo = 0;
+        }
+        $produto->nome = $request->input('nome');
+        $produto->descricao = $request->input('descricao');
+        $produto->peso = $request->input('peso');
+        $produto->altura = $request->input('altura');
+        $produto->largura = $request->input('largura');
+        $produto->comprimento = $request->input('comprimento');
+        $produto->valor = $request->input('valor');
+        $produto->save();
+
+        try {
+            if ($request->hasFile('foto1')) {
+                $imagem = $request->file('foto1');
+                $nomeArquivo = $produto->id . '.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto principal.');
+                }
+            }
+            if ($request->hasFile('foto2')) {
+                $imagem = $request->file('foto2');
+                $nomeArquivo = $produto->id . '_1.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 1.');
+                }
+            }
+            if ($request->hasFile('foto3')) {
+                $imagem = $request->file('foto3');
+                $nomeArquivo = $produto->id . '_2.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
+        }
+
+        $message = 'Produto atualizado com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('produtos');
+    }
+
+    public function editarProduto($id)
+    {
+        $data = [];
+        $produto = Produto::find($id);
+        $data["produto"] = $produto;
+        $listaCategorias = Categoria::all();
+        $data["lista"] = $listaCategorias;
+        return view("produto.editar", $data);
+    }
+
+    public function editarCategoria($id)
+    {
+        $data = [];
+        $categoria = Categoria::find($id);
+        $data["categoria"] = $categoria;
+        return view("categoria.editar", $data);
+    }
+
+    public function updateCategoria(Request $request)
+    {
+        $categoria = Categoria::find($request->input('id'));
+        $categoria->categoria = $request->input('categoria');
+        $categoria->save();
+
+        $message = 'Categoria atualizada com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('categorias');
+    }
+
+    public function storeCategoria(Request $request)
+    {
+
+        try {
+
+            $categoria = new Categoria;
+            $categoria->categoria = $request->input("categoria");
+            $categoria->save();
+            $message = 'Categoria cadastrada com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('categorias');
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'ProdutoController.storeCategoria', 'message' => $e->getMessage()]);
+            $message = 'Erro ao tentar realizar cadastro de categoria!';
+            $status = 'err';
+
+            $request->session()->flash($status, $message);
+            return redirect()->route('categorias');
+        }
+    }
+
+    public function cadastrarCategoria()
+    {
+        return view("categoria.cadastrar");
+    }
+
+    public function cadastrarProduto()
+    {
+        $data = [];
+        $listaCategorias = Categoria::all();
+        $data["lista"] = $listaCategorias;
+        return view("produto.cadastrar", $data);
+    }
+
+    public function store(Request $request)
+    {
+        try {
+
+            $produto = new Produto;
+            $produto->nome = $request->input("nome");
+            $produto->valor = $request->input("valor");
+            $produto->descricao = $request->input("descricao");
+            $produto->peso = $request->input("peso");
+            $produto->altura = $request->input("altura");
+            $produto->largura = $request->input("largura");
+            $produto->comprimento = $request->input("comprimento");
+            $produto->categoria_id = $request->input("categoria");
+            $produto->ativo = 1;
+            $produto->save();
+
+            for ($i = 29; $i <= 39; $i++) {
+                $estoque = new Estoque([
+                    'quantidade' => 0,
+                    'numero' => $i,
+                    'produto_id' => $produto->id
+                ]);
+                $estoque->save();
+            }
+
+            try {
+                if ($request->hasFile('foto1')) {
+                    $imagem = $request->file('foto1');
+                    $nomeArquivo = $produto->id . '.png';
+                    // Armazenar a imagem no caminho desejado
+                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    if (!$uploadSucesso) {
+                        // Adicione logs ou mensagens de erro, se necessário
+                        throw new \Exception('Erro ao fazer upload da foto principal.');
+                    }
+                }
+                if ($request->hasFile('foto2')) {
+                    $imagem = $request->file('foto2');
+                    $nomeArquivo = $produto->id . '_1.png';
+                    // Armazenar a imagem no caminho desejado
+                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    if (!$uploadSucesso) {
+                        // Adicione logs ou mensagens de erro, se necessário
+                        throw new \Exception('Erro ao fazer upload da foto secundaria 1.');
+                    }
+                }
+                if ($request->hasFile('foto3')) {
+                    $imagem = $request->file('foto3');
+                    $nomeArquivo = $produto->id . '_2.png';
+                    // Armazenar a imagem no caminho desejado
+                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    if (!$uploadSucesso) {
+                        // Adicione logs ou mensagens de erro, se necessário
+                        throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
+                    }
+                }
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
+            }
+
+            $message = 'Produto cadastrado com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('produtos');
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
+            $message = 'Erro ao tentar realizar cadastro de produto!';
+            $status = 'err';
+
+            $request->session()->flash($status, $message);
+            return redirect()->route('produtos');
+        }
+    }
+
     public function teste()
     {
         return view('teste');
@@ -22,8 +256,18 @@ class ProdutoController extends Controller
 
     public function produtos()
     {
-        $produtos = Produto::all();
-        return view('cadastrarProduto', $produtos);
+        $listaProdutos = Produto::join('categorias', 'produtos.categoria_id', '=', 'categorias.id')
+            ->select('produtos.*', 'categorias.categoria as nome_categoria')
+            ->get();
+        $data["lista"] = $listaProdutos;
+        return view("produto.index", $data);
+    }
+
+    public function categorias()
+    {
+        $listaCategorias = Categoria::all();
+        $data["lista"] = $listaCategorias;
+        return view("categoria.index", $data);
     }
 
     public function itensPedido($id)
@@ -37,10 +281,10 @@ class ProdutoController extends Controller
         return $itens;
     }
 
-    public function editarProduto($id)
+    public function exluirProduto($id)
     {
         $produto = Produto::find($id);
-        return view('cadastrarProduto', $produto);
+        return $produto;
     }
 
     public function buscarProduto($id)
@@ -79,7 +323,7 @@ class ProdutoController extends Controller
     public function index()
     {
         $data = [];
-        $listaProdutos = Produto::all();
+        $listaProdutos = Produto::where('ativo', 1)->get();
         $data["lista"] = $listaProdutos;
         return view("home", $data);
     }

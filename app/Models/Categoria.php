@@ -9,5 +9,4 @@ class Categoria extends RModel
 
     protected $fillable = ['categoria'];
 
-
 }
