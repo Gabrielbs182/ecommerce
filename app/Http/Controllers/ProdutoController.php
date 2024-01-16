@@ -19,7 +19,7 @@ class ProdutoController extends Controller
         $data = [];
         $pedidos = Pedido::where('status_env', 'Envio iniciado')->get();
         $pedidos2 = Pedido::all();
-        dd($pedidos2);
+        dd($pedidos);
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
