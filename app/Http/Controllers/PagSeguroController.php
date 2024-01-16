@@ -486,31 +486,33 @@ class PagSeguroController extends Controller
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
-                    //lançar frete
-                    $resposta = $melhorEnvio->lancarFrete($referenceId);
+                    if ($pedido->cod_entrega != 'Gratis') {
+                        //lançar frete
+                        $resposta = $melhorEnvio->lancarFrete($referenceId);
 
-                    // Verifique se a resposta é um JSON válido
-                    $respostaJson = json_decode($resposta);
-                    $codEnvio = $respostaJson->id;
+                        // Verifique se a resposta é um JSON válido
+                        $respostaJson = json_decode($resposta);
+                        $codEnvio = $respostaJson->id;
 
-                    // Verifique se a decodificação do JSON foi bem-sucedida e se a chave "protocol" existe
-                    if ($respostaJson && isset($respostaJson->protocol)) {
-                        $respostaPagamento = $melhorEnvio->pagarFrete($codEnvio);
-                        $respostaPagamentoJson = json_decode($respostaPagamento);
-                        if ($respostaPagamentoJson && isset($respostaJson->purchase->status)) {
-                            $pedido->cod_entrega = $respostaJson->protocol;
-                            $pedido->cod_envio = $codEnvio;
-                            $pedido->status_env = 'Envio iniciado';
-                            $pedido->save();
-                            $respostaEtiqueta = $melhorEnvio->gerarEtiqueta($codEnvio);
+                        // Verifique se a decodificação do JSON foi bem-sucedida e se a chave "protocol" existe
+                        if ($respostaJson && isset($respostaJson->protocol)) {
+                            $respostaPagamento = $melhorEnvio->pagarFrete($codEnvio);
+                            $respostaPagamentoJson = json_decode($respostaPagamento);
+                            if ($respostaPagamentoJson && isset($respostaJson->purchase->status)) {
+                                $pedido->cod_entrega = $respostaJson->protocol;
+                                $pedido->cod_envio = $codEnvio;
+                                $pedido->status_env = 'Envio iniciado';
+                                $pedido->save();
+                                $respostaEtiqueta = $melhorEnvio->gerarEtiqueta($codEnvio);
+                            } else {
+                                $pedido->cod_entrega = $respostaJson->protocol;
+                                $pedido->status_env = 'Erro no envio';
+                                $pedido->cod_envio = $codEnvio;
+                                $pedido->save();
+                            }
                         } else {
-                            $pedido->cod_entrega = $respostaJson->protocol;
-                            $pedido->status_env = 'Erro no envio';
-                            $pedido->cod_envio = $codEnvio;
-                            $pedido->save();
+                            Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
                         }
-                    } else {
-                        Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
                     }
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);

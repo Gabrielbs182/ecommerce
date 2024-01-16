@@ -73,7 +73,7 @@ class MelhorEnvioController extends Controller
             ]);
             return $response->getBody();
         } catch (\Exception $e) {
-            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
         }
     }
 
