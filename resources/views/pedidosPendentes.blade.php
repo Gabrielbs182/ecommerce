@@ -105,7 +105,7 @@
                 </div>
             @else
                 <div>
-                    <h2 class="text-center">Produto Sem Estoque.
+                    <h2 class="text-center">Nenhum pedido pendente.
                     </h2>
                 </div>
             @endif
