@@ -497,13 +497,13 @@ class PagSeguroController extends Controller
                         if ($respostaJson && isset($respostaJson->protocol)) {
                             $respostaPagamento = $melhorEnvio->pagarFrete($codEnvio);
                             $respostaPagamentoJson = json_decode($respostaPagamento);
-                            if ($respostaPagamentoJson && isset($respostaJson->purchase->status)) {
+                            if ($respostaPagamentoJson && isset($respostaPagamentoJson->purchase->status)) {
                                 $pedido->cod_entrega = $respostaJson->protocol;
                                 $pedido->cod_envio = $codEnvio;
                                 $pedido->status_env = 'Envio iniciado';
                                 $pedido->save();
                                 $respostaEtiqueta = $melhorEnvio->gerarEtiqueta($codEnvio);
-                                Log::info("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
+                                Log::info("SUCESSO", ['file' => 'PagSeguroController.Handle', 'message' => 'Envio iniciado com sucesso']);
                             } else {
                                 $pedido->cod_entrega = $respostaJson->protocol;
                                 $pedido->status_env = 'Erro no envio';
