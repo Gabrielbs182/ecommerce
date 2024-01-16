@@ -519,6 +519,7 @@ class PagSeguroController extends Controller
                             }
                         } else {
                             Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu obter o status do pagamento']);
+                            Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => $respostaPagamento]);
                         }
                     } else {
                         Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
