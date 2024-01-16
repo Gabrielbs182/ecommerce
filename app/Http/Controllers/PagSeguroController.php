@@ -489,7 +489,6 @@ class PagSeguroController extends Controller
                     if ($pedido->cod_entrega != 'Gratis') {
                         //lançar frete
                         $resposta = $melhorEnvio->lancarFrete($referenceId);
-
                         // Verifique se a resposta é um JSON válido
                         $respostaJson = json_decode($resposta);
                         $codEnvio = $respostaJson->id;
@@ -504,6 +503,7 @@ class PagSeguroController extends Controller
                                 $pedido->status_env = 'Envio iniciado';
                                 $pedido->save();
                                 $respostaEtiqueta = $melhorEnvio->gerarEtiqueta($codEnvio);
+                                Log::info("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
                             } else {
                                 $pedido->cod_entrega = $respostaJson->protocol;
                                 $pedido->status_env = 'Erro no envio';

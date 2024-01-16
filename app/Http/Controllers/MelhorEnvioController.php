@@ -62,6 +62,29 @@ class MelhorEnvioController extends Controller
         $client = new \GuzzleHttp\Client();
 
         try {
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/generate', [
+                'body' => json_encode(['orders' => [$order]]),
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    env('USER_AGENT'),
+                ],
+            ]);
+            return $response->getBody();
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function buscarRastreamento($order)
+    {
+        //buscando autorização
+        $responseData = $this->Authorization();
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
             $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
                 'body' => json_encode(['orders' => [$order]]),
                 'headers' => [
