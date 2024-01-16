@@ -551,7 +551,7 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
         $enderecoJson = json_decode($endereco);
-        var_dump($enderecoJson);
+        var_dump($endereco);
         $logradouro = $enderecoJson->logradouro;
         $bairro = $enderecoJson->bairro;
         $cidade = $enderecoJson->localidade;
