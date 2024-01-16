@@ -48,11 +48,10 @@ class MelhorEnvioController extends Controller
                     env('USER_AGENT'),
                 ],
             ]);
+            return $response->getBody();
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
         }
-
-        echo $response->getBody();
     }
 
     public function gerarEtiqueta($order)
@@ -72,11 +71,10 @@ class MelhorEnvioController extends Controller
                     env('USER_AGENT'),
                 ],
             ]);
+            return $response->getBody();
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
         }
-
-        echo $response->getBody();
     }
 
     public function lancarFrete($reference_id)
