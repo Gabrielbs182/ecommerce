@@ -55,6 +55,30 @@ class MelhorEnvioController extends Controller
         echo $response->getBody();
     }
 
+    public function gerarEtiqueta($order)
+    {
+        //buscando autorização
+        $responseData = $this->Authorization();
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
+                'body' => json_encode(['orders' => [$order]]),
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    env('USER_AGENT'),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+        }
+
+        echo $response->getBody();
+    }
+
     public function lancarFrete($reference_id)
     {
         try {

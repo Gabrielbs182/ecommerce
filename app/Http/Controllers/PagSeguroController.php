@@ -492,14 +492,34 @@ class PagSeguroController extends Controller
                     // Verifique se a resposta é um JSON válido
                     $respostaJson = json_decode($resposta);
 
-                    // Pagando o envio
-                    $respostaPagamento = $melhorEnvio->pagarFrete($respostaJson->id);
+                    $codEnvio = $respostaJson->id;
 
                     // Verifique se a decodificação do JSON foi bem-sucedida e se a chave "protocol" existe
                     if ($respostaJson && isset($respostaJson->protocol)) {
-                        $pedido->cod_entrega = $respostaJson->protocol;
-                        $pedido->status_env = 'Envio iniciado';
-                        $pedido->save();
+
+                        // Pagando o envio
+                        $respostaPagamento = $melhorEnvio->pagarFrete($codEnvio);
+
+                        if ($respostaJson && isset($respostaJson->purchase) && isset($respostaJson->purchase->status)) {
+                            $statusPagamento = $respostaJson->purchase->status;
+
+                            // Continue apenas se o status for 'paid'
+                            if ($statusPagamento === 'paid') {
+                                // Restante do código aqui
+                                $pedido->cod_entrega = $respostaJson->protocol;
+                                $pedido->cod_envio = $codEnvio;
+                                $pedido->status_env = 'Envio iniciado';
+                                $pedido->save();
+                                $respostaEtiqueta =  $melhorEnvio->gerarEtiqueta($codEnvio);
+                            } else {
+                                $pedido->cod_entrega = $respostaJson->protocol;
+                                $pedido->cod_envio = $codEnvio;
+                                $pedido->status_env = 'Envio pendente';
+                                $pedido->save();
+                            }
+                        } else {
+                            Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu obter o status do pagamento']);
+                        }
                     } else {
                         Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
                     }

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("reference_id")->nullable();
             $table->string("cod_checkout")->nullable();
             $table->string("cod_entrega")->nullable();
+            $table->string("cod_envio")->nullable();
             $table->string("cod_rastreamento")->nullable();
             $table->bigInteger("usuario_id")->unsigned();
             $table->bigInteger("endereco_id")->unsigned();
