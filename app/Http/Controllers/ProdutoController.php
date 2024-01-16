@@ -547,6 +547,10 @@ class ProdutoController extends Controller
     {
         $transporte = explode("/", $request->input("frete"));
         $carrinho = session('cart', []);
+        $cep = $request->input("cep");
+        $melhorEnvio = new MelhorEnvioController();
+        $endereco = $melhorEnvio($cep);
+        dd($endereco);
         if ($transporte[0] != 0) {
             $data = [
                 'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),

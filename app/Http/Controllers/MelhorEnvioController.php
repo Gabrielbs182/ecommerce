@@ -24,6 +24,25 @@ class MelhorEnvioController extends Controller
 
     //FUNÇÕES PASSIVAS
 
+    public function obterDadosCEP($cep)
+    {
+        // Use o cliente Guzzle para fazer a requisição à API do ViaCEP
+        $client = new Client();
+        $response = $client->get("https://viacep.com.br/ws/{$cep}/json");
+
+        // Verifique se a resposta está OK (código 200)
+        if ($response->getStatusCode() == 200) {
+            // Obtenha os dados do CEP
+            $dadosCep = json_decode($response->getBody(), true);
+
+            // Retorne os dados em formato JSON
+            return response()->json($dadosCep);
+        } else {
+            // Se a resposta não estiver OK, retorne um erro
+            return response()->json(['erro' => 'Erro na requisição do CEP'], 500);
+        }
+    }
+
     public function Authorization()
     {
         $apiResponse = ENV('AUTHORIZATION');
