@@ -37,7 +37,7 @@ class ProdutoController extends Controller
                 $status = 'ok';
                 $request->session()->flash($status, $message);
 
-                return route('pedidos.pendentes');
+                return redirect()->route('pedidos.pendentes');
             }
         }
 
