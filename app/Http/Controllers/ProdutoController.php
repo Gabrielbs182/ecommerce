@@ -15,7 +15,7 @@ class ProdutoController extends Controller
 {
     //
 
-    public function finalizarPedido($id){
+    public function finalizarPedido($id,Request $request){
         $pedido = Pedido::find($id);
         $pedido->status_env = 'Enviado';
         $melhorEnvio = new MelhorEnvioController();
