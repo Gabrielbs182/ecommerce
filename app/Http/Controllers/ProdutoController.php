@@ -549,7 +549,7 @@ class ProdutoController extends Controller
         $carrinho = session('cart', []);
         $cep = $request->input("cep");
         $melhorEnvio = new MelhorEnvioController();
-        $endereco = $melhorEnvio($cep);
+        $endereco = $melhorEnvio->obterDadosCEP($cep);
         dd($endereco);
         if ($transporte[0] != 0) {
             $data = [
