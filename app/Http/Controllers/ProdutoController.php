@@ -30,7 +30,6 @@ class ProdutoController extends Controller
             // Verifique se a chave "tracking" existe dentro do objeto de rastreamento
             if (is_object($rastreamentoObj) && property_exists($rastreamentoObj, 'tracking')) {
                 $cod_rastreamento = $rastreamentoObj->tracking;
-                dd($cod_rastreamento);
                 $pedido->cod_rastreamento = $cod_rastreamento;
                 $pedido->save();
 
