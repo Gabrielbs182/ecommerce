@@ -21,6 +21,7 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
         $resposta = $melhorEnvio->buscarRastreamento($pedido->cod_envio);
         $respostaJson = json_decode($resposta);
+        dd($respostaJson);
         $cod_rastreamento = $respostaJson->tracking;
         $pedido->cod_rastreamento = $cod_rastreamento;
         $pedido->save();
