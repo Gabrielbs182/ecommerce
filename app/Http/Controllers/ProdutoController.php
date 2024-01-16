@@ -17,7 +17,7 @@ class ProdutoController extends Controller
 
     public function pedidosPendentes(){
         $data = [];
-        $pedidos = Pedido::where('status', '=', 'Envio iniciado')->get();
+        $pedidos = Pedido::where('status_env', '=', 'Envio iniciado')->get();
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
