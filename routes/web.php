@@ -30,29 +30,6 @@ Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'bu
     ->name('buscarEstoqueQuantidade');
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
-Route::get('/produtos', [ProdutoController::class, 'produtos'])->name('produtos')->middleware('IsAdmin');
-Route::get('/produto/editar/{id}', [ProdutoController::class, 'editarProduto'])
-    ->name('produto.editar')->middleware('IsAdmin');
-Route::get('/produto/excluir/{id}', [ProdutoController::class, 'delete'])
-    ->name('produto.excluir')->middleware('IsAdmin');
-Route::post('/produto/update', [ProdutoController::class, 'update'])
-    ->name('produto.update')->middleware('IsAdmin');
-Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrarProduto'])
-    ->name('produto.cadastrar')->middleware('IsAdmin');
-Route::post('/produto/store', [ProdutoController::class, 'store'])
-    ->name('produto.store')->middleware('IsAdmin');
-Route::get('/categorias', [ProdutoController::class, 'categorias'])->name('categorias')->middleware('IsAdmin');
-Route::get('/categoria/editar/{id}', [ProdutoController::class, 'editarCategoria'])
-    ->name('categoria.editar')->middleware('IsAdmin');
-Route::get('/categoria/excluir/{id}', [ProdutoController::class, 'deleteCategoria'])
-    ->name('categoria.excluir')->middleware('IsAdmin');
-Route::post('/categoria/update', [ProdutoController::class, 'updateCategoria'])
-    ->name('categoria.update')->middleware('IsAdmin');
-Route::post('/categoria/store', [ProdutoController::class, 'storeCategoria'])
-    ->name('categoria.store')->middleware('IsAdmin');
-Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
-    ->name('categoria.cadastrar')->middleware('IsAdmin');
-
 
 //Melhor Envio
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo')->middleware('IsAdmin');
@@ -71,6 +48,17 @@ Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name(
 
 
 //REDIRECIONAMENTO
+Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
+    ->name('categoria.cadastrar')->middleware('IsAdmin');
+Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
+    ->name('pedidos.pendentes')->middleware('IsAdmin');
+Route::get('/estoque/produto/{id}', [ProdutoController::class, 'estoqueProduto'])
+    ->name('estoque.index')->middleware('IsAdmin');
+Route::get('/categoria/editar/{id}', [ProdutoController::class, 'editarCategoria'])
+    ->name('categoria.editar')->middleware('IsAdmin');
+Route::get('/categorias', [ProdutoController::class, 'categorias'])->name('categorias')->middleware('IsAdmin');
+Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrarProduto'])
+    ->name('produto.cadastrar')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/', [ProdutoController::class, 'index'])
     ->name('home');
 Route::match(['get', 'post'], '/itens/{id}', [ProdutoController::class, 'itensPedido'])
@@ -89,8 +77,26 @@ Route::match(['get', 'post'], '/keyController', [ProdutoController::class, 'keyC
     ->name('keyController');
 Route::match(['get', 'post'], '/envio/autorizar', [ProdutoController::class, 'autorizarEnvio'])
     ->name('autorizarEnvio');
+Route::match(['get'], '/configuracoes', [ProdutoController::class, 'configuracoes'])
+    ->name('configuracoes')->middleware('IsAdmin');
+Route::get('/produtos', [ProdutoController::class, 'produtos'])->name('produtos')->middleware('IsAdmin');
+Route::get('/produto/editar/{id}', [ProdutoController::class, 'editarProduto'])
+    ->name('produto.editar')->middleware('IsAdmin');
 
 //METODOS
+Route::post('/atualizar_estoque', [ProdutoController::class, 'atualizarEstoque'])->name('atualizar_estoque')->middleware('IsAdmin');;
+Route::get('/categoria/excluir/{id}', [ProdutoController::class, 'deleteCategoria'])
+    ->name('categoria.excluir')->middleware('IsAdmin');
+Route::post('/categoria/update', [ProdutoController::class, 'updateCategoria'])
+    ->name('categoria.update')->middleware('IsAdmin');
+Route::post('/categoria/store', [ProdutoController::class, 'storeCategoria'])
+    ->name('categoria.store')->middleware('IsAdmin');
+Route::post('/produto/store', [ProdutoController::class, 'store'])
+    ->name('produto.store')->middleware('IsAdmin');
+Route::get('/produto/excluir/{id}', [ProdutoController::class, 'delete'])
+    ->name('produto.excluir')->middleware('IsAdmin');
+Route::post('/produto/update', [ProdutoController::class, 'update'])
+    ->name('produto.update')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])
     ->name('logar');
 Route::get('/sair', [UsuarioController::class, 'sair'])
@@ -113,6 +119,7 @@ Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consul
     ->name('consultarCheckout');
 Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualizarQuantidadeCarrinho'])->name('atualizar_quantidade_carrinho');
 Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');
+Route::post('/configuracoes/update', [ProdutoController::class, 'configuracoesUpdate'])->name('configuracoes.update')->middleware('IsAdmin');;
 
 //WEBHOOKS
 Route::post('/webhook/pagbank', [PagSeguroController::class, 'handle']);

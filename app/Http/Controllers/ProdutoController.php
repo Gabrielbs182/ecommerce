@@ -15,6 +15,127 @@ class ProdutoController extends Controller
 {
     //
 
+    public function pedidosPendentes(){
+        $data = [];
+        $pedidos = Pedido::where('status', '=', 'Envio iniciado')->get();
+        if (isset($pedidos)) {
+            $data["lista"] = $pedidos;
+        }
+        return view('pedidos.pendentes', $data);
+    }
+
+    public function atualizarEstoque(Request $request)
+    {
+        $dadosEstoque = json_decode($request->input('dados_estoque'), true);
+
+        foreach ($dadosEstoque as $item) {
+            $estoque = Estoque::find($item['id']);
+            if ($estoque) {
+                $estoque->update(['quantidade' => $item['quantidade']]);
+            }
+        }
+
+        $message = 'Estoque atualizado com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('produtos');
+    }
+
+    public function estoqueProduto($id)
+    {
+        $listaEstoque = Estoque::join('produtos', 'estoque.produto_id', '=', 'produtos.id')
+            ->select('estoque.*', 'produtos.nome as nome_produto')
+            ->where('estoque.produto_id', '=', $id)
+            ->get();
+        $data["lista"] = $listaEstoque;
+        return view("estoque.index", $data);
+    }
+
+    public function configuracoes()
+    {
+        $pagEmail = env('PAGSEGURO_EMAIL');
+        $pagToken = env('PAGSEGURO_TOKEN');
+        $melhorName = env('MELHORENVIO_NAME');
+        $melhorEmail = env('MELHORENVIO_EMAIL');
+        $melhorPhone = env('MELHORENVIO_PHONE');
+        $melhorDocument = env('MELHORENVIO_DOCUMENT');
+        $melhorUF = env('MELHORENVIO_STATE_REGISTER');
+        $melhorLog = env('MELHORENVIO_ADDRESS');
+        $melhorComple = env('MELHORENVIO_COMPLEMENT');
+        $melhorNumber = env('MELHORENVIO_NUMBER');
+        $melhorDistrict = env('MELHORENVIO_DISTRICT');
+        $melhorCep = env('MELHORENVIO_POSTAL_CODE');
+        $melhorCity = env('MELHORENVIO_CITY');
+        $melhorUFAbbr = env('MELHORENVIO_STATE_ABBR');
+        $melhorClientID = env('CLIENT_ID');
+        $melhorClientSecret = env('CLIENT_SECRET');
+        $melhorScope = env('SCOPE');
+        $melhorUserAgent = env('USER_AGENT');
+        $data = [];
+        $data['pagEmail'] = $pagEmail;
+        $data['pagToken'] = $pagToken;
+        $data['melhorName'] = $melhorName;
+        $data['melhorEmail'] = $melhorEmail;
+        $data['melhorPhone'] = $melhorPhone;
+        $data['melhorDocument'] = $melhorDocument;
+        $data['melhorUF'] = $melhorUF;
+        $data['melhorLog'] = $melhorLog;
+        $data['melhorComple'] = $melhorComple;
+        $data['melhorNumber'] = $melhorNumber;
+        $data['melhorDistrict'] = $melhorDistrict;
+        $data['melhorCity'] = $melhorCity;
+        $data['melhorCep'] = $melhorCep;
+        $data['melhorUFAbbr'] = $melhorUFAbbr;
+        $data['melhorClientID'] = $melhorClientID;
+        $data['melhorClientSecret'] = $melhorClientSecret;
+        $data['melhorScope'] = $melhorScope;
+        $data['melhorUserAgent'] = $melhorUserAgent;
+        return view('configuracoes', $data);
+    }
+
+    public function configuracoesUpdate(Request $request)
+    {
+        $PAGSEGURO_EMAIL = $request->input('pagSeguroEmail');
+        $PAGSEGURO_TOKEN = $request->input('pagSeguroToken');
+        $MELHORENVIO_NAME = $request->input('melhorEnvioNome');
+        $MELHORENVIO_PHONE = $request->input('melhorEnvioTelefone');
+        $MELHORENVIO_EMAIL = $request->input('melhorEnvioEmail');
+        $MELHORENVIO_DOCUMENT = $request->input('melhorEnvioDocumento');
+        $MELHORENVIO_STATE_REGISTER = $request->input('melhorEnvioUF');
+        $MELHORENVIO_ADDRESS = $request->input('melhorEnvioLog');
+        $MELHORENVIO_COMPLEMENT = $request->input('melhorEnvioComp');
+        $MELHORENVIO_NUMBER = $request->input('melhorEnvioNumber');
+        $MELHORENVIO_DISTRICT = $request->input('melhorDistrict');
+        $MELHORENVIO_CITY = $request->input('melhorCity');
+        $MELHORENVIO_POSTAL_CODE = $request->input('melhorCep');
+        $CLIENT_SECRET = $request->input('melhorEnvioClientSecret');
+        $USER_AGENT = $request->input('melhorEnvioUserAgent');
+        $SCOPE = $request->input('melhorEnvioEscopo');
+        $CLIENT_ID = $request->input('melhorEnvioClientID');
+        $this->AtualizarVariaveisAmbiente('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
+        $this->AtualizarVariaveisAmbiente('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_NAME', $MELHORENVIO_NAME);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_PHONE', $MELHORENVIO_PHONE);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_EMAIL', $MELHORENVIO_EMAIL);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_DOCUMENT', $MELHORENVIO_DOCUMENT);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_STATE_REGISTER', $MELHORENVIO_STATE_REGISTER);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_STATE_ABBR', $MELHORENVIO_STATE_REGISTER);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_ADDRESS', $MELHORENVIO_ADDRESS);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_COMPLEMENT', $MELHORENVIO_COMPLEMENT);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_NUMBER', $MELHORENVIO_NUMBER);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_DISTRICT', $MELHORENVIO_DISTRICT);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_CITY', $MELHORENVIO_CITY);
+        $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_POSTAL_CODE', $MELHORENVIO_POSTAL_CODE);
+        $this->AtualizarVariaveisAmbienteComAspas('CLIENT_SECRET', $CLIENT_SECRET);
+        $this->AtualizarVariaveisAmbiente('CLIENT_ID', $CLIENT_ID);
+        $this->AtualizarVariaveisAmbienteComAspas('SCOPE', $SCOPE);
+        $this->AtualizarVariaveisAmbienteComAspas('USER_AGENT', $USER_AGENT);
+        $message = 'Variáveis atulizadas com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('configuracoes');
+    }
+
     public function delete($id, Request $request)
     {
         $itens = ItensPedido::where('produto_id', $id)->get();
@@ -423,6 +544,7 @@ class ProdutoController extends Controller
         // Verificações de parâmetros
         if (empty($chave) || empty($valor)) {
             // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo
+            Log::error("ERRO", "AtualizarVariaveisAmbiente, Chave ou valor vazios.");
             return "Erro: Chave ou valor vazios.";
         }
         // Buscando o conteúdo do .env
@@ -438,6 +560,35 @@ class ProdutoController extends Controller
         }
         // Salvar as alterações no arquivo .env
         file_put_contents($envPath, $envContent);
+
+        Log::info("Variavel atualizada, Chave:"  . $chave . " Valor: " . $valor . "");
+    }
+
+    public function AtualizarVariaveisAmbienteComAspas(String $chave, String $valor)
+    {
+        // Verificações de parâmetros
+        if (empty($chave) || empty($valor)) {
+            // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo
+            Log::error("ERRO", "Erro: Chave ou valor vazios.");
+            return "Erro: Chave ou valor vazios.";
+        }
+        // Buscando o conteúdo do .env
+        $envPath = base_path('.env');
+        $envContent = file_get_contents($envPath);
+        // Adicione aspas simples ao redor do valor
+        $valorComAspasSimples = "'" . $valor . "'";
+        // Atualizar ou adicionar as chaves no arquivo .env
+        if (strpos($envContent, $chave) !== false) {
+            // Atualizar o valor se já existir
+            $envContent = preg_replace('/(' . $chave . ')=(.*)/', '' . $chave . '=' . $valorComAspasSimples, $envContent);
+        } else {
+            // Adicionar uma nova linha com a chave e os tokens
+            $envContent .= "\n" . $chave . "=" . $valorComAspasSimples;
+        }
+        // Salvar as alterações no arquivo .env
+        file_put_contents($envPath, $envContent);
+
+        Log::info("Variavel atualizada, Chave:"  . $chave . " Valor: " . $valorComAspasSimples . "");
     }
 
     public function historico()

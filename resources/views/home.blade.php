@@ -248,7 +248,6 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Inicio</a>
-                            <a href="contact.html" class="nav-item nav-link">Contato</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
                             @guest
@@ -259,14 +258,17 @@
                                     <a href="#" class="nav-link dropdown-toggle"
                                         data-toggle="dropdown">{{ Auth::user()->nome }}</a>
                                     <div class="dropdown-menu rounded-0 m-0">
-                                        <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas Compras</a>
+                                        @if (Auth::user()->isAdmin == 0)
+                                            <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas Compras</a>
+                                        @endif
                                         @if (Auth::user()->isAdmin == 1)
                                             <a href="{{ route('produtos') }}" class="dropdown-item">Produtos</a>
-                                            <a href="{{ route('categorias') }}" class="dropdown-item">categorias</a>
-                                            <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
+                                            <a href="{{ route('categorias') }}" class="dropdown-item">Categorias</a>
+                                            <a href="{{ route('configuracoes') }}" class="dropdown-item">Configurações</a>
+                                            {{-- <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
                                                 envio</a>
                                             <a href="{{ route('melhorInfo') }}" class="dropdown-item">Melhor
-                                                envio - Informações</a>
+                                                envio - Informações</a> --}}
                                         @endif
                                         <a href="{{ route('sair') }}" class="dropdown-item">Sair</a>
                                     </div>

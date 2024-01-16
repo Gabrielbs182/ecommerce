@@ -45,6 +45,9 @@
                                 <td>{{ $p->largura }}</td>
                                 <td>{{ $p->comprimento }}</td>
                                 <td>
+                                    <a href="{{ route('estoque.index', ['id' => $p->id]) }}">Estoque</a>
+                                </td>
+                                <td>
                                     <a href="{{ route('produto.editar', ['id' => $p->id]) }}">Editar</a>
                                 </td>
                                 <td>
