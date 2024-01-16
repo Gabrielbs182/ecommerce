@@ -65,7 +65,6 @@
     <input type="hidden" value="{{ asset('images') }}" id="asset">
 
     <div class="container">
-        <form id="formAtualizarEstoque" action="{{ route('atualizar_estoque') }}" method="POST">
             @csrf
             @if (count($lista) > 0)
                 <div class="table-wrapper mt-5 mb-5 table-responsive">
@@ -109,8 +108,6 @@
                     </h2>
                 </div>
             @endif
-            <button type="button" onclick="atualizarEstoque()" class="btn btn-primary">Atualizar Estoque</button>
-        </form>
 
     </div>
 
