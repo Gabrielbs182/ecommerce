@@ -97,6 +97,9 @@
                                     <a href="#" class="edit"
                                         onclick="abrirCarrinho({{ $p->id }})">Produtos</a>
                                 </td>
+                                <td>
+                                    <a href="{{route('pedido.finalizar', $p->id)}}" class="edit">Finalizar</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

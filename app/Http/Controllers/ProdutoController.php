@@ -15,6 +15,12 @@ class ProdutoController extends Controller
 {
     //
 
+    public function finalizarPedido($id){
+        $pedido = Pedido::find($id);
+        $pedido->status_env = 'Enviado';
+        $pedido->save();
+    }
+
     public function pedidosPendentes(){
         $data = [];
         $pedidos = Pedido::where('status_env', 'Envio iniciado')->get();

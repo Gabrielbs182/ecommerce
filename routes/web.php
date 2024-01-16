@@ -84,6 +84,8 @@ Route::get('/produto/editar/{id}', [ProdutoController::class, 'editarProduto'])
     ->name('produto.editar')->middleware('IsAdmin');
 
 //METODOS
+Route::get('/pedido/finalizar/{id}', [ProdutoController::class, 'finalizarPedido'])
+    ->name('pedido.finalizar')->middleware('IsAdmin');
 Route::post('/atualizar_estoque', [ProdutoController::class, 'atualizarEstoque'])->name('atualizar_estoque')->middleware('IsAdmin');;
 Route::get('/categoria/excluir/{id}', [ProdutoController::class, 'deleteCategoria'])
     ->name('categoria.excluir')->middleware('IsAdmin');
