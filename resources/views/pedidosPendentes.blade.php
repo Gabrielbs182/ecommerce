@@ -104,16 +104,9 @@
                     </table>
                 </div>
             @else
-                <div class="table-wrapper table-responsive">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2><b>Estoque</b></h2>
-                            </div>
-                        </div>
-                    </div>
+                <div>
                     <h2 class="text-center">Produto Sem Estoque.
-                        </h1>
+                    </h2>
                 </div>
             @endif
             <button type="button" onclick="atualizarEstoque()" class="btn btn-primary">Atualizar Estoque</button>
