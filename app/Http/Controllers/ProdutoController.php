@@ -21,7 +21,7 @@ class ProdutoController extends Controller
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
-        return view('pedidos.pendentes', $data);
+        return view('pedidosPendentes', $data);
     }
 
     public function atualizarEstoque(Request $request)
