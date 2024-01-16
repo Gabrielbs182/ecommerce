@@ -15,23 +15,42 @@ class ProdutoController extends Controller
 {
     //
 
-    public function finalizarPedido($id,Request $request){
+    public function finalizarPedido($id, Request $request)
+    {
         $pedido = Pedido::find($id);
         $pedido->status_env = 'Enviado';
         $melhorEnvio = new MelhorEnvioController();
         $resposta = $melhorEnvio->buscarRastreamento($pedido->cod_envio);
         $respostaJson = json_decode($resposta);
-        dd($respostaJson->tracking);
-        $cod_rastreamento = $respostaJson->tracking;
-        $pedido->cod_rastreamento = $cod_rastreamento;
-        $pedido->save();
-        $message = 'Pedido finalizado.';
-        $status = 'ok';
-        $request->session()->flash($status, $message);
-        return route('pedidosPendentes');
+
+        // Verifique se a respostaJson é um objeto e tem a chave desejada
+        if ($respostaJson && is_object($respostaJson) && property_exists($respostaJson, $pedido->cod_envio)) {
+            $rastreamentoObj = $respostaJson->{$pedido->cod_envio};
+
+            // Verifique se a chave "tracking" existe dentro do objeto de rastreamento
+            if (is_object($rastreamentoObj) && property_exists($rastreamentoObj, 'tracking')) {
+                $cod_rastreamento = $rastreamentoObj->tracking;
+                dd($cod_rastreamento);
+                $pedido->cod_rastreamento = $cod_rastreamento;
+                $pedido->save();
+
+                $message = 'Pedido finalizado.';
+                $status = 'ok';
+                $request->session()->flash($status, $message);
+
+                return route('pedidosPendentes');
+            }
+        }
+
+        // Lida com o caso em que a estrutura do JSON não é como esperado
+        Log::error("ERRO", ['file' => 'NomeDoSeuArquivo', 'message' => 'Não foi possível obter o código de rastreamento']);
+        // Adicione qualquer tratamento de erro adicional necessário
+
+        return redirect()->back(); // ou redirecione para outra página, dependendo do seu fluxo de trabalho
     }
 
-    public function pedidosPendentes(){
+    public function pedidosPendentes()
+    {
         $data = [];
         $pedidos = Pedido::where('status_env', 'Envio iniciado')->get();
         if (isset($pedidos)) {
