@@ -6,7 +6,7 @@
 
 @section('content')
     {{-- Asset --}}
-    <input type="hidden" value="{{ url('/storage/images') }}" id="asset">
+    <input type="hidden" value="{{ asset('images') }}" id="asset">
     <input type="hidden" value="" id="estoque">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
