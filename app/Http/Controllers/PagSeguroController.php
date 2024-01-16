@@ -492,6 +492,9 @@ class PagSeguroController extends Controller
                     // Verifique se a resposta é um JSON válido
                     $respostaJson = json_decode($resposta);
 
+                    // Pagando o envio
+                    $respostaPagamento = $melhorEnvio->pagarFrete($respostaJson->id);
+
                     // Verifique se a decodificação do JSON foi bem-sucedida e se a chave "protocol" existe
                     if ($respostaJson && isset($respostaJson->protocol)) {
                         $pedido->cod_entrega = $respostaJson->protocol;

@@ -31,6 +31,30 @@ class MelhorEnvioController extends Controller
         return $responseData;
     }
 
+    public function pagarFrete($order)
+    {
+        //buscando autorização
+        $responseData = $this->Authorization();
+
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
+                'body' => json_encode(['orders' => [$order]]),
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    env('USER_AGENT'),
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+        }
+
+        echo $response->getBody();
+    }
+
     public function lancarFrete($reference_id)
     {
         try {
@@ -110,7 +134,7 @@ class MelhorEnvioController extends Controller
                     'height' => $produto->altura,
                     'width' => $produto->largura,
                     'length' => $produto->comprimento,
-                    'weight' => ($produto->peso/1000),
+                    'weight' => ($produto->peso / 1000),
                 ];
                 $requestData['volumes'][] = $volume;
             }
