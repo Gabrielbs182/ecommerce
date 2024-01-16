@@ -322,11 +322,12 @@ class ProdutoController extends Controller
             }
 
             try {
+
                 if ($request->hasFile('foto1')) {
                     $imagem = $request->file('foto1');
                     $nomeArquivo = $produto->id . '.png';
                     // Armazenar a imagem no caminho desejado
-                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);;
                     if (!$uploadSucesso) {
                         // Adicione logs ou mensagens de erro, se necessário
                         throw new \Exception('Erro ao fazer upload da foto principal.');
@@ -336,7 +337,7 @@ class ProdutoController extends Controller
                     $imagem = $request->file('foto2');
                     $nomeArquivo = $produto->id . '_1.png';
                     // Armazenar a imagem no caminho desejado
-                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
                     if (!$uploadSucesso) {
                         // Adicione logs ou mensagens de erro, se necessário
                         throw new \Exception('Erro ao fazer upload da foto secundaria 1.');
@@ -346,7 +347,7 @@ class ProdutoController extends Controller
                     $imagem = $request->file('foto3');
                     $nomeArquivo = $produto->id . '_2.png';
                     // Armazenar a imagem no caminho desejado
-                    $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                    $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
                     if (!$uploadSucesso) {
                         // Adicione logs ou mensagens de erro, se necessário
                         throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
