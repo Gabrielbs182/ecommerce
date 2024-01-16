@@ -18,7 +18,16 @@ class ProdutoController extends Controller
     public function finalizarPedido($id){
         $pedido = Pedido::find($id);
         $pedido->status_env = 'Enviado';
+        $melhorEnvio = new MelhorEnvioController();
+        $resposta = $melhorEnvio->buscarRastreamento($pedido->cod_envio);
+        $respostaJson = json_decode($resposta);
+        $cod_rastreamento = $respostaJson->tracking;
+        $pedido->cod_rastreamento = $cod_rastreamento;
         $pedido->save();
+        $message = 'Pedido finalizado.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return route('pedidosPendentes');
     }
 
     public function pedidosPendentes(){
