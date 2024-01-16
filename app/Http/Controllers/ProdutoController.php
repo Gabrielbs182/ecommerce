@@ -551,12 +551,10 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
         $enderecoJson = json_decode($endereco);
-        
         $logradouro = $endereco['logradouro'];
-        var_dump($logradouro);
-        $bairro = $endereco->bairro;
-        $cidade = $endereco->localidade;
-        $uf = $endereco->uf;
+        $bairro = $endereco['bairro'];
+        $cidade = $endereco['localidade'];
+        $uf = $endereco['uf'];
         if ($transporte[0] != 0) {
             $data = [
                 'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
