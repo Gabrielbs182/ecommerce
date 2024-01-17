@@ -551,27 +551,22 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
         // Ajuste esta parte
-        if ($endereco instanceof JsonResponse) {
-            // Decodifique o conteúdo JSON da resposta
-            $conteudo = json_decode($endereco->content(), true);
 
-            // Atribua os valores a variáveis
-            $logradouro = $conteudo['logradouro'];
-            $bairro = $conteudo['bairro'];
-            $cidade = $conteudo['localidade'];
-            $uf = $conteudo['uf'];
-            if ($transporte[0] != 0) {
-                $data = [
-                    'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-                    'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
-                    'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
-                ];
-            } else {
-                $valorFrete = 0;
-                $data = [
-                    'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
-                ];
-            }
+        // Decodifique o conteúdo JSON da resposta
+        $conteudo = json_decode($endereco->content(), true);
+
+        // Atribua os valores a variáveis
+        $logradouro = $conteudo['logradouro'];
+        $bairro = $conteudo['bairro'];
+        $cidade = $conteudo['localidade'];
+        $uf = $conteudo['uf'];
+        if ($transporte[0] != 0) {
+            $data = [
+                'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+                'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+                'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+            ];
+
             return view("carrinho", $data);
         } else {
             // Trate o erro, se necessário
