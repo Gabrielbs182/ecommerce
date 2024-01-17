@@ -550,30 +550,6 @@ class ProdutoController extends Controller
         $cep = $request->input("cep");
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
-        // Ajuste esta parte
-        if ($endereco instanceof JsonResponse) {
-            // Decodifique o conteúdo JSON da resposta
-            $conteudo = json_decode($endereco->content(), true);
-
-            // Atribua os valores a variáveis
-            $logradouro = $conteudo['logradouro'];
-            $bairro = $conteudo['bairro'];
-            $cidade = $conteudo['localidade'];
-            $uf = $conteudo['uf'];
-        } else {
-            // Trate o erro, se necessário
-            return response()->json(['erro' => 'Erro na requisição do CEP'], 500);
-        }
-    }
-
-
-    public function verCarrinho(Request $request)
-    {
-        $transporte = explode("/", $request->input("frete"));
-        $carrinho = session('cart', []);
-        $cep = $request->input("cep");
-        $melhorEnvio = new MelhorEnvioController();
-        $endereco = $melhorEnvio->obterDadosCEP($cep);
 
         if ($endereco instanceof JsonResponse) {
             // Decodifique o conteúdo JSON da resposta
