@@ -17,23 +17,23 @@
 
 <body>
     <div class="limiter">
-        @if ($message = Session::get('err'))
-            <div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">
-                {{ $message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if ($message = Session::get('ok'))
-            <div class="alert alert-success alert-dismissible fade show text-center fixed-top" role="alert">
-                {{ $message }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
         <div class="container-login100">
+            @if ($message = Session::get('err'))
+                <div class="alert alert-danger alert-dismissible fade show text-center fixed-top" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if ($message = Session::get('ok'))
+                <div class="alert alert-success alert-dismissible fade show text-center fixed-top" role="alert">
+                    {{ $message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
             <div class="wrap-login100">
                 <form class="login100-form validate-form" action="{{ route('logar') }}" method="post">
                     @csrf
