@@ -554,28 +554,35 @@ class ProdutoController extends Controller
         // Chame a função para obter os dados do CEP
         $endereco = $melhorEnvio->obterDadosCEP($cep);
 
-
         $conteudo = json_decode($endereco->content(), true);
 
-        // Atribua os valores a variáveis
-        $logradouro = $conteudo['logradouro'];
-        $bairro = $conteudo['bairro'];
-        $cidade = $conteudo['localidade'];
-        $uf = $conteudo['uf'];
+        if (isset($conteudo['erro'])) {
 
-        if ($transporte[0] != 0) {
-            $data = [
-                'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-                'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
-                'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
-            ];
+            $message = 'Cep invalido.';
+            $status = 'err';
+            $request->session()->flash($status, $message);
+            return redirect()->route('home');
         } else {
-            $valorFrete = 0;
-            $data = [
-                'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
-            ];
+            // Atribua os valores a variáveis
+            $logradouro = $conteudo['logradouro'];
+            $bairro = $conteudo['bairro'];
+            $cidade = $conteudo['localidade'];
+            $uf = $conteudo['uf'];
+
+            if ($transporte[0] != 0) {
+                $data = [
+                    'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+                    'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+                    'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                ];
+            } else {
+                $valorFrete = 0;
+                $data = [
+                    'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
+                ];
+            }
+            return view("carrinho", $data);
         }
-        return view("carrinho", $data);
     }
 
     public function excluirCarrinho($indice)
