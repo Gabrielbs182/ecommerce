@@ -114,7 +114,7 @@ Route::match(['get', 'post'], '/{indice}/excluirCarrinho', [ProdutoController::c
 Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])
     ->name('carrinho_finalizar');
 Route::get('/compras/historico', [ProdutoController::class, 'historico'])
-    ->name('compra_historico');
+    ->name('compra_historico')->middleware('auth');
 Route::get('/compras/detalhes/{id}', [ProdutoController::class, 'compra_detalhes'])
     ->name('compra_detalhes');
 Route::match(['get', 'post'], '/pagar', [PagSeguroController::class, 'PagSeguroCheckout'])
