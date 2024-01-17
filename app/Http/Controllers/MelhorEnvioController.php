@@ -340,7 +340,10 @@ class MelhorEnvioController extends Controller
             file_put_contents($envPath, $envContent);
 
             // Informar ao usuário que os tokens foram armazenados com sucesso
-            return "Tokens armazenados com sucesso!";
+            $message = 'Tokens armazenados com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('configuracoes');
         } else {
             // Informar ao usuário que houve um problema ao obter os tokens
             return "Erro: Tokens não foram obtidos com sucesso.";
