@@ -554,25 +554,28 @@ class ProdutoController extends Controller
         // Chame a função para obter os dados do CEP
         $endereco = $melhorEnvio->obterDadosCEP($cep);
 
-        // Ajuste esta parte
-        if ($endereco instanceof JsonResponse) {
-            // Decodifique o conteúdo JSON da resposta
-            $conteudo = json_decode($endereco->content(), true);
 
-            // Atribua os valores a variáveis
-            $logradouro = $conteudo['logradouro'];
-            $bairro = $conteudo['bairro'];
-            $cidade = $conteudo['localidade'];
-            $uf = $conteudo['uf'];
+        $conteudo = json_decode($endereco->content(), true);
 
-            // Use as variáveis como necessário
-            var_dump($logradouro, $bairro, $cidade, $uf);
+        // Atribua os valores a variáveis
+        $logradouro = $conteudo['logradouro'];
+        $bairro = $conteudo['bairro'];
+        $cidade = $conteudo['localidade'];
+        $uf = $conteudo['uf'];
 
-            // Restante do seu código...
+        if ($transporte[0] != 0) {
+            $data = [
+                'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+                'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+                'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+            ];
         } else {
-            // Trate o erro, se necessário
-            return response()->json(['erro' => 'Erro na requisição do CEP'], 500);
+            $valorFrete = 0;
+            $data = [
+                'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
+            ];
         }
+        return view("carrinho", $data);
     }
 
     public function excluirCarrinho($indice)
