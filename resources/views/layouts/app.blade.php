@@ -41,6 +41,19 @@
 
 <body>
     <style>
+        #loadingBackground {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Cor de fundo escurecida com transparência */
+            z-index: 999;
+            /* Z-index menor que o spinner para que ele fique na frente do fundo */
+        }
+
         #loadingSpinner {
             display: none;
             position: fixed;

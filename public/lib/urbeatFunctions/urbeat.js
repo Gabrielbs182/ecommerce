@@ -97,6 +97,7 @@ function calcularFrete() {
 
     // Verifique se o CEP é válido antes de fazer a requisição
     if (validarCEP(cepValue)) {
+        $('#loadingBackground').show(); // Mostra o fundo escurecido
         $('#loadingSpinner').show();
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
@@ -131,6 +132,7 @@ function calcularFrete() {
                 '</div>';
 
             document.getElementById("envios").innerHTML = linhas;
+            $('#loadingBackground').hide(); // Esconde o fundo escurecido
             $('#loadingSpinner').hide();
         });
     } else {
@@ -139,6 +141,7 @@ function calcularFrete() {
         console.log('Cep é invalido');
         // Adicionar classe para destacar o campo em vermelho
         $("#cep-group").addClass("has-error");
+        $('#loadingBackground').hide(); // Esconde o fundo escurecido
         $('#loadingSpinner').hide();
     }
 };
