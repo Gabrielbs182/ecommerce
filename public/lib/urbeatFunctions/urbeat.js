@@ -66,6 +66,7 @@ function buscarProduto(id) {
 
 function obterDadosCEP(cep) {
     // Montar a URL com o CEP fornecido
+    $('#loadingSpinner').show();
     var url = `https://viacep.com.br/ws/${cep}/json`;
 
     // Fazer a requisição usando a API fetch
@@ -100,6 +101,7 @@ function calcularFrete() {
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
+            $('#loadingSpinner').show();
 
             document.getElementById("envios").innerHTML = '';
 
