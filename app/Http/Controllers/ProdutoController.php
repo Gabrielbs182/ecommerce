@@ -567,7 +567,7 @@ class ProdutoController extends Controller
             $data = [
                 'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
                 'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
-                'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
             ];
         } else {
             $valorFrete = 0;
