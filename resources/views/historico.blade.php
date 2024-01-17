@@ -25,8 +25,14 @@
                     for (var key in data) {
                         if (data.hasOwnProperty(key)) {
                             var item = data[key];
-                            let valorItem = (item.valor*1).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-                            let valorTotal = (item.quantidade*item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                            let valorItem = (item.valor * 1).toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            });
+                            let valorTotal = (item.quantidade * item.valor).toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            });
                             var asset = $('#asset').val();
                             var itemCarrinho =
                                 '<tr>' +
@@ -34,7 +40,8 @@
                                 '<img src="' + asset +
                                 '/' + item.id +
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
-                                'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item.quantidade +
+                                'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item
+                                .quantidade +
                                 '</td>' +
                                 '<td class="align-middle text-center"> ' + valorItem + '</td>' +
                                 '<td class="align-middle text-center"> ' + valorTotal +
@@ -55,7 +62,7 @@
 @endsection
 
 @section('content')
-    <input type="hidden" value="{{ url('/storage/images') }}" id="asset">
+    <input type="hidden" value="{{ asset('images') }}" id="asset">
 
     <div class="container">
         @if (count($lista) > 0)
