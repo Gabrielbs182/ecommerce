@@ -210,7 +210,8 @@
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
                         @if (isset($categorias))
                             @foreach ($categorias as $c)
-                                <a href="{{route('produto.categoria', $c->id)}}" class="nav-item nav-link">{{$c->categoria}}</a>
+                                <a href="{{ route('produto.categoria', $c->id) }}"
+                                    class="nav-item nav-link">{{ $c->categoria }}</a>
                             @endforeach
                         @endif
                     </div>
@@ -242,7 +243,8 @@
                                         data-toggle="dropdown">{{ Auth::user()->nome }}</a>
                                     <div class="dropdown-menu rounded-0 m-0">
                                         @if (Auth::user()->isAdmin == 0)
-                                            <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas Compras</a>
+                                            <a href="{{ route('compra_historico') }}" class="dropdown-item">Minhas
+                                                Compras</a>
                                         @endif
                                         @if (Auth::user()->isAdmin == 1)
                                             <a href="{{ route('produtos') }}" class="dropdown-item">Produtos</a>
@@ -265,7 +267,7 @@
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-1.png" alt="Imagem">
+                            <img class="img-fluid" src="{{ asset('img') }}/carousel-1.png" alt="Imagem">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em
@@ -277,7 +279,7 @@
                             </div>
                         </div>
                         <div class="carousel-item" style="height: 410px;">
-                            <img class="img-fluid" src="img/carousel-2.png" alt="Imagem">
+                            <img class="img-fluid" src="{{ asset('img') }}/carousel-2.png" alt="Imagem">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em
