@@ -513,6 +513,9 @@ class PagSeguroController extends Controller
                         } else {
                             Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
                         }
+                    } else {
+                        $pedido->status_env = 'Preparando encomenda';
+                        $pedido->save();
                     }
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);

@@ -19,40 +19,45 @@ class ProdutoController extends Controller
     public function finalizarPedido($id, Request $request)
     {
         $pedido = Pedido::find($id);
-        $pedido->status_env = 'Enviado';
-        $melhorEnvio = new MelhorEnvioController();
-        $resposta = $melhorEnvio->buscarRastreamento($pedido->cod_envio);
-        $respostaJson = json_decode($resposta);
+        if ($pedido->status_env == 'Preparando encomenda') {
+            $pedido->status_env = 'Aguardando retirada';
+        } else {
+            $pedido->status_env = 'Enviado';
+            $melhorEnvio = new MelhorEnvioController();
+            $resposta = $melhorEnvio->buscarRastreamento($pedido->cod_envio);
+            $respostaJson = json_decode($resposta);
 
-        // Verifique se a respostaJson é um objeto e tem a chave desejada
-        if ($respostaJson && is_object($respostaJson) && property_exists($respostaJson, $pedido->cod_envio)) {
-            $rastreamentoObj = $respostaJson->{$pedido->cod_envio};
+            // Verifique se a respostaJson é um objeto e tem a chave desejada
+            if ($respostaJson && is_object($respostaJson) && property_exists($respostaJson, $pedido->cod_envio)) {
+                $rastreamentoObj = $respostaJson->{$pedido->cod_envio};
 
-            // Verifique se a chave "tracking" existe dentro do objeto de rastreamento
-            if (is_object($rastreamentoObj) && property_exists($rastreamentoObj, 'tracking')) {
-                $cod_rastreamento = $rastreamentoObj->tracking;
-                $pedido->cod_rastreamento = $cod_rastreamento;
-                $pedido->save();
+                // Verifique se a chave "tracking" existe dentro do objeto de rastreamento
+                if (is_object($rastreamentoObj) && property_exists($rastreamentoObj, 'tracking')) {
+                    $cod_rastreamento = $rastreamentoObj->tracking;
+                    $pedido->cod_rastreamento = $cod_rastreamento;
+                    $pedido->save();
 
-                $message = 'Pedido finalizado.';
-                $status = 'ok';
-                $request->session()->flash($status, $message);
+                    $message = 'Pedido finalizado.';
+                    $status = 'ok';
+                    $request->session()->flash($status, $message);
 
-                return redirect()->route('pedidos.pendentes');
+                    return redirect()->route('pedidos.pendentes');
+                }
             }
+
+            // Lida com o caso em que a estrutura do JSON não é como esperado
+            Log::error("ERRO", ['file' => 'NomeDoSeuArquivo', 'message' => 'Não foi possível obter o código de rastreamento']);
+            // Adicione qualquer tratamento de erro adicional necessário
+
+            return redirect()->back(); // ou redirecione para outra página, dependendo do seu fluxo de trabalho
         }
-
-        // Lida com o caso em que a estrutura do JSON não é como esperado
-        Log::error("ERRO", ['file' => 'NomeDoSeuArquivo', 'message' => 'Não foi possível obter o código de rastreamento']);
-        // Adicione qualquer tratamento de erro adicional necessário
-
-        return redirect()->back(); // ou redirecione para outra página, dependendo do seu fluxo de trabalho
     }
 
     public function pedidosPendentes()
     {
         $data = [];
-        $pedidos = Pedido::where('status_env', 'Envio iniciado')->get();
+        $pedidos = Pedido::where('status_env', 'Envio iniciado')
+            ->orWhere('status_env', 'Preparando encomenda')->get();
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
