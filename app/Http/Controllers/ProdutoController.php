@@ -550,25 +550,27 @@ class ProdutoController extends Controller
         $cep = $request->input("cep");
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
+
+        return $endereco;
         // Ajuste esta parte
-        $logradouro = $endereco->logradouro;
-        $bairro = $endereco->bairro;
-        $cidade = $endereco->localidade;
-        $uf = $endereco->uf;
-        dd($logradouro);
-        if ($transporte[0] != 0) {
-            $data = [
-                'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-                'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
-                'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
-            ];
-        } else {
-            $valorFrete = 0;
-            $data = [
-                'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
-            ];
-        }
-        return view("carrinho", $data);
+        // $logradouro = $endereco->logradouro;
+        // $bairro = $endereco->bairro;
+        // $cidade = $endereco->localidade;
+        // $uf = $endereco->uf;
+        // dd($logradouro);
+        // if ($transporte[0] != 0) {
+        //     $data = [
+        //         'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+        //         'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+        //         'logrdouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+        //     ];
+        // } else {
+        //     $valorFrete = 0;
+        //     $data = [
+        //         'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
+        //     ];
+        // }
+        // return view("carrinho", $data);
     }
 
     public function excluirCarrinho($indice)
