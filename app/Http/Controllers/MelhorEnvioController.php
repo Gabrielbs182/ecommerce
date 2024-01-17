@@ -289,9 +289,7 @@ class MelhorEnvioController extends Controller
         $scope = env('SCOPE'); // Adicione outras permissões conforme necessário
         $authorizationUrl = "https://sandbox.melhorenvio.com.br/oauth/authorize?";
         $authorizationUrl .= "client_id={$client_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$scope}";
-
-        echo $authorizationUrl;
-        //return redirect()->away($authorizationUrl);
+        return redirect()->away($authorizationUrl);
     }
 
 
