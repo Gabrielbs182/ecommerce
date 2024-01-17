@@ -8,6 +8,7 @@ use App\Models\Estoque;
 use App\Models\Categoria;
 use App\Models\ItensPedido;
 use App\Models\Pedido;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
