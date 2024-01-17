@@ -549,14 +549,9 @@ class ProdutoController extends Controller
         $carrinho = session('cart', []);
         $cep = $request->input("cep");
         $melhorEnvio = new MelhorEnvioController();
-        $endereco = $melhorEnvio->obterDadosCEP($cep)->json();
-
-        // Agora você pode acessar diretamente as propriedades do objeto JSON
-        $logradouro = $endereco['logradouro'];
-        $bairro = $endereco['bairro'];
-        $cidade = $endereco['localidade'];
-        $uf = $endereco['uf'];
-        dd($logradouro);
+        $endereco = $melhorEnvio->obterDadosCEP($cep);
+        // Ajuste esta parte
+        var_dump($endereco);
         // if ($transporte[0] != 0) {
         //     $data = [
         //         'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
