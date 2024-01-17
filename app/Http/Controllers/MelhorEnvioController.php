@@ -294,7 +294,7 @@ class MelhorEnvioController extends Controller
 
 
 
-    public function getToken()
+    public function getToken(Request $request)
     {
         $client = new \GuzzleHttp\Client();
 
