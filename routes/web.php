@@ -50,6 +50,8 @@ Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name(
 //REDIRECIONAMENTO
 Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
     ->name('categoria.cadastrar')->middleware('IsAdmin');
+Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria'])
+    ->name('produto.categoria');
 Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
     ->name('pedidos.pendentes')->middleware('IsAdmin');
 Route::get('/estoque/produto/{id}', [ProdutoController::class, 'estoqueProduto'])

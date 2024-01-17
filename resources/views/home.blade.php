@@ -208,28 +208,11 @@
                 <nav class="collapse show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                     id="navbar-vertical">
                     <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Casual <i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Masculino</a>
-                                <a href="" class="dropdown-item">Feminino</a>
-                                <a href="" class="dropdown-item">Infantil</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link" data-toggle="dropdown">Esportivo <i
-                                    class="fa fa-angle-down float-right mt-1"></i></a>
-                            <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                <a href="" class="dropdown-item">Masculino</a>
-                                <a href="" class="dropdown-item">Feminino</a>
-                                <a href="" class="dropdown-item">Infantil</a>
-                            </div>
-                        </div>
-                        <a href="" class="nav-item nav-link">Skate</a>
-                        <a href="" class="nav-item nav-link">Sandalias</a>
-                        <a href="" class="nav-item nav-link">Salto</a>
-                        <a href="" class="nav-item nav-link">Tenis</a>
+                        @if (isset($categorias))
+                            @foreach ($categorias as $c)
+                                <a href="{{route('produto.categoria', $c->id)}}" class="nav-item nav-link">{{$c->categoria}}</a>
+                            @endforeach
+                        @endif
                     </div>
                 </nav>
             </div>
@@ -265,7 +248,8 @@
                                             <a href="{{ route('produtos') }}" class="dropdown-item">Produtos</a>
                                             <a href="{{ route('categorias') }}" class="dropdown-item">Categorias</a>
                                             <a href="{{ route('configuracoes') }}" class="dropdown-item">Configurações</a>
-                                            <a href="{{ route('pedidos.pendentes') }}" class="dropdown-item">Pedidos Pendentes</a>
+                                            <a href="{{ route('pedidos.pendentes') }}" class="dropdown-item">Pedidos
+                                                Pendentes</a>
                                             {{-- <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
                                                 envio</a>
                                             <a href="{{ route('melhorInfo') }}" class="dropdown-item">Melhor

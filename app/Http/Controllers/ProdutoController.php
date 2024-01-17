@@ -481,7 +481,19 @@ class ProdutoController extends Controller
     {
         $data = [];
         $listaProdutos = Produto::where('ativo', 1)->get();
+        $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
+        $data["categorias"] = $categorias;
+        return view("home", $data);
+    }
+
+    public function verCategoria($id)
+    {
+        $data = [];
+        $listaProdutos = Produto::where('ativo', 1)->where('categoria_id', $id)->get();
+        $categorias = Categoria::all();
+        $data["lista"] = $listaProdutos;
+        $data["categorias"] = $categorias;
         return view("home", $data);
     }
 
