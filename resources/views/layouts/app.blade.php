@@ -40,6 +40,21 @@
 </head>
 
 <body>
+    <style>
+        #loadingSpinner {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            /* Ajuste conforme necessário para garantir que esteja acima de outros elementos */
+        }
+    </style>
+    <div id="loadingSpinner" class="hidden">
+        <!-- Coloque aqui a animação de carregamento (pode ser um gif, ícone animado, etc.) -->
+        <img src="{{ asset('loading.gif') }}" alt="Carregando...">
+    </div>
     <!-- Topbar Start -->
     <div class="container-fluid">
         @if ($message = Session::get('err'))

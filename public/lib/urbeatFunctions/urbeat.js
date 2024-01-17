@@ -1,5 +1,6 @@
 function buscarProduto(id) {
     var asset = $('#asset').val();
+    $('#loadingSpinner').show();
     $.getJSON('/produto/buscar/' + id, function (produto) {
         var foto = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '.png" alt="Image">';
@@ -46,6 +47,7 @@ function buscarProduto(id) {
                             ')">Comprar</button>' +
                             '</div>';
                         $('#comprar').append(comprar);
+
                     }
                     var tamanho = '<option value="' + item.numero + '">' + item.numero +
                         '</option>';
@@ -57,6 +59,7 @@ function buscarProduto(id) {
                 var aviso = '<h1 class="font-weight-light text-center">Produto Esgotado</h1>';
                 $('#comprar').append(aviso);
             }
+            $('#loadingSpinner').hide();
         });
     });
 }
@@ -86,7 +89,7 @@ function obterDadosCEP(cep) {
 };
 
 function calcularFrete() {
-    $("#loader-div").show();
+    $('#loadingSpinner').show();
     // Obtenha o valor do CEP
     var cepValue = document.getElementById("cep").value;
 
@@ -127,6 +130,7 @@ function calcularFrete() {
                 '</div>';
 
             document.getElementById("envios").innerHTML = linhas;
+            $('#loadingSpinner').hide();
         });
     } else {
         // Exibir mensagem de erro para CEP inválido
@@ -134,6 +138,7 @@ function calcularFrete() {
         console.log('Cep é invalido');
         // Adicionar classe para destacar o campo em vermelho
         $("#cep-group").addClass("has-error");
+        $('#loadingSpinner').hide();
     }
 };
 
@@ -168,21 +173,23 @@ function montarLinhaEnvio(transportadora) {
         '<label class="form-check-label" for="' + transportadora.id + '">' +
         transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
-    '</label>' +
+        '</label>' +
         '</div>';
     return linha;
 }
 
 function buscarEstoque() {
+    $('#loadingSpinner').show();
     var numero = $('#tamanhoModal').val()
     var idProduto = $('#idProduto').val()
     $.getJSON('/estoqueNumero/' + idProduto + '/' + numero, function (estoque) {
         $('#estoque').val(estoque[0].quantidade);
-
+        $('#loadingSpinner').hide();
     });
 };
 
 function removerProdutoCarrinho(id) {
+    $('#loadingSpinner').show();
     var token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
         type: 'POST',
@@ -202,16 +209,19 @@ function removerProdutoCarrinho(id) {
                 } else {
                     carregarCarrinho();
                 }
+                $('#loadingSpinner').hide();
             });
         },
         error: function (error) {
             console.log(error);
+            $('#loadingSpinner').hide();
         }
     });
 
 }
 
 function carregarCarrinho() {
+    $('#loadingSpinner').show();
 
     $.getJSON('/buscarCarrinho', function (data) {
 
@@ -254,8 +264,10 @@ function carregarCarrinho() {
 
             $('#totalCarrinho').empty();
             $('#totalCarrinho').append(total);
+            $('#loadingSpinner').hide();
         } else {
             console.error('O JSON retornado não é um array:', data);
+            $('#loadingSpinner').hide();
         }
         $('#totalCarrinho').empty();
         $('#totalCarrinho').append(total);
@@ -281,10 +293,12 @@ function carregarCarrinho() {
         if (data && data.quantidadeCarrinho !== undefined) {
             $('#quantidade-carrinho').text(data.quantidadeCarrinho);
         }
+        $('#loadingSpinner').hide();
     });
 };
 
 function abrirCarrinho() {
+    $('#loadingSpinner').show();
     $.getJSON('/buscarCarrinho', function (data) {
         var total = 0;
         var indice = 0;
@@ -295,17 +309,21 @@ function abrirCarrinho() {
             carregarCarrinho();
             $('#modalCarrinho').modal('show');
         }
+        $('#loadingSpinner').hide();
     });
 };
 
 function buscarEstoqueCarrinho(id, callback) {
+    $('#loadingSpinner').show();
     var numero = $('#tamanhoModal').val();
     $.getJSON('/buscarItemCarrinho/' + id + '/' + numero, function (data) {
         callback(data); // Chama o callback com os dados recebidos
+        $('#loadingSpinner').hide();
     });
 }
 
 function adicionarCarrinho(id) {
+    $('#loadingSpinner').show();
     var token = $('meta[name="csrf-token"]').attr('content');
     var estoque = $('#estoque').val();
     var numero = $('#tamanhoModal').val();
@@ -331,6 +349,7 @@ function adicionarCarrinho(id) {
                 '</button>' +
                 '</div>';
             $('#modalAlert').append(alerta);
+            $('#loadingSpinner').hide();
         } else {
 
             $.getJSON('/produto/buscar/' + id, function (produto) {
@@ -354,6 +373,8 @@ function adicionarCarrinho(id) {
                         $('#exampleModalCenter').modal('hide');
 
                         carregarCarrinho();
+
+                        $('#loadingSpinner').hide();
                     },
                     error: function (error) {
                         console.log(error);
