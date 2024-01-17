@@ -567,35 +567,33 @@ class ProdutoController extends Controller
         // Chame a função para obter os dados do CEP
         if (isset($cep)) {
             $endereco = $melhorEnvio->obterDadosCEP($cep);
-
             $conteudo = json_decode($endereco->content(), true);
-        }
-
-        if (isset($conteudo['erro'])) {
-
-            $message = 'Cep invalido.';
-            $status = 'err';
-            $request->session()->flash($status, $message);
-            return redirect()->route('home');
-        } else {
-            // Atribua os valores a variáveis
-            $logradouro = $conteudo['logradouro'];
-            $bairro = $conteudo['bairro'];
-            $cidade = $conteudo['localidade'];
-            $uf = $conteudo['uf'];
-
-            if ($transporte[0] != 0) {
-                $data = [
-                    'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
-                    'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
-                    'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
-                ];
+            if (isset($conteudo['erro'])) {
+                $message = 'Cep invalido.';
+                $status = 'err';
+                $request->session()->flash($status, $message);
+                return redirect()->route('home');
             } else {
-                $valorFrete = 0;
-                $data = [
-                    'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
-                ];
+                // Atribua os valores a variáveis
+                $logradouro = $conteudo['logradouro'];
+                $bairro = $conteudo['bairro'];
+                $cidade = $conteudo['localidade'];
+                $uf = $conteudo['uf'];
+
+                if ($transporte[0] != 0) {
+                    $data = [
+                        'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
+                        'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+                        'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                    ];
+                }
+                return view("carrinho", $data);
             }
+        } else {
+            $valorFrete = 0;
+            $data = [
+                'cart' => $carrinho, 'idFrete' => 'Gratis', 'valor' => $valorFrete
+            ];
             return view("carrinho", $data);
         }
     }
