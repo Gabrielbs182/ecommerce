@@ -550,7 +550,7 @@ class ProdutoController extends Controller
         $cep = $request->input("cep");
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
-
+        // Ajuste esta parte
         if ($endereco instanceof JsonResponse) {
             // Decodifique o conteúdo JSON da resposta
             $conteudo = json_decode($endereco->content(), true);
@@ -560,7 +560,6 @@ class ProdutoController extends Controller
             $bairro = $conteudo['bairro'];
             $cidade = $conteudo['localidade'];
             $uf = $conteudo['uf'];
-            return $logradouro;
             if ($transporte[0] != 0) {
                 $data = [
                     'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
