@@ -81,6 +81,7 @@
                             <th>Código</th>
                             <th>Data do pedido</th>
                             <th>Status</th>
+                            <th>Status Envio</th>
                             <th>Código rastreamento</th>
                             <th>Código melhor envio</th>
                             <th>Total</th>
@@ -92,6 +93,7 @@
                                 <td>{{ $p->id }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($p->datapedido)) }}</td>
                                 <td>{{ $p->status }}</td>
+                                <td>{{ $p->status_env }}</td>
                                 <td>{{ $p->cod_rastreamento }}</td>
                                 <td>{{ $p->cod_entrega }}</td>
                                 <td>R$ {{ number_format($p->total, 2, ',', '.') }}</td>
