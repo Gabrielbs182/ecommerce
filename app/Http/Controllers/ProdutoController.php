@@ -21,6 +21,11 @@ class ProdutoController extends Controller
         $pedido = Pedido::find($id);
         if ($pedido->status_env == 'Preparando encomenda') {
             $pedido->status_env = 'Aguardando retirada';
+            $message = 'Pedido finalizado.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+
+            return redirect()->route('pedidos.pendentes');
         } else {
             $pedido->status_env = 'Enviado';
             $melhorEnvio = new MelhorEnvioController();
