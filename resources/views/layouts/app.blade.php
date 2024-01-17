@@ -107,7 +107,7 @@
             </div>
 
             <div class="col-lg-6 col-6 text-left">
-                @if (Route::is('home'))
+                @if (Route::is('home') or Route::is('produto.categoria'))
                     <form action="">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Buscar...">
@@ -123,7 +123,7 @@
 
 
             <div class="col-lg-3 col-6 text-right">
-                @if (Route::is('home'))
+                @if (Route::is('home') or Route::is('produto.categoria'))
                     <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
                             style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
