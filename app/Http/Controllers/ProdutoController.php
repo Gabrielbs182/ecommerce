@@ -217,6 +217,7 @@ class ProdutoController extends Controller
             $produto->ativo = 0;
         }
         $produto->nome = $request->input('nome');
+        $produto->categoria_id = $request->input('categoria');
         $produto->descricao = $request->input('descricao');
         $produto->peso = $request->input('peso');
         $produto->altura = $request->input('altura');
