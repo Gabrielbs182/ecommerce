@@ -174,7 +174,7 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_POSTAL_CODE', $MELHORENVIO_POSTAL_CODE);
         $this->AtualizarVariaveisAmbienteComAspas('CLIENT_SECRET', $CLIENT_SECRET);
         $this->AtualizarVariaveisAmbiente('CLIENT_ID', $CLIENT_ID);
-        $this->AtualizarVariaveisAmbiente('SCOPE', $SCOPE);
+        $this->AtualizarVariaveisAmbienteComAspas('SCOPE', $SCOPE);
         $this->AtualizarVariaveisAmbienteComAspas('USER_AGENT', $USER_AGENT);
         $message = 'Variáveis atulizadas com sucesso.';
         $status = 'ok';
