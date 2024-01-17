@@ -90,7 +90,6 @@ function obterDadosCEP(cep) {
 };
 
 function calcularFrete() {
-    $('#loadingSpinner').show();
     // Obtenha o valor do CEP
     var cepValue = document.getElementById("cep").value;
 
@@ -98,10 +97,10 @@ function calcularFrete() {
 
     // Verifique se o CEP é válido antes de fazer a requisição
     if (validarCEP(cepValue)) {
+        $('#loadingSpinner').show();
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
-            $('#loadingSpinner').show();
 
             document.getElementById("envios").innerHTML = '';
 
