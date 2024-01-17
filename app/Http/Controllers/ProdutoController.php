@@ -565,9 +565,11 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
 
         // Chame a função para obter os dados do CEP
-        $endereco = $melhorEnvio->obterDadosCEP($cep);
+        if (isset($cep)) {
+            $endereco = $melhorEnvio->obterDadosCEP($cep);
 
-        $conteudo = json_decode($endereco->content(), true);
+            $conteudo = json_decode($endereco->content(), true);
+        }
 
         if (isset($conteudo['erro'])) {
 
