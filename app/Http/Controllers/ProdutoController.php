@@ -551,7 +551,7 @@ class ProdutoController extends Controller
         $melhorEnvio = new MelhorEnvioController();
         $endereco = $melhorEnvio->obterDadosCEP($cep);
         // Ajuste esta parte
-        dd($endereco['data']);
+        var_dump($endereco);
         // if ($transporte[0] != 0) {
         //     $data = [
         //         'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
