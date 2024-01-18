@@ -186,11 +186,6 @@ class MelhorEnvioController extends Controller
                 'service' => $pedido->cod_entrega,
             ];
 
-            $altura = 0;
-            $largura = 0;
-            $comprimento = 0;
-            $peso = 0;
-
             foreach ($itens as $item) {
                 $produto = Produto::find($item['produto_id']);
                 $product = [
@@ -200,19 +195,14 @@ class MelhorEnvioController extends Controller
                 ];
                 $requestData['products'][] = $product;
 
-                $altura += ($produto->altura*$item['quantidade']);
-                $largura += ($produto->largura*$item['quantidade']);
-                $comprimento += ($produto->comprimento*$item['quantidade']);
-                $peso += (round(($produto->peso / 1000),2)*$item['quantidade']);
+                $volume = [
+                    'height' => $produto->altura,
+                    'width' => $produto->largura,
+                    'length' => $produto->comprimento,
+                    'weight' => ($produto->peso / 1000),
+                ];
+                $requestData['volumes'][] = $volume;
             }
-
-            $volume = [
-                'height' => $altura,
-                'width' => $largura,
-                'length' => $comprimento,
-                'weight' => $peso,
-            ];
-            $requestData['volumes'][] = $volume;
 
             // Headers da requisição
             $headers = [
@@ -262,7 +252,7 @@ class MelhorEnvioController extends Controller
                 'height' => $prod['altura'],
                 'length' => $prod['comprimento'],
                 'weight' => $prod['peso'] / 1000,
-                'insurance_value' => $prod['valor'],
+                'insurance_value' => $prod['valor'] * $prod['quantidade'],
                 'quantity' => $prod['quantidade'],
             ];
         }

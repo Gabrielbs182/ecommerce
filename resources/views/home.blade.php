@@ -32,6 +32,9 @@
                                         <div class="carousel-item" id="segundoCarrosel">
                                             <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
                                         </div>
+                                        <div class="carousel-item" id="terceiroCarrosel">
+                                            <img class="w-100 h-100" src="{{ asset('images/2_3.png') }}" alt="Image">
+                                        </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                                         <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -280,6 +283,18 @@
                         </div>
                         <div class="carousel-item" style="height: 410px;">
                             <img class="img-fluid" src="{{ asset('img') }}/carousel-2.png" alt="Imagem">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em
+                                        Seu
+                                        Primeiro Pedido</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Preço Razoável</h3>
+                                    <a href="" class="btn btn-light py-2 px-3">Compre Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" style="height: 410px;">
+                            <img class="img-fluid" src="{{ asset('img') }}/carousel-3.png" alt="Imagem">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% de Desconto em

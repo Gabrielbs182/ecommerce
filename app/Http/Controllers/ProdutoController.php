@@ -14,12 +14,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Mail\AcompanhamentoPedido;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 class ProdutoController extends Controller
 {
     //
 
-    public function emailTeste(){
+    public function emailTeste()
+    {
         return view('emails.email_teste');
     }
 
@@ -149,6 +151,42 @@ class ProdutoController extends Controller
 
     public function configuracoesUpdate(Request $request)
     {
+
+        try {
+            if ($request->hasFile('banner1')) {
+                $imagem = $request->file('banner1');
+                $nomeArquivo = 'carousel-1.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->move(public_path('img'), $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto principal.');
+                }
+            }
+            if ($request->hasFile('banner2')) {
+                $imagem = $request->file('banner2');
+                $nomeArquivo = 'carousel-2.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->move(public_path('img'), $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 1.');
+                }
+            }
+            if ($request->hasFile('banner3')) {
+                $imagem = $request->file('banner3');
+                $nomeArquivo = 'carousel-3.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->move(public_path('img'), $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
+        }
+
         $PAGSEGURO_EMAIL = $request->input('pagSeguroEmail');
         $PAGSEGURO_TOKEN = $request->input('pagSeguroToken');
         $MELHORENVIO_NAME = $request->input('melhorEnvioNome');
@@ -267,7 +305,7 @@ class ProdutoController extends Controller
                 $imagem = $request->file('foto1');
                 $nomeArquivo = $produto->id . '.png';
                 // Armazenar a imagem no caminho desejado
-                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
                 if (!$uploadSucesso) {
                     // Adicione logs ou mensagens de erro, se necessário
                     throw new \Exception('Erro ao fazer upload da foto principal.');
@@ -277,7 +315,7 @@ class ProdutoController extends Controller
                 $imagem = $request->file('foto2');
                 $nomeArquivo = $produto->id . '_1.png';
                 // Armazenar a imagem no caminho desejado
-                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
                 if (!$uploadSucesso) {
                     // Adicione logs ou mensagens de erro, se necessário
                     throw new \Exception('Erro ao fazer upload da foto secundaria 1.');
@@ -287,10 +325,30 @@ class ProdutoController extends Controller
                 $imagem = $request->file('foto3');
                 $nomeArquivo = $produto->id . '_2.png';
                 // Armazenar a imagem no caminho desejado
-                $uploadSucesso = $imagem->storeAs('public/images', $nomeArquivo);
+                $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
                 if (!$uploadSucesso) {
                     // Adicione logs ou mensagens de erro, se necessário
                     throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
+                }
+            }
+            if ($request->hasFile('foto4')) {
+                $imagem = $request->file('foto4');
+                $nomeArquivo = $produto->id . '_3.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 3.');
+                }
+            }
+            if ($request->hasFile('foto5')) {
+                $imagem = $request->file('foto5');
+                $nomeArquivo = $produto->id . '_4.png';
+                // Armazenar a imagem no caminho desejado
+                $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
+                if (!$uploadSucesso) {
+                    // Adicione logs ou mensagens de erro, se necessário
+                    throw new \Exception('Erro ao fazer upload da foto secundaria 4.');
                 }
             }
         } catch (\Exception $e) {
@@ -514,6 +572,61 @@ class ProdutoController extends Controller
         return $estoque;
     }
 
+    public function buscarFotos($idProduto) {
+        // Suponha que você tenha o ID do produto, neste exemplo, $idProduto é 1
+        $quantidadeFotos = 4; // Defina o número total de fotos do produto
+    
+        $fotosExistentes = [];
+    
+        // Verifique a existência de cada foto
+        for ($i = 1; $i <= $quantidadeFotos; $i++) {
+            $nomeArquivo = $idProduto . '_' . $i . '.png';
+            $caminhoArquivo = public_path('images/' . $nomeArquivo);
+    
+            if (File::exists($caminhoArquivo)) {
+                // O arquivo existe, adicione-o à lista de fotos existentes
+                $fotosExistentes[] = $nomeArquivo;
+            }
+        }
+        
+        $nomeArquivoPrincipal = $idProduto . '.png';
+        $caminhoArquivoPrincipal = public_path('images/' . $nomeArquivoPrincipal);
+
+        if (File::exists($caminhoArquivoPrincipal)) {
+            // Adicione o arquivo principal à lista de fotos existentes
+            $fotosExistentes[] = $nomeArquivoPrincipal;
+        }
+
+        return $fotosExistentes;
+        
+        // Agora $fotosExistentes contém os nomes dos arquivos que existem na pasta
+        // Você pode passar esta lista para a sua view ou fazer o que for necessário
+    }
+
+    public function buscarFotosBanner() {
+        // Suponha que você tenha o ID do produto, neste exemplo, $idProduto é 1
+        $quantidadeFotos = 3; // Defina o número total de fotos do produto
+        $fotos = 0;
+    
+        $fotosExistentes = [];
+    
+        // Verifique a existência de cada foto
+        for ($i = 1; $i <= $quantidadeFotos; $i++) {
+            $nomeArquivo = 'carousel-' . $i . '.png';
+            $caminhoArquivo = public_path('img/' . $nomeArquivo);
+    
+            if (File::exists($caminhoArquivo)) {
+                // O arquivo existe, adicione-o à lista de fotos existentes
+                $fotos += 1;
+            }
+        }
+
+        return $fotos;
+        
+        // Agora $fotosExistentes contém os nomes dos arquivos que existem na pasta
+        // Você pode passar esta lista para a sua view ou fazer o que for necessário
+    }
+
     public function index()
     {
         $data = [];
@@ -521,6 +634,7 @@ class ProdutoController extends Controller
         $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
         $data["categorias"] = $categorias;
+        $data["fotos"] = $this->buscarFotosBanner();
         return view("home", $data);
     }
 

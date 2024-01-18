@@ -75,6 +75,18 @@
                                 </div>
                             </div>
                             <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="foto4">Foto secundaria 3</label>
+                                    <input type="file" class="form-control" id="foto4" name="foto4"
+                                        placeholder="Tamanho sugerido 500x700">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="foto5">Foto secundaria 4</label>
+                                    <input type="file" class="form-control" id="foto5" name="foto5"
+                                        placeholder="Tamanho sugerido 500x700">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
                                 <div class="form-group col-md-12">
                                     <label for="descricao">Descrição</label>
                                     <textarea class="form-control" id="descricao" name="descricao" rows="3" value="{{$produto->descricao}}"></textarea>

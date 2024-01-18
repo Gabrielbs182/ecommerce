@@ -7,6 +7,7 @@ function buscarProduto(id) {
         var foto2 = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '_2.png" alt="Image">';
         $('#primeiroCarrosel').empty();
+        $('#descricaoProdModal').empty();
         $('#segundoCarrosel').empty();
         $('#nomeProdModal').empty();
         $('#valorProdModal').empty();
@@ -14,6 +15,7 @@ function buscarProduto(id) {
         $('#comprarButton').empty();
         $('#idProduto').empty();
         $('#idProduto').val(produto[0].id);
+        $('#descricaoProdModal').append(produto[0].descricao);
         $('#primeiroCarrosel').append(foto);
         $('#segundoCarrosel').append(foto2);
         $('#nomeProdModal').append(produto[0].nome);

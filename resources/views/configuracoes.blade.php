@@ -13,6 +13,26 @@
                         <h2 class="mt-2 mb-4">Configurações do<b> Sistema</b></h2>
                         <form action="{{ route('configuracoes.update') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            <p><b>Sistema</b></p>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="banner1">Foto Banner 1</label>
+                                    <input type="file" name="banner1"
+                                        class="form-control" id="banner1">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="banner2">Foto Banner 2</label>
+                                    <input type="file" name="banner2"
+                                        class="form-control" id="banner2">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="banner3">Foto Banner 3</label>
+                                    <input type="file" name="banner3"
+                                        class="form-control" id="banner3">
+                                </div>
+                            </div>
                             <p><b>Pag Seguro</b></p>
                             <div class="form-row align-items-center">
                                 <div class="form-group col-md-6">
@@ -51,10 +71,18 @@
                                         id="melhorEnvioDocumento" name="melhorEnvioDocumento"
                                         placeholder="CPF ou CNPJ, somente numeros.">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="melhorEnvioUF">UF</label>
-                                    <input value="{{ $melhorUF }}" type="text" class="form-control"
-                                        id="melhorEnvioUF" name="melhorEnvioUF" placeholder="Sigla UF EX: ES">
+                                <div class="form-group col-md-6">
+                                    <label for="melhorEnvioClientSecret">Client Secret</label>
+                                    <input value="{{ $melhorClientSecret }}" type="text" class="form-control"
+                                        id="melhorEnvioClientSecret" name="melhorEnvioClientSecret">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="melhorEnvioUserAgent">Contato do usuário chave</label>
+                                    <input value="{{ $melhorUserAgent }}" type="text" class="form-control"
+                                        id="melhorEnvioUserAgent" name="melhorEnvioUserAgent"
+                                        placeholder="EX: NomeAplicativo (usuariochave@email.com)">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="melhorEnvioClientID">Client ID</label>
@@ -68,7 +96,12 @@
                                     <input value="{{ $melhorLog }}" type="text" class="form-control"
                                         id="melhorEnvioLog" name="melhorEnvioLog">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3">
+                                    <label for="melhorEnvioComp">UF</label>
+                                    <input value="{{ $melhorUF }}" type="text" class="form-control"
+                                        id="melhorEnvioUF" name="melhorEnvioUF">
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label for="melhorEnvioComp">Complemento</label>
                                     <input value="{{ $melhorComple }}" type="text" class="form-control"
                                         id="melhorEnvioComp" name="melhorEnvioComp">
@@ -99,19 +132,6 @@
                                 </div>
                             </div>
                             <div class="form-row align-items-center">
-                                <div class="form-group col-md-6">
-                                    <label for="melhorEnvioClientSecret">Client Secret</label>
-                                    <input value="{{ $melhorClientSecret }}" type="text" class="form-control"
-                                        id="melhorEnvioClientSecret" name="melhorEnvioClientSecret">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="melhorEnvioUserAgent">Contato do usuário chave</label>
-                                    <input value="{{ $melhorUserAgent }}" type="text" class="form-control"
-                                        id="melhorEnvioUserAgent" name="melhorEnvioUserAgent"
-                                        placeholder="EX: NomeAplicativo (usuariochave@email.com)">
-                                </div>
-                            </div>
-                            <div class="form-row align-items-center">
                                 <div class="form-group col-md-12">
                                     <label for="melhorEnvioEscopo">Escopo dos acessos do site</label>
                                     <textarea class="form-control" id="melhorEnvioEscopo" name="melhorEnvioEscopo" rows="3"
@@ -119,7 +139,8 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary float-right">Salvar</button>
-                            <a href="{{ route('melhorenvio.authorize') }}" class="btn btn-primary float-left">Melhor Envio - Autorização</a>
+                            <a href="{{ route('melhorenvio.authorize') }}" class="btn btn-primary float-left">Melhor
+                                Envio - Autorização</a>
                         </form>
                     </div>
                 </div>
