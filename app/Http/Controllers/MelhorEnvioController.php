@@ -210,7 +210,7 @@ class MelhorEnvioController extends Controller
                 'height' => $altura,
                 'width' => $largura,
                 'length' => $comprimento,
-                'weight' => ($produto->peso / 1000),
+                'weight' => $peso,
             ];
             $requestData['volumes'][] = $volume;
 
