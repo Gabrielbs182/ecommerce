@@ -35,6 +35,6 @@
                     role="button">Acompanhar Pedido</a>
             </p>
         @endif
-        <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro. <a href="https://urbeatstore.com.br/cadastrar">cadastra.</a></p>
+        <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro. <a href="https://urbeatstore.com.br/cadastrar">cadastrar.</a></p>
     </div>
 </div>

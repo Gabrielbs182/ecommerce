@@ -200,10 +200,10 @@ class MelhorEnvioController extends Controller
                 ];
                 $requestData['products'][] = $product;
 
-                $altura += $produto->altura;
-                $largura += $produto->largura;
-                $comprimento += $produto->comprimento;
-                $peso += round(($produto->peso / 1000),2);
+                $altura += ($produto->altura*$item['quantidade']);
+                $largura += ($produto->largura*$item['quantidade']);
+                $comprimento += ($produto->comprimento*$item['quantidade']);
+                $peso += (round(($produto->peso / 1000),2)*$item['quantidade']);
             }
 
             $volume = [
@@ -262,14 +262,14 @@ class MelhorEnvioController extends Controller
                 'height' => $prod['altura'],
                 'length' => $prod['comprimento'],
                 'weight' => $prod['peso'] / 1000,
-                'insurance_value' => $prod['valor'] * $prod['quantidade'],
+                'insurance_value' => $prod['valor'],
                 'quantity' => $prod['quantidade'],
             ];
         }
 
         // Parâmetros para a requisição
         $postData = [
-            'from' => ['postal_code' => '96020360'],
+            'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
             'options' => ['receipt' => true, 'own_hand' => true],
             'products' => $products
