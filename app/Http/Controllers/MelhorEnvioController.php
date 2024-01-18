@@ -301,8 +301,10 @@ class MelhorEnvioController extends Controller
             'headers' => $headers,
         ]);
 
+        $responseJson = json_decode($response->getBody(), true);
+
         //Retornar a resposta da API
-        return $response->getBody();
+        return $responseJson;
     }
 
     public function calcularFrete(string $cep)
