@@ -252,6 +252,7 @@ class MelhorEnvioController extends Controller
             } else {
 
                 // Acesse as informações específicas
+                dd($volumes);
                 $price = $volumes['price'];
                 $discount = $volumes['discount'];
                 $format = $volumes['format'];
