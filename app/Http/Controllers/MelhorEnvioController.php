@@ -252,14 +252,15 @@ class MelhorEnvioController extends Controller
             } else {
 
                 // Acesse as informações específicas
-                dd($volumes);
-                $price = $volumes['price'];
-                $discount = $volumes['discount'];
-                $format = $volumes['format'];
-                $dimensions = $volumes['dimensions'];
-                $weight = $volumes['weight'];
-                $insuranceValue = $volumes['insurance_value'];
-                $products = $volumes['products'];
+                
+                $price = $volumes[0]['price'];
+                $discount = $volumes[0]['discount'];
+                $format = $volumes[0]['format'];
+                $dimensions = $volumes[0]['dimensions'];
+                $weight = $volumes[0]['weight'];
+                $insuranceValue = $volumes[0]['insurance_value'];
+                $products = $volumes[0]['products'];
+                dd($price,$discount,$format,$dimensions,$weight,$insuranceValue,$products);
 
                 
 
