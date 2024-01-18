@@ -106,8 +106,6 @@ function calcularFrete() {
 
             document.getElementById("envios").innerHTML = '';
 
-            console.log(frete)
-
             linhas =
                 '<legend class="col-form-label col-sm-2 pt-0">A domicílio</legend>' +
                 '<div class="col-sm-10">';
@@ -118,7 +116,6 @@ function calcularFrete() {
                 } else {
                     linha = montarLinhaEnvio(transportadora);
                     linhas += linha;
-                    console.log(transportadora);
                 }
             }
 
@@ -173,7 +170,7 @@ function montarLinhaEnvio(transportadora) {
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
         transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount) + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
-        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + (transportadora.price - transportadora.discount) +
+        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + number_format((transportadora.price - transportadora.discount), 2, ',', '.')  +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
         '</label>' +
         '</div>';
