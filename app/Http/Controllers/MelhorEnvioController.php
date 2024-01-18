@@ -261,7 +261,7 @@ class MelhorEnvioController extends Controller
                 $insuranceValue = $volumes['insurance_value'];
                 $products = $volumes['products'];
 
-                dd($price,$discount,$format,$weight,$insuranceValue,$products,$dimensions);
+                dd($volumes[0]);
 
                 // Acesse informações dentro do array dimensions
                 $height = $dimensions['height'];
