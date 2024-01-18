@@ -49,6 +49,7 @@ class ProdutoController extends Controller
                     $cod_rastreamento = $rastreamentoObj->tracking;
                     $pedido->cod_rastreamento = $cod_rastreamento;
                     $pedido->save();
+                    $this->email($pedido->id);
 
                     $message = 'Pedido finalizado.';
                     $status = 'ok';
