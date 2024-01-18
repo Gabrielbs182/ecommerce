@@ -252,7 +252,7 @@ class MelhorEnvioController extends Controller
                 'height' => $prod['altura'],
                 'length' => $prod['comprimento'],
                 'weight' => $prod['peso'] / 1000,
-                'insurance_value' => $prod['valor'] * $prod['quantidade'],
+                'insurance_value' => $prod['valor'],
                 'quantity' => $prod['quantidade'],
             ];
         }
