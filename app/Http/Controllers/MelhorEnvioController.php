@@ -266,13 +266,14 @@ class MelhorEnvioController extends Controller
 
         foreach ($prods as $prod) {
             // Adicionar cada produto à lista 'products'
+            $p = Produto::find($prod->produto_id);
             $products[] = [
-                'id' => $prod['id'],
-                'width' => $prod['largura'],
-                'height' => $prod['altura'],
-                'length' => $prod['comprimento'],
-                'weight' => $prod['peso'] / 1000,
-                'insurance_value' => $prod['valor'],
+                'id' => $p->id,
+                'width' => $p->largura,
+                'height' => $p->altura,
+                'length' => $p->comprimento,
+                'weight' => ($p->peso / 1000),
+                'insurance_value' => $p->valor,
                 'quantity' => $prod['quantidade'],
             ];
         }
