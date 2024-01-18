@@ -186,6 +186,11 @@ class MelhorEnvioController extends Controller
                 'service' => $pedido->cod_entrega,
             ];
 
+            $altura = 0;
+            $largura = 0;
+            $comprimento = 0;
+            $peso = 0;
+
             foreach ($itens as $item) {
                 $produto = Produto::find($item['produto_id']);
                 $product = [
@@ -194,14 +199,20 @@ class MelhorEnvioController extends Controller
                     'unitary_value' => $item['valor'],
                 ];
                 $requestData['products'][] = $product;
-                $volume = [
-                    'height' => $produto->altura,
-                    'width' => $produto->largura,
-                    'length' => $produto->comprimento,
-                    'weight' => ($produto->peso / 1000),
-                ];
-                $requestData['volumes'][] = $volume;
+
+                $altura += $produto->altura;
+                $largura += $produto->largura;
+                $comprimento += $produto->comprimento;
+                $peso += round(($produto->peso / 1000),2);
             }
+
+            $volume = [
+                'height' => $altura,
+                'width' => $largura,
+                'length' => $comprimento,
+                'weight' => ($produto->peso / 1000),
+            ];
+            $requestData['volumes'][] = $volume;
 
             // Headers da requisição
             $headers = [
