@@ -152,7 +152,21 @@ class MelhorEnvioController extends Controller
                 }
             }
 
-            dd($volumesPorTransporte[2]);
+            $volumes = $volumesPorTransporte[$pedido->cod_entrega][0];
+
+            // Acesse as informações específicas
+            $price = $volumes['price'];
+            $discount = $volumes['discount'];
+            $format = $volumes['format'];
+            $dimensions = $volumes['dimensions'];
+            $weight = $volumes['weight'];
+            $insuranceValue = $volumes['insurance_value'];
+            $products = $volumes['products'];
+
+            // Acesse informações dentro do array dimensions
+            $height = $dimensions['height'];
+            $width = $dimensions['width'];
+            $length = $dimensions['length'];
 
             // Criar uma instância do GuzzleHttp\Client
             $client = new Client();
@@ -214,15 +228,15 @@ class MelhorEnvioController extends Controller
                     'unitary_value' => $item['valor'],
                 ];
                 $requestData['products'][] = $product;
-
-                $volume = [
-                    'height' => $produto->altura,
-                    'width' => $produto->largura,
-                    'length' => $produto->comprimento,
-                    'weight' => ($produto->peso / 1000),
-                ];
-                $requestData['volumes'][] = $volume;
             }
+
+            $volume = [
+                'height' => $height,
+                'width' => $width,
+                'length' => $length,
+                'weight' => $weight,
+            ];
+            $requestData['volumes'][] = $volume;
 
             // Headers da requisição
             $headers = [
