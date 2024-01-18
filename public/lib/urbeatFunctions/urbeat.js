@@ -170,7 +170,7 @@ function montarLinhaEnvio(transportadora) {
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
         transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount) + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
-        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
+        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + (transportadora.price - transportadora.discount) +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
         '</label>' +
         '</div>';
