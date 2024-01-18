@@ -152,7 +152,7 @@ class MelhorEnvioController extends Controller
                 }
             }
 
-            dd($volumesPorTransporte[2]);
+            dd($volumesPorTransporte[2]['dimensions']);
 
             // Criar uma instância do GuzzleHttp\Client
             $client = new Client();
