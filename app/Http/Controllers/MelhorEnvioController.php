@@ -132,7 +132,6 @@ class MelhorEnvioController extends Controller
             if (isset($pedido)) {
                 $endereco = Endereco::find($pedido->endereco_id);
                 $usuario = Usuario::find($pedido->usuario_id);
-                $itens = ItensPedido::where('pedido_id', $pedido->id)->get();
             }
 
             $respostaApi = $this->calcularFrete2($endereco->cep, $pedido->id);
@@ -152,109 +151,218 @@ class MelhorEnvioController extends Controller
                 }
             }
 
-            $volumes = $volumesPorTransporte[$pedido->cod_entrega][0];
+            $volumes = $volumesPorTransporte[$pedido->cod_entrega];
 
-            // Acesse as informações específicas
-            $price = $volumes['price'];
-            $discount = $volumes['discount'];
-            $format = $volumes['format'];
-            $dimensions = $volumes['dimensions'];
-            $weight = $volumes['weight'];
-            $insuranceValue = $volumes['insurance_value'];
-            $products = $volumes['products'];
+            if (count($volumes) > 1 && in_array($pedido->cod_entrega, [1, 2, 17])) {
 
-            // Acesse informações dentro do array dimensions
-            $height = $dimensions['height'];
-            $width = $dimensions['width'];
-            $length = $dimensions['length'];
+                // Criar uma instância do GuzzleHttp\Client
+                $client = new Client();
 
-            // Criar uma instância do GuzzleHttp\Client
-            $client = new Client();
-
-            // Dados para a requisição
-            $requestData = [
-                'from' => [
-                    'name' => ENV('MELHORENVIO_NAME'),
-                    'phone' => ENV('MELHORENVIO_PHONE'),
-                    'email' => ENV('MELHORENVIO_EMAIL'),
-                    'document' => ENV('MELHORENVIO_DOCUMENT'),
-                    'state_register' => ENV('MELHORENVIO_STATE_REGISTER'),
-                    'address' => ENV('MELHORENVIO_ADDRESS'),
-                    'complement' => ENV('MELHORENVIO_COMPLEMENT'),
-                    'number' => ENV('MELHORENVIO_NUMBER'),
-                    'district' => ENV('MELHORENVIO_DISTRICT'),
-                    'city' => ENV('MELHORENVIO_CITY'),
-                    'country_id' => 'BR',
-                    'postal_code' => ENV('MELHORENVIO_POSTAL_CODE'),
-                    'state_abbr' => ENV('MELHORENVIO_STATE_ABBR'),
-                    'note' => 'Teste',
-                ],
-                'to' => [
-                    'name' => $usuario->nome,
-                    'phone' => $usuario->telefone,
-                    'email' => $usuario->email,
-                    'document' => $usuario->cpf,
-                    'address' => $endereco->logradouro,
-                    'complement' => $endereco->complemento,
-                    'number' => $endereco->numero,
-                    'district' => $endereco->bairro,
-                    'city' => $endereco->cidade,
-                    'country_id' => 'BR',
-                    'postal_code' => $endereco->cep,
-                    'state_abbr' => $endereco->uf,
-                    'note' => 'teste',
-                ],
-                'options' => [
-                    'receipt' => true,
-                    'own_hand' => true,
-                    'reverse' => true,
-                    'non_commercial' => true,
-                    'insurance_value' => 180,
-                    'tags' => [
-                        [
-                            'tag' => '187723',
-                            'Url' => 'https://urbeatstore.com.br/melhorenvio/posenvio',
+                // Dados para a requisição
+                $requestData = [
+                    'from' => [
+                        'name' => ENV('MELHORENVIO_NAME'),
+                        'phone' => ENV('MELHORENVIO_PHONE'),
+                        'email' => ENV('MELHORENVIO_EMAIL'),
+                        'document' => ENV('MELHORENVIO_DOCUMENT'),
+                        'state_register' => ENV('MELHORENVIO_STATE_REGISTER'),
+                        'address' => ENV('MELHORENVIO_ADDRESS'),
+                        'complement' => ENV('MELHORENVIO_COMPLEMENT'),
+                        'number' => ENV('MELHORENVIO_NUMBER'),
+                        'district' => ENV('MELHORENVIO_DISTRICT'),
+                        'city' => ENV('MELHORENVIO_CITY'),
+                        'country_id' => 'BR',
+                        'postal_code' => ENV('MELHORENVIO_POSTAL_CODE'),
+                        'state_abbr' => ENV('MELHORENVIO_STATE_ABBR'),
+                        'note' => 'Teste',
+                    ],
+                    'to' => [
+                        'name' => $usuario->nome,
+                        'phone' => $usuario->telefone,
+                        'email' => $usuario->email,
+                        'document' => $usuario->cpf,
+                        'address' => $endereco->logradouro,
+                        'complement' => $endereco->complemento,
+                        'number' => $endereco->numero,
+                        'district' => $endereco->bairro,
+                        'city' => $endereco->cidade,
+                        'country_id' => 'BR',
+                        'postal_code' => $endereco->cep,
+                        'state_abbr' => $endereco->uf,
+                        'note' => 'teste',
+                    ],
+                    'options' => [
+                        'receipt' => true,
+                        'own_hand' => true,
+                        'reverse' => true,
+                        'non_commercial' => true,
+                        'insurance_value' => 180,
+                        'tags' => [
+                            [
+                                'tag' => '187723',
+                                'Url' => 'https://urbeatstore.com.br/melhorenvio/posenvio',
+                            ],
                         ],
                     ],
-                ],
-                'service' => $pedido->cod_entrega,
-            ];
-
-            foreach ($itens as $item) {
-                $produto = Produto::find($item['produto_id']);
-                $product = [
-                    'name' => $produto['nome'],
-                    'quantity' => $item['quantidade'],
-                    'unitary_value' => $item['valor'],
+                    'service' => $pedido->cod_entrega,
                 ];
-                $requestData['products'][] = $product;
-            }
 
-            $volume = [
-                'height' => $height,
-                'width' => $width,
-                'length' => $length,
-                'weight' => $weight,
-            ];
-            $requestData['volumes'][] = $volume;
+                foreach ($volumes as $v) {
+                    $product = $v['products'];
+                    $dimensions = $v['dimensions'];
+                    foreach ($product as $p) {
+                        $produto = Produto::find($p['id']);
+                        $product = [
+                            'name' => $produto->nome,
+                            'quantity' => $p['quantity'],
+                            'unitary_value' => $produto->valor,
+                        ];
 
-            // Headers da requisição
-            $headers = [
-                'Accept' => 'application/json',
-                'Authorization' => 'Bearer ' . $responseData['access_token'],
-                'Content-Type' => 'application/json',
-                'User-Agent' => env('USER_AGENT'),
-            ];
+                        $requestData['products'][] = $product;
+                    }
+                    
+                    $volume = [
+                        'height' => $dimensions['height'],
+                        'width' => $dimensions['width'],
+                        'length' => $dimensions['length'],
+                        'weight' => $v['weight'],
+                    ];
 
-            // Fazer a requisição POST
-            try {
-                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
-                    'json' => $requestData,
-                    'headers' => $headers,
-                ]);
-            } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
+                    $requestData['volumes'][] = $volume;
+
+                    // Headers da requisição
+                    $headers = [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $responseData['access_token'],
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => env('USER_AGENT'),
+                    ];
+
+                    // Fazer a requisição POST
+                    try {
+                        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+                            'json' => $requestData,
+                            'headers' => $headers,
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
+                        Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
+                    }
+                }
+            } else {
+
+                // Acesse as informações específicas
+                $price = $volumes['price'];
+                $discount = $volumes['discount'];
+                $format = $volumes['format'];
+                $dimensions = $volumes['dimensions'];
+                $weight = $volumes['weight'];
+                $insuranceValue = $volumes['insurance_value'];
+                $products = $volumes['products'];
+
+                // Acesse informações dentro do array dimensions
+                $height = $dimensions['height'];
+                $width = $dimensions['width'];
+                $length = $dimensions['length'];
+
+                // Criar uma instância do GuzzleHttp\Client
+                $client = new Client();
+
+                // Dados para a requisição
+                $requestData = [
+                    'from' => [
+                        'name' => ENV('MELHORENVIO_NAME'),
+                        'phone' => ENV('MELHORENVIO_PHONE'),
+                        'email' => ENV('MELHORENVIO_EMAIL'),
+                        'document' => ENV('MELHORENVIO_DOCUMENT'),
+                        'state_register' => ENV('MELHORENVIO_STATE_REGISTER'),
+                        'address' => ENV('MELHORENVIO_ADDRESS'),
+                        'complement' => ENV('MELHORENVIO_COMPLEMENT'),
+                        'number' => ENV('MELHORENVIO_NUMBER'),
+                        'district' => ENV('MELHORENVIO_DISTRICT'),
+                        'city' => ENV('MELHORENVIO_CITY'),
+                        'country_id' => 'BR',
+                        'postal_code' => ENV('MELHORENVIO_POSTAL_CODE'),
+                        'state_abbr' => ENV('MELHORENVIO_STATE_ABBR'),
+                        'note' => 'Teste',
+                    ],
+                    'to' => [
+                        'name' => $usuario->nome,
+                        'phone' => $usuario->telefone,
+                        'email' => $usuario->email,
+                        'document' => $usuario->cpf,
+                        'address' => $endereco->logradouro,
+                        'complement' => $endereco->complemento,
+                        'number' => $endereco->numero,
+                        'district' => $endereco->bairro,
+                        'city' => $endereco->cidade,
+                        'country_id' => 'BR',
+                        'postal_code' => $endereco->cep,
+                        'state_abbr' => $endereco->uf,
+                        'note' => 'teste',
+                    ],
+                    'options' => [
+                        'receipt' => true,
+                        'own_hand' => true,
+                        'reverse' => true,
+                        'non_commercial' => true,
+                        'insurance_value' => 180,
+                        'tags' => [
+                            [
+                                'tag' => '187723',
+                                'Url' => 'https://urbeatstore.com.br/melhorenvio/posenvio',
+                            ],
+                        ],
+                    ],
+                    'service' => $pedido->cod_entrega,
+                ];
+
+                foreach ($volumes as $v) {
+
+                    $product = $v['products'];
+
+                    $dimensions = $v['dimensions'];
+
+                    foreach ($product as $p) {
+                        $produto = Produto::find($p['id']);
+                        $product = [
+                            'name' => $produto->nome,
+                            'quantity' => $p['quantity'],
+                            'unitary_value' => $produto->valor,
+                        ];
+
+                        $requestData['products'][] = $product;
+                    }
+
+                    $volume = [
+                        'height' => $dimensions['height'],
+                        'width' => $dimensions['width'],
+                        'length' => $dimensions['length'],
+                        'weight' => $v['weight'],
+                    ];
+
+                    $requestData['volumes'][] = $volume;
+
+                }
+
+                // Headers da requisição
+                $headers = [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => env('USER_AGENT'),
+                ];
+
+                // Fazer a requisição POST
+                try {
+                    $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+                        'json' => $requestData,
+                        'headers' => $headers,
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
+                    Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
+                }
             }
 
             // Retornar a resposta da API
