@@ -106,6 +106,8 @@ function calcularFrete() {
 
             document.getElementById("envios").innerHTML = '';
 
+            console.log(frete)
+
             linhas =
                 '<legend class="col-form-label col-sm-2 pt-0">A domicílio</legend>' +
                 '<div class="col-sm-10">';
@@ -114,9 +116,9 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    console.log(transportadora);
                     linha = montarLinhaEnvio(transportadora);
                     linhas += linha;
+                    console.log(transportadora);
                 }
             }
 
