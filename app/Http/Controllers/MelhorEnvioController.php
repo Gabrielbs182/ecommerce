@@ -135,7 +135,7 @@ class MelhorEnvioController extends Controller
                 $itens = ItensPedido::where('pedido_id', $pedido->id)->get();
             }
 
-            $respostaApi = $this->calcularFrete2($endereco->cep);
+            $respostaApi = $this->calcularFrete2($endereco->cep, $pedido->id);
 
             // Array para armazenar os volumes associados a cada ID de transporte
             $volumesPorTransporte = [];
@@ -151,6 +151,8 @@ class MelhorEnvioController extends Controller
                     $volumesPorTransporte[$idTransporte] = $transporte['packages'];
                 }
             }
+
+            dd($volumesPorTransporte);
 
             // Criar uma instância do GuzzleHttp\Client
             $client = new Client();
