@@ -219,6 +219,7 @@ class MelhorEnvioController extends Controller
                 ]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
             }
 
             // Retornar a resposta da API
