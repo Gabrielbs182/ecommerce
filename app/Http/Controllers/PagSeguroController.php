@@ -456,6 +456,7 @@ class PagSeguroController extends Controller
     {
         $payload = $request->all();
         $melhorEnvio = new MelhorEnvioController;
+        $produtoController = new ProdutoController;
 
         if (isset($payload['reference_id'])) {
             $referenceId = $payload['reference_id'];
@@ -482,6 +483,7 @@ class PagSeguroController extends Controller
                 if ($pedido->status_pag == 'DECLINED' or $pedido->status_pag == 'CANCELED') {
                     $pedido->status = 'Cancelado';
                     $pedido->save();
+                    $produtoController->email($pedido->id);
                     // $this->InativarCheckout($pedido->cod_checkout);
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
@@ -504,18 +506,24 @@ class PagSeguroController extends Controller
                                 $pedido->save();
                                 $respostaEtiqueta = $melhorEnvio->gerarEtiqueta($codEnvio);
                                 Log::info("SUCESSO", ['file' => 'PagSeguroController.Handle', 'message' => 'Envio iniciado com sucesso']);
+                                $produtoController->email($pedido->id);
                             } else {
                                 $pedido->cod_entrega = $respostaJson->protocol;
-                                $pedido->status_env = 'Erro no envio';
+                                $pedido->status_env = 'Erro na geração de etiqueta';
+                                $pedido->status = 'Pendente de acompanhamento';
                                 $pedido->cod_envio = $codEnvio;
                                 $pedido->save();
                             }
                         } else {
                             Log::error("ERRO", ['file' => 'PagSeguroController.Handle', 'message' => 'Não conseguiu gerar envio']);
+                            $pedido->status_env = 'Erro no lançamento';
+                            $pedido->status = 'Pendente de acompanhamento';
+                            $pedido->save();
                         }
                     } else {
                         $pedido->status_env = 'Preparando encomenda';
                         $pedido->save();
+                        $produtoController->email($pedido->id);
                     }
                 }
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);

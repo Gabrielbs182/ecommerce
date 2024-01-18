@@ -5,16 +5,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produto;
 use App\Models\Estoque;
+use App\Models\Usuario;
 use App\Models\Categoria;
 use App\Models\ItensPedido;
 use App\Models\Pedido;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Mail\AcompanhamentoPedido;
+use Illuminate\Support\Facades\Mail;
 
 class ProdutoController extends Controller
 {
     //
+
+    public function emailTeste(){
+        return view('emails.email_teste');
+    }
 
     public function finalizarPedido($id, Request $request)
     {
@@ -180,6 +187,23 @@ class ProdutoController extends Controller
         $status = 'ok';
         $request->session()->flash($status, $message);
         return redirect()->route('configuracoes');
+    }
+
+    public function email($id)
+    {
+        $pedido = Pedido::find($id);
+        $usuario = Usuario::find($pedido->usuario_id);
+        $data['subject'] = "Acompanhamento de pedido";
+        $data['message'] = "Seu pedido teve uma atualização";
+        $data['data'] = $pedido->datapedido;
+        $data['status'] = $pedido->status;
+        $data['cod_rastreamento'] = $pedido->cod_rastreamento;
+        $data['id'] = $pedido->id;
+        $data['total'] = $pedido->total;
+        $data['nome'] = $usuario->nome;
+        $sent = Mail::to($usuario->email, $usuario->nome)->send(new AcompanhamentoPedido($data));
+
+        var_dump($sent);
     }
 
     public function delete($id, Request $request)
