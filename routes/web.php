@@ -39,6 +39,7 @@ Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo
 Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken')->middleware('IsAdmin');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
+Route::get('/melhorenvio/atualizarToken', [MelhorEnvioController::class, 'refreshToken'])->name('melhorenvio.refreshToken')->middleware('IsAdmin');
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
 Route::get('/melhorenvio/calcularFrete2/{cep}/{idPedido}', [MelhorEnvioController::class, 'calcularFrete2'])->name('melhorenvio.calcularFrete2');
 Route::get('/melhorenvio/lancarFrete/{reference_id}', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete');

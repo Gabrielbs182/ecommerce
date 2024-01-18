@@ -220,7 +220,7 @@ class MelhorEnvioController extends Controller
 
                         $requestData['products'][] = $product;
                     }
-                    
+
                     $volume = [
                         'height' => $dimensions['height'],
                         'width' => $dimensions['width'],
@@ -328,7 +328,6 @@ class MelhorEnvioController extends Controller
                     ];
 
                     $requestData['volumes'][] = $volume;
-
                 }
 
                 // Headers da requisição
@@ -534,6 +533,56 @@ class MelhorEnvioController extends Controller
         } else {
             // Informar ao usuário que houve um problema ao obter os tokens
             return "Erro: Tokens não foram obtidos com sucesso.";
+        }
+    }
+
+    public function refreshToken()
+    {
+        $client = new \GuzzleHttp\Client();
+
+        $responseData = $this->Authorization();
+
+        //montando a requisição
+
+        try {
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
+                'form_params' => [
+                    'grant_type' => 'refresh_token',
+                    'client_id' => env('CLIENT_ID'),
+                    'client_secret' => env('CLIENT_SECRET'),
+                    'refresh_token' => $responseData['refresh_token']
+                ],
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-Type' => 'application/x-www-form-urlencoded',
+                    'User-Agent' => ENV('USER_AGENT'),
+                ],
+            ]);
+
+            // Obter e retornar a resposta JSON
+            $responseJson = json_decode($response->getBody(), true);
+
+            // Verifique se os tokens foram obtidos com sucesso
+            if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
+
+                //Buscando o conteudo do .env
+                $envPath = base_path('.env');
+                $envContent = file_get_contents($envPath);
+
+                // Verificar se a chave Authorization já existe
+                if (strpos($envContent, 'AUTHORIZATION') !== false) {
+                    // Atualizar o valor se já existir
+                    $envContent = preg_replace('/(AUTHORIZATION)=(.*)/', 'AUTHORIZATION=' . json_encode($responseJson), $envContent);
+                } else {
+                    // Adicionar uma nova linha com a chave Authorization e os tokens
+                    $envContent .= "\AUTHORIZATION=" . json_encode($responseJson);
+                }
+                // Salvar as alterações no arquivo .env
+                file_put_contents($envPath, $envContent);
+            }
+            Log::info('Atualizou_Token');
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'MelhorEnvioController.refreshToken', 'message' => $e->getMessage()]);
         }
     }
 
