@@ -152,7 +152,7 @@ class MelhorEnvioController extends Controller
                 }
             }
 
-            dd($itens);
+            dd($endereco);
 
             // Criar uma instância do GuzzleHttp\Client
             $client = new Client();
