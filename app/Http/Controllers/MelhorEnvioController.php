@@ -251,24 +251,6 @@ class MelhorEnvioController extends Controller
                 }
             } else {
 
-                // Acesse as informações específicas
-                
-                $price = $volumes[0]['price'];
-                $discount = $volumes[0]['discount'];
-                $format = $volumes[0]['format'];
-                $dimensions = $volumes[0]['dimensions'];
-                $weight = $volumes[0]['weight'];
-                $insuranceValue = $volumes[0]['insurance_value'];
-                $products = $volumes[0]['products'];
-                dd($price,$discount,$format,$dimensions,$weight,$insuranceValue,$products);
-
-                
-
-                // Acesse informações dentro do array dimensions
-                $height = $dimensions['height'];
-                $width = $dimensions['width'];
-                $length = $dimensions['length'];
-
                 // Criar uma instância do GuzzleHttp\Client
                 $client = new Client();
 
