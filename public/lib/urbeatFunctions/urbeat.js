@@ -121,11 +121,6 @@ function calcularFrete() {
 
             linhas +=
                 '</div>' +
-                '<legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>' +
-                '<div class="col-sm-10">' +
-                '<div class="form-check">' +
-                '<input class="form-check-input" type="radio" name="frete"' +
-                'id="gratis" value="' + 0 + '" checked>' +
                 '<label class="form-check-label" for="gratis">' +
                 'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
                 '</label>' +
@@ -173,7 +168,7 @@ function montarLinhaEnvio(transportadora) {
     linha =
         '<div class="form-check">' +
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-        transportadora.id + '/' + transportadora.name + '/' + transportadora.price + '" >' +
+        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount) + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
         transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + transportadora.price +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
