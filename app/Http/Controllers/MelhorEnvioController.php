@@ -121,6 +121,7 @@ class MelhorEnvioController extends Controller
 
     public function lancarFrete($reference_id)
     {
+
         try {
             //buscando autorização
             $responseData = $this->Authorization();
@@ -132,6 +133,23 @@ class MelhorEnvioController extends Controller
                 $endereco = Endereco::find($pedido->endereco_id);
                 $usuario = Usuario::find($pedido->usuario_id);
                 $itens = ItensPedido::where('pedido_id', $pedido->id)->get();
+            }
+
+            $respostaApi = $this->calcularFrete2($endereco->cep);
+
+            // Array para armazenar os volumes associados a cada ID de transporte
+            $volumesPorTransporte = [];
+
+            // Iterar sobre a resposta da API
+            foreach ($respostaApi as $transporte) {
+                // Verificar se o transporte possui volumes (packages)
+                if (isset($transporte['packages']) && is_array($transporte['packages'])) {
+                    // Obter o ID do transporte
+                    $idTransporte = $transporte['id'];
+
+                    // Armazenar os volumes associados ao ID do transporte
+                    $volumesPorTransporte[$idTransporte] = $transporte['packages'];
+                }
             }
 
             // Criar uma instância do GuzzleHttp\Client
@@ -228,6 +246,60 @@ class MelhorEnvioController extends Controller
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
         }
+    }
+
+    public function calcularFrete2(string $cep, $idPedido)
+    {
+
+        //buscando autorização
+        $responseData = $this->Authorization();
+
+        // Criar uma instância do GuzzleHttp\Client
+        $client = new Client();
+
+        $itens = ItensPedido::where('pedido_id', $idPedido)->get();
+
+        $prods = $itens;
+
+        // Inicializar a lista de produtos
+        $products = [];
+
+        foreach ($prods as $prod) {
+            // Adicionar cada produto à lista 'products'
+            $products[] = [
+                'id' => $prod['id'],
+                'width' => $prod['largura'],
+                'height' => $prod['altura'],
+                'length' => $prod['comprimento'],
+                'weight' => $prod['peso'] / 1000,
+                'insurance_value' => $prod['valor'],
+                'quantity' => $prod['quantidade'],
+            ];
+        }
+
+        // Parâmetros para a requisição
+        $postData = [
+            'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
+            'to' => ['postal_code' => $cep],
+            'options' => ['receipt' => true, 'own_hand' => true],
+            'products' => $products
+        ];
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Authorization' => 'Bearer ' . $responseData['access_token'],
+            'Content-Type' => 'application/json',
+            'User-Agent' => ENV('USER_AGENT'),
+        ];
+
+        // Fazer a requisição POST
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+            'json' => $postData,
+            'headers' => $headers,
+        ]);
+
+        //Retornar a resposta da API
+        return $response->getBody();
     }
 
     public function calcularFrete(string $cep)
