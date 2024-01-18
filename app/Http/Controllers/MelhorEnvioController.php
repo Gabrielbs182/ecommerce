@@ -252,7 +252,7 @@ class MelhorEnvioController extends Controller
             } else {
 
                 // Acesse as informações específicas
-                
+                dd($volumes);
                 $price = $volumes['price'];
                 $discount = $volumes['discount'];
                 $format = $volumes['format'];
@@ -261,7 +261,7 @@ class MelhorEnvioController extends Controller
                 $insuranceValue = $volumes['insurance_value'];
                 $products = $volumes['products'];
 
-                dd($volumes);
+                
 
                 // Acesse informações dentro do array dimensions
                 $height = $dimensions['height'];
