@@ -28,6 +28,9 @@
                 </tr>
             </tbody>
         </table>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="https://app.melhorrastreio.com.br/app/melhorenvio/{{ $data['cod_rastreamento'] }}" role="button">Acompanhar Pedido</a>
+        </p>
         <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro.</p>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="https://urbeatstore.com.br/cadastrar" role="button">Cadastrar</a>
