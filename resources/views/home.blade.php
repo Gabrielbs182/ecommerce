@@ -126,7 +126,7 @@
                     </div>
                     <form action="{{ route('ver_carrinho') }}" method="POST">
                         @csrf
-                        <div class="d-flex">
+                        <div class="d-flex  justify-content-center">
                             <p>
                                 Meios de envio:
                             </p>
