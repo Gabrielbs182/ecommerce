@@ -121,9 +121,6 @@ function calcularFrete() {
 
             linhas +=
                 '</div>' +
-                '<label class="form-check-label" for="gratis">' +
-                'Rua santa catarina, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis' +
-                '</label>' +
                 '</div>' +
                 '</div>';
 
