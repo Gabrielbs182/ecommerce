@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string("nome");
             $table->integer("isAdmin");
             $table->integer("ativo");
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

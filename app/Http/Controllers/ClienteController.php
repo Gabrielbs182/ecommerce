@@ -38,16 +38,17 @@ class ClienteController extends Controller
             if ($status == 'err') {
                 return redirect()->route('cadastrar');
             } else {
-                Auth::login($usuarioGenerico);
+                return redirect()->route('home');
+                // Auth::login($usuarioGenerico);
 
-                $carrinho = session('cart', []);
-                if (count($carrinho) > 0) {
-                    if (Auth::check()) {
-                        return redirect()->route('ver_carrinho');
-                    }
-                } else {
-                    return redirect()->route('home');
-                }
+                // $carrinho = session('cart', []);
+                // if (count($carrinho) > 0) {
+                //     if (Auth::check()) {
+                //         return redirect()->route('ver_carrinho');
+                //     }
+                // } else {
+                //     return redirect()->route('home');
+                // }
             }
         } else {
             $values = $request->all();
@@ -78,16 +79,17 @@ class ClienteController extends Controller
             if ($status == 'err') {
                 return redirect()->route('cadastrar');
             } else {
-                Auth::login($usuario);
+                return redirect()->route('home');
+                // Auth::login($usuario);
 
-                $carrinho = session('cart', []);
-                if (count($carrinho) > 0) {
-                    if (Auth::check()) {
-                        return redirect()->route('ver_carrinho');
-                    }
-                } else {
-                    return redirect()->route('home');
-                }
+                // $carrinho = session('cart', []);
+                // if (count($carrinho) > 0) {
+                //     if (Auth::check()) {
+                //         return redirect()->route('ver_carrinho');
+                //     }
+                // } else {
+                //     return redirect()->route('home');
+                // }
             }
         }
     }

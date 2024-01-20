@@ -6,6 +6,9 @@ use App\Http\Controllers\PagSeguroController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\MelhorEnvioController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Password;
 
 
 /*
@@ -31,7 +34,6 @@ Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'bu
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
 Route::get('/email/{id}', [ProdutoController::class, 'email']);
-Route::get('/testeEmail', [ProdutoController::class, 'emailTeste']);
 
 
 //Melhor Envio
@@ -43,6 +45,7 @@ Route::get('/melhorenvio/atualizarToken', [MelhorEnvioController::class, 'refres
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
 Route::get('/melhorenvio/calcularFrete2/{cep}/{idPedido}', [MelhorEnvioController::class, 'calcularFrete2'])->name('melhorenvio.calcularFrete2');
 Route::get('/melhorenvio/lancarFrete/{reference_id}', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete');
+
 //PagSeguro
 Route::get('/pagseguro/criarapp', [PagSeguroController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
 Route::get('/pagbank/authorize', [PagSeguroController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
@@ -50,6 +53,47 @@ Route::get('/pagbank/auth', [PagSeguroController::class, 'PagSeguroAuth'])->name
 Route::get('/pagbank/gettoken', [PagSeguroController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
 Route::get('/pagbank/checkout', [PagSeguroController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
 Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name('pagseguro.pospagar');
+
+//Usuario
+Route::get('/email/verify/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    $request->session()->flash("ok", "Email verificado.");
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    $request->session()->flash("ok", "Email de verificação reenviado.");
+    return redirect('/');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::get('/forgot-password', function () {
+    return view('auth.forgot-password');
+})->middleware('guest')->name('password.request');
+
+Route::post('/reset-password', [UsuarioController::class, 'store'])->name('password.store');
+
+Route::post('/forgot-password', function (Request $request) {
+    $request->validate(['email' => 'required|email']);
+
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
+
+    $request->session()->flash("ok", "Email de recuperação enviado.");
+
+    return $status === Password::RESET_LINK_SENT
+        ? redirect()->route('home')
+        : back()->withErrors(['email' => __($status)]);
+})->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', function (Request $request, string $token) {
+    return view('auth.reset-password', ['token' => $token, 'email' => $request->email]);
+})->middleware('guest')->name('password.reset');
 
 
 //REDIRECIONAMENTO
@@ -71,19 +115,15 @@ Route::match(['get', 'post'], '/', [ProdutoController::class, 'index'])
 Route::match(['get', 'post'], '/itens/{id}', [ProdutoController::class, 'itensPedido'])
     ->name('itensPedido');
 Route::match(['get', 'post'], '/categoria', [ProdutoController::class, 'categoria'])
-    ->name('categoria');
+    ->name('categoria')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/cadastrar', [ClienteController::class, 'cadastrar'])
     ->name('cadastrar');
 Route::match(['get', 'post'], '/{idcategoria}/categoria', [ProdutoController::class, 'categoria'])
     ->name('categoria_por_id');
 Route::match(['get', 'post'], '/carrinho', [ProdutoController::class, 'verCarrinho'])
-    ->name('ver_carrinho');
+    ->name('ver_carrinho')->middleware(['isVerified']);
 Route::get('/compras/detalhes/{idproduto}', [ProdutoController::class, 'detalhes'])
-    ->name('detalhes');
-Route::match(['get', 'post'], '/keyController', [ProdutoController::class, 'keyController'])
-    ->name('keyController');
-Route::match(['get', 'post'], '/envio/autorizar', [ProdutoController::class, 'autorizarEnvio'])
-    ->name('autorizarEnvio');
+    ->name('detalhes')->middleware('isVerified');
 Route::match(['get'], '/configuracoes', [ProdutoController::class, 'configuracoes'])
     ->name('configuracoes')->middleware('IsAdmin');
 Route::get('/produtos', [ProdutoController::class, 'produtos'])->name('produtos')->middleware('IsAdmin');
@@ -111,21 +151,21 @@ Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])
 Route::get('/sair', [UsuarioController::class, 'sair'])
     ->name('sair');
 Route::match(['get', 'post'], '/cliente/cadastrar', [ClienteController::class, 'cadastrarCliente'])
-    ->name('cadastrar_cliente');
+    ->name('cadastrar_cliente')->middleware('isVerified');
 Route::match(['get', 'post'], '/carrinho/adicionar/{idProduto}/{quantidade}/{numero}', [ProdutoController::class, 'adicionarCarrinho'])
     ->name('adicionar_carrinho');
 Route::match(['get', 'post'], '/{indice}/excluirCarrinho', [ProdutoController::class, 'excluirCarrinho'])
     ->name('excluirCarrinho');
 Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])
-    ->name('carrinho_finalizar');
+    ->name('carrinho_finalizar')->middleware('isVerified');;
 Route::get('/compras/historico', [ProdutoController::class, 'historico'])
-    ->name('compra_historico')->middleware('auth');
+    ->name('compra_historico')->middleware(['auth', 'verified']);
 Route::get('/compras/detalhes/{id}', [ProdutoController::class, 'compra_detalhes'])
     ->name('compra_detalhes');
 Route::match(['get', 'post'], '/pagar', [PagSeguroController::class, 'PagSeguroCheckout'])
-    ->name('pagar');
+    ->name('pagar')->middleware('isVerified');
 Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consultarCheckout'])
-    ->name('consultarCheckout');
+    ->name('consultarCheckout')->middleware('isVerified');
 Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualizarQuantidadeCarrinho'])->name('atualizar_quantidade_carrinho');
 Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');
 Route::post('/configuracoes/update', [ProdutoController::class, 'configuracoesUpdate'])->name('configuracoes.update')->middleware('IsAdmin');;

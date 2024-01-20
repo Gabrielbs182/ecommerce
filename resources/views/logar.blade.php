@@ -46,7 +46,7 @@
                 <form class="login100-form validate-form" action="{{ route('logar') }}" method="post">
                     @csrf
                     <a href="{{ route('home') }}" class="text-decoration-none d-block">
-                        <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{asset('URBEAT.png')}}"
+                        <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}"
                                 alt="..." class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat
                         </h1>
                     </a>
@@ -72,6 +72,10 @@
                                 Entrar
                             </button>
                         </div>
+                    </div><div class="text-center">
+                        <a class="txt2" href="{{ route('password.request') }}">
+                            Recuperar Senha
+                        </a>
                     </div>
 
                     <div class="text-center p-t-115">
@@ -83,6 +87,7 @@
                             Cadastre-se
                         </a>
                     </div>
+                    
                 </form>
             </div>
         </div>

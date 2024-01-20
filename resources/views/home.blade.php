@@ -144,16 +144,6 @@
 
                         <fieldset class="form-group">
                             <div class="row" id="envios">
-                                <legend class="col-form-label col-sm-2 pt-0">Nossa loja</legend>
-                                <div class="col-sm-10">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="frete" id="gridRadios1"
-                                            value="0" checked>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Rua santa catarina2, SN, Carapicuiba, Guarapari, Es, 29160-988 - Grátis
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                 </div>

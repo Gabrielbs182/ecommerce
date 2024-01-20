@@ -69,7 +69,21 @@ class MelhorEnvioController extends Controller
             ]);
             return $response->getBody();
         } catch (\Exception $e) {
-            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
+                    'body' => json_encode(['orders' => [$order]]),
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $responseData['access_token'],
+                        'Content-Type' => 'application/json',
+                        env('USER_AGENT'),
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+            }
         }
     }
 
@@ -92,7 +106,21 @@ class MelhorEnvioController extends Controller
             ]);
             return $response->getBody();
         } catch (\Exception $e) {
-            Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/generate', [
+                    'body' => json_encode(['orders' => [$order]]),
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $responseData['access_token'],
+                        'Content-Type' => 'application/json',
+                        env('USER_AGENT'),
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            }
         }
     }
 
@@ -115,7 +143,21 @@ class MelhorEnvioController extends Controller
             ]);
             return $response->getBody();
         } catch (\Exception $e) {
-            Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
+                    'body' => json_encode(['orders' => [$order]]),
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $responseData['access_token'],
+                        'Content-Type' => 'application/json',
+                        env('USER_AGENT'),
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            }
         }
     }
 
@@ -245,8 +287,25 @@ class MelhorEnvioController extends Controller
                             'headers' => $headers,
                         ]);
                     } catch (\Exception $e) {
-                        Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
-                        Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
+                        try {
+                            $this->refreshToken();
+                            $responseData = $this->Authorization();
+
+                            // Headers da requisição
+                            $headers = [
+                                'Accept' => 'application/json',
+                                'Authorization' => 'Bearer ' . $responseData['access_token'],
+                                'Content-Type' => 'application/json',
+                                'User-Agent' => env('USER_AGENT'),
+                            ];
+
+                            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+                                'json' => $requestData,
+                                'headers' => $headers,
+                            ]);
+                        } catch (\Exception $e) {
+                            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+                        }
                     }
                 }
             } else {
@@ -345,8 +404,23 @@ class MelhorEnvioController extends Controller
                         'headers' => $headers,
                     ]);
                 } catch (\Exception $e) {
-                    Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
-                    Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $requestData]);
+                    try {
+                        $this->refreshToken();
+                        $responseData = $this->Authorization();
+                        // Headers da requisição
+                        $headers = [
+                            'Accept' => 'application/json',
+                            'Authorization' => 'Bearer ' . $responseData['access_token'],
+                            'Content-Type' => 'application/json',
+                            'User-Agent' => env('USER_AGENT'),
+                        ];
+                        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
+                            'json' => $requestData,
+                            'headers' => $headers,
+                        ]);
+                    } catch (\Exception $e) {
+                        Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                    }
                 }
             }
 
@@ -402,11 +476,32 @@ class MelhorEnvioController extends Controller
             'User-Agent' => ENV('USER_AGENT'),
         ];
 
-        // Fazer a requisição POST
-        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
-            'json' => $postData,
-            'headers' => $headers,
-        ]);
+        try {
+
+            // Fazer a requisição POST
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                'json' => $postData,
+                'headers' => $headers,
+            ]);
+        } catch (\Exception $e) {
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $headers = [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => ENV('USER_AGENT'),
+                ];
+                // Fazer a requisição POST
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                    'json' => $postData,
+                    'headers' => $headers,
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            }
+        }
 
         $responseJson = json_decode($response->getBody(), true);
 
@@ -456,11 +551,32 @@ class MelhorEnvioController extends Controller
             'User-Agent' => ENV('USER_AGENT'),
         ];
 
-        // Fazer a requisição POST
-        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
-            'json' => $postData,
-            'headers' => $headers,
-        ]);
+        try {
+
+            // Fazer a requisição POST
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                'json' => $postData,
+                'headers' => $headers,
+            ]);
+        } catch (\Exception $e) {
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $headers = [
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Bearer ' . $responseData['access_token'],
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => ENV('USER_AGENT'),
+                ];
+                // Fazer a requisição POST
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                    'json' => $postData,
+                    'headers' => $headers,
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            }
+        }
 
         //Retornar a resposta da API
         return $response->getBody();
@@ -664,8 +780,19 @@ class MelhorEnvioController extends Controller
                 echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
             }
         } catch (\Exception $e) {
-            // Exiba detalhes do erro
-            echo "Erro ao fazer a requisição: {$e->getMessage()}";
+            try {
+                $this->refreshToken();
+                $responseData = $this->Authorization();
+                $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Authorization' => 'Bearer ' . $responseData['access_token'],
+                        'User-Agent' => ENV('USER_AGENT'),
+                    ],
+                ]);
+            } catch (\Exception $e) {
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+            }
         }
     }
 }
