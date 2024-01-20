@@ -122,7 +122,12 @@ function calcularFrete() {
             linhas +=
                 '</div>' +
                 '</div>' +
-                '</div>';
+                '</div>' +
+                '<div class="modal-footer border-top-0 d-flex justify-content-right">' +
+                '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
+                '</form>' +
+                '</div>'
+                ;
 
             document.getElementById("envios").innerHTML = linhas;
             $('#loadingSpinner').hide();
@@ -169,7 +174,7 @@ function montarLinhaEnvio(transportadora) {
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
         transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" >' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
-        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado  +
+        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
         '</label>' +
         '</div>';
