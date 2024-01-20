@@ -147,12 +147,6 @@
                             </div>
                         </fieldset>
                 </div>
-
-                <div class="modal-footer border-top-0 d-flex justify-content-right">
-
-                    <button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
