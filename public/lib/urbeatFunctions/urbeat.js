@@ -107,8 +107,8 @@ function calcularFrete() {
             document.getElementById("envios").innerHTML = '';
 
             linhas =
-                '<legend class="col-form-label col-sm-2 pt-0">A domicílio</legend>' +
-                '<div class="col-sm-10">';
+                '<legend class="col-form-label col-sm-3 pt-0">A domicílio</legend>' +
+                '<div class="col-sm-7">';
 
             for (var transportadora of frete) {
                 if ('error' in transportadora) {
