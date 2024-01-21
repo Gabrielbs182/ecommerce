@@ -147,7 +147,7 @@ Route::get('/produto/excluir/{id}', [ProdutoController::class, 'delete'])
 Route::post('/produto/update', [ProdutoController::class, 'update'])
     ->name('produto.update')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])
-    ->name('logar');
+    ->name('logar')->middleware('guest');
 Route::get('/sair', [UsuarioController::class, 'sair'])
     ->name('sair');
 Route::match(['get', 'post'], '/cliente/cadastrar', [ClienteController::class, 'cadastrarCliente'])
