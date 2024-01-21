@@ -124,27 +124,41 @@
                             </table>
                         </div>
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-auto">
+                    <div class="row">
+                        <div class="d-flex col-md-2">
+
+                        </div>
+                        <div class="form-group col-md-8">
                             <form action="{{ route('ver_carrinho') }}" method="POST">
                                 @csrf
-                                <p>
-                                    Meios de envio:
-                                </p>
-                                <div class="form-group" id="cep-group">
-                                    <input placeholder="Seu Cep" name="cep" class="form-control" type="text"
-                                        id="cep" maxlength="10" oninput="validarNumero(this)">
-                                    <button type="button" class="btn btn-primary" onclick="calcularFrete()">Calcular
-                                        Frete</button>
+                                <div class="d-flex">
+                                    <p>
+                                        Meios de envio:
+                                    </p>
                                 </div>
+                                <div class="row">
+                                    <div class="d-flex col-md-8 form-group" id="cep-group">
+                                        <input placeholder="Seu Cep" name="cep" class="form-control" type="text"
+                                            id="cep" maxlength="10" oninput="validarNumero(this)">
+                                    </div>
+                                    <div class="d-flex col-md-4 form-group">
+                                        <button type="button" class="btn btn-primary" onclick="calcularFrete()">Calcular
+                                            Frete</button>
+                                    </div>
+                                </div>
+
+                                <fieldset class="form-group">
+                                    <div class="row" id="envios">
+                                    </div>
+                                </fieldset>
+                        </div>
+                        <div class="d-flex col-md-2">
+
                         </div>
                     </div>
 
-                    <fieldset class="form-group">
-                        <div class="row" id="envios">
-                        </div>
-                    </fieldset>
                 </div>
+                </form>
             </div>
         </div>
     </div>
