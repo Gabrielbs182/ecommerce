@@ -113,16 +113,16 @@ function calcularFrete() {
                 '</div>' +
                 '<div class="col-sm-9">';
 
-            check = true;
+            check = 0;
 
             for (var transportadora of frete) {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (check) {
-                        linha = montarLinhaEnvio(transportadora, true);
+                    if (check == 0) {
+                        linha = montarLinhaEnvio(transportadora, check);
                         linhas += linha;
-                        check = false;
+                        check = 1;
                     } else {
                         linha = montarLinhaEnvio(transportadora);
                         linhas += linha;
@@ -183,7 +183,7 @@ function montarLinhaEnvio(transportadora, check) {
 
     var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
 
-    if (check) {
+    if (check == 0) {
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
