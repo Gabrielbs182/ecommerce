@@ -193,16 +193,18 @@ function montarLinhaEnvio(transportadora, check) {
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
-    }
-    linha =
+    }else{
+        linha =
         '<div class="form-check">' +
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" checked>' +
+        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '">' +
         '<label class="form-check-label" for="' + transportadora.id + '">' +
         transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
         ' - Prazo ' + transportadora.delivery_time + ' dias.' +
         '</label>' +
         '</div>';
+    }
+    
     return linha;
 }
 
