@@ -123,6 +123,7 @@ function calcularFrete() {
                 '</div>' +
                 '</div>' +
                 '</div>' +
+                '</div>' +
                 '<div class="row">' +
                 '<div class="modal-footer">' +
                 '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
