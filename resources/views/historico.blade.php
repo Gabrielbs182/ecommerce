@@ -38,7 +38,7 @@
                                 '<tr>' +
                                 '<td class="w-20 align-middle text-center">' +
                                 '<img src="' + asset +
-                                '/' + item.id +
+                                '/' + item.produto_id +
                                 '.png" class="img-fluid img-thumbnail" width="100" height="100" ' +
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item
                                 .quantidade +
