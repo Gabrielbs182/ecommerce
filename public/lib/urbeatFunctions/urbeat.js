@@ -128,7 +128,7 @@ function calcularFrete() {
                 '</div>' +
                 '</div>' +
                 '<div class="row w-100">' +
-                '<div class="w-100">' +
+                '<div class="col-sm-12 mt-3">' +
                 '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
                 '</form>' +
                 '</div>' +
