@@ -39,7 +39,7 @@
                                 '<td class="w-20 align-middle text-center">' +
                                 '<img src="' + asset +
                                 '/' + item.id +
-                                '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
+                                '.png" class="img-fluid img-thumbnail" width="100" height="100" ' +
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item
                                 .quantidade +
                                 '</td>' +
