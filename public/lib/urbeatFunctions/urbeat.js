@@ -108,7 +108,9 @@ function calcularFrete() {
 
             linhas =
                 '<div class="row">' +
+                '<div class="col-sm-3">' +
                 '<legend class="col-form-label col-sm-3 pt-0">A domicílio</legend>' +
+                '</div>' +
                 '<div class="col-sm-9">';
 
             for (var transportadora of frete) {
