@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("nome");
             $table->string("descricao")->nullable();
             $table->decimal("valor",10,2);
+            $table->integer("desconto")->nullable();
             $table->integer("peso");
             $table->integer("largura");
             $table->integer("altura");
