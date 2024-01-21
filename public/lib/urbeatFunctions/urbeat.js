@@ -15,6 +15,9 @@ function buscarProduto(id) {
         $('#primeiroCarrosel').empty();
         $('#descricaoProdModal').empty();
         $('#segundoCarrosel').empty();
+        $('#terceiroCarrosel').empty();
+        $('#quartoCarrosel').empty();
+        $('#quintoCarrosel').empty();
         $('#nomeProdModal').empty();
         $('#valorProdModal').empty();
         $('#comprar').empty();
