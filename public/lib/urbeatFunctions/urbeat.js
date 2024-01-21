@@ -6,6 +6,10 @@ function buscarProduto(id) {
             '/' + produto[0].id + '.png" alt="Image">';
         var foto2 = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '_2.png" alt="Image">';
+        var foto3 = '<img class="w-100 h-100" src="' + asset +
+            '/' + produto[0].id + '_3.png" alt="Image">';
+        var foto4 = '<img class="w-100 h-100" src="' + asset +
+            '/' + produto[0].id + '_4.png" alt="Image">';
         $('#primeiroCarrosel').empty();
         $('#descricaoProdModal').empty();
         $('#segundoCarrosel').empty();
@@ -18,6 +22,8 @@ function buscarProduto(id) {
         $('#descricaoProdModal').append(produto[0].descricao);
         $('#primeiroCarrosel').append(foto);
         $('#segundoCarrosel').append(foto2);
+        $('#terceiroCarrosel').append(foto3);
+        $('#quartoCarrosel').append(foto4);
         $('#nomeProdModal').append(produto[0].nome);
         var val = produto[0].valor.replace('.', ',');
         var valor = 'R$ ' + val;
@@ -193,18 +199,18 @@ function montarLinhaEnvio(transportadora, check) {
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
-    }else{
+    } else {
         linha =
-        '<div class="form-check">' +
-        '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '">' +
-        '<label class="form-check-label" for="' + transportadora.id + '">' +
-        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
-        ' - Prazo ' + transportadora.delivery_time + ' dias.' +
-        '</label>' +
-        '</div>';
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '">' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+            ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
     }
-    
+
     return linha;
 }
 

@@ -481,6 +481,26 @@ class ProdutoController extends Controller
                         throw new \Exception('Erro ao fazer upload da foto secundaria 2.');
                     }
                 }
+                if ($request->hasFile('foto4')) {
+                    $imagem = $request->file('foto4');
+                    $nomeArquivo = $produto->id . '_3.png';
+                    // Armazenar a imagem no caminho desejado
+                    $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
+                    if (!$uploadSucesso) {
+                        // Adicione logs ou mensagens de erro, se necessário
+                        throw new \Exception('Erro ao fazer upload da foto secundaria 3.');
+                    }
+                }
+                if ($request->hasFile('foto5')) {
+                    $imagem = $request->file('foto5');
+                    $nomeArquivo = $produto->id . '_4.png';
+                    // Armazenar a imagem no caminho desejado
+                    $uploadSucesso = $imagem->move(public_path('images'), $nomeArquivo);
+                    if (!$uploadSucesso) {
+                        // Adicione logs ou mensagens de erro, se necessário
+                        throw new \Exception('Erro ao fazer upload da foto secundaria 4.');
+                    }
+                }
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
             }
