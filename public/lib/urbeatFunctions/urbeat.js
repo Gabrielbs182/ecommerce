@@ -113,14 +113,14 @@ function calcularFrete() {
                 '</div>' +
                 '<div class="col-sm-9">';
 
-            check = 0;
+            var check = 0;
 
             for (var transportadora of frete) {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
                     if (check == 0) {
-                        linha = montarLinhaEnvio(transportadora, check);
+                        linha = montarLinhaEnvio(transportadora, 0);
                         linhas += linha;
                         check = 1;
                     } else {
