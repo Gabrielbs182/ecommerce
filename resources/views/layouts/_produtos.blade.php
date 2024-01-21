@@ -12,13 +12,14 @@
                         <h6>R${{ $prod->valor }}</h6>
                         @if ($prod->desconto > 0)
                             <h6 class="text-muted ml-2">
-                                <del>R${{ $prod->valor - $prod->valor * ($prod->desconto / 100) }}</del></h6>
+                                <del>R${{ $prod->valor - $prod->valor * ($prod->desconto / 100) }}</del>
+                            </h6>
                         @endif
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-light border">
                     <a class="btn btn-sm text-dark p-0" onclick="buscarProduto({{ $prod->id }})"><i
-                            class="fas fa-shopping-cart mr-1 float-right" style="color:#e63412;"></i>Comprar</a>
+                            class="fas fa-shopping-cart mr-1" style="color:#e63412;"></i>Comprar</a>
                 </div>
             </div>
         </div>
