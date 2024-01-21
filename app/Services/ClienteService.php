@@ -6,6 +6,7 @@ use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Auth;
 
 class ClienteService
 {
@@ -24,6 +25,7 @@ class ClienteService
             //finalizando
             DB::commit();
             event(new Registered($usuario));
+            Auth::login($usuario);
             return ["status" => 'ok', 'message' => 'Usuario cadastrado com sucesso, um email de verificação de email foi enviado.'];
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'ClienteService.salvarUsuario', 'message' => $e->getMessage()]);
@@ -40,6 +42,7 @@ class ClienteService
             $usuario->save();
             DB::commit();
             event(new Registered($usuario));
+            Auth::login($usuario);
             return ["status" => 'ok', 'message' => 'Usuario cadastrado com sucesso, um email de verificação de email foi enviado.'];
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'ClienteService.salvarUsuario', 'message' => $e->getMessage()]);
