@@ -109,7 +109,7 @@ function calcularFrete() {
             linhas =
                 '<div class="row">' +
                 '<div class="col-sm-3">' +
-                '<legend class="col-form-label col-sm-3 pt-0">A domicílio</legend>' +
+                '<legend class="col-form-label pt-0">A domicílio</legend>' +
                 '</div>' +
                 '<div class="col-sm-9">';
 
@@ -127,7 +127,7 @@ function calcularFrete() {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="row">' +
+                '<div class="row col-sm-12">' +
                 '<div class="col-sm-12">' +
                 '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
                 '</form>' +
