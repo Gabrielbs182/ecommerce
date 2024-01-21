@@ -107,9 +107,9 @@ function calcularFrete() {
             document.getElementById("envios").innerHTML = '';
 
             linhas =
-                '<div class="row w-100">' +
+                '<div class="row w-100 mt-3">' +
                 '<div class="col-sm-3">' +
-                '<legend class="col-form-label pt-0 mt-3">A domicílio</legend>' +
+                '<legend class="col-form-label pt-0">A domicílio:</legend>' +
                 '</div>' +
                 '<div class="col-sm-9">';
 
