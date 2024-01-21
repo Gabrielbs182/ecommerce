@@ -171,10 +171,21 @@ function validarCEP(cep) {
     }
 };
 
-function montarLinhaEnvio(transportadora) {
+function montarLinhaEnvio(transportadora, check) {
 
     var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
 
+    if (check) {
+        linha =
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" checked>' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+            ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
+    }
     linha =
         '<div class="form-check">' +
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
