@@ -10,6 +10,8 @@ function buscarProduto(id) {
             '/' + produto[0].id + '_3.png" alt="Image">';
         var foto4 = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '_4.png" alt="Image">';
+        var foto5 = '<img class="w-100 h-100" src="' + asset +
+            '/' + produto[0].id + '_5.png" alt="Image">';
         $('#primeiroCarrosel').empty();
         $('#descricaoProdModal').empty();
         $('#segundoCarrosel').empty();
@@ -24,6 +26,7 @@ function buscarProduto(id) {
         $('#segundoCarrosel').append(foto2);
         $('#terceiroCarrosel').append(foto3);
         $('#quartoCarrosel').append(foto4);
+        $('#quintoCarrosel').append(foto5);
         $('#nomeProdModal').append(produto[0].nome);
         var val = produto[0].valor.replace('.', ',');
         var valor = 'R$ ' + val;

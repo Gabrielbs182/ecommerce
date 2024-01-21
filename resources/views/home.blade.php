@@ -38,6 +38,9 @@
                                         <div class="carousel-item" id="quartoCarrosel">
                                             <img class="w-100 h-100" src="{{ asset('images/2_4.png') }}" alt="Image">
                                         </div>
+                                        <div class="carousel-item" id="quintoCarrosel">
+                                            <img class="w-100 h-100" src="{{ asset('images/2_5.png') }}" alt="Image">
+                                        </div>
                                     </div>
                                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                                         <i class="fa fa-2x fa-angle-left text-dark"></i>
