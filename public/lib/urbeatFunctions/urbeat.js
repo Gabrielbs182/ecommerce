@@ -107,7 +107,7 @@ function calcularFrete() {
             document.getElementById("envios").innerHTML = '';
 
             linhas =
-                '<div class="row">' +
+                '<div class="row w-100">' +
                 '<div class="col-sm-3">' +
                 '<legend class="col-form-label pt-0">A domicílio</legend>' +
                 '</div>' +
@@ -127,7 +127,7 @@ function calcularFrete() {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="row col-sm-12">' +
+                '<div class="row w-100">' +
                 '<div class="col-sm-12">' +
                 '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
                 '</form>' +
