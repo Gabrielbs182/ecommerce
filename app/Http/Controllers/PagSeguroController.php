@@ -19,130 +19,6 @@ use DateTime;
 class PagSeguroController extends Controller
 {
 
-
-    public function PagSeguroCriarApp(Request $request)
-    {
-        $token = env('PAGSEGURO_TOKEN');
-        $produtoController = new ProdutoController;
-
-        $client = new \GuzzleHttp\Client();
-
-        try {
-            $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/application', [
-                'body' => '{"name":"Urbeat","site":"https://urbeatstore.com.br","redirect_uri":"https://urbeatstore.com.br/pagbank/auth"}',
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token,
-                    'accept' => 'application/json',
-                    'content-type' => 'application/json',
-                ],
-            ]);
-        } catch (\Exception $e) {
-            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCriarApp', 'message' => $e->getMessage()]);
-            $message = 'Erro ao tentar realizar pagamento!';
-            $status = 'err';
-
-            $request->session()->flash($status, $message);
-            return redirect()->route('home');
-        }
-
-        $teste = 1;
-
-        $responseJson = json_decode($response->getBody(), true);
-
-        // Verifique se os tokens foram obtidos com sucesso
-        if (isset($responseJson['client_id']) && isset($responseJson['client_secret'])) {
-
-            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_ID', $responseJson['client_id']);
-            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_SECRET', $responseJson['client_secret']);
-
-            // Informar ao usuário que os tokens foram armazenados com sucesso
-            return "Aplicativo criado com sucesso.";
-        } else {
-            // Informar ao usuário que houve um problema ao obter os tokens
-            return "Erro: Aplicativo não foi criado.";
-        }
-    }
-
-    public function redirectToAuthorization()
-    {
-        $client_id = env('PAGSEGURO_CLIENT_ID');
-        $redirect_uri = 'https://urbeatstore.com.br/pagbank/auth';
-        $scope = env('PAGSEGURO_SCOPE'); // Adicione outras permissões conforme necessário
-        $authorizationUrl = "https://connect.sandbox.pagseguro.uol.com.br/oauth2/authorize?";
-        $authorizationUrl .= "response_type=code&client_id={$client_id}&redirect_uri={$redirect_uri}&scope={$scope}&state=xyz";
-
-        return redirect()->away($authorizationUrl);
-    }
-
-    public function PagSeguroGetToken(String $code)
-    {
-
-        $token = env('PAGSEGURO_TOKEN');
-        $clientId = env('PAGSEGURO_CLIENT_ID');
-        $clientSecret = env('PAGSEGURO_CLIENT_SECRET');
-        $produtoController = new ProdutoController;
-
-        $client = new \GuzzleHttp\Client();
-
-        try {
-            $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/token', [
-                'json' => [
-                    'grant_type' => 'authorization_code',
-                    'code' => $code,
-                    'redirect_uri' => 'https://urbeatstore.com.br/pagbank/auth',
-                ],
-                'headers' => [
-                    'Authorization' => 'Bearer ' . $token,
-                    'X_CLIENT_ID' => $clientId,
-                    'X_CLIENT_SECRET' => $clientSecret,
-                    'accept' => 'application/json',
-                    'content-type' => 'application/json',
-                ],
-            ]);
-        } catch (\EXCEPTION $e) {
-            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroGetToken', 'message' => $e->getMessage()]);
-            return redirect()->route('home');
-        }
-
-
-        $responseJson = json_decode($response->getBody(), true);
-
-        // Verifique se os tokens foram obtidos com sucesso
-        if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
-
-            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
-            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
-            $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
-
-            // Informar ao usuário que os tokens foram armazenados com sucesso
-            return "Tokens salvos com sucesso";
-        } else {
-            // Informar ao usuário que houve um problema ao obter os tokens
-            return "Erro: Tokens não vieram.";
-        }
-    }
-
-    public function pagar(Request $request)
-    {
-        $data = [];
-        $carrinho = session('cart', []);
-        $data = ['cart' => $carrinho];
-
-        return view("pagar", $data);
-    }
-
-    public function pagamento(Request $request)
-    {
-        $data = [];
-        return view("payment.pagamento", $data);
-    }
-
-    public function keyController(Request $request)
-    {
-        $data = [];
-        return view("payment.KeyController", $data);
-    }
-
     public function consultarCheckout($checkoutId)
     {
         $token = env('PAGSEGURO_TOKEN'); // Substitua pela obtenção do seu token
@@ -163,26 +39,6 @@ class PagSeguroController extends Controller
     {
         $request->session()->flash('ok', 'Compra realizada, um email de confirmação e o código de rastreamento do pacote sera enviado para você assim que o pagamento for confirmado.');
         return redirect()->route("home");
-    }
-
-    public function PagSeguroAuth(Request $request)
-    {
-        // Verifica se o código está presente na URL
-        if ($request->has('code')) {
-            $code = $request->input('code');
-
-            // Verifique se os tokens foram obtidos com sucesso
-            if (isset($code)) {
-                // Informe ao usuário que o código de autorização foi armazenado com sucesso
-                // Agora, chame a função getToken
-                $tokenResponse = $this->PagSeguroGetToken($code);
-                // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
-                return $tokenResponse; // ou alguma mensagem personalizada
-            } else {
-                // Informar ao usuário que houve um problema ao obter os tokens
-                return "Erro: algo deu errado.";
-            }
-        }
     }
 
     public function PagSeguroCheckout(Request $request)
@@ -533,4 +389,154 @@ class PagSeguroController extends Controller
         // Responda para confirmar o recebimento do Webhook
         return response()->json(['status' => 'Webhook recebido com sucesso']);
     }
+
+
+
+
+    //DESUSO
+    
+    // public function PagSeguroCriarApp(Request $request)
+    // {
+    //     $token = env('PAGSEGURO_TOKEN');
+    //     $produtoController = new ProdutoController;
+
+    //     $client = new \GuzzleHttp\Client();
+
+    //     try {
+    //         $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/application', [
+    //             'body' => '{"name":"Urbeat","site":"https://urbeatstore.com.br","redirect_uri":"https://urbeatstore.com.br/pagbank/auth"}',
+    //             'headers' => [
+    //                 'Authorization' => 'Bearer ' . $token,
+    //                 'accept' => 'application/json',
+    //                 'content-type' => 'application/json',
+    //             ],
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCriarApp', 'message' => $e->getMessage()]);
+    //         $message = 'Erro ao tentar realizar pagamento!';
+    //         $status = 'err';
+
+    //         $request->session()->flash($status, $message);
+    //         return redirect()->route('home');
+    //     }
+
+    //     $teste = 1;
+
+    //     $responseJson = json_decode($response->getBody(), true);
+
+    //     // Verifique se os tokens foram obtidos com sucesso
+    //     if (isset($responseJson['client_id']) && isset($responseJson['client_secret'])) {
+
+    //         $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_ID', $responseJson['client_id']);
+    //         $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_CLIENT_SECRET', $responseJson['client_secret']);
+
+    //         // Informar ao usuário que os tokens foram armazenados com sucesso
+    //         return "Aplicativo criado com sucesso.";
+    //     } else {
+    //         // Informar ao usuário que houve um problema ao obter os tokens
+    //         return "Erro: Aplicativo não foi criado.";
+    //     }
+    // }
+
+    // public function redirectToAuthorization()
+    // {
+    //     $client_id = env('PAGSEGURO_CLIENT_ID');
+    //     $redirect_uri = 'https://urbeatstore.com.br/pagbank/auth';
+    //     $scope = env('PAGSEGURO_SCOPE'); // Adicione outras permissões conforme necessário
+    //     $authorizationUrl = "https://connect.sandbox.pagseguro.uol.com.br/oauth2/authorize?";
+    //     $authorizationUrl .= "response_type=code&client_id={$client_id}&redirect_uri={$redirect_uri}&scope={$scope}&state=xyz";
+
+    //     return redirect()->away($authorizationUrl);
+    // }
+
+    // public function PagSeguroGetToken(String $code)
+    // {
+
+    //     $token = env('PAGSEGURO_TOKEN');
+    //     $clientId = env('PAGSEGURO_CLIENT_ID');
+    //     $clientSecret = env('PAGSEGURO_CLIENT_SECRET');
+    //     $produtoController = new ProdutoController;
+
+    //     $client = new \GuzzleHttp\Client();
+
+    //     try {
+    //         $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/token', [
+    //             'json' => [
+    //                 'grant_type' => 'authorization_code',
+    //                 'code' => $code,
+    //                 'redirect_uri' => 'https://urbeatstore.com.br/pagbank/auth',
+    //             ],
+    //             'headers' => [
+    //                 'Authorization' => 'Bearer ' . $token,
+    //                 'X_CLIENT_ID' => $clientId,
+    //                 'X_CLIENT_SECRET' => $clientSecret,
+    //                 'accept' => 'application/json',
+    //                 'content-type' => 'application/json',
+    //             ],
+    //         ]);
+    //     } catch (\EXCEPTION $e) {
+    //         Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroGetToken', 'message' => $e->getMessage()]);
+    //         return redirect()->route('home');
+    //     }
+
+
+    //     $responseJson = json_decode($response->getBody(), true);
+
+    //     // Verifique se os tokens foram obtidos com sucesso
+    //     if (isset($responseJson['access_token']) && isset($responseJson['refresh_token']) && isset($responseJson['account_id'])) {
+
+    //         $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCESS_TOKEN', $responseJson['access_token']);
+    //         $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_REFRESH_TOKEN', $responseJson['refresh_token']);
+    //         $produtoController->AtualizarVariaveisAmbiente('PAGSEGURO_ACCOUNT_ID', $responseJson['account_id']);
+
+    //         // Informar ao usuário que os tokens foram armazenados com sucesso
+    //         return "Tokens salvos com sucesso";
+    //     } else {
+    //         // Informar ao usuário que houve um problema ao obter os tokens
+    //         return "Erro: Tokens não vieram.";
+    //     }
+    // }
+
+    // public function pagar(Request $request)
+    // {
+    //     $data = [];
+    //     $carrinho = session('cart', []);
+    //     $data = ['cart' => $carrinho];
+
+    //     return view("pagar", $data);
+    // }
+
+    // public function pagamento(Request $request)
+    // {
+    //     $data = [];
+    //     return view("payment.pagamento", $data);
+    // }
+
+    // public function keyController(Request $request)
+    // {
+    //     $data = [];
+    //     return view("payment.KeyController", $data);
+    // }
+
+    
+
+    // public function PagSeguroAuth(Request $request)
+    // {
+    //     // Verifica se o código está presente na URL
+    //     if ($request->has('code')) {
+    //         $code = $request->input('code');
+
+    //         // Verifique se os tokens foram obtidos com sucesso
+    //         if (isset($code)) {
+    //             // Informe ao usuário que o código de autorização foi armazenado com sucesso
+    //             // Agora, chame a função getToken
+    //             $tokenResponse = $this->PagSeguroGetToken($code);
+    //             // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
+    //             return $tokenResponse; // ou alguma mensagem personalizada
+    //         } else {
+    //             // Informar ao usuário que houve um problema ao obter os tokens
+    //             return "Erro: algo deu errado.";
+    //         }
+    //     }
+    // }
 }

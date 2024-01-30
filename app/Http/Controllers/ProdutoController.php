@@ -780,7 +780,6 @@ class ProdutoController extends Controller
 
     public function AtualizarVariaveisAmbiente(String $chave, String $valor)
     {
-
         // Verificações de parâmetros
         if (empty($chave) || empty($valor)) {
             // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo

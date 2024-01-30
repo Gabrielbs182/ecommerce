@@ -11,6 +11,7 @@ use App\Models\ItensPedido;
 use App\Models\Usuario;
 use App\Models\Produto;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\ProdutoController;
 
 
 class MelhorEnvioController extends Controller
@@ -26,25 +27,21 @@ class MelhorEnvioController extends Controller
 
     public function obterDadosCEP($cep)
     {
-        // Use o cliente Guzzle para fazer a requisição à API do ViaCEP
+        //RETORNAR ENDEREÇO A PARTIR DE UM CEP
         $client = new Client();
         $response = $client->get("https://viacep.com.br/ws/{$cep}/json");
 
-        // Verifique se a resposta está OK (código 200)
         if ($response->getStatusCode() == 200) {
-            // Obtenha os dados do CEP
             $dadosCep = json_decode($response->getBody(), true);
-
-            // Retorne os dados em formato JSON
             return response()->json($dadosCep);
         } else {
-            // Se a resposta não estiver OK, retorne um erro
             return response()->json(['erro' => 'Erro na requisição do CEP'], 500);
         }
     }
 
     public function Authorization()
     {
+        //BUSCAR AUTORIZAÇÃO DO MELHOR ENVIO NO ARQUIVO DE VARIAVEIS DE AMBIENTE
         $apiResponse = ENV('AUTHORIZATION');
         $responseData = json_decode($apiResponse, true);
         return $responseData;
@@ -54,10 +51,10 @@ class MelhorEnvioController extends Controller
     {
         //buscando autorização
         $responseData = $this->Authorization();
-
         $client = new \GuzzleHttp\Client();
 
         try {
+            //TENTANDO DAR POST NO MELHOR ENVIO COM A AUTORIZAÇÃO ATUAL DO SISTEMA.
             $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
                 'body' => json_encode(['orders' => [$order]]),
                 'headers' => [
@@ -70,6 +67,7 @@ class MelhorEnvioController extends Controller
             return $response->getBody();
         } catch (\Exception $e) {
             try {
+                //SE A AUTORIZAÇÃO FOR NEGADA, EU TENTO ATUALIZAR O TOKEN PARA ENVIAR OUTRA O POST NOVAMENTE
                 $this->refreshToken();
                 $responseData = $this->Authorization();
                 $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
@@ -91,9 +89,7 @@ class MelhorEnvioController extends Controller
     {
         //buscando autorização
         $responseData = $this->Authorization();
-
         $client = new \GuzzleHttp\Client();
-
         try {
             $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/generate', [
                 'body' => json_encode(['orders' => [$order]]),
@@ -128,9 +124,7 @@ class MelhorEnvioController extends Controller
     {
         //buscando autorização
         $responseData = $this->Authorization();
-
         $client = new \GuzzleHttp\Client();
-
         try {
             $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
                 'body' => json_encode(['orders' => [$order]]),
@@ -167,17 +161,13 @@ class MelhorEnvioController extends Controller
         try {
             //buscando autorização
             $responseData = $this->Authorization();
-
-            //buscando os dados
             $pedido = Pedido::where('reference_id', $reference_id)->first();
 
             if (isset($pedido)) {
                 $endereco = Endereco::find($pedido->endereco_id);
                 $usuario = Usuario::find($pedido->usuario_id);
             }
-
             $respostaApi = $this->calcularFrete2($endereco->cep, $pedido->id);
-
             // Array para armazenar os volumes associados a cada ID de transporte
             $volumesPorTransporte = [];
 
@@ -433,18 +423,13 @@ class MelhorEnvioController extends Controller
 
     public function calcularFrete2(string $cep, $idPedido)
     {
-
+        //FUNÇÃO PARA BUSCAR O ORÇAMENTO DE FRETE ANTES DE LANÇAR O FRETE.
         //buscando autorização
         $responseData = $this->Authorization();
 
-        // Criar uma instância do GuzzleHttp\Client
         $client = new Client();
-
         $itens = ItensPedido::where('pedido_id', $idPedido)->get();
-
         $prods = $itens;
-
-        // Inicializar a lista de produtos
         $products = [];
 
         foreach ($prods as $prod) {
@@ -502,9 +487,7 @@ class MelhorEnvioController extends Controller
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
             }
         }
-
         $responseJson = json_decode($response->getBody(), true);
-
         //Retornar a resposta da API
         return $responseJson;
     }
@@ -512,15 +495,11 @@ class MelhorEnvioController extends Controller
     public function calcularFrete(string $cep)
     {
 
+        //FUNCAO PARA BUSCAR ORÇAMENTO DE FRETE
         //buscando autorização
         $responseData = $this->Authorization();
-
-        // Criar uma instância do GuzzleHttp\Client
         $client = new Client();
-
         $prods = session('cart', []);
-
-        // Inicializar a lista de produtos
         $products = [];
 
         foreach ($prods as $prod) {
@@ -560,6 +539,7 @@ class MelhorEnvioController extends Controller
             ]);
         } catch (\Exception $e) {
             try {
+                //REFAZENDO REQUISIÇÃO DO POST CASO O POST TENHA SIDO NEGADO.
                 $this->refreshToken();
                 $responseData = $this->Authorization();
                 $headers = [
@@ -598,11 +578,9 @@ class MelhorEnvioController extends Controller
 
     public function getToken(Request $request)
     {
+        $produtoController = new ProdutoController;
         $client = new \GuzzleHttp\Client();
-
-        //buscando o código de autorização obtino no getAuthorization
         $code = env('AUTHORIZATION_CODE');
-
         //montando a requisição
         $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
@@ -618,48 +596,27 @@ class MelhorEnvioController extends Controller
                 'User-Agent' => ENV('USER_AGENT'),
             ],
         ]);
-
         // Obter e retornar a resposta JSON
         $responseJson = json_decode($response->getBody(), true);
-
         // Verifique se os tokens foram obtidos com sucesso
         if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
-
-            //Buscando o conteudo do .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Verificar se a chave Authorization já existe
-            if (strpos($envContent, 'AUTHORIZATION') !== false) {
-                // Atualizar o valor se já existir
-                $envContent = preg_replace('/(AUTHORIZATION)=(.*)/', 'AUTHORIZATION=' . json_encode($responseJson), $envContent);
-            } else {
-                // Adicionar uma nova linha com a chave Authorization e os tokens
-                $envContent .= "\AUTHORIZATION=" . json_encode($responseJson);
-            }
-
-            // Salvar as alterações no arquivo .env
-            file_put_contents($envPath, $envContent);
-
-            // Informar ao usuário que os tokens foram armazenados com sucesso
+            $produtoController->AtualizarVariaveisAmbiente('AUTHORIZATION', json_encode($responseJson));
             $message = 'Tokens armazenados com sucesso.';
-            $status = 'ok';
-            $request->session()->flash($status, $message);
-            return redirect()->route('configuracoes');
+            return $message;
         } else {
             // Informar ao usuário que houve um problema ao obter os tokens
-            return "Erro: Tokens não foram obtidos com sucesso.";
+            $message = 'Problema ao tentar armazenar os tokens.';
+            return $message;
         }
     }
 
     public function refreshToken()
     {
+        $produtoController = new ProdutoController;
+        //FUNÇÃO PARA ATUALIZAR O TOKEN.
         $client = new \GuzzleHttp\Client();
-
         $responseData = $this->Authorization();
-
         //montando a requisição
-
         try {
             $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
                 'form_params' => [
@@ -677,24 +634,9 @@ class MelhorEnvioController extends Controller
 
             // Obter e retornar a resposta JSON
             $responseJson = json_decode($response->getBody(), true);
-
             // Verifique se os tokens foram obtidos com sucesso
             if (isset($responseJson['access_token']) && isset($responseJson['refresh_token'])) {
-
-                //Buscando o conteudo do .env
-                $envPath = base_path('.env');
-                $envContent = file_get_contents($envPath);
-
-                // Verificar se a chave Authorization já existe
-                if (strpos($envContent, 'AUTHORIZATION') !== false) {
-                    // Atualizar o valor se já existir
-                    $envContent = preg_replace('/(AUTHORIZATION)=(.*)/', 'AUTHORIZATION=' . json_encode($responseJson), $envContent);
-                } else {
-                    // Adicionar uma nova linha com a chave Authorization e os tokens
-                    $envContent .= "\AUTHORIZATION=" . json_encode($responseJson);
-                }
-                // Salvar as alterações no arquivo .env
-                file_put_contents($envPath, $envContent);
+                $produtoController->AtualizarVariaveisAmbiente('AUTHORIZATION', json_encode($responseJson));
             }
             Log::info('Atualizou_Token');
         } catch (\Exception $e) {
@@ -704,48 +646,27 @@ class MelhorEnvioController extends Controller
 
     public function getAuthorization(Request $request)
     {
+        $produtoController = new ProdutoController;
         // Verifique se o código de autorização está presente na solicitação
         if ($request->has('code')) {
             // Obtenha o código de autorização da solicitação
             $authorizationCode = $request->input('code');
+            $produtoController->AtualizarVariaveisAmbiente('AUTHORIZATION_CODE', $authorizationCode);
+            $tokenResponse = $this->getToken($request);
 
-            // Salve o código de autorização no arquivo .env
-            $envPath = base_path('.env');
-            $envContent = file_get_contents($envPath);
-
-            // Verifique se o arquivo .env existe
-            if (File::exists($envPath)) {
-                // Abra o arquivo .env para leitura
-                $envContent = File::get($envPath);
-
-                // Adicione ou atualize a variável de ambiente do código de autorização
-                // Verificar se a variável de ambiente AUTHORIZATION_CODE já existe
-                if (strpos($envContent, 'AUTHORIZATION_CODE') !== false) {
-                    // Atualizar o valor se já existir
-                    $envContent = preg_replace('/(AUTHORIZATION_CODE)=(.*)/', 'AUTHORIZATION_CODE=' . $authorizationCode, $envContent);
-                } else {
-                    // Adicionar a variável se não existir
-                    $envContent .= "\nAUTHORIZATION_CODE=" . $authorizationCode;
-                }
-
-                // Salve as alterações no arquivo .env
-                file_put_contents($envPath, $envContent);
-
-                // Informe ao usuário que o código de autorização foi armazenado com sucesso
-                // Agora, chame a função getToken
-                $tokenResponse = $this->getToken($request);
-
-                // Se precisar fazer algo com a resposta da função getToken, pode fazer aqui
-
-                return $tokenResponse; // ou alguma mensagem personalizada
+            if ($tokenResponse == 'Tokens armazenados com sucesso.') {
+                $status = 'ok';
+                $request->session()->flash($status, $tokenResponse);
             } else {
-                // Informe ao usuário que o arquivo .env não foi encontrado
-                return "Erro: Arquivo .env não encontrado!";
+                $status = 'err';
+                $request->session()->flash($status, $tokenResponse);
             }
         } else {
             // Informe ao usuário que o código de autorização não foi encontrado na solicitação
-            return "Erro: Código de autorização não encontrado na solicitação!";
+            $status = 'err';
+            $request->session()->flash($status, 'Código de autorização não encontrado na solicitação!');
         }
+        return redirect()->route('configuracoes');
     }
 
     //funções ativas
@@ -753,12 +674,9 @@ class MelhorEnvioController extends Controller
     public function melhorInfo()
     {
         // Função para imprimir opções de configuração do melhor envio
-
         //buscando autorização
         $responseData = $this->Authorization();
-
         $client = new Client();
-
         try {
             $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
                 'headers' => [

@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Password;
 
 
 
-// API'S
+// API'S Internas
 Route::get('/produto/buscar/{idProduto}', [ProdutoController::class, 'buscarProduto'])
     ->name('buscarProduto');
 Route::get('/buscarCarrinho', [ProdutoController::class, 'buscarCarrinho'])
@@ -33,24 +33,15 @@ Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'bu
     ->name('buscarEstoqueQuantidade');
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
-Route::get('/email/{id}', [ProdutoController::class, 'email']);
-
 
 //Melhor Envio
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo')->middleware('IsAdmin');
-Route::post('/melhorenvio/token', [MelhorEnvioController::class, 'getToken'])->name('getToken')->middleware('IsAdmin');
 Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToAuthorization'])->name('melhorenvio.authorize')->middleware('IsAdmin');
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
-Route::get('/melhorenvio/atualizarToken', [MelhorEnvioController::class, 'refreshToken'])->name('melhorenvio.refreshToken')->middleware('IsAdmin');
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
-Route::get('/melhorenvio/calcularFrete2/{cep}/{idPedido}', [MelhorEnvioController::class, 'calcularFrete2'])->name('melhorenvio.calcularFrete2');
 Route::get('/melhorenvio/lancarFrete/{reference_id}', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete');
 
 //PagSeguro
-Route::get('/pagseguro/criarapp', [PagSeguroController::class, 'PagSeguroCriarApp'])->name('pagseguro.criarapp')->middleware('IsAdmin');
-Route::get('/pagbank/authorize', [PagSeguroController::class, 'redirectToAuthorization'])->name('pagseguro.authorization')->middleware('IsAdmin');
-Route::get('/pagbank/auth', [PagSeguroController::class, 'PagSeguroAuth'])->name('pagseguro.auth')->middleware('IsAdmin');
-Route::get('/pagbank/gettoken', [PagSeguroController::class, 'PagSeguroGetToken'])->name('pagseguro.gettoken')->middleware('IsAdmin');
 Route::get('/pagbank/checkout', [PagSeguroController::class, 'PagSeguroCheckout'])->name('pagseguro.checkout');
 Route::get('/pagbank/pospagar', [PagSeguroController::class, 'PosPagar'])->name('pagseguro.pospagar');
 
