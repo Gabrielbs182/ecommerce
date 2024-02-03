@@ -132,6 +132,16 @@ class PagSeguroController extends Controller
 
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
+                'payment_methods_configs' => [
+                    [
+                        'config_options' => [
+                            [
+                                'option' => 'INSTALLMENTS_LIMIT',
+                                'value' => 3,
+                            ]
+                        ]
+                    ]
+                ],
                 'reference_id' => $referenceId,
                 'customer' => [
                     'phone' => $customerPhone,
@@ -347,9 +357,9 @@ class PagSeguroController extends Controller
                     $pedido->save();
                     $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id)->get();
                     foreach ($itens_pedido as $item) {
-                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero',$item->numero)->first();
+                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero', $item->numero)->first();
                         $estoque->quantidade -= $item->quantidade;
-                        $estoque->save(); 
+                        $estoque->save();
                     }
                     if ($pedido->cod_entrega != 'Gratis') {
                         //lançar frete
@@ -401,7 +411,7 @@ class PagSeguroController extends Controller
 
 
     //DESUSO
-    
+
     // public function PagSeguroCriarApp(Request $request)
     // {
     //     $token = env('PAGSEGURO_TOKEN');
@@ -525,7 +535,7 @@ class PagSeguroController extends Controller
     //     return view("payment.KeyController", $data);
     // }
 
-    
+
 
     // public function PagSeguroAuth(Request $request)
     // {
