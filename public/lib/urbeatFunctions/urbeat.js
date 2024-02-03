@@ -280,9 +280,12 @@ function carregarCarrinho() {
             for (var key in data) {
                 if (data.hasOwnProperty(key)) {
                     var item = data[key];
-
                     var asset = $('#asset').val();
-                    valor = (item.valor - (item.valor * (item.desconto / 100)))
+                    if (item.desconto){
+                        valor = (item.valor - (item.valor * (item.desconto / 100)));
+                    }else{
+                        valor = item.valor;
+                    }
                     valorUnitario = String(valor).replace('.', ',');
                     valorTotal = String(valor * item.quantidade).replace('.', ',');
                     total += valor * item.quantidade;

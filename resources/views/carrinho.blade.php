@@ -102,9 +102,9 @@
                             @foreach ($cart as $indice => $p)
                                 <div class="d-flex justify-content-between">
                                     <p>{{ $p->nome }} x {{ $p->quantidade }}</p>
-                                    <p>{{ number_format($p->valor * $p->quantidade, 2, ',', '.') }}</p>
+                                    <p>{{ number_format(($p->valor-($p->valor*($p->desconto/100))) * $p->quantidade, 2, ',', '.') }}</p>
                                 </div>
-                                @php $total += ($p->valor*$p->quantidade); @endphp
+                                @php $total += (($p->valor-($p->valor*($p->desconto/100)))*$p->quantidade); @endphp
                             @endforeach
                             <hr class="mt-0">
                             <div class="d-flex justify-content-between mb-3 pt-1">
