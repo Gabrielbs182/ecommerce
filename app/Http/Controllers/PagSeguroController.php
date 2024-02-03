@@ -345,9 +345,9 @@ class PagSeguroController extends Controller
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
-                    $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id);
+                    $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id)->get();
                     foreach ($itens_pedido as $item) {
-                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero',$item->numero);
+                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero',$item->numero)->first();
                         $estoque->quantidade -= $item->quantidade;
                         $estoque->save(); 
                     }
