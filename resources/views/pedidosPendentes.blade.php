@@ -38,7 +38,7 @@
                                 '<tr>' +
                                 '<td class="w-20 align-middle text-center">' +
                                 '<img src="' + asset +
-                                '/' + item.id +
+                                '/' + item.produto_id +
                                 '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                                 'alt="Produto" >' + item.nome_produto + '/' + item.numero + ' x ' + item
                                 .quantidade +
@@ -101,9 +101,11 @@
                                     <a href="#" class="edit"
                                         onclick="abrirCarrinho({{ $p->id }})">Produtos</a>
                                 </td>
-                                <td>
-                                    <a href="{{route('pedido.finalizar', $p->id)}}" class="edit">Finalizar</a>
-                                </td>
+                                @if (Route::is('pedidos.pendentes'))
+                                    <td>
+                                        <a href="{{ route('pedido.finalizar', $p->id) }}" class="edit">Finalizar</a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
