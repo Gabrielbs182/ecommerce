@@ -161,7 +161,7 @@ class PagSeguroController extends Controller
                     'name' => $produto['nome'],
                     'description' => $produto['nome'],
                     'quantity' => $item['quantidade'],
-                    'unit_amount' => (($item['valor']-($item['valor']*($item['desconto']/100))) * 100),
+                    'unit_amount' => (($item['valor'] - ($item['valor'] * ($item['desconto'] / 100))) * 100),
                 ];
                 $bodyData['items'][] = $item;
             }
@@ -343,14 +343,16 @@ class PagSeguroController extends Controller
                     $produtoController->email($pedido->id);
                     // $this->InativarCheckout($pedido->cod_checkout);
                 } else if ($pedido->status_pag == 'PAID') {
+                    if ($pedido->status != 'Pagamento aprovado') {
+                        $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id)->get();
+                        foreach ($itens_pedido as $item) {
+                            $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero', $item->numero)->first();
+                            $estoque->quantidade -= $item->quantidade;
+                            $estoque->save();
+                        }
+                    }
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
-                    $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id)->get();
-                    foreach ($itens_pedido as $item) {
-                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero', $item->numero)->first();
-                        $estoque->quantidade -= $item->quantidade;
-                        $estoque->save();
-                    }
                     if ($pedido->cod_entrega != 'Gratis') {
                         //lançar frete
                         $resposta = $melhorEnvio->lancarFrete($referenceId);

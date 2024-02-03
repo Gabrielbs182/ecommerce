@@ -120,6 +120,8 @@ function calcularFrete() {
 
             document.getElementById("envios").innerHTML = '';
 
+            var total = document.getElementById("totalCarrinho").val();
+
             linhas =
                 '<div class="row w-100 mt-3">' +
                 '<div class="col-sm-3">' +
@@ -133,13 +135,24 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (check == 0) {
-                        linha = montarLinhaEnvio(transportadora, 0);
-                        linhas += linha;
-                        check = 1;
+                    if (total >= 299) {
+                        if (check == 0) {
+                            linha = montarLinhaEnvio(transportadora, 2);
+                            linhas += linha;
+                            check = 1;
+                        } else {
+                            linha = montarLinhaEnvio(transportadora, 1);
+                            linhas += linha;
+                        }
                     } else {
-                        linha = montarLinhaEnvio(transportadora);
-                        linhas += linha;
+                        if (check == 0) {
+                            linha = montarLinhaEnvio(transportadora, 0);
+                            linhas += linha;
+                            check = 1;
+                        } else {
+                            linha = montarLinhaEnvio(transportadora);
+                            linhas += linha;
+                        }
                     }
                 }
             }
@@ -205,6 +218,24 @@ function montarLinhaEnvio(transportadora, check) {
             '<label class="form-check-label" for="' + transportadora.id + '">' +
             transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
+    } else if (check == 1) {
+        linha =
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (0).toFixed(2) + '">' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
+    } else if (check == 2) {
+        linha =
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (0).toFixed(2) + '" checked>' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
     } else {
@@ -281,9 +312,9 @@ function carregarCarrinho() {
                 if (data.hasOwnProperty(key)) {
                     var item = data[key];
                     var asset = $('#asset').val();
-                    if (item.desconto){
+                    if (item.desconto) {
                         valor = (item.valor - (item.valor * (item.desconto / 100)));
-                    }else{
+                    } else {
                         valor = item.valor;
                     }
                     valorUnitario = String(valor).replace('.', ',');
