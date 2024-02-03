@@ -173,7 +173,7 @@ class PagSeguroController extends Controller
                     'name' => $produto['nome'],
                     'description' => $produto['nome'],
                     'quantity' => $item['quantidade'],
-                    'unit_amount' => ($item['valor'] * 100),
+                    'unit_amount' => (($item['valor']-($item['valor']*($item['desconto']/100))) * 100),
                 ];
                 $bodyData['items'][] = $item;
             }
