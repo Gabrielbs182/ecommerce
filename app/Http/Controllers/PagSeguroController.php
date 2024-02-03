@@ -132,18 +132,6 @@ class PagSeguroController extends Controller
 
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
-                'payment_methods_configs' => [
-                    [
-                        'config_options' => [
-                            [
-                                'option' => 'INSTALLMENTS_LIMIT',
-                                'value' => 10,
-                            ]
-                        ],
-                        'type' => 'CREDIT_CARD',
-                        'type' => 'DEBIT_CARD',
-                    ]
-                ],
                 'reference_id' => $referenceId,
                 'customer' => [
                     'phone' => $customerPhone,
