@@ -31,7 +31,9 @@ function buscarProduto(id) {
         $('#quartoCarrosel').append(foto4);
         $('#quintoCarrosel').append(foto5);
         $('#nomeProdModal').append(produto[0].nome);
-        var val = produto[0].valor.replace('.', ',');
+        var valComDesconto = produto[0].valor - (produto[0].valor * (produto[0].desconto / 100));
+        console.log(valComDesconto);
+        var val = String(valComDesconto).replace('.', ',');
         var valor = 'R$ ' + val;
         $('#valorProdModal').append(valor);
         $('#exampleModalCenter').modal('show');
@@ -280,7 +282,10 @@ function carregarCarrinho() {
                     var item = data[key];
 
                     var asset = $('#asset').val();
-                    total += item.quantidade * item.valor;
+                    valor = (item.valor - (item.valor * (item.desconto / 100)))
+                    valorUnitario = String(valor).replace('.', ',');
+                    valorTotal = String(valor * item.quantidade).replace('.', ',');
+                    total += valor * item.quantidade;
                     var itemCarrinho =
                         '<tr>' +
                         '<td class="w-20 align-middle text-center">' +
@@ -289,8 +294,8 @@ function carregarCarrinho() {
                         '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                         'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
                         '</td>' +
-                        '<td class="align-middle text-center"> R$' + item.valor + '</td>' +
-                        '<td class="align-middle text-center"> R$' + (item.quantidade * item.valor) +
+                        '<td class="align-middle text-center"> R$' + valorUnitario + '</td>' +
+                        '<td class="align-middle text-center"> R$' + valorTotal +
                         '</td>' +
                         '<td class="align-middle text-center">' +
                         '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
@@ -312,7 +317,8 @@ function carregarCarrinho() {
             $('#loadingSpinner').hide();
         }
         $('#totalCarrinho').empty();
-        $('#totalCarrinho').append(total);
+        totalFim = String(total).replace('.', ',');
+        $('#totalCarrinho').append(totalFim);
         document.getElementById("envios").innerHTML = '';
 
         linha =

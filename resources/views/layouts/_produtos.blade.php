@@ -9,11 +9,13 @@
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                     <h6 class="text-truncate mb-3">{{ $prod->nome }}</h6>
                     <div class="d-flex justify-content-center">
-                        <h6>R${{ $prod->valor }}</h6>
                         @if ($prod->desconto > 0)
+                            <h6>R${{ $prod->valor - $prod->valor * ($prod->desconto / 100) }}</h6>
                             <h6 class="text-muted ml-2">
-                                <del>R${{ $prod->valor - $prod->valor * ($prod->desconto / 100) }}</del>
+                                <del>R${{ $prod->valor }}</del>
                             </h6>
+                        @else
+                            <h6>R${{ $prod->valor }}</h6>
                         @endif
                     </div>
                 </div>

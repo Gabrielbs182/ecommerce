@@ -29,10 +29,15 @@
                                 </div>
                             </div>
                             <div class="form-row align-items-center">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="valor">Valor de venda</label>
                                     <input type="text" name="valor" class="form-control" id="valor"
                                         placeholder="Exemplo: 20,00" value="{{$produto->valor}}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="valor">Desconto</label>
+                                    <input type="number" name="desconto" class="form-control" id="desconto"
+                                        placeholder="Exemplo: 5%" value="{{$produto->desconto}}" min="5" max="100">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="peso">peso</label>

@@ -306,6 +306,7 @@ class ProdutoController extends Controller
         $produto->largura = $request->input('largura');
         $produto->comprimento = $request->input('comprimento');
         $produto->valor = $request->input('valor');
+        $produto->desconto = $request->input('desconto');
         $produto->save();
 
         try {
