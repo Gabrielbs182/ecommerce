@@ -7,6 +7,7 @@ use App\Models\Produto;
 use App\Models\Estoque;
 use App\Models\Usuario;
 use App\Models\Categoria;
+use App\Models\Cupom;
 use App\Models\ItensPedido;
 use App\Models\Pedido;
 use Illuminate\Http\JsonResponse;
@@ -289,6 +290,16 @@ class ProdutoController extends Controller
         }
     }
 
+    public function deleteCupom($id, Request $request)
+    {
+        $cupom = Cupom::find($id);
+        $cupom->delete();
+        $message = 'Cupom deletado com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('cupons');
+    }
+
     public function update(Request $request)
     {
         $ativo = $request->has('ativo');
@@ -388,6 +399,14 @@ class ProdutoController extends Controller
         return view("categoria.editar", $data);
     }
 
+    public function editarCupom($id)
+    {
+        $data = [];
+        $cupom = Cupom::find($id);
+        $data["cupom"] = $cupom;
+        return view("cupom.editar", $data);
+    }
+
     public function updateCategoria(Request $request)
     {
         $categoria = Categoria::find($request->input('id'));
@@ -398,6 +417,26 @@ class ProdutoController extends Controller
         $status = 'ok';
         $request->session()->flash($status, $message);
         return redirect()->route('categorias');
+    }
+
+    public function updateCupom(Request $request)
+    {
+        $cupom = Cupom::find($request->input('id'));
+        $cupom->nome = $request->input('nome');
+        $cupom->codigo = $request->input('codigo');
+        $cupom->tipo = $request->input('tipo');
+        $cupom->desconto = $request->input('desconto');
+        if ($request->input('ativo')){
+            $cupom->ativo = 1;
+        }else{
+            $cupom->ativo = 0;
+        }
+        $cupom->save();
+
+        $message = 'Cupom atualizado com sucesso.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('cupons');
     }
 
     public function storeCategoria(Request $request)
@@ -422,9 +461,40 @@ class ProdutoController extends Controller
         }
     }
 
+    public function storeCupom(Request $request)
+    {
+
+        try {
+
+            $cupom = new Cupom;
+            $cupom->nome = $request->input("nome");
+            $cupom->codigo = $request->input("codigo");
+            $cupom->tipo = $request->input("tipo");
+            $cupom->desconto = $request->input("desconto");
+            $cupom->ativo = 1;
+            $cupom->save();
+            $message = 'Cupom cadastrado com sucesso.';
+            $status = 'ok';
+            $request->session()->flash($status, $message);
+            return redirect()->route('cupons');
+        } catch (\Exception $e) {
+            Log::error("ERRO", ['file' => 'ProdutoController.storeCupom', 'message' => $e->getMessage()]);
+            $message = 'Erro ao tentar realizar cadastro de cupom!';
+            $status = 'err';
+
+            $request->session()->flash($status, $message);
+            return redirect()->route('cupons');
+        }
+    }
+
     public function cadastrarCategoria()
     {
         return view("categoria.cadastrar");
+    }
+
+    public function cadastrarCupom()
+    {
+        return view("cupom.cadastrar");
     }
 
     public function cadastrarProduto()
@@ -551,6 +621,13 @@ class ProdutoController extends Controller
         return view("categoria.index", $data);
     }
 
+    public function cupons()
+    {
+        $listaCupons = Cupom::all();
+        $data["lista"] = $listaCupons;
+        return view("cupom.index", $data);
+    }
+
     public function itensPedido($id)
     {
 
@@ -601,23 +678,24 @@ class ProdutoController extends Controller
         return $estoque;
     }
 
-    public function buscarFotos($idProduto) {
+    public function buscarFotos($idProduto)
+    {
         // Suponha que você tenha o ID do produto, neste exemplo, $idProduto é 1
         $quantidadeFotos = 4; // Defina o número total de fotos do produto
-    
+
         $fotosExistentes = [];
-    
+
         // Verifique a existência de cada foto
         for ($i = 1; $i <= $quantidadeFotos; $i++) {
             $nomeArquivo = $idProduto . '_' . $i . '.png';
             $caminhoArquivo = public_path('images/' . $nomeArquivo);
-    
+
             if (File::exists($caminhoArquivo)) {
                 // O arquivo existe, adicione-o à lista de fotos existentes
                 $fotosExistentes[] = $nomeArquivo;
             }
         }
-        
+
         $nomeArquivoPrincipal = $idProduto . '.png';
         $caminhoArquivoPrincipal = public_path('images/' . $nomeArquivoPrincipal);
 
@@ -627,23 +705,24 @@ class ProdutoController extends Controller
         }
 
         return $fotosExistentes;
-        
+
         // Agora $fotosExistentes contém os nomes dos arquivos que existem na pasta
         // Você pode passar esta lista para a sua view ou fazer o que for necessário
     }
 
-    public function buscarFotosBanner() {
+    public function buscarFotosBanner()
+    {
         // Suponha que você tenha o ID do produto, neste exemplo, $idProduto é 1
         $quantidadeFotos = 3; // Defina o número total de fotos do produto
         $fotos = 0;
-    
+
         $fotosExistentes = [];
-    
+
         // Verifique a existência de cada foto
         for ($i = 1; $i <= $quantidadeFotos; $i++) {
             $nomeArquivo = 'carousel-' . $i . '.png';
             $caminhoArquivo = public_path('img/' . $nomeArquivo);
-    
+
             if (File::exists($caminhoArquivo)) {
                 // O arquivo existe, adicione-o à lista de fotos existentes
                 $fotos += 1;
@@ -651,7 +730,7 @@ class ProdutoController extends Controller
         }
 
         return $fotos;
-        
+
         // Agora $fotosExistentes contém os nomes dos arquivos que existem na pasta
         // Você pode passar esta lista para a sua view ou fazer o que for necessário
     }

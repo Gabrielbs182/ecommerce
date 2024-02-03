@@ -90,6 +90,8 @@ Route::get('/reset-password/{token}', function (Request $request, string $token)
 //REDIRECIONAMENTO
 Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
     ->name('categoria.cadastrar')->middleware('IsAdmin');
+Route::get('/cupom/cadastrar', [ProdutoController::class, 'cadastrarCupom'])
+    ->name('cupom.cadastrar')->middleware('IsAdmin');
 Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria'])
     ->name('produto.categoria');
 Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
@@ -100,7 +102,10 @@ Route::get('/estoque/produto/{id}', [ProdutoController::class, 'estoqueProduto']
     ->name('estoque.index')->middleware('IsAdmin');
 Route::get('/categoria/editar/{id}', [ProdutoController::class, 'editarCategoria'])
     ->name('categoria.editar')->middleware('IsAdmin');
+Route::get('/cupom/editar/{id}', [ProdutoController::class, 'editarCupom'])
+    ->name('cupom.editar')->middleware('IsAdmin');
 Route::get('/categorias', [ProdutoController::class, 'categorias'])->name('categorias')->middleware('IsAdmin');
+Route::get('/cupons', [ProdutoController::class, 'cupons'])->name('cupons')->middleware('IsAdmin');
 Route::get('/produto/cadastrar', [ProdutoController::class, 'cadastrarProduto'])
     ->name('produto.cadastrar')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/', [ProdutoController::class, 'index'])
@@ -129,10 +134,16 @@ Route::get('/pedido/finalizar/{id}', [ProdutoController::class, 'finalizarPedido
 Route::post('/atualizar_estoque', [ProdutoController::class, 'atualizarEstoque'])->name('atualizar_estoque')->middleware('IsAdmin');;
 Route::get('/categoria/excluir/{id}', [ProdutoController::class, 'deleteCategoria'])
     ->name('categoria.excluir')->middleware('IsAdmin');
+Route::get('/cupom/excluir/{id}', [ProdutoController::class, 'deleteCupom'])
+    ->name('cupom.excluir')->middleware('IsAdmin');
 Route::post('/categoria/update', [ProdutoController::class, 'updateCategoria'])
     ->name('categoria.update')->middleware('IsAdmin');
+Route::post('/cupom/update', [ProdutoController::class, 'updateCupom'])
+    ->name('cupom.update')->middleware('IsAdmin');
 Route::post('/categoria/store', [ProdutoController::class, 'storeCategoria'])
     ->name('categoria.store')->middleware('IsAdmin');
+Route::post('/cupom/store', [ProdutoController::class, 'storeCupom'])
+    ->name('cupom.store')->middleware('IsAdmin');
 Route::post('/produto/store', [ProdutoController::class, 'store'])
     ->name('produto.store')->middleware('IsAdmin');
 Route::get('/produto/excluir/{id}', [ProdutoController::class, 'delete'])

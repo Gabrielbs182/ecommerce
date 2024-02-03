@@ -254,6 +254,7 @@
                                         @if (Auth::user()->isAdmin == 1)
                                             <a href="{{ route('produtos') }}" class="dropdown-item">Produtos</a>
                                             <a href="{{ route('categorias') }}" class="dropdown-item">Categorias</a>
+                                            <a href="{{ route('cupons') }}" class="dropdown-item">Cupons</a>
                                             <a href="{{ route('configuracoes') }}" class="dropdown-item">Configurações</a>
                                             <a href="{{ route('pedidos.pendentes') }}" class="dropdown-item">Pedidos
                                                 Pendentes</a>
