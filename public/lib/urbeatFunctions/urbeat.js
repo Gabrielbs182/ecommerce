@@ -122,6 +122,8 @@ function calcularFrete() {
 
             var total = $("#totalCarrinho").val();
 
+            console.log(total);
+
             linhas =
                 '<div class="row w-100 mt-3">' +
                 '<div class="col-sm-3">' +
