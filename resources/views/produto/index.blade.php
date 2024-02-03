@@ -67,6 +67,9 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <a href="{{ route('cupom.cadastrar')}}" class="float-right mt-4">+ Novo</a>
+                </div>
                 <h2 class="text-center">Nenhum Produto cadastrado.
                     </h1>
             </div>
