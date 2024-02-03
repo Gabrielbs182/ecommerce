@@ -80,6 +80,16 @@ class ProdutoController extends Controller
         return view('pedidosPendentes', $data);
     }
 
+    public function todosPedidos()
+    {
+        $data = [];
+        $pedidos = Pedido::all();
+        if (isset($pedidos)) {
+            $data["lista"] = $pedidos;
+        }
+        return view('pedidosPendentes', $data);
+    }
+
     public function atualizarEstoque(Request $request)
     {
         $dadosEstoque = json_decode($request->input('dados_estoque'), true);

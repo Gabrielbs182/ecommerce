@@ -257,6 +257,7 @@
                                             <a href="{{ route('configuracoes') }}" class="dropdown-item">Configurações</a>
                                             <a href="{{ route('pedidos.pendentes') }}" class="dropdown-item">Pedidos
                                                 Pendentes</a>
+                                            <a href="{{ route('pedidos.todos') }}" class="dropdown-item">Todos os pedidos</a>
                                             {{-- <a href="{{ route('melhorenvio.authorize') }}" class="dropdown-item">Melhor
                                                 envio</a>
                                             <a href="{{ route('melhorInfo') }}" class="dropdown-item">Melhor
