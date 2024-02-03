@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\MelhorEnvioController;
+use App\Models\Estoque;
 use DateTime;
 
 class PagSeguroController extends Controller
@@ -344,6 +345,12 @@ class PagSeguroController extends Controller
                 } else if ($pedido->status_pag == 'PAID') {
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
+                    $itens_pedido = ItensPedido::where('pedido_id',  $pedido->id);
+                    foreach ($itens_pedido as $item) {
+                        $estoque = Estoque::where('produto_id', $item->produto_id)->where('numero',$item->numero);
+                        $estoque->quantidade -= $item->quantidade;
+                        $estoque->save(); 
+                    }
                     if ($pedido->cod_entrega != 'Gratis') {
                         //lançar frete
                         $resposta = $melhorEnvio->lancarFrete($referenceId);
