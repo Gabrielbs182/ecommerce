@@ -139,7 +139,8 @@ class PagSeguroController extends Controller
                                 'option' => 'INSTALLMENTS_LIMIT',
                                 'value' => 3,
                             ]
-                        ]
+                        ],
+                        'type' => 'CREDIT_CARD',
                     ]
                 ],
                 'reference_id' => $referenceId,
