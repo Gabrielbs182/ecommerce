@@ -120,7 +120,8 @@ function calcularFrete() {
 
             document.getElementById("envios").innerHTML = '';
 
-            var total = document.getElementById("totalCarrinho").value;
+            var paragrafo = document.getElementById("totalCarrinho").innerText;
+            var total = parseFloat(paragrafo.replace(',', '.'));
 
             console.log(total);
 
