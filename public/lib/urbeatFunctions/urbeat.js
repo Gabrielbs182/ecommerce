@@ -120,7 +120,7 @@ function calcularFrete() {
 
             document.getElementById("envios").innerHTML = '';
 
-            var total = document.getElementById("totalCarrinho").val();
+            var total = $("#totalCarrinho").val();
 
             linhas =
                 '<div class="row w-100 mt-3">' +
