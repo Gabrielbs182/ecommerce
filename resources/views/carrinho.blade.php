@@ -133,15 +133,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-8 form-group" id="logradouro-group">
+                        <div class="col-md-10 form-group" id="logradouro-group">
                             <label>Cupom</label>
                             <input class="form-control" type="text" id="cupom" name="cupom">
                         </div>
-                        <div class="col-md-4 form-group" id="logradouro-group">
-                            <div class="d-flex align-items-center justify-content-center">
+                        <div class="col-md-2 form-group" id="logradouro-group">
+                            {{-- <div class="d-flex align-items-center justify-content-center">
                                 <button type="button" class="btn btn-primary font-weight-bold my-2 py-2">
                                     Aplicar</button>
-                            </div>
+                            </div> --}}
+                            <input type="submit" value="Aplicar"
+                            class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
                         </div>
                     </div>
 
