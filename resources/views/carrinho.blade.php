@@ -102,7 +102,8 @@
                             @foreach ($cart as $indice => $p)
                                 <div class="d-flex justify-content-between">
                                     <p>{{ $p->nome }} x {{ $p->quantidade }}</p>
-                                    <p>{{ number_format(($p->valor-($p->valor*($p->desconto/100))) * $p->quantidade, 2, ',', '.') }}</p>
+                                    <p>{{ number_format(($p->valor - $p->valor * ($p->desconto / 100)) * $p->quantidade, 2, ',', '.') }}
+                                    </p>
                                 </div>
                                 @php $total += (($p->valor-($p->valor*($p->desconto/100)))*$p->quantidade); @endphp
                             @endforeach
@@ -128,6 +129,17 @@
                                 <h5 class="font-weight-bold">Total</h5>
                                 <h5 class="font-weight-bold">R$ {{ number_format($total + $valor, 2, ',', '.') }}</h5>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <label>Nome</label>
+                            <input class="form-control" type="text" id="nome" name="nome" required>
+                        </div>
+                        <div class="col-md-6 form-group" id="logradouro-group">
+                            <button type="button" value="Aplicar"
+                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
                         </div>
                     </div>
 
