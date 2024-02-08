@@ -134,12 +134,12 @@
 
                     <div class="row">
                         <div class="col-md-6 form-group" id="logradouro-group">
-                            <label>Nome</label>
-                            <input class="form-control" type="text" id="nome" name="nome" required>
+                            <label>Cupom</label>
+                            <input class="form-control" type="text" id="cupom" name="cupom">
                         </div>
                         <div class="col-md-6 form-group" id="logradouro-group">
-                            <button type="button" value="Aplicar"
-                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
+                            <button type="button"
+                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Aplicar</button>
                         </div>
                     </div>
 
