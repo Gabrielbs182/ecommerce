@@ -139,7 +139,7 @@
                         </div>
                         <div class="col-md-6 form-group" id="logradouro-group">
                             <button type="button"
-                                class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Aplicar</button>
+                                class="btn btn-block btn-primary font-weight-bold my-3 py-3">Aplicar</button>
                         </div>
                     </div>
 
