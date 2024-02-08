@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row border">
                         <hr>
                         <div class="col-md-9 form-group" id="logradouro-group">
                             <label>Cupom</label>
