@@ -138,8 +138,11 @@
                             <input class="form-control" type="text" id="cupom" name="cupom">
                         </div>
                         <div class="col-md-4 form-group" id="logradouro-group">
-                            <button type="button"
-                                class="btn btn-primary font-weight-bold my-2 py-2">Aplicar</button>
+                            <div class="border d-flex align-items-center justify-content-center" style="height: 350px;">
+                                <button type="button" class="btn btn-primary">Example button</button>
+                            </div>
+
+                            <button type="button" class="btn btn-primary font-weight-bold my-2 py-2">Aplicar</button>
                         </div>
                     </div>
 
