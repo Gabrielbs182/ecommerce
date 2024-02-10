@@ -256,9 +256,12 @@ function montarLinhaEnvio(transportadora, check) {
     return linha;
 }
 
+$('#cupomTexto').on('input', function() {
+    $(this).val($(this).val().toUpperCase());
+});
+
 function buscarCupom() {
     codigo = $("#cupomTexto").val();
-    console.log(codigo);
     // $('#loadingSpinner').show();
     // var numero = $('#tamanhoModal').val()
     // var idProduto = $('#idProduto').val()
@@ -266,58 +269,63 @@ function buscarCupom() {
         console.log(cupom);
         // $('#estoque').val(estoque[0].quantidade);
         // $('#loadingSpinner').hide();
-        if (cupom[0].ativo == 1) {
-            if (cupom[0].tipo == 0) {
-                // Se o frete é grátis
-                $('#cupom').val(cupom[0].id);
-                var gratis = "Grátis"
-                $('#valorFreteTexto').text(gratis);
-                var subtotal = $("#subtotal").text();
-                $('#total').text(subtotal);
-                var mensagem = '<p class="text-success">Cupom aplicado !</p>';
-                $('#mensagem').empty();
-                $('#mensagem').append(mensagem);
-                console.log($('#cupom').val())
-            } else {
-
-                $('#cupom').val(cupom[0].id);
-
-                // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-                var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '.');
-
-                // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-                var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
-
-                // Converter para float
-                var subtotal = parseFloat(textoSubtotal);
-                var vlrFrete = parseFloat(textoFrete);
-
-                console.log(subtotal);
-                console.log(vlrFrete);
-
-                // Calcular o novo valor (85 - 10%)
-                var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
-                var novoTotal = novoValor + vlrFrete;
-
-                // Formatar para o padrão brasileiro
-                var formatoBrasileiro = {
-                    style: 'currency',
-                    currency: 'BRL'
-                };
-
-                var novoValorFormatado = novoValor.toLocaleString('pt-BR', formatoBrasileiro);
-                var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
-
-                // Atualizar o conteúdo do elemento com o novo valor
-                $('#subtotal').text(novoValorFormatado);
-                $('#total').text(novoTotalFormatado);
-                var mensagem = '<p class="text-success">Cupom aplicado !</p>';
-                $('#mensagem').empty();
-                $('#mensagem').append(mensagem);
-                console.log($('#cupom').val())
-            }
+        if (!cupom) {
+            var mensagem = '<p class="text-danger">Cupom inválido !</p>';
+            $('#mensagem').empty();
+            $('#mensagem').append(mensagem);
         } else {
-            console.log('Cupom não está ativo.')
+            if (cupom[0].ativo == 1) {
+                if (cupom[0].tipo == 0) {
+                    // Se o frete é grátis
+                    $('#cupom').val(cupom[0].id);
+                    var gratis = "Grátis"
+                    $('#valorFreteTexto').text(gratis);
+                    var subtotal = $("#subtotal").text();
+                    $('#total').text(subtotal);
+                    var mensagem = '<p class="text-success">Cupom aplicado !</p>';
+                    $('#mensagem').empty();
+                    $('#mensagem').append(mensagem);
+                    $('#cupomButton').prop('disabled', true);
+                } else {
+
+                    $('#cupom').val(cupom[0].id);
+
+                    // Pegar o texto do elemento e remover o símbolo de R$ e espaços
+                    var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '.');
+
+                    // Pegar o texto do elemento e remover o símbolo de R$ e espaços
+                    var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
+
+                    // Converter para float
+                    var subtotal = parseFloat(textoSubtotal);
+                    var vlrFrete = parseFloat(textoFrete);
+
+                    // Calcular o novo valor (85 - 10%)
+                    var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
+                    var novoTotal = novoValor + vlrFrete;
+
+                    // Formatar para o padrão brasileiro
+                    var formatoBrasileiro = {
+                        style: 'currency',
+                        currency: 'BRL'
+                    };
+
+                    var novoValorFormatado = novoValor.toLocaleString('pt-BR', formatoBrasileiro);
+                    var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
+
+                    // Atualizar o conteúdo do elemento com o novo valor
+                    $('#subtotal').text(novoValorFormatado);
+                    $('#total').text(novoTotalFormatado);
+                    var mensagem = '<p class="text-success">Cupom aplicado !</p>';
+                    $('#mensagem').empty();
+                    $('#mensagem').append(mensagem);
+                    $('#cupomButton').prop('disabled', true);
+                }
+            } else {
+                var mensagem = '<p class="text-danger">Cupom inválido !</p>';
+                $('#mensagem').empty();
+                $('#mensagem').append(mensagem);
+            }
         }
     });
 };

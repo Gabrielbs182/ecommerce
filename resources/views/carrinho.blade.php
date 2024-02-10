@@ -82,8 +82,8 @@
                                 </div>
                                 <div class="col-md-6 form-group" id="cep-group">
                                     <label>CEP</label>
-                                    <input value="{{ $cep }}" class="form-control" name="cep" type="text"
-                                        id="cep" maxlength="10" readonly>
+                                    <input value="{{ $cep }}" class="form-control" name="cep"
+                                        type="text" id="cep" maxlength="10" readonly>
                                 </div>
                             </div>
                         @endif
@@ -116,7 +116,8 @@
                             <hr class="mt-0">
                             <div class="d-flex justify-content-between mb-3 pt-1">
                                 <h6 class="font-weight-medium">Subtotal</h6>
-                                <h6 class="font-weight-medium" id="subtotal">R$ {{ number_format($total, 2, ',', '.') }}</h6>
+                                <h6 class="font-weight-medium" id="subtotal">R$ {{ number_format($total, 2, ',', '.') }}
+                                </h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Frete</h6>
@@ -133,7 +134,8 @@
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold" id="total">R$ {{ number_format($total + $valor, 2, ',', '.') }}</h5>
+                                <h5 class="font-weight-bold" id="total">R$
+                                    {{ number_format($total + $valor, 2, ',', '.') }}</h5>
                             </div>
                         </div>
                     </div>
@@ -147,8 +149,9 @@
                         </div>
 
                         <div class="col-md-3 form-group" id="logradouro-group">
-                            <button type="button"
-                                class="btn btn-block btn-primary font-weight-bold my-3 py-3" onclick="buscarCupom()">Aplicar</button>
+                            <button type="button" id="cupomButton"
+                                class="btn btn-block btn-primary font-weight-bold my-3 py-3"
+                                onclick="buscarCupom()">Aplicar</button>
                         </div>
                         <hr>
                     </div>
