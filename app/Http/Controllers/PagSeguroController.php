@@ -62,7 +62,7 @@ class PagSeguroController extends Controller
             $cupom = Cupom::find($idCupom);
         }
         if ($cupom) {
-            if ($cupom->tipo = 0) {
+            if ($cupom->tipo == 0) {
                 $vlrFrete = 0;
             } else {
                 $vlrFrete = ($request->input('valorFrete') * 100);
