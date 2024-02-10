@@ -17,9 +17,9 @@
                     <h4 class="font-weight-semi-bold mb-4">Endereço de entrega</h4>
                     <form action="{{ route('pagar') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="valorFrete" value="{{ $valor }}">
-                        <input type="hidden" name="idFrete" value="{{ $idFrete }}">
-                        <input type="hidden" name="desconto">
+                        <input type="hidden" id="valorFrete" name="valorFrete" value="{{ $valor }}">
+                        <input type="hidden" id="idFrete" name="idFrete" value="{{ $idFrete }}">
+                        <input type="hidden" name="desconto" id="desconto">
                         @if ($idFrete == 'Gratis')
                             <div class="row">
                                 <div class="col-md-6 form-group" id="logradouro-group">
