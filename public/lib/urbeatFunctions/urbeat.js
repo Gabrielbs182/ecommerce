@@ -256,7 +256,8 @@ function montarLinhaEnvio(transportadora, check) {
     return linha;
 }
 
-function buscarCupom(codigo) {
+function buscarCupom() {
+    codigo = $("#cupom").val();
     // $('#loadingSpinner').show();
     // var numero = $('#tamanhoModal').val()
     // var idProduto = $('#idProduto').val()
@@ -266,7 +267,12 @@ function buscarCupom(codigo) {
         // $('#loadingSpinner').hide();
         if (cupom[0].ativo == 1) {
             if (cupom[0].tipo == 0) {
-                $('#valorFrete').val(0);
+                $('#valorFrete').empty();
+                var valorFreteTexto = 'Gratís';
+                $('#valorFrete').append(valorFreteTexto);
+                var subtotal = $('#subtotal').val();
+                $('#total').empty();
+                $('#total').append(subtotal);
                 console.log('frete gratis')
                 console.log($('#valorFrete'))
             } else {
