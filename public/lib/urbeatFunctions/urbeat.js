@@ -297,12 +297,19 @@ function buscarCupom() {
                 // Calcular o novo valor (85 - 10%)
                 var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
                 var novoTotal = novoValor + vlrFrete;
-                var novoValorText = novoValor.replace('R$ ', '').replace(',', '.');
-                var novoTotalText = novoTotal.replace('R$ ', '').replace(',', '.');
+
+                // Formatar para o padrão brasileiro
+                var formatoBrasileiro = {
+                    style: 'currency',
+                    currency: 'BRL'
+                };
+
+                var novoValorFormatado = novoValor.toLocaleString('pt-BR', formatoBrasileiro);
+                var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
 
                 // Atualizar o conteúdo do elemento com o novo valor
-                $('#subtotal').text('R$ ' + novoValorText);
-                $('#total').text('R$ ' + novoTotalText);
+                $('#subtotal').text('R$ ' + novoValorFormatado);
+                $('#total').text('R$ ' + novoTotalFormatado);
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
                 $('#mensagem').append(mensagem);
