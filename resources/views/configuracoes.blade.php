@@ -32,27 +32,27 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="freteFixo" type="checkbox" id="gridCheck"
+                                    <input class="form-check-input" name="freteFixo" type="checkbox" id="gridCheck1"
                                         @if ($freteFixo == 1) checked @endif>
-                                    <label class="form-check-label" for="gridCheck">
+                                    <label class="form-check-label" for="gridCheck1">
                                         Frete Fixo
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="freteGratis299" type="checkbox" id="gridCheck"
+                                    <input class="form-check-input" name="freteGratis299" type="checkbox" id="gridCheck2"
                                         @if ($freteGratis299 == 1) checked @endif>
-                                    <label class="form-check-label" for="gridCheck">
+                                    <label class="form-check-label" for="gridCheck2">
                                         Frete Grátis acima de 299
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="motoboy" type="checkbox" id="gridCheck"
+                                    <input class="form-check-input" name="motoboy" type="checkbox" id="gridCheck3"
                                         @if ($motoboy == 1) checked @endif>
-                                    <label class="form-check-label" for="gridCheck">
+                                    <label class="form-check-label" for="gridCheck3">
                                         Motoboy
                                     </label>
                                 </div>
