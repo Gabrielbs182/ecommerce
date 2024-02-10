@@ -138,7 +138,9 @@ class ProdutoController extends Controller
         $melhorClientSecret = env('CLIENT_SECRET');
         $melhorScope = env('SCOPE');
         $melhorUserAgent = env('USER_AGENT');
+        $freteFixo = env('FRETE_FIXO');
         $data = [];
+        $data['freteFixo'] = $freteFixo;
         $data['pagEmail'] = $pagEmail;
         $data['pagToken'] = $pagToken;
         $data['melhorName'] = $melhorName;
