@@ -268,9 +268,11 @@ function buscarCupom() {
         // $('#loadingSpinner').hide();
         if (cupom[0].ativo == 1) {
             if (cupom[0].tipo == 0) {
+                // Se o frete é grátis
                 $('#valorFrete').text('Grátis');
-                var subtotal = parseFloat($('#subtotal').val());
-                $('#total').text(subtotal.toFixed(2));
+
+                var subtotal = $("#subtotal").text();
+                $('#total').text(subtotal);
                 console.log('frete gratis')
             } else {
                 $('#desconto').val(cupom[0].desconto);
