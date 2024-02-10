@@ -270,7 +270,7 @@ function buscarCupom() {
             if (cupom[0].tipo == 0) {
                 // Se o frete é grátis
                 var gratis = "Grátis"
-                $('#valorFrete').text(gratis);
+                $('#valorFreteTexto').text(gratis);
                 var subtotal = $("#subtotal").text();
                 $('#total').text(subtotal);
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
