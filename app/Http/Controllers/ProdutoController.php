@@ -641,7 +641,7 @@ class ProdutoController extends Controller
 
     public function buscarCupom($codigo)
     {
-        $cupom = Cupom::where('codigo', $id)->get();
+        $cupom = Cupom::where('codigo', $codigo)->get();
         return $cupom;
     }
 
