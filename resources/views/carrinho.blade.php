@@ -120,7 +120,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Frete</h6>
-                                <h6 class="font-weight-medium" id="valorFrete">
+                                <h6 class="font-weight-medium" id="valorFreteTexto">
                                     @if ($valor == 0)
                                         Grátis
                                     @else
