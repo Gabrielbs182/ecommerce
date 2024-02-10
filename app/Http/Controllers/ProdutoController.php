@@ -240,6 +240,7 @@ class ProdutoController extends Controller
         $MOTOBOY = $motoboy;
         $FRETE_FIXO = $freteFixo;
         $FRETE_GRATIS299 = $freteGratis299;
+        dd($MOTOBOY,$FRETE_FIXO,$FRETE_GRATIS299);
         $MOTOBOY_VIX = $request->input('motoboyVix');
         $MOTOBOY_SERRA = $request->input('motoboySerra');
         $MOTOBOY_VV = $request->input('motoboyVV');
