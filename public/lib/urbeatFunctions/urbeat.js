@@ -296,10 +296,13 @@ function buscarCupom() {
 
                 // Calcular o novo valor (85 - 10%)
                 var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
+                var novoTotal = novoValor + vlrFrete;
+                var novoValorText = novoValor.replace('R$ ', '').replace(',', '.');
+                var novoTotalText = novoTotal.replace('R$ ', '').replace(',', '.');
 
                 // Atualizar o conteúdo do elemento com o novo valor
-                $('#subtotal').text('R$ ' + novoValor);
-                $('#total').text('R$ ' + total);
+                $('#subtotal').text('R$ ' + novoValorText);
+                $('#total').text('R$ ' + novoTotalText);
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
                 $('#mensagem').append(mensagem);
