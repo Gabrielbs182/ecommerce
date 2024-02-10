@@ -277,6 +277,7 @@ function buscarCupom() {
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
                 $('#mensagem').append(mensagem);
+                console.log($('#cupom').val())
             } else {
 
                 $('#cupom').val(cupom[0].id);
@@ -313,6 +314,7 @@ function buscarCupom() {
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
                 $('#mensagem').append(mensagem);
+                console.log($('#cupom').val())
             }
         } else {
             console.log('Cupom não está ativo.')
