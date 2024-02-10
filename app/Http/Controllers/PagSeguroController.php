@@ -58,6 +58,10 @@ class PagSeguroController extends Controller
         //buscando inputs
         $vlrFrete = ($request->input('valorFrete') * 100);
         $total = $request->input('valorFrete');
+        $desconto = null; // Defina uma valor padrão ou deixe nulo, dependendo do que você precisa.
+        if (isset($request->input('desconto'))) {
+            $desconto = $request->input('desconto');
+        }
         $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
@@ -165,6 +169,9 @@ class PagSeguroController extends Controller
                 ];
                 $bodyData['items'][] = $item;
             }
+
+            $descontoCentavos = ($total*($desconto/100))*100;
+            $bodyData['discount_amount'] = $descontoCentavos;
 
             // Convertendo o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
