@@ -932,7 +932,7 @@ class ProdutoController extends Controller
         // Verificações de parâmetros
         if (empty($chave) || empty($valor)) {
             // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo
-            Log::error("ERRO", "AtualizarVariaveisAmbiente, Chave ou valor vazios.");
+            Log::error("ERRO", ['file' => 'ProdutoController.AtualizarVariaveisAmbiente', 'message' => $e->getMessage()]);
             return "Erro: Chave ou valor vazios.";
         }
         // Buscando o conteúdo do .env
@@ -957,7 +957,7 @@ class ProdutoController extends Controller
         // Verificações de parâmetros
         if (empty($chave) || empty($valor)) {
             // Trate como um erro ou apenas retorne, dependendo da lógica do seu aplicativo
-            Log::error("ERRO", "Erro: Chave ou valor vazios.");
+            Log::error("ERRO", ['file' => 'ProdutoController.AtualizarVariaveisAmbiente', 'message' => $e->getMessage()]);
             return "Erro: Chave ou valor vazios.";
         }
         // Buscando o conteúdo do .env
