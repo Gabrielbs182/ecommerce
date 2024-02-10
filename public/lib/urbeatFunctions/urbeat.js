@@ -282,21 +282,20 @@ function buscarCupom() {
                 $('#cupom').val(cupom[0].id);
 
                 // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-                var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '');
+                var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '.');
 
                 // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-                var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '');
+                var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
 
                 // Converter para float
                 var subtotal = parseFloat(textoSubtotal);
                 var vlrFrete = parseFloat(textoFrete);
 
-                // Calcular o novo valor (85 - 10%)
-                var novoValor = subtotal - (subtotal * (cupom[0].desconto/100));
+                console.log(subtotal);
+                console.log(vlrFrete);
 
-                // Arredondar para duas casas decimais
-                novoValor = novoValor.toFixed(2);
-                total = novoValor+vlrFrete;
+                // Calcular o novo valor (85 - 10%)
+                var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
 
                 // Atualizar o conteúdo do elemento com o novo valor
                 $('#subtotal').text('R$ ' + novoValor);
