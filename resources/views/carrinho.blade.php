@@ -19,7 +19,7 @@
                         @csrf
                         <input type="hidden" id="valorFrete" name="valorFrete" value="{{ $valor }}">
                         <input type="hidden" id="idFrete" name="idFrete" value="{{ $idFrete }}">
-                        <input type="hidden" id="cupom">
+                        <input type="hidden" id="cupom" name="cupom">
                         @if ($idFrete == 'Gratis')
                             <div class="row">
                                 <div class="col-md-6 form-group" id="logradouro-group">

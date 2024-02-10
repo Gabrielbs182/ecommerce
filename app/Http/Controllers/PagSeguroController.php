@@ -61,8 +61,12 @@ class PagSeguroController extends Controller
             $idCupom = $request->input('cupom');
             $cupom = Cupom::find($idCupom);
         }
-        if ($cupom->tipo = 0) {
-            $vlrFrete = 0;
+        if ($cupom) {
+            if ($cupom->tipo = 0) {
+                $vlrFrete = 0;
+            } else {
+                $vlrFrete = ($request->input('valorFrete') * 100);
+            }
         } else {
             $vlrFrete = ($request->input('valorFrete') * 100);
         }
@@ -175,11 +179,13 @@ class PagSeguroController extends Controller
                 $bodyData['items'][] = $item;
             }
 
-            if($cupom->tipo == 1){
-                $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
-                $bodyData['discount_amount'] = $descontoCentavos;
+            if ($cupom) {
+                if ($cupom->tipo == 1) {
+                    $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
+                    $bodyData['discount_amount'] = $descontoCentavos;
+                }
             }
-            
+
             // Convertendo o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
 
