@@ -214,11 +214,13 @@ class ProdutoController extends Controller
             Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
         }
 
+        $freteFixo = 0;
+        $freteGratis299 = 0;
+        $motoboy = 0;
+
         $freteFixo = $request->has('freteFixo');
         if ($freteFixo) {
             $freteFixo = 1;
-        } else {
-            $freteFixo = 0;
         }
 
         $freteGratis299 = $request->has('freteGratis299');
