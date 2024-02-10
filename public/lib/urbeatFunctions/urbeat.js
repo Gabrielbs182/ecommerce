@@ -264,6 +264,15 @@ function buscarCupom(codigo) {
         console.log(cupom);
         // $('#estoque').val(estoque[0].quantidade);
         // $('#loadingSpinner').hide();
+        if (cupom[0].ativo == 1) {
+            if (cupom[0].tipo == 0) {
+                console.log('frete gratis')
+            } else {
+                console.log('desconto no total');
+            }
+        } else {
+            console.log('Cupom não está ativo.')
+        }
     });
 };
 
