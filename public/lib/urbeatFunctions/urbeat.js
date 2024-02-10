@@ -257,58 +257,58 @@ function montarLinhaEnvio(transportadora, check) {
 }
 
 function buscarCupom() {
-    codigo = $("#cupom").val();
+    codigo = $("#cupomTexto").val();
     console.log(codigo);
     // $('#loadingSpinner').show();
     // var numero = $('#tamanhoModal').val()
     // var idProduto = $('#idProduto').val()
-    // $.getJSON('/buscarCupom/' + codigo, function (cupom) {
-    //     console.log(cupom);
-    //     // $('#estoque').val(estoque[0].quantidade);
-    //     // $('#loadingSpinner').hide();
-    //     if (cupom[0].ativo == 1) {
-    //         if (cupom[0].tipo == 0) {
-    //             // Se o frete é grátis
-    //             $('#cupom').val(cupom[0].id);
-    //             var gratis = "Grátis"
-    //             $('#valorFreteTexto').text(gratis);
-    //             var subtotal = $("#subtotal").text();
-    //             $('#total').text(subtotal);
-    //             var mensagem = '<p class="text-success">Cupom aplicado !</p>';
-    //             $('#mensagem').empty();
-    //             $('#mensagem').append(mensagem);
-    //         } else {
+    $.getJSON('/buscarCupom/' + codigo, function (cupom) {
+        console.log(cupom);
+        // $('#estoque').val(estoque[0].quantidade);
+        // $('#loadingSpinner').hide();
+        if (cupom[0].ativo == 1) {
+            if (cupom[0].tipo == 0) {
+                // Se o frete é grátis
+                $('#cupom').val(cupom[0].id);
+                var gratis = "Grátis"
+                $('#valorFreteTexto').text(gratis);
+                var subtotal = $("#subtotal").text();
+                $('#total').text(subtotal);
+                var mensagem = '<p class="text-success">Cupom aplicado !</p>';
+                $('#mensagem').empty();
+                $('#mensagem').append(mensagem);
+            } else {
 
-    //             $('#cupom').val(cupom[0].id);
+                $('#cupom').val(cupom[0].id);
 
-    //             // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-    //             var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '');
+                // Pegar o texto do elemento e remover o símbolo de R$ e espaços
+                var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '');
 
-    //             // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-    //             var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '');
+                // Pegar o texto do elemento e remover o símbolo de R$ e espaços
+                var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '');
 
-    //             // Converter para float
-    //             var subtotal = parseFloat(textoSubtotal);
-    //             var vlrFrete = parseFloat(textoFrete);
+                // Converter para float
+                var subtotal = parseFloat(textoSubtotal);
+                var vlrFrete = parseFloat(textoFrete);
 
-    //             // Calcular o novo valor (85 - 10%)
-    //             var novoValor = subtotal - (subtotal * (cupom[0].desconto/100));
+                // Calcular o novo valor (85 - 10%)
+                var novoValor = subtotal - (subtotal * (cupom[0].desconto/100));
 
-    //             // Arredondar para duas casas decimais
-    //             novoValor = novoValor.toFixed(2);
-    //             total = novoValor+vlrFrete;
+                // Arredondar para duas casas decimais
+                novoValor = novoValor.toFixed(2);
+                total = novoValor+vlrFrete;
 
-    //             // Atualizar o conteúdo do elemento com o novo valor
-    //             $('#subtotal').text('R$ ' + novoValor);
-    //             $('#total').text('R$ ' + total);
-    //             var mensagem = '<p class="text-success">Cupom aplicado !</p>';
-    //             $('#mensagem').empty();
-    //             $('#mensagem').append(mensagem);
-    //         }
-    //     } else {
-    //         console.log('Cupom não está ativo.')
-    //     }
-    // });
+                // Atualizar o conteúdo do elemento com o novo valor
+                $('#subtotal').text('R$ ' + novoValor);
+                $('#total').text('R$ ' + total);
+                var mensagem = '<p class="text-success">Cupom aplicado !</p>';
+                $('#mensagem').empty();
+                $('#mensagem').append(mensagem);
+            }
+        } else {
+            console.log('Cupom não está ativo.')
+        }
+    });
 };
 
 function buscarEstoque() {

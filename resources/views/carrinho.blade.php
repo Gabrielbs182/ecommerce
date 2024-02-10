@@ -142,7 +142,7 @@
                         <hr>
                         <div class="col-md-9 form-group" id="logradouro-group">
                             <label>Cupom</label>
-                            <input class="form-control" type="text" id="cupom" name="cupom">
+                            <input class="form-control" type="text" id="cupomTexto" name="cupomTexto">
                             <div id="mensagem"></div>
                         </div>
 
