@@ -258,9 +258,10 @@ function montarLinhaEnvio(transportadora, check) {
 
 $(document).ready(function () {
     $('#cupomTexto').on('input', function () {
-        $(this).val($(this).val().toUpperCase());
+        this.value = this.value.toUpperCase();
     });
 });
+
 function buscarCupom() {
     codigo = $("#cupomTexto").val();
     // $('#loadingSpinner').show();
