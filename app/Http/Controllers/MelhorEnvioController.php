@@ -500,7 +500,7 @@ class MelhorEnvioController extends Controller
 
     public function consultarMotoboy(String $cidade)
     {
-        $motoboy = ENV('MOTOBOY');
+        $motoboy = env('MOTOBOY');
 
         $valor = 0;
 
@@ -508,20 +508,20 @@ class MelhorEnvioController extends Controller
             $valor = 0;
             switch ($cidade) {
                 case "serra":
-                    $valor = ENV('MOTOBOY_SERRA');
+                    $valor = env('MOTOBOY_SERRA', 0);
                     break;
                 case "vitoria":
-                    $valor = ENV('MOTOBOY_VIX');
+                    $valor = env('MOTOBOY_VIX', 0);
                     break;
                 case "vilavelha":
-                    $valor = ENV('MOTOBOY_VV');
+                    $valor = env('MOTOBOY_VV', 0);
                     break;
                 case "cariacica":
-                    $valor = ENV('MOTOBOY_CARIACICA');
+                    $valor = env('MOTOBOY_CARIACICA', 0);
                     break;
             }
-            return $valor;
         }
+
         return $valor;
     }
 
