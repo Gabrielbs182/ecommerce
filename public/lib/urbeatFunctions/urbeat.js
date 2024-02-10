@@ -98,6 +98,8 @@ function obterDadosCEP(cep) {
         .then(data => {
             // Manipular os dados obtidos
 
+            console.log(data);
+
             // Aqui você pode fazer o que quiser com os dados, por exemplo, preencher um formulário
         })
         .catch(error => {
