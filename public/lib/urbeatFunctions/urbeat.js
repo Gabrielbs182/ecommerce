@@ -162,6 +162,27 @@ function calcularFrete() {
                 }
             }
 
+            cepInteiro = parseInt(cepValue)
+
+            if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
+                // CEP pertence à região sudeste
+                console.log("CEP da região sudeste.");
+                if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
+                    console.log("Cariacica.");
+                } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
+                    console.log("Serra.");
+                } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
+                    console.log("Vitória.");
+                } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
+                    console.log("Vila velha.");
+                } else {
+                    console.log("Não faz parte da grande vitoria")
+                }
+            } else {
+                // CEP não pertence à região sudeste
+                console.log("CEP fora da região sudeste.");
+            }
+
             console.log(cepValue);
 
             linhas +=
