@@ -59,7 +59,7 @@ class PagSeguroController extends Controller
         $vlrFrete = ($request->input('valorFrete') * 100);
         $total = $request->input('valorFrete');
         $desconto = null; // Defina uma valor padrão ou deixe nulo, dependendo do que você precisa.
-        if (isset($request->input('desconto'))) {
+        if ($request->input('desconto') != null){
             $desconto = $request->input('desconto');
         }
         $idFrete = $request->input('idFrete');
