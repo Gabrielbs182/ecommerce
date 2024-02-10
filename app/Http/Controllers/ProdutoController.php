@@ -259,7 +259,7 @@ class ProdutoController extends Controller
         $USER_AGENT = $request->input('melhorEnvioUserAgent');
         $SCOPE = $request->input('melhorEnvioEscopo');
         $CLIENT_ID = $request->input('melhorEnvioClientID');
-        // $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
         // $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         // $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
         // $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
