@@ -117,11 +117,6 @@ function calcularFrete() {
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
-            var freteFixo = 0;
-
-            $.getJSON('/melhorenvio/freteFixo/', function (frete) {
-                console.log(frete);
-            });
 
             document.getElementById("envios").innerHTML = '';
 
@@ -213,6 +208,21 @@ function validarCEP(cep) {
         return false;
     }
 };
+
+function montarLinhaEnvioFreteGratis() {
+
+    linha =
+        '<div class="form-check">' +
+        '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" checked>' +
+        '<label class="form-check-label" for="' + transportadora.id + '">' +
+        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+        ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+        '</label>' +
+        '</div>';
+
+    return linha;
+}
 
 function montarLinhaEnvio(transportadora, check) {
 
