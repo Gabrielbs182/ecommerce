@@ -308,8 +308,8 @@ function buscarCupom() {
                 var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
 
                 // Atualizar o conteúdo do elemento com o novo valor
-                $('#subtotal').text('R$ ' + novoValorFormatado);
-                $('#total').text('R$ ' + novoTotalFormatado);
+                $('#subtotal').text(novoValorFormatado);
+                $('#total').text(novoTotalFormatado);
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
                 $('#mensagem').append(mensagem);
