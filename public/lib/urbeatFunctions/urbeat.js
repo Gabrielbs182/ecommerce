@@ -268,14 +268,10 @@ function buscarCupom() {
         // $('#loadingSpinner').hide();
         if (cupom[0].ativo == 1) {
             if (cupom[0].tipo == 0) {
-                $('#valorFrete').empty();
-                var valorFreteTexto = 'Gratís';
-                $('#valorFrete').append(valorFreteTexto);
-                var subtotal = $('#subtotal').val();
-                $('#total').empty();
-                $('#total').append(subtotal);
+                $('#valorFrete').text('Grátis');
+                var subtotal = parseFloat($('#subtotal').val());
+                $('#total').text(total.toFixed(2));
                 console.log('frete gratis')
-                console.log($('#valorFrete'))
             } else {
                 $('#desconto').val(cupom[0].desconto);
                 console.log('desconto no total');
