@@ -292,11 +292,11 @@ function buscarCupom() {
                 var vlrFrete = parseFloat(textoFrete);
 
                 // Calcular o novo valor (85 - 10%)
-                var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
+                var novoValor = subtotal - (subtotal * (cupom[0].desconto/100));
 
                 // Arredondar para duas casas decimais
                 novoValor = novoValor.toFixed(2);
-                total = novoValor + vlrFrete;
+                total = novoValor+vlrFrete;
 
                 // Atualizar o conteúdo do elemento com o novo valor
                 $('#subtotal').text('R$ ' + novoValor);
