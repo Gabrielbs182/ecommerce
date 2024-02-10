@@ -272,6 +272,7 @@ function buscarCupom(codigo) {
             } else {
                 $('#desconto').val(cupom[0].desconto);
                 console.log('desconto no total');
+                console.log($('#desconto').val);
             }
         } else {
             console.log('Cupom não está ativo.')
