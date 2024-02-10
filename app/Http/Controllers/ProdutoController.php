@@ -177,8 +177,6 @@ class ProdutoController extends Controller
     public function configuracoesUpdate(Request $request)
     {
 
-        dd($request);
-
         try {
             if ($request->hasFile('banner1')) {
                 $imagem = $request->file('banner1');
