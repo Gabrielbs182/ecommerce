@@ -212,29 +212,29 @@ class ProdutoController extends Controller
             Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
         }
 
-        $freteFixo = 0;
-        $freteGratis299 = 0;
-        $motoboy = 0;
+        $freteFixo = 1;
+        $freteGratis299 = 1;
+        $motoboy = 1;
 
         $freteFixoTeste = $request->has('freteFixo');
         if ($freteFixoTeste) {
-            $freteFixo = 1;
+            $freteFixo = 2;
         } else {
-            $freteFixo = 0;
+            $freteFixo = 1;
         }
 
         $freteGratis299Teste = $request->has('freteGratis299');
         if ($freteGratis299Teste) {
-            $freteGratis299 = 1;
+            $freteGratis299 = 2;
         } else {
-            $freteGratis299 = 0;
+            $freteGratis299 = 1;
         }
 
         $motoboyTeste = $request->has('motoboy');
         if ($motoboyTeste) {
-            $motoboy = 1;
+            $motoboy = 2;
         } else {
-            $motoboy = 0;
+            $motoboy = 1;
         }
 
         $MOTOBOY = $motoboy;
