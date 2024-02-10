@@ -266,8 +266,10 @@ function buscarCupom(codigo) {
         // $('#loadingSpinner').hide();
         if (cupom[0].ativo == 1) {
             if (cupom[0].tipo == 0) {
+                $('#valorFrete').val(0);
                 console.log('frete gratis')
             } else {
+                $('#desconto').val(cupom[0].desconto);
                 console.log('desconto no total');
             }
         } else {
