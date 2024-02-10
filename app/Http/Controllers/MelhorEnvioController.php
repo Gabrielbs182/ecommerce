@@ -520,8 +520,8 @@ class MelhorEnvioController extends Controller
                     $valor = ENV('MOTOBOY_CARIACICA');
                     break;
             }
+            return $valor;
         }
-
         return $valor;
     }
 
