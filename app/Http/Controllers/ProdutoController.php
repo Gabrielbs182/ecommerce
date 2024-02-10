@@ -265,12 +265,12 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
-        // $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
-        // $this->AtualizarVariaveisAmbiente('MOTOBOY_SERRA', $MOTOBOY_SERRA);
-        // $this->AtualizarVariaveisAmbiente('MOTOBOY_VV', $MOTOBOY_VV);
-        // $this->AtualizarVariaveisAmbiente('MOTOBOY_CARIACICA', $MOTOBOY_CARIACICA);
-        // $this->AtualizarVariaveisAmbiente('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
-        // $this->AtualizarVariaveisAmbiente('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_SERRA', $MOTOBOY_SERRA);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_VV', $MOTOBOY_VV);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_CARIACICA', $MOTOBOY_CARIACICA);
+        $this->AtualizarVariaveisAmbiente('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
+        $this->AtualizarVariaveisAmbiente('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_NAME', $MELHORENVIO_NAME);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_PHONE', $MELHORENVIO_PHONE);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_EMAIL', $MELHORENVIO_EMAIL);
