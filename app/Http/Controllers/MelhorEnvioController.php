@@ -508,16 +508,16 @@ class MelhorEnvioController extends Controller
             $valor = 0;
             switch ($cidade) {
                 case "serra":
-                    $valor = env('MOTOBOY_SERRA', 0);
+                    $valor = intval(env('MOTOBOY_SERRA', 0));
                     break;
                 case "vitoria":
-                    $valor = env('MOTOBOY_VIX', 0);
+                    $valor = intval(env('MOTOBOY_VIX', 0));
                     break;
                 case "vilavelha":
-                    $valor = env('MOTOBOY_VV', 0);
+                    $valor = intval(env('MOTOBOY_VV', 0));
                     break;
                 case "cariacica":
-                    $valor = env('MOTOBOY_CARIACICA', 0);
+                    $valor = intval(env('MOTOBOY_CARIACICA', 0));
                     break;
             }
         }
