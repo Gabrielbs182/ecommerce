@@ -270,7 +270,7 @@ function buscarCupom() {
             if (cupom[0].tipo == 0) {
                 $('#valorFrete').text('Grátis');
                 var subtotal = parseFloat($('#subtotal').val());
-                $('#total').text(total.toFixed(2));
+                $('#total').text(subtotal.toFixed(2));
                 console.log('frete gratis')
             } else {
                 $('#desconto').val(cupom[0].desconto);
