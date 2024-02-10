@@ -166,15 +166,30 @@ function calcularFrete() {
 
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                 // CEP pertence à região sudeste
+                $.getJSON('/melhorenvio/freteFixo', function (frete) {
+                    console.log(frete);
+                });
                 console.log("CEP da região sudeste.");
                 if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
+                    $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
+                        console.log(frete);
+                    });
                     console.log("Cariacica.");
                 } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                     console.log("Serra.");
+                    $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
+                        console.log(frete);
+                    });
                 } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
                     console.log("Vitória.");
+                    $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
+                        console.log(frete);
+                    });
                 } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
                     console.log("Vila velha.");
+                    $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
+                        console.log(frete);
+                    });
                 } else {
                     console.log("Não faz parte da grande vitoria")
                 }

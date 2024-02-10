@@ -12,7 +12,7 @@ use App\Models\Usuario;
 use App\Models\Produto;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\ProdutoController;
-
+use Illuminate\Support\Env;
 
 class MelhorEnvioController extends Controller
 {
@@ -492,9 +492,37 @@ class MelhorEnvioController extends Controller
         return $responseJson;
     }
 
-    public function consultarFreteFixo(){
+    public function consultarFreteFixo()
+    {
         $freteFixo = ENV('FRETE_FIXO');
         return $freteFixo;
+    }
+
+    public function consultarMotoboy(String $cidade)
+    {
+        $motoboy = ENV('MOTOBOY');
+
+        $valor = 0;
+
+        if ($motoboy == 2) {
+            $valor = 0;
+            switch ($cidade) {
+                case "serra":
+                    $valor = ENV('MOTOBOY_SERRA');
+                    break;
+                case "vitoria":
+                    $valor = ENV('MOTOBOY_VIX');
+                    break;
+                case "vilavelha":
+                    $valor = ENV('MOTOBOY_VV');
+                    break;
+                case "cariacica":
+                    $valor = ENV('MOTOBOY_CARIACICA');
+                    break;
+            }
+        }
+
+        return $valor;
     }
 
     public function calcularFrete(string $cep)
