@@ -143,11 +143,12 @@
                         <div class="col-md-9 form-group" id="logradouro-group">
                             <label>Cupom</label>
                             <input class="form-control" type="text" id="cupom" name="cupom">
+                            <div id="mensagem"></div>
                         </div>
 
                         <div class="col-md-3 form-group" id="logradouro-group">
                             <button type="button"
-                                class="btn btn-block btn-primary font-weight-bold my-3 py-3">Aplicar</button>
+                                class="btn btn-block btn-primary font-weight-bold my-3 py-3" onclick="buscarCupom()">Aplicar</button>
                         </div>
                         <hr>
                     </div>

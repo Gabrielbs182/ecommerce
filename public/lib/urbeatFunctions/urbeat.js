@@ -269,10 +269,13 @@ function buscarCupom() {
         if (cupom[0].ativo == 1) {
             if (cupom[0].tipo == 0) {
                 // Se o frete é grátis
-                $('#valorFrete').text('Grátis');
-
+                var gratis = "Grátis"
+                $('#valorFrete').text(gratis);
                 var subtotal = $("#subtotal").text();
                 $('#total').text(subtotal);
+                var mensagem = '<p class="text-success">Cupom aplicado !</p>';
+                $('#mensagem').empty();
+                $('#mensagem').val(mensagem);
                 console.log('frete gratis')
             } else {
                 $('#desconto').val(cupom[0].desconto);
