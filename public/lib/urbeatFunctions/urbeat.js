@@ -275,7 +275,7 @@ function buscarCupom() {
                 $('#total').text(subtotal);
                 var mensagem = '<p class="text-success">Cupom aplicado !</p>';
                 $('#mensagem').empty();
-                $('#mensagem').val(mensagem);
+                $('#mensagem').append(mensagem);
                 console.log('frete gratis')
             } else {
                 $('#desconto').val(cupom[0].desconto);
