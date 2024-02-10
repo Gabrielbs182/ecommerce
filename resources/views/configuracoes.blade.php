@@ -17,28 +17,68 @@
                             <div class="form-row align-items-center">
                                 <div class="form-group col-md-6">
                                     <label for="banner1">Foto Banner 1</label>
-                                    <input type="file" name="banner1"
-                                        class="form-control" id="banner1">
+                                    <input type="file" name="banner1" class="form-control" id="banner1">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="banner2">Foto Banner 2</label>
-                                    <input type="file" name="banner2"
-                                        class="form-control" id="banner2">
+                                    <input type="file" name="banner2" class="form-control" id="banner2">
                                 </div>
                             </div>
                             <div class="form-row align-items-center">
                                 <div class="form-group col-md-6">
                                     <label for="banner3">Foto Banner 3</label>
-                                    <input type="file" name="banner3"
-                                        class="form-control" id="banner3">
+                                    <input type="file" name="banner3" class="form-control" id="banner3">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="freteFixo" type="checkbox" id="gridCheck" @if($freteFixo == 1) checked @endif>
+                                    <input class="form-check-input" name="freteFixo" type="checkbox" id="gridCheck"
+                                        @if ($freteFixo == 1) checked @endif>
                                     <label class="form-check-label" for="gridCheck">
                                         Frete Fixo
                                     </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="freteGratis299" type="checkbox" id="gridCheck"
+                                        @if ($freteGratis299 == 1) checked @endif>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Frete Grátis acima de 299
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="motoboy" type="checkbox" id="gridCheck"
+                                        @if ($motoboy == 1) checked @endif>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Motoboy
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="melhorEnvioNome">Motoboy Vitória</label>
+                                    <input value="{{ $motoboyVix }}" type="number" step="0.010" name="motoboyVix"
+                                        class="form-control" id="motoboyVix">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="banner3">Motoboy Serra</label>
+                                    <input value="{{ $motoboySerra }}" type="number" step="0.010" name="motoboySerra"
+                                        class="form-control" id="motoboySerra">
+                                </div>
+                            </div>
+                            <div class="form-row align-items-center">
+                                <div class="form-group col-md-6">
+                                    <label for="banner3">Motoboy Cariacica</label>
+                                    <input value="{{ $motoboyCariacica }}" type="number" step="0.010"
+                                        name="motoboyCariacica" class="form-control" id="motoboyCariacica">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="banner3">Motoboy VV</label>
+                                    <input value="{{ $motoboyVV }}" type="number" step="0.010" name="motoboyVV"
+                                        class="form-control" id="motoboyVV">
                                 </div>
                             </div>
                             <p><b>Pag Seguro</b></p>
@@ -64,7 +104,8 @@
                                 <div class="form-group col-md-3">
                                     <label for="melhorEnvioTelefone">Telefone</label>
                                     <input value="{{ $melhorPhone }}" type="text" class="form-control"
-                                        id="melhorEnvioTelefone" name="melhorEnvioTelefone" placeholder="EX: 27999999999">
+                                        id="melhorEnvioTelefone" name="melhorEnvioTelefone"
+                                        placeholder="EX: 27999999999">
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="melhorEnvioEmail">Email</label>

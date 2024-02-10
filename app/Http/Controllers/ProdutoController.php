@@ -139,8 +139,16 @@ class ProdutoController extends Controller
         $melhorScope = env('SCOPE');
         $melhorUserAgent = env('USER_AGENT');
         $freteFixo = env('FRETE_FIXO');
+        $motoboyVix = env('MOTOBOY_VIX');
+        $motoboySerra = env('MOTOBOY_SERRA');
+        $motoboyVV = env('MOTOBOY_VV');
+        $motoboyCariacica = env('MOTOBOY_CARIACICA');
         $data = [];
         $data['freteFixo'] = $freteFixo;
+        $data['motoboyCariacica'] = $motoboyCariacica;
+        $data['motoboyVV'] = $motoboyVV;
+        $data['motoboySerra'] = $motoboySerra;
+        $data['motoboyVix'] = $motoboyVix;
         $data['pagEmail'] = $pagEmail;
         $data['pagToken'] = $pagToken;
         $data['melhorName'] = $melhorName;
@@ -199,7 +207,11 @@ class ProdutoController extends Controller
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
         }
-
+        $FRETE_FIXO = $request->input('freteFixo');
+        $MOTOBOY_VIX = $request->input('motoboyVix');
+        $MOTOBOY_SERRA = $request->input('motoboySerra');
+        $MOTOBOY_VV = $request->input('motoboyVV');
+        $MOTOBOY_CARIACICA = $request->input('motoboyCariacica');
         $PAGSEGURO_EMAIL = $request->input('pagSeguroEmail');
         $PAGSEGURO_TOKEN = $request->input('pagSeguroToken');
         $MELHORENVIO_NAME = $request->input('melhorEnvioNome');
@@ -217,6 +229,11 @@ class ProdutoController extends Controller
         $USER_AGENT = $request->input('melhorEnvioUserAgent');
         $SCOPE = $request->input('melhorEnvioEscopo');
         $CLIENT_ID = $request->input('melhorEnvioClientID');
+        $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_SERRA', $MOTOBOY_SERRA);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_VV', $MOTOBOY_VV);
+        $this->AtualizarVariaveisAmbiente('MOTOBOY_CARIACICA', $MOTOBOY_CARIACICA);
         $this->AtualizarVariaveisAmbiente('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
         $this->AtualizarVariaveisAmbiente('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_NAME', $MELHORENVIO_NAME);
@@ -428,9 +445,9 @@ class ProdutoController extends Controller
         $cupom->codigo = $request->input('codigo');
         $cupom->tipo = $request->input('tipo');
         $cupom->desconto = $request->input('desconto');
-        if ($request->input('ativo')){
+        if ($request->input('ativo')) {
             $cupom->ativo = 1;
-        }else{
+        } else {
             $cupom->ativo = 0;
         }
         $cupom->save();
