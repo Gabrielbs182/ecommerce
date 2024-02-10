@@ -216,19 +216,21 @@ class ProdutoController extends Controller
         $freteGratis299 = 0;
         $motoboy = 0;
 
-        $freteFixo = $request->has('freteFixo');
+        $freteFixoTeste = $request->has('freteFixo');
         if ($freteFixo) {
             $freteFixo = 1;
+        } else {
+            $freteFixo = 0;
         }
 
-        $freteGratis299 = $request->has('freteGratis299');
+        $freteGratis299Teste = $request->has('freteGratis299');
         if ($freteGratis299) {
             $freteGratis299 = 1;
         } else {
             $freteGratis299 = 0;
         }
 
-        $motoboy = $request->has('motoboy');
+        $motoboyTeste = $request->has('motoboy');
         if ($motoboy) {
             $motoboy = 1;
         } else {
