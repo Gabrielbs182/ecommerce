@@ -109,7 +109,9 @@ function calcularFrete() {
     // Obtenha o valor do CEP
     var cepValue = document.getElementById("cep").value;
 
-    obterDadosCEP(cepValue);
+    var teste = obterDadosCEP(cepValue);
+
+    console.log(teste);
 
     // Verifique se o CEP é válido antes de fazer a requisição
     if (validarCEP(cepValue)) {
