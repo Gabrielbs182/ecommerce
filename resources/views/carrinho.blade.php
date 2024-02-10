@@ -144,7 +144,7 @@
                         <hr>
                         <div class="col-md-9 form-group" id="logradouro-group">
                             <label>Cupom</label>
-                            <input class="form-control" type="text" id="cupomTexto" name="cupomTexto">
+                            <input maxlength="15" class="form-control" type="text" id="cupomTexto" name="cupomTexto">
                             <div id="mensagem"></div>
                         </div>
 
