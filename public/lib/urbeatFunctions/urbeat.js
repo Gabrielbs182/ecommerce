@@ -256,10 +256,11 @@ function montarLinhaEnvio(transportadora, check) {
     return linha;
 }
 
-$('#cupomTexto').on('input', function() {
-    $(this).val($(this).val().toUpperCase());
+$(document).ready(function () {
+    $('#seuCampo').on('input', function () {
+        $(this).val($(this).val().toUpperCase());
+    });
 });
-
 function buscarCupom() {
     codigo = $("#cupomTexto").val();
     // $('#loadingSpinner').show();
