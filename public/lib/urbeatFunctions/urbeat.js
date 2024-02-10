@@ -257,7 +257,7 @@ function montarLinhaEnvio(transportadora, check) {
 }
 
 $(document).ready(function () {
-    $('#seuCampo').on('input', function () {
+    $('#cupomTexto').on('input', function () {
         $(this).val($(this).val().toUpperCase());
     });
 });
