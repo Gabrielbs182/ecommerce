@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\ProdutoController;
 use App\Http\Controllers\MelhorEnvioController;
+use App\Models\Cupom;
 use App\Models\Estoque;
 use DateTime;
 
@@ -56,12 +57,16 @@ class PagSeguroController extends Controller
         $produtoController = new ProdutoController;
 
         //buscando inputs
-        $vlrFrete = ($request->input('valorFrete') * 100);
-        $total = $request->input('valorFrete');
-        $desconto = null; // Defina uma valor padrão ou deixe nulo, dependendo do que você precisa.
-        if ($request->input('desconto') != null){
-            $desconto = $request->input('desconto');
+        if ($request->input('cupom') != null) {
+            $idCupom = $request->input('cupom');
+            $cupom = Cupom::find($idCupom);
         }
+        if ($cupom->tipo = 0) {
+            $vlrFrete = 0;
+        } else {
+            $vlrFrete = ($request->input('valorFrete') * 100);
+        }
+        $total = $request->input('valorFrete');
         $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
@@ -170,9 +175,11 @@ class PagSeguroController extends Controller
                 $bodyData['items'][] = $item;
             }
 
-            $descontoCentavos = ($total*($desconto/100))*100;
-            $bodyData['discount_amount'] = $descontoCentavos;
-
+            if($cupom->tipo == 1){
+                $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
+                $bodyData['discount_amount'] = $descontoCentavos;
+            }
+            
             // Convertendo o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
 
