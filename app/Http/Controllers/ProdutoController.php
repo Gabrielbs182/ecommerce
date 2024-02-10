@@ -144,6 +144,7 @@ class ProdutoController extends Controller
         $motoboySerra = env('MOTOBOY_SERRA');
         $motoboyVV = env('MOTOBOY_VV');
         $motoboyCariacica = env('MOTOBOY_CARIACICA');
+        $motoboy = env('MOTOBOY');
         $data = [];
         $data['freteFixo'] = $freteFixo;
         $data['freteGratis299'] = $freteGratis299;
@@ -151,6 +152,7 @@ class ProdutoController extends Controller
         $data['motoboyVV'] = $motoboyVV;
         $data['motoboySerra'] = $motoboySerra;
         $data['motoboyVix'] = $motoboyVix;
+        $data['motoboy'] = $motoboy;
         $data['pagEmail'] = $pagEmail;
         $data['pagToken'] = $pagToken;
         $data['melhorName'] = $melhorName;
@@ -224,6 +226,14 @@ class ProdutoController extends Controller
             $freteGratis299 = 0;
         }
 
+        $motoboy = $request->has('motoboy');
+        if ($motoboy) {
+            $motoboy = 1;
+        } else {
+            $motoboy = 0;
+        }
+
+        $MOTOBOY = $motoboy;
         $FRETE_FIXO = $freteFixo;
         $FRETE_GRATIS299 = $freteGratis299;
         $MOTOBOY_VIX = $request->input('motoboyVix');
@@ -247,6 +257,7 @@ class ProdutoController extends Controller
         $USER_AGENT = $request->input('melhorEnvioUserAgent');
         $SCOPE = $request->input('melhorEnvioEscopo');
         $CLIENT_ID = $request->input('melhorEnvioClientID');
+        $this->AtualizarVariaveisAmbiente('motoboy', $MOTOBOY);
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
         $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
