@@ -238,7 +238,7 @@ class ProdutoController extends Controller
         $MOTOBOY = $motoboy;
         $FRETE_FIXO = $freteFixo;
         $FRETE_GRATIS299 = $freteGratis299;
-        $MOTOBOY_VIX = $request->input('motoboyVix');
+        // $MOTOBOY_VIX = $request->input('motoboyVix')
         $MOTOBOY_SERRA = $request->input('motoboySerra');
         $MOTOBOY_VV = $request->input('motoboyVV');
         $MOTOBOY_CARIACICA = $request->input('motoboyCariacica');
@@ -262,7 +262,7 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
-        $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
+        // $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
         // $this->AtualizarVariaveisAmbiente('MOTOBOY_SERRA', $MOTOBOY_SERRA);
         // $this->AtualizarVariaveisAmbiente('MOTOBOY_VV', $MOTOBOY_VV);
         // $this->AtualizarVariaveisAmbiente('MOTOBOY_CARIACICA', $MOTOBOY_CARIACICA);
