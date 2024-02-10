@@ -117,6 +117,11 @@ function calcularFrete() {
         console.log('Cep é valido');
         // Faça a requisição para calcular o frete
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
+            var freteFixo = 0;
+
+            $.getJSON('/melhorenvio/freteFixo/', function (frete) {
+                console.log(frete);
+            });
 
             document.getElementById("envios").innerHTML = '';
 

@@ -33,6 +33,14 @@
                                         class="form-control" id="banner3">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="freteFixo" type="checkbox" id="gridCheck" @if($freteFixo == 1) checked @endif>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Frete Fixo
+                                    </label>
+                                </div>
+                            </div>
                             <p><b>Pag Seguro</b></p>
                             <div class="form-row align-items-center">
                                 <div class="form-group col-md-6">

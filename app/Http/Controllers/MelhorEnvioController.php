@@ -492,6 +492,11 @@ class MelhorEnvioController extends Controller
         return $responseJson;
     }
 
+    public function consultarFreteFixo(){
+        $freteFixo = ENV('FRETE_FIXO');
+        return $freteFixo;
+    }
+
     public function calcularFrete(string $cep)
     {
 
