@@ -258,6 +258,7 @@ function montarLinhaEnvio(transportadora, check) {
 
 function buscarCupom() {
     codigo = $("#cupom").val();
+    console.log(codigo);
     // $('#loadingSpinner').show();
     // var numero = $('#tamanhoModal').val()
     // var idProduto = $('#idProduto').val()
