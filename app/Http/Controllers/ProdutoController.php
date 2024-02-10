@@ -139,12 +139,14 @@ class ProdutoController extends Controller
         $melhorScope = env('SCOPE');
         $melhorUserAgent = env('USER_AGENT');
         $freteFixo = env('FRETE_FIXO');
+        $freteGratis299 = env('FRETE_GRATIS299');
         $motoboyVix = env('MOTOBOY_VIX');
         $motoboySerra = env('MOTOBOY_SERRA');
         $motoboyVV = env('MOTOBOY_VV');
         $motoboyCariacica = env('MOTOBOY_CARIACICA');
         $data = [];
         $data['freteFixo'] = $freteFixo;
+        $data['freteGratis299'] = $freteGratis299;
         $data['motoboyCariacica'] = $motoboyCariacica;
         $data['motoboyVV'] = $motoboyVV;
         $data['motoboySerra'] = $motoboySerra;
@@ -207,7 +209,23 @@ class ProdutoController extends Controller
         } catch (\Exception $e) {
             Log::error("ERRO", ['file' => 'ProdutoController.store', 'message' => $e->getMessage()]);
         }
-        $FRETE_FIXO = $request->input('freteFixo');
+
+        $freteFixo = $request->has('freteFixo');
+        if ($freteFixo) {
+            $freteFixo = 1;
+        } else {
+            $freteFixo = 0;
+        }
+
+        $freteGratis299 = $request->has('freteGratis299');
+        if ($freteGratis299) {
+            $freteGratis299 = 1;
+        } else {
+            $freteGratis299 = 0;
+        }
+
+        $FRETE_FIXO = $freteFixo;
+        $FRETE_GRATIS299 = $freteGratis299;
         $MOTOBOY_VIX = $request->input('motoboyVix');
         $MOTOBOY_SERRA = $request->input('motoboySerra');
         $MOTOBOY_VV = $request->input('motoboyVV');
@@ -230,6 +248,7 @@ class ProdutoController extends Controller
         $SCOPE = $request->input('melhorEnvioEscopo');
         $CLIENT_ID = $request->input('melhorEnvioClientID');
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
+        $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
         $this->AtualizarVariaveisAmbiente('MOTOBOY_VIX', $MOTOBOY_VIX);
         $this->AtualizarVariaveisAmbiente('MOTOBOY_SERRA', $MOTOBOY_SERRA);
         $this->AtualizarVariaveisAmbiente('MOTOBOY_VV', $MOTOBOY_VV);
