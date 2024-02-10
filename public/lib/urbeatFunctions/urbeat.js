@@ -256,6 +256,17 @@ function montarLinhaEnvio(transportadora, check) {
     return linha;
 }
 
+function buscarCupom(codigo) {
+    // $('#loadingSpinner').show();
+    // var numero = $('#tamanhoModal').val()
+    // var idProduto = $('#idProduto').val()
+    $.getJSON('/buscarCupom/' + codigo, function (cupom) {
+        console.log(cupom);
+        // $('#estoque').val(estoque[0].quantidade);
+        // $('#loadingSpinner').hide();
+    });
+};
+
 function buscarEstoque() {
     $('#loadingSpinner').show();
     var numero = $('#tamanhoModal').val()

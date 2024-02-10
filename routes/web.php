@@ -112,6 +112,8 @@ Route::match(['get', 'post'], '/', [ProdutoController::class, 'index'])
     ->name('home');
 Route::match(['get', 'post'], '/itens/{id}', [ProdutoController::class, 'itensPedido'])
     ->name('itensPedido');
+Route::match(['get', 'post'], '/buscarCupom/{id}', [ProdutoController::class, 'buscarCupom'])
+    ->name('buscarCupom');
 Route::match(['get', 'post'], '/categoria', [ProdutoController::class, 'categoria'])
     ->name('categoria')->middleware('IsAdmin');
 Route::match(['get', 'post'], '/cadastrar', [ClienteController::class, 'cadastrar'])

@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('scriptjs')
+    <script src="{{ asset('lib/urbeatFunctions/urbeat.js') }}"></script>
+@endsection
+
+
 @section('content')
     <!-- Checkout Start -->
     <!-- Adicione uma div para mostrar a mensagem de erro -->

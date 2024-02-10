@@ -639,6 +639,12 @@ class ProdutoController extends Controller
         return $itens;
     }
 
+    public function buscarCupom($codigo)
+    {
+        $cupom = Cupom::where('codigo', $id)->get();
+        return $cupom;
+    }
+
     public function exluirProduto($id)
     {
         $produto = Produto::find($id);
