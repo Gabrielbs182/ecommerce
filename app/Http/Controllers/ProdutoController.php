@@ -240,10 +240,9 @@ class ProdutoController extends Controller
         $MOTOBOY = $motoboy;
         $FRETE_FIXO = $freteFixo;
         $FRETE_GRATIS299 = $freteGratis299;
-        $MOTOBOY_VIX = $request->filled('motoboyVix') ? $request->input('motoboyVix') : ' ';
-        $MOTOBOY_VIX = $request->input('motoboyVix');
-        $MOTOBOY_SERRA = $request->filled('motoboySerra') ? $request->input('motoboySerra') : ' ';
-        $MOTOBOY_VV = $request->filled('motoboyVV') ? $request->input('motoboyVV') : ' ';
+        $MOTOBOY_VIX = $request->filled('motoboyVix') ? $request->input('motoboyVix') : '0';
+        $MOTOBOY_SERRA = $request->filled('motoboySerra') ? $request->input('motoboySerra') : '0';
+        $MOTOBOY_VV = $request->filled('motoboyVV') ? $request->input('motoboyVV') : '0';
         $MOTOBOY_CARIACICA = $request->filled('motoboyCariacica') ? $request->input('motoboyCariacica') : ' ';
         $PAGSEGURO_EMAIL = $request->input('pagSeguroEmail');
         $PAGSEGURO_TOKEN = $request->input('pagSeguroToken');
