@@ -287,7 +287,7 @@ function montarLinhaEnvioMotoboy(motoboy, valor) {
     linha =
         '<div class="form-check">' +
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + motoboy + '" value="' +
-        motoboy + '/Motoboy/' + (valor).toFixed(2) + '">' +
+        motoboy + '/Motoboy/' + valor + '">' +
         '<label class="form-check-label" for="' + motoboy + '">Motoboy - R$ ' + valor +
         ' - Prazo 1 dia.' +
         '</label>' +
