@@ -196,6 +196,7 @@ function calcularFrete() {
                     $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
                         console.log('Motoboy_Serra');
                         console.log(frete);
+                        console.log(typeof frete);
                         if (frete > 0) {
                             linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
                             linhas += linha;
