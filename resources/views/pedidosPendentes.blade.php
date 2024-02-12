@@ -10,7 +10,7 @@
 
         function abrirEndereco(id) {
             carregarEndereco(id);
-            $('#modalDetalhes').modal('show');
+            $('#modalDetalhesEndereco').modal('show');
         };
 
         function carregarItens(id) {
@@ -74,7 +74,7 @@
                 // O objeto retornado é um array
                 var total = 0;
                 var indice = 0;
-                $('#modalCarrinhoLista').empty();
+                $('#modalEnderecoLista').empty();
 
                 // Verificar se data é um objeto
                 if (typeof data === 'object' && data !== null) {
@@ -93,7 +93,7 @@
                                 '<td class="align-middle text-center"> ' + item.cidade + '</td>' +
                                 '<td class="align-middle text-center"> ' + item.uf + '</td>' +
                                 '</tr>';
-                            $('#modalCarrinhoLista').append(itemCarrinho);
+                            $('#modalEnderecoLista').append(itemCarrinho);
                             indice++
                         }
                     }
@@ -194,6 +194,44 @@
                                     </tr>
                                 </thead>
                                 <tbody id="modalCarrinhoLista">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalDetalhesEndereco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable justify-content-center"
+            role="document">
+
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Endereço
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="enderecoModal">
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <table class="table table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="text-center">Logradouro</th>
+                                        <th scope="col" class="text-center">Bairro</th>
+                                        <th scope="col" class="text-center">Complemento</th>
+                                        <th scope="col" class="text-center">Cep</th>
+                                        <th scope="col" class="text-center">Cidade</th>
+                                        <th scope="col" class="text-center">UF</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalEnderecoLista">
                                 </tbody>
                             </table>
                         </div>
