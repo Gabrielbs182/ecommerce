@@ -285,7 +285,8 @@ class PagSeguroController extends Controller
                             DB::beginTransaction();
                             $pedido->save();
                             DB::commit();
-                            $this->email($pedido->id);
+                            $produtoController = new ProdutoController;
+                            $produtoController->email($pedido->id);
                         } catch (\Exception $e) {
                             Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
                             DB::rollback();
