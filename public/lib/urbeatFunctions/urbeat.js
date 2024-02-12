@@ -141,31 +141,41 @@ function calcularFrete() {
 
                             if (frete299 == 2) {
                                 if (total >= 299) {
+                                    linhas = document.getElementById("envios").innerHTML;
                                     linha = montarLinhaEnvio(transportadora, check, 0);
                                     linhas += linha;
+                                    document.getElementById("envios").innerHTML = linhas;
                                     check = 0;
                                 } else {
                                     $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
                                         if (freteFixo == 2) {
+                                            linhas = document.getElementById("envios").innerHTML;
                                             linha = montarLinhaEnvio(transportadora, check, 2);
                                             linhas += linha;
+                                            document.getElementById("envios").innerHTML = linhas;
                                             check = 0;
                                         } else {
+                                            linhas = document.getElementById("envios").innerHTML;
                                             linha = montarLinhaEnvio(transportadora, check, 1);
                                             linhas += linha;
                                             check = 0;
+                                            document.getElementById("envios").innerHTML = linhas;
                                         }
                                     });
                                 }
                             } else {
                                 $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
                                     if (freteFixo == 2) {
+                                        linhas = document.getElementById("envios").innerHTML;
                                         linha = montarLinhaEnvio(transportadora, check, 2);
                                         linhas += linha;
+                                        document.getElementById("envios").innerHTML = linhas;
                                         check = 0;
                                     } else {
+                                        linhas = document.getElementById("envios").innerHTML;
                                         linha = montarLinhaEnvio(transportadora, check, 1);
                                         linhas += linha;
+                                        document.getElementById("envios").innerHTML = linhas;
                                         check = 0;
                                     }
                                 });
@@ -174,8 +184,10 @@ function calcularFrete() {
                         });
 
                     } else {
+                        linhas = document.getElementById("envios").innerHTML;
                         linha = montarLinhaEnvio(transportadora, check, 1);
                         linhas += linha;
+                        document.getElementById("envios").innerHTML = linhas;
                         check = 0;
                     }
                 }
@@ -184,30 +196,38 @@ function calcularFrete() {
             if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
                 $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
                     if (frete > 0) {
+                        linhas = document.getElementById("envios").innerHTML;
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        document.getElementById("envios").innerHTML = linhas;
                     }
                 });
             } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                 $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
                     if (frete > 0) {
+                        linhas = document.getElementById("envios").innerHTML;
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        document.getElementById("envios").innerHTML = linhas;
                     }
                 });
             } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
                 $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
                     if (frete > 0) {
+                        linhas = document.getElementById("envios").innerHTML;
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        document.getElementById("envios").innerHTML = linhas;
                     }
                 });
             } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
                 $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
 
                     if (frete > 0) {
+                        linhas = document.getElementById("envios").innerHTML;
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        document.getElementById("envios").innerHTML = linhas;
                     }
                 });
             }
@@ -224,12 +244,6 @@ function calcularFrete() {
                 '</div>' +
                 '</div>'
                 ;
-
-            document.getElementById("envios").innerHTML = linhas;
-            $('#loadingSpinner').hide();
-
-            console.log(linhas);
-
         });
     } else {
         // Exibir mensagem de erro para CEP inválido
