@@ -146,6 +146,7 @@ function calcularFrete() {
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                 if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
                     linha = montarLinhaEnvioMotoboy('motoboyCariacica', motoboyCariacica);
+                    console.log(motoboyCariacica);
                     linhas += linha;
                 } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                     console.log("Serra.");
