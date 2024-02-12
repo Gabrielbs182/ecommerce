@@ -120,7 +120,6 @@ function calcularFrete() {
             cepInteiro = parseInt(cepValue)
             var paragrafo = document.getElementById("totalCarrinho").innerText;
             var total = parseFloat(paragrafo.replace(',', '.'));
-            console.log(total);
 
             linhas =
                 '<div class="row w-100 mt-3">' +
@@ -227,7 +226,16 @@ function calcularFrete() {
                 });
             }
 
+            document.getElementById("envios").innerHTML = linhas;
+            $('#loadingSpinner').hide();
+
         });
+    } else {
+        // Exibir mensagem de erro para CEP inválido
+        $("#cep-error-message").text("CEP inválido");
+        // Adicionar classe para destacar o campo em vermelho
+        $("#cep-group").addClass("has-error");
+        $('#loadingSpinner').hide();
     }
 }
 
