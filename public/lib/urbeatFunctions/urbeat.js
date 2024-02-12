@@ -141,6 +141,26 @@ function calcularFrete() {
                 '</div>' +
                 '<div class="col-sm-9">';
 
+
+            if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
+                if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
+                    linha = montarLinhaEnvioMotoboy('motoboyCariacica', valor);
+                    linhas += linha;
+                } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
+                    console.log("Serra.");
+                    linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
+                    linhas += linha;
+                } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
+                    console.log("Vitória.");
+                    linha = montarLinhaEnvioMotoboy('motoboyVix', valor);
+                    linhas += linha;
+                } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
+                    console.log("Vila velha.");
+                    linha = montarLinhaEnvioMotoboy('motoboyVV', valor);
+                    linhas += linha;
+                }
+            }
+
             var check = 0;
 
             for (var transportadora of frete) {
