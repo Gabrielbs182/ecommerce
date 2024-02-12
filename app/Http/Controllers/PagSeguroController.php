@@ -55,6 +55,7 @@ class PagSeguroController extends Controller
         $carrinho = session('cart', []);
         $produtoSemEstoque = "";
         $produtoController = new ProdutoController;
+        $cupom = "";
 
         //buscando inputs
         if ($request->input('cupom') != null) {
