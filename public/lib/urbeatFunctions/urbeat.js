@@ -138,7 +138,6 @@ function calcularFrete() {
                     if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                         //testar se está no sudeste
                         $.getJSON('/melhorenvio/frete299', function (frete299) {
-
                             if (frete299 == 2) {
                                 if (total >= 299) {
                                     linhas = document.getElementById("envios").innerHTML;
@@ -309,8 +308,6 @@ function montarLinhaEnvioMotoboy(preco) {
 
 function montarLinhaEnvio(transportadora, check, tipo) {
 
-    var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
-
     //tipo = 0=gratis, 1=normal, 2=fixo, 3=motoboy
     //check = 0=nao checkado, 1=checkado
 
@@ -322,27 +319,83 @@ function montarLinhaEnvio(transportadora, check, tipo) {
         var vlrFrete = 0;
     }
 
-    if (check == 1) {
-        //imprime normal porém checkado
-        linha =
+    var valorFormatado = vlrFrete.toFixed(2).replace('.', ',');
+
+    if (tipo == 0) {
+
+        if (check == 1) {
+            //imprime normal porém checkado
+            linha =
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '" checked>' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        } else {
+            //imprime frete gratis sem checkado
+            linha =
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '" >' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        }
+
+    } else if (tipo == 1) {
+
+        if (check == 1) {
+            //imprime normal porém checkado
+            linha =
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '" checked>' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+                ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        } else {
+            //imprime frete gratis sem checkado
+            linha =
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '">' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+                ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        }
+
+    } else if (tipo == 2) {
+
+        if (check == 1) {
+            //imprime normal porém checkado
             '<div class="form-check">' +
-            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (vlrFrete).toFixed(2) + '" checked>' +
-            '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
-            ' - Prazo ' + transportadora.delivery_time + ' dias.' +
-            '</label>' +
-            '</div>';
-    } else {
-        //imprime frete gratis sem checkado
-        linha =
-            '<div class="form-check">' +
-            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (vlrFrete).toFixed(2) + '">' +
-            '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
-            '</label>' +
-            '</div>';
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '" checked>' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+                ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        } else {
+            //imprime frete gratis sem checkado
+            linha =
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+                transportadora.id + '/' + transportadora.name + '/' + valorFormatado + '">' +
+                '<label class="form-check-label" for="' + transportadora.id + '">' +
+                transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
+                ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+                '</label>' +
+                '</div>';
+        }
+
     }
 
     return linha;
