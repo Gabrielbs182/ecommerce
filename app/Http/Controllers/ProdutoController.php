@@ -842,6 +842,14 @@ class ProdutoController extends Controller
         $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
         $data["categorias"] = $categorias;
+        $data["fotos"] = $this->buscarFotosBanner();
+        $data["frete299"] = $frete299;
+        $data["freteFixo"] = $freteFixo;
+        $data["motoboy"] = $motoboy;
+        $data["motoboyVix"] = $motoboyVix;
+        $data["motoboySerra"] = $motoboySerra;
+        $data["motoboyCariacica"] = $motoboyCariacica;
+        $data["motoboyVV"] = $motoboyVV;
         return view("home", $data);
     }
 
