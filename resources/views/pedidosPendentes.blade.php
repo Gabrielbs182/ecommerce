@@ -8,6 +8,11 @@
             $('#modalDetalhes').modal('show');
         };
 
+        function abrirEndereco(id) {
+            carregarEndereco(id);
+            $('#modalDetalhes').modal('show');
+        };
+
         function carregarItens(id) {
 
             $.getJSON('/itens/' + id, function(data) {
@@ -48,6 +53,44 @@
                                 '</td>' +
                                 '<td class="align-middle text-center">' +
                                 '</td>' +
+                                '</tr>';
+                            $('#modalCarrinhoLista').append(itemCarrinho);
+                            indice++
+                        }
+                    }
+                } else {
+                    console.error('O JSON retornado não é um array:', data);
+                }
+            });
+        };
+
+        function carregarEndereco(id) {
+
+            $.getJSON('/endereco/' + id, function(data) {
+
+                console.log(id);
+
+                // O objeto retornado é um array
+                var total = 0;
+                var indice = 0;
+                $('#modalCarrinhoLista').empty();
+
+                // Verificar se data é um objeto
+                if (typeof data === 'object' && data !== null) {
+                    // Iterar sobre as propriedades do objeto
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var item = data[key];
+
+                            var asset = $('#asset').val();
+                            var itemCarrinho =
+                                '<tr>' +
+                                '<td class="align-middle text-center"> ' + data.logradouro + '</td>' +
+                                '<td class="align-middle text-center"> ' + data.bairro + '</td>' +
+                                '<td class="align-middle text-center"> ' + data.complemento + '</td>' +
+                                '<td class="align-middle text-center"> ' + data.cep + '</td>' +
+                                '<td class="align-middle text-center"> ' + data.cidade + '</td>' +
+                                '<td class="align-middle text-center"> ' + data.uf + '</td>' +
                                 '</tr>';
                             $('#modalCarrinhoLista').append(itemCarrinho);
                             indice++
@@ -100,6 +143,10 @@
                                 <td>
                                     <a href="#" class="edit"
                                         onclick="abrirCarrinho({{ $p->id }})">Produtos</a>
+                                </td>
+                                <td>
+                                    <a href="#" class="edit"
+                                        onclick="abrirEndereco({{ $p->endereco_id }})">Endereco</a>
                                 </td>
                                 @if (Route::is('pedidos.pendentes'))
                                     <td>

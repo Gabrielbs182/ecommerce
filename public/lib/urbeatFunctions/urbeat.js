@@ -145,7 +145,7 @@ function calcularFrete() {
 
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                 if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
-                    linha = montarLinhaEnvioMotoboy('motoboyCariacica', valor);
+                    linha = montarLinhaEnvioMotoboy('motoboyCariacica', motoboyCariacica);
                     linhas += linha;
                 } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                     console.log("Serra.");
@@ -153,11 +153,11 @@ function calcularFrete() {
                     linhas += linha;
                 } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
                     console.log("Vitória.");
-                    linha = montarLinhaEnvioMotoboy('motoboyVix', valor);
+                    linha = montarLinhaEnvioMotoboy('motoboyVix', motoboyVix);
                     linhas += linha;
                 } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
                     console.log("Vila velha.");
-                    linha = montarLinhaEnvioMotoboy('motoboyVV', valor);
+                    linha = montarLinhaEnvioMotoboy('motoboyVV', motoboyVV);
                     linhas += linha;
                 }
             }

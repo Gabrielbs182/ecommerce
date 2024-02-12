@@ -33,6 +33,8 @@ Route::get('/estoqueNumero/{idProduto}/{numero}', [ProdutoController::class, 'bu
     ->name('buscarEstoqueQuantidade');
 Route::get('/estoque/{idProduto}', [ProdutoController::class, 'buscarEstoque'])
     ->name('buscarEstoque');
+Route::get('/endereco/{id}', [ProdutoController::class, 'buscarEndereco'])
+    ->name('buscarEstoque');
 
 //Melhor Envio
 Route::get('/melhorenvio/melhorInfo', [MelhorEnvioController::class, 'melhorInfo'])->name('melhorInfo')->middleware('IsAdmin');
