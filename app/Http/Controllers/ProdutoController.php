@@ -830,6 +830,13 @@ class ProdutoController extends Controller
 
     public function verCategoria($id)
     {
+        $frete299 = env('FRETE_GRATIS299');
+        $freteFixo = env('FRETE_FIXO');
+        $motoboy = env('MOTOBOY');
+        $motoboyVix = env('MOTOBOY_VIX');
+        $motoboySerra = env('MOTOBOY_SERRA');
+        $motoboyCariacica = env('MOTOBOY_CARIACICA');
+        $motoboyVV = env('MOTOBOY_VV');
         $data = [];
         $listaProdutos = Produto::where('ativo', 1)->where('categoria_id', $id)->get();
         $categorias = Categoria::all();
