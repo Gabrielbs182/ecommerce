@@ -285,6 +285,7 @@ class PagSeguroController extends Controller
                             DB::beginTransaction();
                             $pedido->save();
                             DB::commit();
+                            $this->email($pedido->id);
                         } catch (\Exception $e) {
                             Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
                             DB::rollback();
@@ -345,11 +346,6 @@ class PagSeguroController extends Controller
                 $status_pagamento = $payload['charges'][0]['status'];
                 Log::info('Recebeu webhook', ['reference_id' => $referenceId, 'status_pagamento' => $status_pagamento]);
             }
-
-            // Verifica se 'status' existe antes de acessá-lo
-            // if (isset($payload['status'])) {
-            //     $status_checkout = $payload['status'];
-            // }
 
             $pedido = Pedido::where('reference_id', $referenceId)->first();
 

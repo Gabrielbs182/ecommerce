@@ -31,8 +31,9 @@ class ProdutoController extends Controller
     {
         $pedido = Pedido::find($id);
         if ($pedido->status_env == 'Preparando encomenda') {
-            $pedido->status_env = 'Aguardando retirada';
+            $pedido->status_env = 'Pedido enviado.';
             $pedido->save();
+            $this->email($pedido->id);
             $message = 'Pedido finalizado.';
             $status = 'ok';
             $request->session()->flash($status, $message);
