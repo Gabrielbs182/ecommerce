@@ -258,7 +258,18 @@ function calcularFrete() {
                 });
             }
 
-            console.log(linhas);
+            linhas +=
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<div class="row w-100">' +
+                '<div class="col-sm-12 mt-3">' +
+                '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
+                '</form>' +
+                '</div>' +
+                '</div>'
+                ;
 
             document.getElementById("envios").innerHTML = linhas;
             $('#loadingSpinner').hide();
