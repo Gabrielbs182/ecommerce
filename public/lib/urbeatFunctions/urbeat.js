@@ -141,6 +141,7 @@ function calcularFrete() {
                 '</div>' +
                 '<div class="col-sm-9">';
 
+            cepInteiro = parseInt(cepValue);
 
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                 if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
@@ -197,64 +198,6 @@ function calcularFrete() {
                     }
                 }
             }
-
-            cepInteiro = parseInt(cepValue)
-
-            if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
-                if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
-                    $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
-                        console.log('Motoboy_Cariacica');
-                        console.log(frete);
-                        if (frete > 0) {
-                            linhas = document.getElementById("envios").innerHTML;
-                            linha = montarLinhaEnvioMotoboy('motoboyCariacica', frete);
-                            linhas += linha;
-                            document.getElementById("envios").innerHTML = linhas;
-                        }
-                    });
-                    console.log("Cariacica.");
-                } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
-                    console.log("Serra.");
-                    $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
-                        console.log('Motoboy_Serra');
-                        console.log(frete);
-                        console.log(typeof frete);
-                        if (frete > 0) {
-                            linhas = document.getElementById("envios").innerHTML;
-                            linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
-                            linhas += linha;
-                            document.getElementById("envios").innerHTML = linhas;
-                        }
-                    });
-                } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
-                    console.log("Vitória.");
-                    $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
-                        console.log('Motoboy_Vitoria');
-                        console.log(frete);
-                        if (frete > 0) {
-                            linha = montarLinhaEnvioMotoboy('motoboyVix', valor);
-                            linhas += linha;
-                        }
-                    });
-                } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
-                    console.log("Vila velha.");
-                    $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
-                        console.log('Motoboy_VilaVelha');
-                        console.log(frete);
-                        if (frete > 0) {
-                            linha = montarLinhaEnvioMotoboy('motoboyVV', valor);
-                            linhas += linha;
-                        }
-                    });
-                } else {
-                    console.log("Não faz parte da grande vitoria")
-                }
-            } else {
-                // CEP não pertence à região sudeste
-                console.log("CEP fora da região sudeste.");
-            }
-
-            console.log(cepValue);
 
             linhas +=
                 '</div>' +
