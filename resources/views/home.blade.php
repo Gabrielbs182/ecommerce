@@ -8,6 +8,13 @@
     {{-- Asset --}}
     <input type="hidden" value="{{ asset('images') }}" id="asset">
     <input type="hidden" value="" id="estoque">
+    <input type="hidden" value="{{ $frete299 }}" id="frete299">
+    <input type="hidden" value="{{ $freteFixo }}" id="freteFixo">
+    <input type="hidden" value="{{ $motoboy }}" id="motoboy">
+    <input type="hidden" value="{{ $motoboyVix }}" id="motoboyVix">
+    <input type="hidden" value="{{ $motoboySerra }}" id="motoboySerra">
+    <input type="hidden" value="{{ $motoboyCariacica }}" id="motoboyCariacica">
+    <input type="hidden" value="{{ $motoboyVV }}" id="motoboyVV">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Modais --}}
@@ -62,7 +69,8 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-12">
                                             <label for="descricaoProdModal">Descrição:</label>
-                                            <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou escrevendo
+                                            <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou
+                                                escrevendo
                                                 um grande texto para testar.</p>
                                         </div>
                                     </div>

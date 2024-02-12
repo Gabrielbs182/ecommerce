@@ -796,12 +796,26 @@ class ProdutoController extends Controller
 
     public function index()
     {
+        $frete299 = env('FRETE_GRATIS299');
+        $freteFixo = env('FRETE_FIXO');
+        $motoboy = env('MOTOBOY');
+        $motoboyVix = env('MOTOBOY_VIX');
+        $motoboySerra = env('MOTOBOY_SERRA');
+        $motoboyCariacica = env('MOTOBOY_CARIACICA');
+        $motoboyVV = env('MOTOBOY_VV');
         $data = [];
         $listaProdutos = Produto::where('ativo', 1)->get();
         $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
         $data["categorias"] = $categorias;
         $data["fotos"] = $this->buscarFotosBanner();
+        $data["frete299"] = $frete299;
+        $data["freteFixo"] = $freteFixo;
+        $data["motoboy"] = $motoboy;
+        $data["motoboyVix"] = $motoboyVix;
+        $data["motoboySerra"] = $motoboySerra;
+        $data["motoboyCariacica"] = $motoboyCariacica;
+        $data["motoboyVV"] = $motoboyVV;
         return view("home", $data);
     }
 

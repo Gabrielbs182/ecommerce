@@ -108,6 +108,13 @@ function obterDadosCEP(cep) {
 function calcularFrete() {
     // Obtenha o valor do CEP
     var cepValue = document.getElementById("cep").value;
+    var frete299 = document.getElementById("frete299").value;
+    var freteFixo = document.getElementById("freteFixo").value;
+    var motoboy = document.getElementById("motoboy").value;
+    var motoboyVix = document.getElementById("motoboyVix").value;
+    var motoboySerra = document.getElementById("motoboySerra").value;
+    var motoboyCariacica = document.getElementById("motoboyCariacica").value;
+    var motoboyVV = document.getElementById("motoboyVV").value;
 
     var teste = obterDadosCEP(cepValue);
 
@@ -140,13 +147,22 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (total >= 299) {
+                    if (total >= 299 && frete299 == 2) {
                         if (check == 0) {
                             linha = montarLinhaEnvio(transportadora, 2);
                             linhas += linha;
                             check = 1;
                         } else {
-                            linha = montarLinhaEnvio(transportadora, 1);
+                            linha = montarLinhaEnvio(transportadora, 3);
+                            linhas += linha;
+                        }
+                    } else if (freteFixo == 2) {
+                        if (check == 0) {
+                            linha = montarLinhaEnvio(transportadora, 4);
+                            linhas += linha;
+                            check = 1;
+                        } else {
+                            linha = montarLinhaEnvio(transportadora, 5);
                             linhas += linha;
                         }
                     } else {
@@ -155,7 +171,7 @@ function calcularFrete() {
                             linhas += linha;
                             check = 1;
                         } else {
-                            linha = montarLinhaEnvio(transportadora);
+                            linha = montarLinhaEnvio(transportadora, 1);
                             linhas += linha;
                         }
                     }
@@ -270,6 +286,13 @@ function montarLinhaEnvioFreteGratis() {
 
 function montarLinhaEnvio(transportadora, check) {
 
+    //check = 0 - Frete normal checkado
+    //check = 1 - Frete normal
+    //check = 2 - Frete Gratis checkado
+    //check = 3 - Frete Gratis 
+    //check = 4 - Frete Fixo checkado 
+    //check = 5 - Frete Fico  
+
     var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
 
     if (check == 0) {
@@ -282,7 +305,7 @@ function montarLinhaEnvio(transportadora, check) {
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
-    } else if (check == 1) {
+    } else if (check == 3) {
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
@@ -300,7 +323,7 @@ function montarLinhaEnvio(transportadora, check) {
             transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
-    } else {
+    } else if (check == 1) {
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
@@ -308,6 +331,25 @@ function montarLinhaEnvio(transportadora, check) {
             '<label class="form-check-label" for="' + transportadora.id + '">' +
             transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
+    } else if (check == 4) {
+        linha =
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '">' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
+            '</label>' +
+            '</div>';
+
+    } else if (check == 5) {
+        linha =
+            '<div class="form-check">' +
+            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
+            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '" checked>' +
+            '<label class="form-check-label" for="' + transportadora.id + '">' +
+            transportadora.company.name + ' - ' + transportadora.name + ' R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
     }
