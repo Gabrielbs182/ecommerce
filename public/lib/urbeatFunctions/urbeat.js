@@ -283,13 +283,12 @@ function validarCEP(cep) {
 
 function montarLinhaEnvioMotoboy(motoboy, valor) {
 
-    var valorFormatado = valor.toFixed(2).replace('.', ',');
 
     linha =
         '<div class="form-check">' +
         '<input class="form-check-input" type="radio" name="frete"' + 'id="' + motoboy + '" value="' +
         motoboy + '/Motoboy/' + (valor).toFixed(2) + '">' +
-        '<label class="form-check-label" for="' + motoboy + '">Motoboy - R$ ' + valorFormatado +
+        '<label class="form-check-label" for="' + motoboy + '">Motoboy - R$ ' + valor +
         ' - Prazo 1 dia.' +
         '</label>' +
         '</div>';
