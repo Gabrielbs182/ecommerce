@@ -69,6 +69,7 @@
             $.getJSON('/endereco/' + id, function(data) {
 
                 console.log(id);
+                console.log(data);
 
                 // O objeto retornado é um array
                 var total = 0;
