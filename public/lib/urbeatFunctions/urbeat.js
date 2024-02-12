@@ -149,7 +149,7 @@ function calcularFrete() {
                     linhas += linha;
                 } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                     console.log("Serra.");
-                    linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
+                    linha = montarLinhaEnvioMotoboy('motoboySerra', motoboySerra);
                     linhas += linha;
                 } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
                     console.log("Vitória.");
