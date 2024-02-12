@@ -374,7 +374,10 @@ class PagSeguroController extends Controller
                     }
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
-                    if ($pedido->cod_entrega != 'Gratis') {
+                    if ($pedido->cod_entrega != 'Gratis' && $pedido->cod_entrega != 'motoboySerra'
+                    && $pedido->cod_entrega != 'motoboyVix' && $pedido->cod_entrega != 'motoboyCariacica'
+                    && $pedido->cod_entrega != 'motoboyVV'
+                    ) {
                         //lançar frete
                         $resposta = $melhorEnvio->lancarFrete($referenceId);
                         // Verifique se a resposta é um JSON válido
