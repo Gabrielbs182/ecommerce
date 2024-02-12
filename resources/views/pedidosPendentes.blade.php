@@ -86,12 +86,12 @@
                             var asset = $('#asset').val();
                             var itemCarrinho =
                                 '<tr>' +
-                                '<td class="align-middle text-center"> ' + data.logradouro + '</td>' +
-                                '<td class="align-middle text-center"> ' + data.bairro + '</td>' +
-                                '<td class="align-middle text-center"> ' + data.complemento + '</td>' +
-                                '<td class="align-middle text-center"> ' + data.cep + '</td>' +
-                                '<td class="align-middle text-center"> ' + data.cidade + '</td>' +
-                                '<td class="align-middle text-center"> ' + data.uf + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.logradouro + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.bairro + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.complemento + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.cep + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.cidade + '</td>' +
+                                '<td class="align-middle text-center"> ' + item.uf + '</td>' +
                                 '</tr>';
                             $('#modalCarrinhoLista').append(itemCarrinho);
                             indice++
