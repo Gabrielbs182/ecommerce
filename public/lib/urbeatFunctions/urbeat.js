@@ -283,7 +283,7 @@ function validarCEP(cep) {
 
 function montarLinhaEnvioMotoboy(motoboy, valor) {
 
-    var valorFormatado = (valor).toFixed(2).replace('.', ',');
+    var valorFormatado = valor.toFixed(2).replace('.', ',');
 
     linha =
         '<div class="form-check">' +
