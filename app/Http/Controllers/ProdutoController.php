@@ -32,7 +32,7 @@ class ProdutoController extends Controller
         $pedido = Pedido::find($id);
         if ($pedido->status_env == 'Preparando encomenda') {
             $pedido->status_env = 'Pedido enviado.';
-            $pedido->cod_rastreamento = 'Motoboy';
+            $pedido->cod_rastreamento = 'Motoboy enviado';
             $pedido->save();
             $this->email($pedido->id);
             $message = 'Pedido finalizado.';
