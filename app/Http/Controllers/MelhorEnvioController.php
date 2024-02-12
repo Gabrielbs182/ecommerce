@@ -498,6 +498,12 @@ class MelhorEnvioController extends Controller
         return $freteFixo;
     }
 
+    public function consultarFrete299()
+    {
+        $frete299 = ENV('FRETE_GRATIS299');
+        return $frete299;
+    }
+
     public function consultarMotoboy(String $cidade)
     {
         $motoboy = env('MOTOBOY');

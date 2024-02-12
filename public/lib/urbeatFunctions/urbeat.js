@@ -109,10 +109,6 @@ function calcularFrete() {
     // Obtenha o valor do CEP
     var cepValue = document.getElementById("cep").value;
 
-    var teste = obterDadosCEP(cepValue);
-
-    console.log(teste);
-
     // Verifique se o CEP é válido antes de fazer a requisição
     if (validarCEP(cepValue)) {
         $('#loadingSpinner').show();
@@ -121,10 +117,9 @@ function calcularFrete() {
         $.getJSON('/melhorenvio/calcularFrete/' + cepValue, function (frete) {
 
             document.getElementById("envios").innerHTML = '';
-
+            cepInteiro = parseInt(cepValue)
             var paragrafo = document.getElementById("totalCarrinho").innerText;
             var total = parseFloat(paragrafo.replace(',', '.'));
-
             console.log(total);
 
             linhas =
@@ -134,102 +129,107 @@ function calcularFrete() {
                 '</div>' +
                 '<div class="col-sm-9">';
 
-            var check = 0;
+            var check = 1;
 
             for (var transportadora of frete) {
+
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (total >= 299) {
-                        if (check == 0) {
-                            linha = montarLinhaEnvio(transportadora, 2);
-                            linhas += linha;
-                            check = 1;
-                        } else {
-                            linha = montarLinhaEnvio(transportadora, 1);
-                            linhas += linha;
-                        }
+
+                    if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
+                        //testar se está no sudeste
+                        $.getJSON('/melhorenvio/frete299', function (frete299) {
+
+                            if (frete299 == 2) {
+                                if (total >= 299) {
+
+                                    linha = montarLinhaEnvio(transportadora, check, 0);
+                                    linhas += linha;
+                                    check = 0;
+
+                                } else {
+                                    $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
+                                        if (freteFixo == 2) {
+
+                                            linha = montarLinhaEnvio(transportadora, check, 2);
+                                            linhas += linha;
+                                            check = 0;
+
+                                        } else {
+
+                                            linha = montarLinhaEnvio(transportadora, check, 1);
+                                            linhas += linha;
+                                            check = 0;
+
+                                        }
+                                    });
+                                }
+                            } else {
+                                $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
+                                    if (freteFixo == 2) {
+
+                                        linha = montarLinhaEnvio(transportadora, check, 2);
+                                        linhas += linha;
+                                        check = 0;
+
+                                    } else {
+
+                                        linha = montarLinhaEnvio(transportadora, check, 1);
+                                        linhas += linha;
+                                        check = 0;
+
+                                    }
+                                });
+                            }
+
+                        });
+
                     } else {
-                        if (check == 0) {
-                            linha = montarLinhaEnvio(transportadora, 0);
-                            linhas += linha;
-                            check = 1;
-                        } else {
-                            linha = montarLinhaEnvio(transportadora);
-                            linhas += linha;
-                        }
+
+                        linha = montarLinhaEnvio(transportadora, check, 1);
+                        linhas += linha;
+                        check = 0;
+
                     }
                 }
             }
 
-            cepInteiro = parseInt(cepValue)
-
-            if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
-                // CEP pertence à região sudeste
-                $.getJSON('/melhorenvio/freteFixo', function (frete) {
-                    console.log(frete);
+            if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
+                $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
+                    if (frete > 0) {
+                        linha = montarLinhaEnvioMotoboy(frete);
+                        linhas += linha;
+                    }
                 });
-                console.log("CEP da região sudeste.");
-                if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
-                    $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
-                        console.log('Motoboy_Cariacica');
-                        console.log(frete);
-                    });
-                    console.log("Cariacica.");
-                } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
-                    console.log("Serra.");
-                    $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
-                        console.log('Motoboy_Serra');
-                        console.log(frete);
-                    });
-                } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
-                    console.log("Vitória.");
-                    $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
-                        console.log('Motoboy_Vitoria');
-                        console.log(frete);
-                    });
-                } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
-                    console.log("Vila velha.");
-                    $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
-                        console.log('Motoboy_VilaVelha');
-                        console.log(frete);
-                    });
-                } else {
-                    console.log("Não faz parte da grande vitoria")
-                }
-            } else {
-                // CEP não pertence à região sudeste
-                console.log("CEP fora da região sudeste.");
+            } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
+                $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
+                    if (frete > 0) {
+                        linha = montarLinhaEnvioMotoboy(frete);
+                        linhas += linha;
+                    }
+                });
+            } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
+                console.log("Vitória.");
+                $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
+                    if (frete > 0) {
+                        linha = montarLinhaEnvioMotoboy(frete);
+                        linhas += linha;
+                    }
+                });
+            } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
+                console.log("Vila velha.");
+                $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
+                    if (frete > 0) {
+                        linha = montarLinhaEnvioMotoboy(frete);
+                        linhas += linha;
+                    }
+                });
             }
 
-            console.log(cepValue);
-
-            linhas +=
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '<div class="row w-100">' +
-                '<div class="col-sm-12 mt-3">' +
-                '<button type="submit" class="btn btn-primary float-right">Finalizar Compra</button>' +
-                '</form>' +
-                '</div>' +
-                '</div>'
-                ;
-
-            document.getElementById("envios").innerHTML = linhas;
-            $('#loadingSpinner').hide();
         });
-    } else {
-        // Exibir mensagem de erro para CEP inválido
-        $("#cep-error-message").text("CEP inválido");
-        console.log('Cep é invalido');
-        // Adicionar classe para destacar o campo em vermelho
-        $("#cep-group").addClass("has-error");
-        $('#loadingBackground').hide(); // Esconde o fundo escurecido
-        $('#loadingSpinner').hide();
     }
-};
+}
 
 function validarNumero(input) {
     // Remover caracteres não numéricos
@@ -268,46 +268,56 @@ function montarLinhaEnvioFreteGratis() {
     return linha;
 }
 
-function montarLinhaEnvio(transportadora, check) {
+function montarLinhaEnvioMotoboy(preco) {
+
+    var valorFormatado = (preco).toFixed(2).replace('.', ',');
+
+    linha =
+        '<div class="form-check">' +
+        '<input class="form-check-input" type="radio" name="frete"' + 'id="motoboy" value="motoboy/motoboy/' + (preco).toFixed(2) + '" >' +
+        '<label class="form-check-label" for="motoboy">' +
+        ' Motoboy - R$ ' + valorFormatado +
+        ' - Prazo 1 dia.' +
+        '</label>' +
+        '</div>';
+
+    return linha;
+}
+
+function montarLinhaEnvio(transportadora, check, tipo) {
 
     var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
 
-    if (check == 0) {
+    //tipo = 0=gratis, 1=normal, 2=fixo, 3=motoboy
+    //check = 0=nao checkado, 1=checkado
+
+    if (tipo == 1) {
+        var vlrFrete = (transportadora.price - transportadora.discount);
+    } else if (tipo == 2) {
+        var vlrFrete = 14.99;
+    } else if (tipo == 0) {
+        var vlrFrete = 0;
+    }
+
+    if (check == 1) {
+        //imprime normal porém checkado
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" checked>' +
+            transportadora.id + '/' + transportadora.name + '/' + (vlrFrete).toFixed(2) + '" checked>' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
             transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
             ' - Prazo ' + transportadora.delivery_time + ' dias.' +
-            '</label>' +
-            '</div>';
-    } else if (check == 1) {
-        linha =
-            '<div class="form-check">' +
-            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (0).toFixed(2) + '">' +
-            '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
-            '</label>' +
-            '</div>';
-    } else if (check == 2) {
-        linha =
-            '<div class="form-check">' +
-            '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (0).toFixed(2) + '" checked>' +
-            '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
     } else {
+        //imprime frete gratis sem checkado
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '">' +
+            transportadora.id + '/' + transportadora.name + '/' + (vlrFrete).toFixed(2) + '">' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
-            ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+            transportadora.company.name + ' - ' + transportadora.name + ' Grátis - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
     }

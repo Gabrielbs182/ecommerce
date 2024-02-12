@@ -40,6 +40,7 @@ Route::get('/melhorenvio/authorize', [MelhorEnvioController::class, 'redirectToA
 Route::get('/melhorenvio/getAuthorization', [MelhorEnvioController::class, 'getAuthorization'])->name('melhorenvio.getAuthorization')->middleware('IsAdmin');
 Route::get('/melhorenvio/calcularFrete/{cep}', [MelhorEnvioController::class, 'calcularFrete'])->name('melhorenvio.calcularFrete');
 Route::get('/melhorenvio/freteFixo', [MelhorEnvioController::class, 'consultarFreteFixo'])->name('melhorenvio.consultarFreteFixo');
+Route::get('/melhorenvio/frete299', [MelhorEnvioController::class, 'consultarFrete299'])->name('melhorenvio.consultarFrete299');
 Route::get('/melhorenvio/motoboy/{cidade}', [MelhorEnvioController::class, 'consultarMotoboy'])->name('melhorenvio.consultarMotoboy');
 Route::get('/melhorenvio/lancarFrete/{reference_id}', [MelhorEnvioController::class, 'lancarFrete'])->name('melhorenvio.lancarFrete');
 
