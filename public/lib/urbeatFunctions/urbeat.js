@@ -181,15 +181,14 @@ function calcularFrete() {
             cepInteiro = parseInt(cepValue)
 
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
-                // CEP pertence à região sudeste
-                $.getJSON('/melhorenvio/freteFixo', function (frete) {
-                    console.log(frete);
-                });
-                console.log("CEP da região sudeste.");
                 if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
                     $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
                         console.log('Motoboy_Cariacica');
                         console.log(frete);
+                        if (frete > 0) {
+                            linha = montarLinhaEnvioMotoboy('motoboyCariacica', frete);
+                            linhas += linha;
+                        }
                     });
                     console.log("Cariacica.");
                 } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
@@ -197,18 +196,30 @@ function calcularFrete() {
                     $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
                         console.log('Motoboy_Serra');
                         console.log(frete);
+                        if (frete > 0) {
+                            linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
+                            linhas += linha;
+                        }
                     });
                 } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
                     console.log("Vitória.");
                     $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
                         console.log('Motoboy_Vitoria');
                         console.log(frete);
+                        if (frete > 0) {
+                            linha = montarLinhaEnvioMotoboy('motoboyVix', valor);
+                            linhas += linha;
+                        }
                     });
                 } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
                     console.log("Vila velha.");
                     $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
                         console.log('Motoboy_VilaVelha');
                         console.log(frete);
+                        if (frete > 0) {
+                            linha = montarLinhaEnvioMotoboy('motoboyVV', valor);
+                            linhas += linha;
+                        }
                     });
                 } else {
                     console.log("Não faz parte da grande vitoria")
@@ -269,15 +280,16 @@ function validarCEP(cep) {
     }
 };
 
-function montarLinhaEnvioFreteGratis() {
+function montarLinhaEnvioMotoboy(motoboy, valor) {
+
+    var valorFormatado = (valor).toFixed(2).replace('.', ',');
 
     linha =
         '<div class="form-check">' +
-        '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-        transportadora.id + '/' + transportadora.name + '/' + (transportadora.price - transportadora.discount).toFixed(2) + '" checked>' +
-        '<label class="form-check-label" for="' + transportadora.id + '">' +
-        transportadora.company.name + ' - ' + transportadora.name + ' R$ ' + valorFormatado +
-        ' - Prazo ' + transportadora.delivery_time + ' dias.' +
+        '<input class="form-check-input" type="radio" name="frete"' + 'id="' + motoboy + '" value="' +
+        motoboy + '/Motoboy/' + (valor).toFixed(2) + '">' +
+        '<label class="form-check-label" for="' + motoboy + '">Motoboy - R$ ' + valorFormatado +
+        ' - Prazo 1 dia.' +
         '</label>' +
         '</div>';
 
@@ -339,7 +351,7 @@ function montarLinhaEnvio(transportadora, check) {
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
             transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '">' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
+            transportadora.company.name + ' - ' + transportadora.name + ' - R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
 
@@ -349,7 +361,7 @@ function montarLinhaEnvio(transportadora, check) {
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
             transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '" checked>' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
-            transportadora.company.name + ' - ' + transportadora.name + ' R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
+            transportadora.company.name + ' - ' + transportadora.name + ' - R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
             '</div>';
     }

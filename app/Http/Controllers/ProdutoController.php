@@ -911,10 +911,34 @@ class ProdutoController extends Controller
                 $cidade = $conteudo['localidade'];
                 $uf = $conteudo['uf'];
 
-                if ($transporte[0] != 0) {
+                if ($transporte[0] >= 0 and $transporte[0] <= 40) {
                     $data = [
                         'cart' => $carrinho, 'idFrete' => $transporte[0], 'cep' => $request->input("cep"),
                         'nomeFrete' => $transporte[1], 'valor' => $transporte[2],
+                        'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                    ];
+                } else if ($transporte[0] == 'motoboySerra') {
+                    $data = [
+                        'cart' => $carrinho, 'idFrete' => 'motoboySerra', 'cep' => $request->input("cep"),
+                        'nomeFrete' => 'Motoboy', 'valor' => $transporte[2],
+                        'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                    ];
+                } else if ($transporte[0] == 'motoboyVix') {
+                    $data = [
+                        'cart' => $carrinho, 'idFrete' => 'motoboyVix', 'cep' => $request->input("cep"),
+                        'nomeFrete' => 'Motoboy', 'valor' => $transporte[2],
+                        'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                    ];
+                } else if ($transporte[0] == 'motoboyVV') {
+                    $data = [
+                        'cart' => $carrinho, 'idFrete' => 'motoboyVV', 'cep' => $request->input("cep"),
+                        'nomeFrete' => 'Motoboy', 'valor' => $transporte[2],
+                        'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
+                    ];
+                } else if ($transporte[0] == 'motoboyCariacica') {
+                    $data = [
+                        'cart' => $carrinho, 'idFrete' => 'motoboyCariacica', 'cep' => $request->input("cep"),
+                        'nomeFrete' => 'Motoboy', 'valor' => $transporte[2],
                         'logradouro' => $logradouro, 'bairro' => $bairro, 'cidade' => $cidade, 'uf' => $uf
                     ];
                 }
