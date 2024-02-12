@@ -150,6 +150,7 @@ function calcularFrete() {
                                     linha = montarLinhaEnvio(transportadora, check, 0);
                                     linhas += linha;
                                     check = 0;
+                                    console.log(linha);
 
                                 } else {
 
@@ -163,6 +164,7 @@ function calcularFrete() {
                                             linha = montarLinhaEnvio(transportadora, check, 2);
                                             linhas += linha;
                                             check = 0;
+                                            console.log(linha);
 
                                         } else {
 
@@ -171,6 +173,7 @@ function calcularFrete() {
                                             linha = montarLinhaEnvio(transportadora, check, 1);
                                             linhas += linha;
                                             check = 0;
+                                            console.log(linha);
 
                                         }
                                     });
@@ -184,6 +187,7 @@ function calcularFrete() {
                                         linha = montarLinhaEnvio(transportadora, check, 2);
                                         linhas += linha;
                                         check = 0;
+                                        console.log(linha);
 
                                     } else {
 
@@ -192,6 +196,7 @@ function calcularFrete() {
                                         linha = montarLinhaEnvio(transportadora, check, 1);
                                         linhas += linha;
                                         check = 0;
+                                        console.log(linha);
 
                                     }
                                 });
@@ -206,6 +211,7 @@ function calcularFrete() {
                         linha = montarLinhaEnvio(transportadora, check, 1);
                         linhas += linha;
                         check = 0;
+                        console.log(linha);
 
                     }
                 }
@@ -217,6 +223,7 @@ function calcularFrete() {
                         console.log('frete motoboy cariacica');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        console.log(linha);
                     }
                 });
             } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
@@ -225,6 +232,7 @@ function calcularFrete() {
                         console.log('frete motoboy serra');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        console.log(linha);
                     }
                 });
             } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
@@ -234,6 +242,7 @@ function calcularFrete() {
                         console.log('frete motoboy vitoria');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        console.log(linha);
                     }
                 });
             } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
@@ -244,6 +253,7 @@ function calcularFrete() {
                         console.log('frete motoboy vilavelha');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
+                        console.log(linha);
                     }
                 });
             }
