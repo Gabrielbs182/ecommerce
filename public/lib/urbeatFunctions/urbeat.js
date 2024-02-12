@@ -186,8 +186,10 @@ function calcularFrete() {
                         console.log('Motoboy_Cariacica');
                         console.log(frete);
                         if (frete > 0) {
+                            linhas = document.getElementById("envios").innerHTML;
                             linha = montarLinhaEnvioMotoboy('motoboyCariacica', frete);
                             linhas += linha;
+                            document.getElementById("envios").innerHTML = linhas;
                         }
                     });
                     console.log("Cariacica.");
