@@ -135,27 +135,38 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
+                    console.log('frete disponivel');
 
                     if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                         //testar se está no sudeste
                         $.getJSON('/melhorenvio/frete299', function (frete299) {
 
                             if (frete299 == 2) {
+                                console.log('frete gratis acima de 299 ativo');
                                 if (total >= 299) {
+
+                                    console.log('frete acima de 299');
 
                                     linha = montarLinhaEnvio(transportadora, check, 0);
                                     linhas += linha;
                                     check = 0;
 
                                 } else {
+
+                                    console.log('frete a baixo de 299');
+
                                     $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
                                         if (freteFixo == 2) {
+
+                                            console.log('frete fixo ativado');
 
                                             linha = montarLinhaEnvio(transportadora, check, 2);
                                             linhas += linha;
                                             check = 0;
 
                                         } else {
+
+                                            console.log('frete normal');
 
                                             linha = montarLinhaEnvio(transportadora, check, 1);
                                             linhas += linha;
@@ -168,11 +179,15 @@ function calcularFrete() {
                                 $.getJSON('/melhorenvio/freteFixo', function (freteFixo) {
                                     if (freteFixo == 2) {
 
+                                        console.log('frete fixo ativado');
+
                                         linha = montarLinhaEnvio(transportadora, check, 2);
                                         linhas += linha;
                                         check = 0;
 
                                     } else {
+
+                                        console.log('frete normal');
 
                                         linha = montarLinhaEnvio(transportadora, check, 1);
                                         linhas += linha;
@@ -186,6 +201,8 @@ function calcularFrete() {
 
                     } else {
 
+                        console.log('frete normal');
+
                         linha = montarLinhaEnvio(transportadora, check, 1);
                         linhas += linha;
                         check = 0;
@@ -197,6 +214,7 @@ function calcularFrete() {
             if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
                 $.getJSON('/melhorenvio/motoboy/cariacica', function (frete) {
                     if (frete > 0) {
+                        console.log('frete motoboy cariacica');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
                     }
@@ -204,6 +222,7 @@ function calcularFrete() {
             } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
                 $.getJSON('/melhorenvio/motoboy/serra', function (frete) {
                     if (frete > 0) {
+                        console.log('frete motoboy serra');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
                     }
@@ -212,6 +231,7 @@ function calcularFrete() {
                 console.log("Vitória.");
                 $.getJSON('/melhorenvio/motoboy/vitoria', function (frete) {
                     if (frete > 0) {
+                        console.log('frete motoboy vitoria');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
                     }
@@ -219,12 +239,16 @@ function calcularFrete() {
             } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
                 console.log("Vila velha.");
                 $.getJSON('/melhorenvio/motoboy/vilavelha', function (frete) {
+
                     if (frete > 0) {
+                        console.log('frete motoboy vilavelha');
                         linha = montarLinhaEnvioMotoboy(frete);
                         linhas += linha;
                     }
                 });
             }
+
+            console.log(linhas);
 
             document.getElementById("envios").innerHTML = linhas;
             $('#loadingSpinner').hide();
