@@ -200,8 +200,10 @@ function calcularFrete() {
                         console.log(frete);
                         console.log(typeof frete);
                         if (frete > 0) {
+                            linhas = document.getElementById("envios").innerHTML;
                             linha = montarLinhaEnvioMotoboy('motoboySerra', valor);
                             linhas += linha;
+                            document.getElementById("envios").innerHTML = linhas;
                         }
                     });
                 } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
