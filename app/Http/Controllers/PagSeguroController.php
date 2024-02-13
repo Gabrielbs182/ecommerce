@@ -195,17 +195,24 @@ class PagSeguroController extends Controller
                 $bodyData['items'][] = $item;
             }
 
+            $desconto = 0;
+
+            if ($formaPagamento == 'pix') {
+                $desconto += 10;
+            }
+
             if ($cupom) {
                 if ($cupom->tipo == 1) {
-                    $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
-                    $bodyData['discount_amount'] = $descontoCentavos;
+                    $desconto += $cupom->desconto;
                 }
             }
 
-            if ($formaPagamento == 'pix') {
-                $descontoPixCentavos = ($descontoCentavos * (10 / 100)) * 100;
-                $bodyData['discount_amount'] = $descontoPixCentavos;
+            if ($desconto > 0) {
+                $descontoCentavos = ($total * ($desconto / 100)) * 100;
+                $bodyData['discount_amount'] = $descontoCentavos;
             }
+
+
 
             // Convertendo o array em JSON para ser usado como corpo da requisição
             $body = json_encode($bodyData);
