@@ -141,10 +141,35 @@
                     </div>
 
                     <div class="row border">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formaPagamento" id="cartao"
+                                value="cartao" checked>
+                            <label class="form-check-label" for="cartao">
+                                Cartão Crédito/Débito
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formaPagamento" id="pix"
+                                value="pix">
+                            <label class="form-check-label" for="pix">
+                                Pix
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="formaPagamento" id="boleto"
+                                value="boleto">
+                            <label class="form-check-label" for="boleto">
+                                Boleto
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row border">
                         <hr>
                         <div class="col-md-9 form-group" id="logradouro-group">
                             <label>Cupom</label>
-                            <input maxlength="15" class="form-control" type="text" id="cupomTexto" name="cupomTexto">
+                            <input maxlength="15" class="form-control" type="text" id="cupomTexto"
+                                name="cupomTexto">
                             <div id="mensagem"></div>
                         </div>
 
