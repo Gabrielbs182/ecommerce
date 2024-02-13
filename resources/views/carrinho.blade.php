@@ -141,22 +141,22 @@
                     </div>
 
                     <div class="row border">
-                        <p>Forma de pagamento</p>
-                        <div class="col-md-9 form-group ml-2" id="logradouro-group">
+                        <p><b>Forma de pagamento</b></p>
+                        <div class="col-md-9 form-group ml-3  text-center" id="logradouro-group">
                             <input class="form-check-input" type="radio" name="formaPagamento" id="cartao"
                                 value="cartao" checked>
                             <label class="form-check-label" for="cartao">
                                 Cartão Crédito/Débito
                             </label>
                         </div>
-                        <div class="col-md-9 form-group ml-2" id="logradouro-group">
+                        <div class="col-md-9 form-group ml-3  text-center" id="logradouro-group">
                             <input class="form-check-input" type="radio" name="formaPagamento" id="pix"
                                 value="pix">
                             <label class="form-check-label" for="pix">
                                 Pix
                             </label>
                         </div>
-                        <div class="col-md-9 form-group ml-2" id="logradouro-group">
+                        <div class="col-md-9 form-group ml-3  text-center" id="logradouro-group">
                             <input class="form-check-input" type="radio" name="formaPagamento" id="boleto"
                                 value="boleto">
                             <label class="form-check-label" for="boleto">
