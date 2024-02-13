@@ -196,7 +196,6 @@ class PagSeguroController extends Controller
             }
 
             $desconto = 0;
-            $totalSemFrete = ($total - $vlrFrete);
 
             if ($formaPagamento == 'pix') {
                 $desconto += 10;
@@ -209,7 +208,7 @@ class PagSeguroController extends Controller
             }
 
             if ($desconto > 0) {
-                $descontoCentavos = ($totalSemFrete * ($desconto / 100)) * 100;
+                $descontoCentavos = ($total * ($desconto / 100)) * 100;
                 $bodyData['discount_amount'] = $descontoCentavos;
             }
 
