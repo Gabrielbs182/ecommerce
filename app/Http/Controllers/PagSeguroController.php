@@ -71,7 +71,6 @@ class PagSeguroController extends Controller
         } else {
             $vlrFrete = ($request->input('valorFrete') * 100);
         }
-        $total = $request->input('valorFrete');
         $formaPagamento = $request->input('formaPagamento');
         $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
