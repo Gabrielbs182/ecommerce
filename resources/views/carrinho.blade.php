@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="row border">
-                        <p><b>Forma de pagamento</b></p>
+                        <p class="ml-2"><b>Forma de pagamento</b></p>
                         <div class="col-md-9 form-group ml-3" id="logradouro-group">
                             <input class="form-check-input" type="radio" name="formaPagamento" id="cartao"
                                 value="cartao" checked>
