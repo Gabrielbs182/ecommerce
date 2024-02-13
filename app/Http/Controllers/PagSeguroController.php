@@ -203,8 +203,8 @@ class PagSeguroController extends Controller
             }
 
             if ($formaPagamento == 'pix') {
-                $descontoCentavos = ($total * (10 / 100)) * 100;
-                $bodyData['discount_amount'] = $descontoCentavos;
+                $descontoPixCentavos = ($descontoCentavos * (10 / 100)) * 100;
+                $bodyData['discount_amount'] = $descontoPixCentavos;
             }
 
             // Convertendo o array em JSON para ser usado como corpo da requisição
