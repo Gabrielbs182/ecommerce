@@ -207,8 +207,10 @@ class PagSeguroController extends Controller
                 }
             }
 
+            $totalSemFrete = $total - $request->input('valorFrete');
+
             if ($desconto > 0) {
-                $descontoCentavos = 100;
+                $descontoCentavos = ($totalSemFrete * ($desconto / 100)) * 100;
                 $bodyData['discount_amount'] = $descontoCentavos;
             }
 
