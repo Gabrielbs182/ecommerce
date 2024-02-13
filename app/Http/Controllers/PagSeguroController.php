@@ -72,6 +72,7 @@ class PagSeguroController extends Controller
             $vlrFrete = ($request->input('valorFrete') * 100);
         }
         $total = $request->input('valorFrete');
+        $formaPagamento = $request->input('formaPagamento');
         $idFrete = $request->input('idFrete');
         $nomeCliente = $request->input('nome') . " " . $request->input('Sobrenome');
         $ddd = $request->input('ddd');
@@ -185,6 +186,19 @@ class PagSeguroController extends Controller
                     $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
                     $bodyData['discount_amount'] = $descontoCentavos;
                 }
+            }
+
+            // Adicionando tipos de pagamento com base na escolha do usuário
+            if ($formaPagamento == 'cartao') {
+                // Se o usuário escolher cartão, inclua ambos crédito e débito
+                $paymentMethods[] = ['type' => 'CREDIT_CARD'];
+                $paymentMethods[] = ['type' => 'DEBIT_CARD'];
+            } elseif ($formaPagamento == 'boleto') {
+                // Se o usuário escolher boleto, inclua apenas boleto
+                $paymentMethods[] = ['type' => 'BOLETO'];
+            } elseif ($formaPagamento == 'pix') {
+                // Se o usuário escolher PIX, inclua apenas PIX
+                $paymentMethods[] = ['type' => 'PIX'];
             }
 
             // Convertendo o array em JSON para ser usado como corpo da requisição
@@ -371,9 +385,10 @@ class PagSeguroController extends Controller
                     }
                     $pedido->status = 'Pagamento aprovado';
                     $pedido->save();
-                    if ($pedido->cod_entrega != 'Gratis' && $pedido->cod_entrega != 'motoboySerra'
-                    && $pedido->cod_entrega != 'motoboyVix' && $pedido->cod_entrega != 'motoboyCariacica'
-                    && $pedido->cod_entrega != 'motoboyVV'
+                    if (
+                        $pedido->cod_entrega != 'Gratis' && $pedido->cod_entrega != 'motoboySerra'
+                        && $pedido->cod_entrega != 'motoboyVix' && $pedido->cod_entrega != 'motoboyCariacica'
+                        && $pedido->cod_entrega != 'motoboyVV'
                     ) {
                         //lançar frete
                         $resposta = $melhorEnvio->lancarFrete($referenceId);
