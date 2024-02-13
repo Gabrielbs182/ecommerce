@@ -153,7 +153,7 @@
                             <input class="form-check-input" type="radio" name="formaPagamento" id="pix"
                                 value="pix">
                             <label class="form-check-label" for="pix">
-                                Pix
+                                Pix (10% off)
                             </label>
                         </div>
                         <div class="col-md-9 form-group ml-3" id="logradouro-group">
