@@ -271,7 +271,7 @@ function montarLinhaEnvio(transportadora, check) {
     //check = 2 - Frete Gratis checkado
     //check = 3 - Frete Gratis 
     //check = 4 - Frete Fixo checkado 
-    //check = 5 - Frete Fico  
+    //check = 5 - Frete Fixo  
 
     var valorFormatado = (transportadora.price - transportadora.discount).toFixed(2).replace('.', ',');
 
@@ -317,7 +317,7 @@ function montarLinhaEnvio(transportadora, check) {
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '">' +
+            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '"checked>' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
             transportadora.company.name + ' - ' + transportadora.name + ' - R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
@@ -327,7 +327,7 @@ function montarLinhaEnvio(transportadora, check) {
         linha =
             '<div class="form-check">' +
             '<input class="form-check-input" type="radio" name="frete"' + 'id="' + transportadora.id + '" value="' +
-            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '" checked>' +
+            transportadora.id + '/' + transportadora.name + '/' + (14.99).toFixed(2) + '">' +
             '<label class="form-check-label" for="' + transportadora.id + '">' +
             transportadora.company.name + ' - ' + transportadora.name + ' - R$  14,99 (Frete Fixo) - Prazo ' + transportadora.delivery_time + ' dias.' +
             '</label>' +
