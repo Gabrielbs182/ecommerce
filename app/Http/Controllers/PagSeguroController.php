@@ -145,6 +145,19 @@ class PagSeguroController extends Controller
                 // Adicione mais URLs conforme necessário
             ];
 
+            // Adicionando tipos de pagamento com base na escolha do usuário
+            if ($formaPagamento == 'cartao') {
+                // Se o usuário escolher cartão, inclua ambos crédito e débito
+                $paymentMethods[] = ['type' => 'CREDIT_CARD'];
+                $paymentMethods[] = ['type' => 'DEBIT_CARD'];
+            } elseif ($formaPagamento == 'boleto') {
+                // Se o usuário escolher boleto, inclua apenas boleto
+                $paymentMethods[] = ['type' => 'BOLETO'];
+            } elseif ($formaPagamento == 'pix') {
+                // Se o usuário escolher PIX, inclua apenas PIX
+                $paymentMethods[] = ['type' => 'PIX'];
+            }
+
             // Construa o corpo dinamicamente usando as variáveis
             $bodyData = [
                 'reference_id' => $referenceId,
@@ -164,6 +177,7 @@ class PagSeguroController extends Controller
                 'redirect_url' => $redirectUrl,
                 'notification_urls' => $notification_urls,
                 'payment_notification_urls' => $payment_notification_urls,
+                'payment_methods' => $paymentMethods,
             ];
 
 
@@ -186,19 +200,6 @@ class PagSeguroController extends Controller
                     $descontoCentavos = ($total * ($cupom->desconto / 100)) * 100;
                     $bodyData['discount_amount'] = $descontoCentavos;
                 }
-            }
-
-            // Adicionando tipos de pagamento com base na escolha do usuário
-            if ($formaPagamento == 'cartao') {
-                // Se o usuário escolher cartão, inclua ambos crédito e débito
-                $paymentMethods[] = ['type' => 'CREDIT_CARD'];
-                $paymentMethods[] = ['type' => 'DEBIT_CARD'];
-            } elseif ($formaPagamento == 'boleto') {
-                // Se o usuário escolher boleto, inclua apenas boleto
-                $paymentMethods[] = ['type' => 'BOLETO'];
-            } elseif ($formaPagamento == 'pix') {
-                // Se o usuário escolher PIX, inclua apenas PIX
-                $paymentMethods[] = ['type' => 'PIX'];
             }
 
             // Convertendo o array em JSON para ser usado como corpo da requisição
