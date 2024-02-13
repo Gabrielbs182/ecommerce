@@ -208,7 +208,7 @@ class PagSeguroController extends Controller
             }
 
             if ($desconto > 0) {
-                $descontoCentavos = ($total * ($desconto / 100)) * 100;
+                $descontoCentavos = 100;
                 $bodyData['discount_amount'] = $descontoCentavos;
             }
 
@@ -230,7 +230,7 @@ class PagSeguroController extends Controller
                     ],
                 ]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'ProdutoController.salvarUsuario', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'PagSeguroController.PagSeguroCheckout', 'message' => $e->getMessage()]);
                 $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                 session()->forget('cart');
                 return redirect()->route('home');
