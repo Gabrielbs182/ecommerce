@@ -95,6 +95,10 @@ Route::get('/reset-password/{token}', function (Request $request, string $token)
 //REDIRECIONAMENTO
 Route::get('/categoria/cadastrar', [ProdutoController::class, 'cadastrarCategoria'])
     ->name('categoria.cadastrar')->middleware('IsAdmin');
+
+Route::get('/politica', [ProdutoController::class, 'politica'])
+    ->name('politica');
+
 Route::get('/cupom/cadastrar', [ProdutoController::class, 'cadastrarCupom'])
     ->name('cupom.cadastrar')->middleware('IsAdmin');
 Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria'])

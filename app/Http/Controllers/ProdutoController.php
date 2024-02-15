@@ -27,6 +27,11 @@ class ProdutoController extends Controller
         return view('emails.email_teste');
     }
 
+    public function politica()
+    {
+        return view('politica');
+    }
+
     public function finalizarPedido($id, Request $request)
     {
         $pedido = Pedido::find($id);
