@@ -233,8 +233,9 @@ class PagSeguroController extends Controller
                 ]);
 
                 Log::info('Payload da Requisição:', ['payload' => $body]);
-                Log::info('Payload da resposta:', ['payload' => $response]);
-
+                $jsonResponse = $response->getBody();
+                $data = json_decode($jsonResponse, true);
+                Log::info('Payload da resposta:', ['payload' => $data]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'PagSeguroController.PagSeguroCheckout', 'message' => $e->getMessage()]);
                 $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
