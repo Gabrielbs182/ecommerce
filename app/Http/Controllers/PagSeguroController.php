@@ -136,7 +136,7 @@ class PagSeguroController extends Controller
                 'postal_code' => $cep,
             ];
 
-            if ($complemento) {
+            if ($request->input('complemento') != null) {
                 $shippingAddress['complement'] = $complemento;
             }
 
