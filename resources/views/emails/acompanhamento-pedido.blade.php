@@ -29,7 +29,7 @@
             </tbody>
         </table>
         @if ($data['cod_rastreamento'] != '')
-            @if ($data['cod_rastreamento'] == 'Motoboy')
+            @if ($data['cod_rastreamento'] == 'Motoboy enviado')
                 <p class="lead">
                     Pedido enviado via motoboy
                 </p>
