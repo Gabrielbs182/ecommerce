@@ -21,7 +21,7 @@
             <tbody>
                 <tr>
                     <td>{{ $data['id'] }}</td>
-                    <td>{{ $data['data'] }}</td>
+                    <td>{{ \Carbon\Carbon::parse($data['data'])->format('d/m/y H:i:s') }}</td>
                     <td>{{ $data['status'] }}</td>
                     <td>{{ $data['cod_rastreamento'] }}</td>
                     <td>R$ {{ number_format($data['total'], 2, ',', '.') }}</td>
