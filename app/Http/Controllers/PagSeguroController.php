@@ -292,7 +292,7 @@ class PagSeguroController extends Controller
                         }
                         //guardando endereço
                         $endereco = new Endereco;
-                        if ($complemento) {
+                        if ($request->input('complemento') != null) {
                             $endereco->complemento = $complemento;
                         }
                         $endereco->logradouro = $logradouro;
