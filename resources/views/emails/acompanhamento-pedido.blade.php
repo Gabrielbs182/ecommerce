@@ -29,12 +29,20 @@
             </tbody>
         </table>
         @if ($data['cod_rastreamento'] != '')
-            <p class="lead">
-                <a class="btn btn-primary btn-lg float-right"
-                    href="https://app.melhorrastreio.com.br/app/melhorenvio/{{ $data['cod_rastreamento'] }}"
-                    role="button">Acompanhar Pedido</a>
-            </p>
-        @endif
-        <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro. <a href="https://urbeatstore.com.br/cadastrar">cadastrar.</a></p>
+            @if ($data['cod_rastreamento'] == 'Motoboy')
+                <p class="lead">
+                    Pedido enviado via motoboy
+                </p>
+            @else
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg float-right"
+                        href="https://app.melhorrastreio.com.br/app/melhorenvio/{{ $data['cod_rastreamento'] }}"
+                        role="button">Acompanhar Pedido</a>
+                </p>
+            @endif
+            <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro. <a
+                    href="https://urbeatstore.com.br/cadastrar">cadastrar.</a></p>
+            <p>Caso tenha algum problema com o pedido, favor entrar em contato pelo <a
+                    href="https://w.app/X6vkaJ">whatsapp.</a></p>
     </div>
 </div>

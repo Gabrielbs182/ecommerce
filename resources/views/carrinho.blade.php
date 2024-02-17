@@ -58,13 +58,23 @@
                             <div class="row">
                                 <div class="col-md-6 form-group" id="logradouro-group">
                                     <label>Logradouro</label>
-                                    <input value="{{ $logradouro }}" class="form-control" type="text" id="logradouro"
-                                        name="logradouro" readonly>
+                                    @if ($logradouro != '')
+                                        <input value="{{ $logradouro }}" class="form-control" type="text"
+                                            id="logradouro" name="logradouro" readonly>
+                                    @else
+                                        <input value="" class="form-control" type="text" id="logradouro"
+                                            name="logradouro" required>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 form-group" id="logradouro-group">
                                     <label>Bairro</label>
-                                    <input value="{{ $bairro }}" class="form-control" type="text" id="bairro"
-                                        name="bairro" readonly>
+                                    @if ($bairro != '')
+                                        <input value="{{ $bairro }}" class="form-control" type="text"
+                                            id="bairro" name="bairro" readonly>
+                                    @else
+                                        <input value="" class="form-control" type="text" id="bairro"
+                                            name="bairro" required>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 form-group" id="numero-group">
                                     <label>Numero</label>
@@ -72,13 +82,24 @@
                                 </div>
                                 <div class="col-md-6 form-group" id="cidade-group">
                                     <label>Cidade</label>
-                                    <input value="{{ $cidade }}" class="form-control" type="text" id="cidade"
-                                        name="cidade" readonly>
+                                    @if ($cidade != '')
+                                        <input value="{{ $cidade }}" class="form-control" type="text"
+                                            id="cidade" name="cidade" readonly>
+                                    @else
+                                        <input value="" class="form-control" type="text" id="cidade"
+                                            name="cidade" required>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 form-group" id="uf-group">
+
                                     <label>Uf</label>
-                                    <input value="{{ $uf }}" class="form-control" type="text" id="uf"
-                                        name="uf" readonly>
+                                    @if ($uf != '')
+                                        <input value="{{ $uf }}" class="form-control" type="text"
+                                            id="uf" name="uf" readonly>
+                                    @else
+                                        <input value="" class="form-control" type="text" id="uf"
+                                            name="uf" required>
+                                    @endif
                                 </div>
                                 <div class="col-md-6 form-group" id="cep-group">
                                     <label>CEP</label>

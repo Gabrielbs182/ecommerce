@@ -82,6 +82,9 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
+                    <a class="text-dark px-2" href="https://w.app/X6vkaJ">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
                     <a class="text-dark px-2" href="">
                         <i class="fab fa-facebook-f"></i>
                     </a>
