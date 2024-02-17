@@ -1,9 +1,9 @@
 @if (isset($lista))
     @foreach ($lista as $prod)
         <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-            <div class="card product-item border-1 mb-4" style="height: 450px; max-width: 300px;">
+            <div class="card product-item border-1 mb-4" style="height: 500px;">
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0"
-                    style="height: 300px;">
+                    style="height: 400px;">
                     <img class="img-fluid mw-100" src=" {{ asset('images') . '/' . $prod->id }}.png" alt="">
                 </div>
                 <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
