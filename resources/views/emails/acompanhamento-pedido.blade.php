@@ -42,7 +42,8 @@
             @endif
             <p>Para acompanhar o seu pedido pelo nosso sistema, faça já o seu cadastro. <a
                     href="https://urbeatstore.com.br/cadastrar">cadastrar.</a></p>
-            <p>Caso tenha algum problema com o pedido, favor entrar em contato pelo <a
-                    href="https://w.app/X6vkaJ">whatsapp.</a></p>
+        @endif
+        <p>Caso tenha algum problema com o pedido, favor entrar em contato pelo <a
+                href="https://w.app/X6vkaJ">whatsapp.</a></p>
     </div>
 </div>
