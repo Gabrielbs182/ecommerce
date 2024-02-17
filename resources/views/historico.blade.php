@@ -116,11 +116,12 @@
                     </h1>
             </div>
         @endif
+        <p>Caso tenha algum problema com o pedido, favor ler a nossa <a href="{{ route('politica') }}">política.</a> de
+            troca e devolução, e entrar em contato através dos contatos disponiveis na nossa pagina de <a
+                href="{{ route('politica') }}">política.</a> de devolução e troca. </p>
     </div>
 
-    <p>Caso tenha algum problema com o pedido, favor ler a nossa <a href="{{ route('politica') }}">política.</a> de
-        troca e devolução, e entrar em contato através dos contatos disponiveis na nossa pagina de <a
-            href="{{ route('politica') }}">política.</a> de devolução e troca. </p>
+
 
     <div class="modal fade" id="modalDetalhes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
