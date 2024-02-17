@@ -276,8 +276,8 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_SERRA', $MOTOBOY_SERRA);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_VV', $MOTOBOY_VV);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_CARIACICA', $MOTOBOY_CARIACICA);
-        $this->AtualizarVariaveisAmbiente('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
-        $this->AtualizarVariaveisAmbiente('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
+        $this->AtualizarVariaveisAmbienteComAspas('PAGSEGURO_EMAIL', $PAGSEGURO_EMAIL);
+        $this->AtualizarVariaveisAmbienteComAspas('PAGSEGURO_TOKEN', $PAGSEGURO_TOKEN);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_NAME', $MELHORENVIO_NAME);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_PHONE', $MELHORENVIO_PHONE);
         $this->AtualizarVariaveisAmbienteComAspas('MELHORENVIO_EMAIL', $MELHORENVIO_EMAIL);
