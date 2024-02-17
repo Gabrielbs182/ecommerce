@@ -85,20 +85,11 @@
                     <a class="text-dark px-2" href="https://w.app/X6vkaJ">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
-                    <a class="text-dark px-2" href="">
+                    <a class="text-dark px-2" href="https://www.facebook.com/mulherurbanastore?mibextid=uzlsIk">
                         <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a class="text-dark px-2" href="">
-                        <i class="fab fa-linkedin-in"></i>
                     </a>
                     <a class="text-dark px-2" href="https://instagram.com/use_mulherurbana?igshid=MzRlODBiNWFlZA==">
                         <i class="fab fa-instagram"></i>
-                    </a>
-                    <a class="text-dark pl-2" href="">
-                        <i class="fab fa-youtube"></i>
                     </a>
                 </div>
             </div>
