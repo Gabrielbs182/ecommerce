@@ -135,7 +135,7 @@ function calcularFrete() {
             console.log(total);
 
             linhas =
-                '<div class="row w-100 mt-3">' +
+                '<div class="row w-100 mt-3 ml-1">' +
                 '<div class="col-sm-3">' +
                 '<legend class="col-form-label pt-0">A domicílio:</legend>' +
                 '</div>' +
