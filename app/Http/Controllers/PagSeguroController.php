@@ -85,6 +85,9 @@ class PagSeguroController extends Controller
         $cidade = $request->input('cidade');
         $uf = $request->input('uf');
         $cep = $request->input('cep');
+        if ($request->input('complemento') != null) {
+            $complemento = $request->input('complemento');
+        }
 
         //testando estoque
         foreach ($carrinho as $item) {
@@ -132,6 +135,10 @@ class PagSeguroController extends Controller
                 'country' => 'BRA',
                 'postal_code' => $cep,
             ];
+
+            if ($complemento) {
+                $shippingAddress['complement'] = $complemento;
+            }
 
             $shippingAmount = $vlrFrete;
 
@@ -285,6 +292,9 @@ class PagSeguroController extends Controller
                         }
                         //guardando endereço
                         $endereco = new Endereco;
+                        if ($complemento) {
+                            $endereco->complemento = $complemento;
+                        }
                         $endereco->logradouro = $logradouro;
                         $endereco->bairro = $bairro;
                         $endereco->numero = $numero;

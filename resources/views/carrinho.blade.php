@@ -42,16 +42,21 @@
                                     <input class="form-control" value="Serra" type="text" id="cidade" name="cidade"
                                         readonly>
                                 </div>
-                                <div class="col-md-6 form-group" id="uf-group">
+                                <div class="col-md-2 form-group" id="uf-group">
                                     <label>Uf</label>
                                     <input class="form-control" value="ES" type="text" id="uf" name="uf"
                                         readonly>
                                 </div>
-                                <div class="col-md-6 form-group" id="cep-group">
+                                <div class="col-md-4 form-group" id="cep-group">
                                     <label>CEP</label>
                                     <input class="form-control" value="29160887" name="cep" type="text"
                                         id="cep" onblur="calcularFrete()" maxlength="10" oninput="validarNumero(this)"
                                         readonly>
+                                </div>
+                                <div class="col-md-4 form-group" id="complemento-group">
+                                    <label>Complemento</label>
+                                    <input class="form-control" value="" name="complemento" type="text"
+                                        id="complemento">
                                 </div>
                             </div>
                         @else
@@ -90,7 +95,7 @@
                                             name="cidade" required>
                                     @endif
                                 </div>
-                                <div class="col-md-6 form-group" id="uf-group">
+                                <div class="col-md-2 form-group" id="uf-group">
 
                                     <label>Uf</label>
                                     @if ($uf != '')
@@ -101,10 +106,16 @@
                                             name="uf" required>
                                     @endif
                                 </div>
-                                <div class="col-md-6 form-group" id="cep-group">
+                                <div class="col-md-4 form-group" id="cep-group">
                                     <label>CEP</label>
                                     <input value="{{ $cep }}" class="form-control" name="cep"
                                         type="text" id="cep" maxlength="10" readonly>
+                                </div>
+
+                                <div class="col-md-4 form-group" id="complemento-group">
+                                    <label>Complemento</label>
+                                    <input class="form-control" value="" name="complemento" type="text"
+                                        id="complemento">
                                 </div>
                             </div>
                         @endif
@@ -207,7 +218,8 @@
                         <div class="row">
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Nome</label>
-                                <input class="form-control" type="text" id="nome" name="nome" required>
+                                <input class="form-control" minlength="3" maxlength="15" type="text" id="nome"
+                                    name="nome" required>
                             </div>
                             <div class="col-md-6 form-group" id="logradouro-group">
                                 <label>Sobrenome</label>
@@ -215,7 +227,8 @@
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Email</label>
-                                <input class="form-control" type="text" id="email" name="email" required>
+                                <input class="form-control" placeholder="EX: exemplo@exemplo.com.br" type="text"
+                                    id="email" name="email" required>
                             </div>
                             <div class="col-md-6 form-group" id="numero-group">
                                 <label>Cpf</label>
@@ -223,11 +236,13 @@
                             </div>
                             <div class="col-md-2 form-group" id="cidade-group">
                                 <label>ddd</label>
-                                <input class="form-control" type="text" id="ddd" name="ddd" required>
+                                <input class="form-control" maxlength="2" minlength="2" placeholder="EX: 27"
+                                    type="text" id="ddd" name="ddd" required>
                             </div>
                             <div class="col-md-4 form-group" id="cidade-group">
                                 <label>Telefone</label>
-                                <input class="form-control" type="text" id="telefone" name="telefone" required>
+                                <input class="form-control" maxlength="9" minlength="9" type="text" id="telefone"
+                                    name="telefone" placeholder="EX: 999999999" required>
                             </div>
                         </div>
                     @endguest
