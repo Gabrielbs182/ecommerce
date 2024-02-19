@@ -29,7 +29,7 @@ class PagSeguroController extends Controller
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
-            ])->get('https://sandbox.api.pagseguro.com/checkouts/' . $checkoutId);
+            ])->get('https://api.pagseguro.com/checkouts/' . $checkoutId);
         } catch (\EXCEPTION $e) {
             Log::error("ERRO", ['file' => 'ProdutoController.consultarCheckout', 'message' => $e->getMessage()]);
             return redirect()->route('home');
