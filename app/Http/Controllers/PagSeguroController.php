@@ -230,7 +230,7 @@ class PagSeguroController extends Controller
 
             try {
                 // Enviando a requisição
-                $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
+                $response = $client->request('POST', 'https://api.pagseguro.com/checkouts', [
                     'body' => $body,
                     'headers' => [
                         'Authorization' => 'Bearer ' . $token,
