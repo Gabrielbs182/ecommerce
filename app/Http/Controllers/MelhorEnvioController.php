@@ -55,7 +55,7 @@ class MelhorEnvioController extends Controller
 
         try {
             //TENTANDO DAR POST NO MELHOR ENVIO COM A AUTORIZAÇÃO ATUAL DO SISTEMA.
-            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/checkout', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
                 'body' => json_encode(['orders' => [$order]]),
                 'headers' => [
                     'Accept' => 'application/json',
@@ -70,7 +70,7 @@ class MelhorEnvioController extends Controller
                 //SE A AUTORIZAÇÃO FOR NEGADA, EU TENTO ATUALIZAR O TOKEN PARA ENVIAR OUTRA O POST NOVAMENTE
                 $this->refreshToken();
                 $responseData = $this->Authorization();
-                $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/checkout', [
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/checkout', [
                     'body' => json_encode(['orders' => [$order]]),
                     'headers' => [
                         'Accept' => 'application/json',
@@ -91,7 +91,7 @@ class MelhorEnvioController extends Controller
         $responseData = $this->Authorization();
         $client = new \GuzzleHttp\Client();
         try {
-            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/generate', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/generate', [
                 'body' => json_encode(['orders' => [$order]]),
                 'headers' => [
                     'Accept' => 'application/json',
@@ -105,7 +105,7 @@ class MelhorEnvioController extends Controller
             try {
                 $this->refreshToken();
                 $responseData = $this->Authorization();
-                $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/generate', [
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/generate', [
                     'body' => json_encode(['orders' => [$order]]),
                     'headers' => [
                         'Accept' => 'application/json',
@@ -126,7 +126,7 @@ class MelhorEnvioController extends Controller
         $responseData = $this->Authorization();
         $client = new \GuzzleHttp\Client();
         try {
-            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/tracking', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
                 'body' => json_encode(['orders' => [$order]]),
                 'headers' => [
                     'Accept' => 'application/json',
@@ -140,7 +140,7 @@ class MelhorEnvioController extends Controller
             try {
                 $this->refreshToken();
                 $responseData = $this->Authorization();
-                $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/tracking', [
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/tracking', [
                     'body' => json_encode(['orders' => [$order]]),
                     'headers' => [
                         'Accept' => 'application/json',
@@ -272,7 +272,7 @@ class MelhorEnvioController extends Controller
 
                     // Fazer a requisição POST
                     try {
-                        $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
+                        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
                             'json' => $requestData,
                             'headers' => $headers,
                         ]);
@@ -289,7 +289,7 @@ class MelhorEnvioController extends Controller
                                 'User-Agent' => env('USER_AGENT'),
                             ];
 
-                            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
+                            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
                                 'json' => $requestData,
                                 'headers' => $headers,
                             ]);
@@ -389,7 +389,7 @@ class MelhorEnvioController extends Controller
 
                 // Fazer a requisição POST
                 try {
-                    $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
+                    $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
                         'json' => $requestData,
                         'headers' => $headers,
                     ]);
@@ -404,7 +404,7 @@ class MelhorEnvioController extends Controller
                             'Content-Type' => 'application/json',
                             'User-Agent' => env('USER_AGENT'),
                         ];
-                        $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
+                        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/cart', [
                             'json' => $requestData,
                             'headers' => $headers,
                         ]);
@@ -464,7 +464,7 @@ class MelhorEnvioController extends Controller
         try {
 
             // Fazer a requisição POST
-            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/calculate', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
                 'json' => $postData,
                 'headers' => $headers,
             ]);
@@ -479,7 +479,7 @@ class MelhorEnvioController extends Controller
                     'User-Agent' => ENV('USER_AGENT'),
                 ];
                 // Fazer a requisição POST
-                $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
                     'json' => $postData,
                     'headers' => $headers,
                 ]);
@@ -572,7 +572,7 @@ class MelhorEnvioController extends Controller
         try {
 
             // Fazer a requisição POST
-            $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/calculate', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
                 'json' => $postData,
                 'headers' => $headers,
             ]);
@@ -588,7 +588,7 @@ class MelhorEnvioController extends Controller
                     'User-Agent' => ENV('USER_AGENT'),
                 ];
                 // Fazer a requisição POST
-                $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/calculate', [
+                $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate', [
                     'json' => $postData,
                     'headers' => $headers,
                 ]);
@@ -608,7 +608,7 @@ class MelhorEnvioController extends Controller
         $client_id = env('CLIENT_ID');
         $redirect_uri = 'https://urbeatstore.com.br/melhorenvio/getAuthorization';
         $scope = env('SCOPE'); // Adicione outras permissões conforme necessário
-        $authorizationUrl = "https://melhorenvio.com.br/oauth/authorize?";
+        $authorizationUrl = "https://sandbox.melhorenvio.com.br/oauth/authorize?";
         $authorizationUrl .= "client_id={$client_id}&redirect_uri={$redirect_uri}&response_type=code&scope={$scope}";
         return redirect()->away($authorizationUrl);
     }
@@ -621,7 +621,7 @@ class MelhorEnvioController extends Controller
         $client = new \GuzzleHttp\Client();
         $code = env('AUTHORIZATION_CODE');
         //montando a requisição
-        $response = $client->request('POST', 'https://melhorenvio.com.br/oauth/token', [
+        $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
             'form_params' => [
                 'grant_type' => 'authorization_code',
                 'client_id' => env('CLIENT_ID'),
@@ -657,7 +657,7 @@ class MelhorEnvioController extends Controller
         $responseData = $this->Authorization();
         //montando a requisição
         try {
-            $response = $client->request('POST', 'https://melhorenvio.com.br/oauth/token', [
+            $response = $client->request('POST', 'https://sandbox.melhorenvio.com.br/oauth/token', [
                 'form_params' => [
                     'grant_type' => 'refresh_token',
                     'client_id' => env('CLIENT_ID'),
@@ -717,7 +717,7 @@ class MelhorEnvioController extends Controller
         $responseData = $this->Authorization();
         $client = new Client();
         try {
-            $response = $client->request('GET', 'https://melhorenvio.com.br/api/v2/me/shipment/app-settings', [
+            $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . $responseData['access_token'],
@@ -740,7 +740,7 @@ class MelhorEnvioController extends Controller
             try {
                 $this->refreshToken();
                 $responseData = $this->Authorization();
-                $response = $client->request('GET', 'https://melhorenvio.com.br/api/v2/me/shipment/app-settings', [
+                $response = $client->request('GET', 'https://sandbox.melhorenvio.com.br/api/v2/me/shipment/app-settings', [
                     'headers' => [
                         'Accept' => 'application/json',
                         'Authorization' => 'Bearer ' . $responseData['access_token'],
