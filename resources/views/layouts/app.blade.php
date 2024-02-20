@@ -12,8 +12,8 @@
     <meta charset="utf-8">
     <title>Urbeat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+    <meta content="Urbeat Store" name="keywords">
+    <meta content="Urbeat Store" name="description">
     <!-- Favicon -->
     <link href="{{ secure_asset('img/favicon.ico') }}" rel="icon">
 
