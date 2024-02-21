@@ -1,6 +1,6 @@
 @if (isset($lista))
     @foreach ($lista as $prod)
-        <div class="col col-md-3 col-sm-12 pb-1">
+        <div class="col col-md-3 col-6">
             <div class="card product-item border-1 mb-4 " >
                 <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
                     <img class="img-fluid img-thumbnail" src=" {{ asset('images') . '/' . $prod->id }}.png" alt="">
