@@ -43,7 +43,7 @@
                                     <td> Desconto </td>
                                 @endif
                                 <td>{{ $p->desconto }}</td>
-                                @if ($p->ativo = 0)
+                                @if ($p->ativo == 0)
                                     <td> Não </td>
                                 @else
                                     <td> Sim </td>
