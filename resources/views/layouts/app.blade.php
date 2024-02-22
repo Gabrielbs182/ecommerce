@@ -82,7 +82,7 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-dark px-2" href="https://w.app/X6vkaJ">
+                    <a class="text-dark px-2" href="https://wa.me/5527996658538">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
                     <a class="text-dark px-2" href="https://www.facebook.com/mulherurbanastore?mibextid=uzlsIk">
