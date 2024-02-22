@@ -40,7 +40,8 @@
                         <p>3) A troca ou devolução deverá ser solicitada através do e-mail: <a
                                 href="mailto:contato@urbeatstore.com.br">contato@urbeatstore.com.br</a> ou entrando em
                             contato com a nossa equipe de atendimento
-                            no whatsapp através deste link <a href="https://w.app/X6vkaJ">Urbeat Whatsapp</a> e somente por
+                            no whatsapp através deste link <a href="https://wa.me/5527996658538">Urbeat Whatsapp</a> e
+                            somente por
                             estes 2 meios de comunicação, informando o número do pedido e motivo da troca ou devolução. O
                             prazo para resposta é de
                             até 48 horas úteis.</p>
