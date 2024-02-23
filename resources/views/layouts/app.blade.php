@@ -147,7 +147,7 @@
                 </a>
                 <p>Em nossa loja o universo da moda em movimento, onde cada passo é uma declaração de estilo e
                     personalidade!</p>
-                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>contato@urbeat.com</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>contato@urbeatstore.com.br</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>27 99665-8538</p>
             </div>
             <div class="col-lg-8 col-md-12">
