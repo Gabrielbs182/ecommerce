@@ -102,7 +102,7 @@
                 </a>
             </div>
 
-            <div class="col-lg-6 col-6 text-left">
+            {{-- <div class="col-lg-6 col-6 text-left">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <form action="">
                         <div class="input-group">
@@ -115,7 +115,7 @@
                         </div>
                     </form>
                 @endif
-            </div>
+            </div> --}}
 
 
             <div class="col-lg-3 col-6 text-right">
