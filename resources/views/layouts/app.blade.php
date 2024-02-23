@@ -102,7 +102,7 @@
                 </a>
             </div>
 
-            {{-- <div class="col-lg-6 col-6 text-left">
+            <div class="col-lg-6 col-6 text-left">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <form action="">
                         <div class="input-group">
@@ -115,7 +115,7 @@
                         </div>
                     </form>
                 @endif
-            </div> --}}
+            </div>
 
 
             <div class="col-lg-3 col-6 text-right">
@@ -159,7 +159,7 @@
                                     class="fa fa-angle-right mr-2"></i>Início</a>
                             <a class="text-dark" href="{{ route('politica') }}"><i
                                     class="fa fa-angle-right mr-2"></i>Política de troca e devolução</a>
-                            <a class="text-dark" href="https://wa.me/5527996658538"><i class="fa fa-angle-right mr-2"></i>Fale
+                            <a class="text-dark" href="https://w.app/X6vkaJ"><i class="fa fa-angle-right mr-2"></i>Fale
                                 Conosco</a>
                         </div>
                     </div>
