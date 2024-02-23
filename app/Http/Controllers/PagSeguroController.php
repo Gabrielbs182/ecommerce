@@ -29,7 +29,7 @@ class PagSeguroController extends Controller
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
                 'Accept' => 'application/json',
-            ])->get('https://sandbox.api.pagseguro.com/checkouts/' . $checkoutId);
+            ])->get('https://api.pagseguro.com/checkouts/' . $checkoutId);
         } catch (\EXCEPTION $e) {
             Log::error("ERRO", ['file' => 'ProdutoController.consultarCheckout', 'message' => $e->getMessage()]);
             return redirect()->route('home');
@@ -230,7 +230,7 @@ class PagSeguroController extends Controller
 
             try {
                 // Enviando a requisição
-                $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/checkouts', [
+                $response = $client->request('POST', 'https://api.pagseguro.com/checkouts', [
                     'body' => $body,
                     'headers' => [
                         'Authorization' => 'Bearer ' . $token,
@@ -478,7 +478,7 @@ class PagSeguroController extends Controller
     //     $client = new \GuzzleHttp\Client();
 
     //     try {
-    //         $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/application', [
+    //         $response = $client->request('POST', 'https://api.pagseguro.com/oauth2/application', [
     //             'body' => '{"name":"Urbeat","site":"https://urbeatstore.com.br","redirect_uri":"https://urbeatstore.com.br/pagbank/auth"}',
     //             'headers' => [
     //                 'Authorization' => 'Bearer ' . $token,
@@ -535,7 +535,7 @@ class PagSeguroController extends Controller
     //     $client = new \GuzzleHttp\Client();
 
     //     try {
-    //         $response = $client->request('POST', 'https://sandbox.api.pagseguro.com/oauth2/token', [
+    //         $response = $client->request('POST', 'https://api.pagseguro.com/oauth2/token', [
     //             'json' => [
     //                 'grant_type' => 'authorization_code',
     //                 'code' => $code,
