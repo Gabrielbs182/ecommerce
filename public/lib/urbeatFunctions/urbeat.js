@@ -384,6 +384,9 @@ function buscarCupom() {
                     // Verificar se o frete é "Grátis"
                     var freteGratis = textoFrete.toLowerCase() === 'grátis';
 
+                    console.log(textoFrete)
+                    console.log(freteGratis)
+
                     // Converter para float
                     var subtotal = parseFloat(textoSubtotal);
                     var vlrFrete = freteGratis ? 0 : parseFloat(textoFrete);
@@ -391,8 +394,6 @@ function buscarCupom() {
                     // Calcular o novo valor (85 - 10%)
                     var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
                     var novoTotal = freteGratis ? novoValor : novoValor + vlrFrete;
-
-                    
 
                     // Formatar para o padrão brasileiro
                     var formatoBrasileiro = {
@@ -403,8 +404,8 @@ function buscarCupom() {
                     var novoValorFormatado = novoValor.toLocaleString('pt-BR', formatoBrasileiro);
                     var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
 
-                    console.log(novoTotal)
-                    console.log(novoTotalFormatado)
+                    console.log(novoTotal);
+                    console.log(novoTotalFormatado);
 
                     // Atualizar o conteúdo do elemento com o novo valor
                     $('#subtotal').text(novoValorFormatado);
