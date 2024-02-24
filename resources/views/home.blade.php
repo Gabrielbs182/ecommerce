@@ -65,7 +65,7 @@
                                         <p class="h4 font-weight-bold" id="valorProdModal">R$ 246,00</p>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <div class="form-row scrollable-div">
                                     <div class="form-group col-md-12">
                                         <label for="descricaoProdModal">Descrição:</label>
                                         <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou

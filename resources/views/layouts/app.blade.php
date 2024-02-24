@@ -51,6 +51,13 @@
             /* ou qualquer altura desejada em viewport height */
             overflow-y: auto;
         }
+
+        .scrollable-div {
+            max-height: 200px; /* Defina a altura máxima desejada */
+            overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
+            border: 1px solid #ccc; /* Apenas para fins de estilo, pode ser removido */
+            padding: 10px; /* Ajuste o preenchimento conforme necessário */
+        }
     </style>
 
 </head>
