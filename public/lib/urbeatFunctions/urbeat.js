@@ -381,13 +381,16 @@ function buscarCupom() {
                     // Pegar o texto do elemento e remover o símbolo de R$ e espaços
                     var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
 
+                    // Verificar se o frete é "Grátis"
+                    var freteGratis = textoFrete.toLowerCase() === 'grátis';
+
                     // Converter para float
                     var subtotal = parseFloat(textoSubtotal);
-                    var vlrFrete = parseFloat(textoFrete);
+                    var vlrFrete = freteGratis ? 0 : parseFloat(textoFrete);
 
                     // Calcular o novo valor (85 - 10%)
                     var novoValor = subtotal - (subtotal * (cupom[0].desconto / 100));
-                    var novoTotal = novoValor + vlrFrete;
+                    var novoTotal = freteGratis ? novoValor : novoValor + vlrFrete;
 
                     // Formatar para o padrão brasileiro
                     var formatoBrasileiro = {
