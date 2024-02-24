@@ -40,6 +40,18 @@
     @yield('scriptjs')
 
     <style>
+        .modal-content {
+            max-height: 80vh;
+            /* ou qualquer altura desejada em viewport height */
+            overflow-y: auto;
+        }
+
+        .modal-dialog {
+            max-height: 80vh;
+            /* ou qualquer altura desejada em viewport height */
+            overflow-y: auto;
+        }
+
         .scrollable-div {
             overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
             padding: 10px; /* Ajuste o preenchimento conforme necessário */
