@@ -382,7 +382,7 @@ function buscarCupom() {
                     var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
 
                     // Verificar se o frete é "Grátis"
-                    var freteGratis = textoFrete.toLowerCase() === 'grátis';
+                    var freteGratis = textoFrete == 'Grátis';
 
                     console.log(textoFrete)
                     console.log(freteGratis)
