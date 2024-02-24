@@ -20,7 +20,7 @@
     {{-- Modais --}}
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg  modal-dialog-centered" role="document">
             <div class="modal-content" id="modalbody">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

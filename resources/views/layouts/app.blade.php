@@ -39,6 +39,20 @@
     @yield('head')
     @yield('scriptjs')
 
+    <style>
+        .modal-content {
+            max-height: 80vh;
+            /* ou qualquer altura desejada em viewport height */
+            overflow-y: auto;
+        }
+
+        .modal-dialog {
+            max-height: 80vh;
+            /* ou qualquer altura desejada em viewport height */
+            overflow-y: auto;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -159,7 +173,8 @@
                                     class="fa fa-angle-right mr-2"></i>Início</a>
                             <a class="text-dark" href="{{ route('politica') }}"><i
                                     class="fa fa-angle-right mr-2"></i>Política de troca e devolução</a>
-                            <a class="text-dark" href="https://wa.me/5527996658538"><i class="fa fa-angle-right mr-2"></i>Fale
+                            <a class="text-dark" href="https://wa.me/5527996658538"><i
+                                    class="fa fa-angle-right mr-2"></i>Fale
                                 Conosco</a>
                         </div>
                     </div>
