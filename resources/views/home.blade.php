@@ -57,7 +57,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6 ml-auto">
+                            <div class="col-md-6 ml-auto" style="overflow-y: scroll;">
                                 <form>
                                     <input type="hidden" value="" id="idProduto">
                                     <div class="form-row">
