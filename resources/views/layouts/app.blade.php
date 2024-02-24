@@ -41,14 +41,8 @@
 
     <style>
         .modal-content {
-            max-height: 80vh;
             /* ou qualquer altura desejada em viewport height */
             overflow-y: auto;
-        }
-
-        .modal-dialog {
-            max-height: 80vh;
-            /* ou qualquer altura desejada em viewport height */
         }
 
         .scrollable-div {
