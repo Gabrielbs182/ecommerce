@@ -53,7 +53,6 @@
         }
 
         .scrollable-div {
-            max-height: 200px; /* Defina a altura máxima desejada */
             overflow-y: auto; /* Adiciona rolagem vertical quando o conteúdo excede a altura */
             padding: 10px; /* Ajuste o preenchimento conforme necessário */
         }
