@@ -381,12 +381,15 @@ function buscarCupom() {
                     // Pegar o texto do elemento e remover o símbolo de R$ e espaços
                     var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
 
+                    var testoFrete2 = $('#valorFreteTexto').text();
                     // Verificar se o frete é "Grátis"
                     var freteGratis = textoFrete == 'Grátis';
 
-                    if (textoFrete == 'Grátis'){
+                    if (testoFrete2 == 'Grátis'){
+                        console.log(textoFrete2)
                         console.log('Sim')
                     }else{
+                        console.log(textoFrete2)
                         console.log('Nao')
                     }
 
