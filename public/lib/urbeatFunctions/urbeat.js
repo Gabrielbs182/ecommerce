@@ -384,6 +384,12 @@ function buscarCupom() {
                     // Verificar se o frete é "Grátis"
                     var freteGratis = textoFrete == 'Grátis';
 
+                    if (textoFrete == 'Grátis'){
+                        console.log('Sim')
+                    }else{
+                        console.log('Nao')
+                    }
+
                     console.log(textoFrete)
                     console.log(freteGratis)
 
