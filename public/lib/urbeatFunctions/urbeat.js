@@ -379,7 +379,7 @@ function buscarCupom() {
                     var textoSubtotal = $('#subtotal').text().replace('R$ ', '').replace(',', '.');
 
                     // Pegar o texto do elemento e remover o símbolo de R$ e espaços
-                    var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.');
+                    var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.').trim();
 
                     var textoFrete2 = $('#valorFreteTexto').text();
                     // Verificar se o frete é "Grátis"
