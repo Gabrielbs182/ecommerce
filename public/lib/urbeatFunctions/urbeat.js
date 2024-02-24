@@ -351,7 +351,6 @@ function buscarCupom() {
     // var numero = $('#tamanhoModal').val()
     // var idProduto = $('#idProduto').val()
     $.getJSON('/buscarCupom/' + codigo, function (cupom) {
-        console.log(cupom);
         // $('#estoque').val(estoque[0].quantidade);
         // $('#loadingSpinner').hide();
         if (!cupom) {
@@ -381,20 +380,8 @@ function buscarCupom() {
                     // Pegar o texto do elemento e remover o símbolo de R$ e espaços
                     var textoFrete = $('#valorFreteTexto').text().replace('R$ ', '').replace(',', '.').trim();
 
-                    var textoFrete2 = $('#valorFreteTexto').text();
                     // Verificar se o frete é "Grátis"
                     var freteGratis = textoFrete == 'Grátis';
-
-                    if (textoFrete2 == 'Grátis'){
-                        console.log(textoFrete2)
-                        console.log('Sim')
-                    }else{
-                        console.log(textoFrete2)
-                        console.log('Nao')
-                    }
-
-                    console.log(textoFrete)
-                    console.log(freteGratis)
 
                     // Converter para float
                     var subtotal = parseFloat(textoSubtotal);
@@ -412,9 +399,6 @@ function buscarCupom() {
 
                     var novoValorFormatado = novoValor.toLocaleString('pt-BR', formatoBrasileiro);
                     var novoTotalFormatado = novoTotal.toLocaleString('pt-BR', formatoBrasileiro);
-
-                    console.log(novoTotal);
-                    console.log(novoTotalFormatado);
 
                     // Atualizar o conteúdo do elemento com o novo valor
                     $('#subtotal').text(novoValorFormatado);
