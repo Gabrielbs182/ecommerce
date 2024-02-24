@@ -57,7 +57,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6 ml-auto" style="overflow-y: scroll;">
+                            <div class="col-md-6 ml-auto">
                                 <form>
                                     <input type="hidden" value="" id="idProduto">
                                     <div class="form-row">
@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12" style="overflow-y: scroll;">
                                             <label for="descricaoProdModal">Descrição:</label>
                                             <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou
                                                 escrevendo
