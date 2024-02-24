@@ -28,72 +28,70 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="container-fluid" id="modalAlert">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner border">
-                                        <div class="carousel-item active" id="primeiroCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2.png') }}" alt="Image">
-                                        </div>
-                                        <div class="carousel-item" id="segundoCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
-                                        </div>
-                                        <div class="carousel-item" id="terceiroCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_3.png') }}" alt="Image">
-                                        </div>
-                                        <div class="carousel-item" id="quartoCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_4.png') }}" alt="Image">
-                                        </div>
-                                        <div class="carousel-item" id="quintoCarrosel">
-                                            <img class="w-100 h-100" src="{{ asset('images/2_5.png') }}" alt="Image">
-                                        </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner border">
+                                    <div class="carousel-item active" id="primeiroCarrosel">
+                                        <img class="w-100 h-100" src="{{ asset('images/2.png') }}" alt="Image">
                                     </div>
-                                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                                    </a>
-                                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                                    </a>
+                                    <div class="carousel-item" id="segundoCarrosel">
+                                        <img class="w-100 h-100" src="{{ asset('images/2_2.png') }}" alt="Image">
+                                    </div>
+                                    <div class="carousel-item" id="terceiroCarrosel">
+                                        <img class="w-100 h-100" src="{{ asset('images/2_3.png') }}" alt="Image">
+                                    </div>
+                                    <div class="carousel-item" id="quartoCarrosel">
+                                        <img class="w-100 h-100" src="{{ asset('images/2_4.png') }}" alt="Image">
+                                    </div>
+                                    <div class="carousel-item" id="quintoCarrosel">
+                                        <img class="w-100 h-100" src="{{ asset('images/2_5.png') }}" alt="Image">
+                                    </div>
                                 </div>
+                                <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
+                                    <i class="fa fa-2x fa-angle-left text-dark"></i>
+                                </a>
+                                <a class="carousel-control-next" href="#product-carousel" data-slide="next">
+                                    <i class="fa fa-2x fa-angle-right text-dark"></i>
+                                </a>
                             </div>
-                            <div class="col-md-6 ml-auto">
-                                <form>
-                                    <input type="hidden" value="" id="idProduto">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                            <h1 class="display-4 font-weight-light" id="nomeProdModal">Tenis X</h1>
-                                            <p class="h4 font-weight-bold" id="valorProdModal">R$ 246,00</p>
-                                        </div>
+                        </div>
+                        <div class="col-md-6 ml-auto">
+                            <form>
+                                <input type="hidden" value="" id="idProduto">
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <h1 class="display-4 font-weight-light" id="nomeProdModal">Tenis X</h1>
+                                        <p class="h4 font-weight-bold" id="valorProdModal">R$ 246,00</p>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12" style="overflow-y: scroll;">
-                                            <label for="descricaoProdModal">Descrição:</label>
-                                            <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou
-                                                escrevendo
-                                                um grande texto para testar.</p>
-                                        </div>
-                                    </div>
-                                    <div id="comprar">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="tamanhoModal">Tamanho</label>
-                                                <select id="tamanhoModal" class="form-control" disabled
-                                                    onchange="buscarEstoque()" required>
-                                                    <option selected>Produto Esgotado</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-6" id="inputZipDiv">
-                                                <label for="inputZip">Quantidade</label>
-                                                <input type="number" class="form-control" id="inputZip" required>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div id="comprarButton">
-                                    <button type="button" class="btn btn-primary"
-                                        onclick="adicionarCarrinho()">Comprar</button>
                                 </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="descricaoProdModal">Descrição:</label>
+                                        <p id="descricaoProdModal">Uma sandalia top, muito confortavel, estou
+                                            escrevendo
+                                            um grande texto para testar.</p>
+                                    </div>
+                                </div>
+                                <div id="comprar">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="tamanhoModal">Tamanho</label>
+                                            <select id="tamanhoModal" class="form-control" disabled
+                                                onchange="buscarEstoque()" required>
+                                                <option selected>Produto Esgotado</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6" id="inputZipDiv">
+                                            <label for="inputZip">Quantidade</label>
+                                            <input type="number" class="form-control" id="inputZip" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="comprarButton">
+                                <button type="button" class="btn btn-primary"
+                                    onclick="adicionarCarrinho()">Comprar</button>
                             </div>
                         </div>
                     </div>
