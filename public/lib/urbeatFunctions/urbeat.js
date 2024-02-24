@@ -5,13 +5,13 @@ function buscarProduto(id) {
         var foto = '<img class="w-100 h-100" src="' + asset +
             '/' + produto[0].id + '.png" alt="Image">';
         var foto2 = '<img class="w-100 h-100" src="' + asset +
-            '/' + produto[0].id + '_2.png" alt="Image">';
+            '/' + produto[0].id + '_1.png" alt="Image">';
         var foto3 = '<img class="w-100 h-100" src="' + asset +
-            '/' + produto[0].id + '_3.png" alt="Image">';
+            '/' + produto[0].id + '_2.png" alt="Image">';
         var foto4 = '<img class="w-100 h-100" src="' + asset +
-            '/' + produto[0].id + '_4.png" alt="Image">';
+            '/' + produto[0].id + '_3.png" alt="Image">';
         var foto5 = '<img class="w-100 h-100" src="' + asset +
-            '/' + produto[0].id + '_5.png" alt="Image">';
+            '/' + produto[0].id + '_4.png" alt="Image">';
         $('#primeiroCarrosel').empty();
         $('#descricaoProdModal').empty();
         $('#segundoCarrosel').empty();
