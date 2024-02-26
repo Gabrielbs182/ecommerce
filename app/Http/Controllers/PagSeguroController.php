@@ -460,6 +460,8 @@ class PagSeguroController extends Controller
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
                 // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
             }
+        }else{
+            Log::info('Não recebeu webhook');
         }
         // Responda para confirmar o recebimento do Webhook
         return response()->json(['status' => 'Webhook recebido com sucesso']);
