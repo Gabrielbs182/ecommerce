@@ -313,7 +313,7 @@ class ProdutoController extends Controller
         $data['total'] = $pedido->total;
         $data['nome'] = $usuario->nome;
         $sent = Mail::to($usuario->email, $usuario->nome)->send(new AcompanhamentoPedido($data));
-        Log::info("Email enviado:"  . $sent . "");
+        Log::info("Email enviado:"  . $data . "");
     }
 
     public function delete($id, Request $request)
