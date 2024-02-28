@@ -89,19 +89,6 @@ class PagSeguroController extends Controller
             $complemento = $request->input('complemento');
         }
 
-        $endereco = new Endereco;
-        if ($request->input('complemento') != null) {
-            $endereco->complemento = $complemento;
-        }
-        $endereco->logradouro = $logradouro;
-        $endereco->bairro = $bairro;
-        $endereco->numero = $numero;
-        $endereco->cidade = $cidade;
-        $endereco->uf = $uf;
-        $endereco->cep = $cep;
-
-        dd($endereco);
-
         //testando estoque
         foreach ($carrinho as $item) {
             $quantidadeCarrinho = $item['quantidade'];
@@ -338,6 +325,7 @@ class PagSeguroController extends Controller
                         $pedido->endereco_id = $endereco->id;
                         $pedido->cod_entrega = $idFrete;
                         $pedido->total = $total;
+                        dd($pedido);
                         try {
                             DB::beginTransaction();
                             $pedido->save();
