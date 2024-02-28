@@ -301,17 +301,18 @@ class PagSeguroController extends Controller
                         $endereco->cidade = $cidade;
                         $endereco->uf = $uf;
                         $endereco->cep = $cep;
-                        try {
-                            DB::beginTransaction();
-                            $endereco->save();
-                            DB::commit();
-                        } catch (\Exception $e) {
-                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarEndereco', 'message' => $e->getMessage()]);
-                            DB::rollback();
-                            $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
-                            session()->forget('cart');
-                            return redirect()->route('home');
-                        }
+                        $endereco->save();
+                        // try {
+                        //     DB::beginTransaction();
+                        //     $endereco->save();
+                        //     DB::commit();
+                        // } catch (\Exception $e) {
+                        //     Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarEndereco', 'message' => $e->getMessage()]);
+                        //     DB::rollback();
+                        //     $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
+                        //     session()->forget('cart');
+                        //     return redirect()->route('home');
+                        // }
 
                         //criar pedido
                         $dateTimeAtual = new DateTime();
