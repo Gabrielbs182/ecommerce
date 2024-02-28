@@ -244,7 +244,7 @@ class PagSeguroController extends Controller
                 $data = json_decode($jsonResponse, true);
                 Log::info('Payload da resposta:', ['payload' => $data]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'PagSeguroController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'PagSeguroController.PagSeguroCheckout.Checkout', 'message' => $e->getMessage()]);
                 $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                 session()->forget('cart');
                 return redirect()->route('home');
@@ -283,7 +283,7 @@ class PagSeguroController extends Controller
                                 $usuarioPedido->save();
                                 DB::commit();
                             } catch (\Exception $e) {
-                                Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                                Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarUsu', 'message' => $e->getMessage()]);
                                 DB::rollback();
                                 $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                                 session()->forget('cart');
@@ -306,7 +306,7 @@ class PagSeguroController extends Controller
                             $endereco->save();
                             DB::commit();
                         } catch (\Exception $e) {
-                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarEndereco', 'message' => $e->getMessage()]);
                             DB::rollback();
                             $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                             session()->forget('cart');
@@ -332,7 +332,7 @@ class PagSeguroController extends Controller
                             $produtoController = new ProdutoController;
                             $produtoController->email($pedido->id);
                         } catch (\Exception $e) {
-                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarPedido', 'message' => $e->getMessage()]);
                             DB::rollback();
                             $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                             session()->forget('cart');
@@ -352,7 +352,7 @@ class PagSeguroController extends Controller
                                 $iten->save();
                                 DB::commit();
                             } catch (\Exception $e) {
-                                Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout', 'message' => $e->getMessage()]);
+                                Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.salvarItens', 'message' => $e->getMessage()]);
                                 DB::rollback();
                                 $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
                                 session()->forget('cart');
