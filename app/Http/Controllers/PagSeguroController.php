@@ -89,6 +89,19 @@ class PagSeguroController extends Controller
             $complemento = $request->input('complemento');
         }
 
+        $endereco = new Endereco;
+        if ($request->input('complemento') != null) {
+            $endereco->complemento = $complemento;
+        }
+        $endereco->logradouro = $logradouro;
+        $endereco->bairro = $bairro;
+        $endereco->numero = $numero;
+        $endereco->cidade = $cidade;
+        $endereco->uf = $uf;
+        $endereco->cep = $cep;
+
+        dd($endereco);
+
         //testando estoque
         foreach ($carrinho as $item) {
             $quantidadeCarrinho = $item['quantidade'];
@@ -301,18 +314,17 @@ class PagSeguroController extends Controller
                         $endereco->cidade = $cidade;
                         $endereco->uf = $uf;
                         $endereco->cep = $cep;
-                        $endereco->save();
-                        // try {
-                        //     DB::beginTransaction();
-                        //     $endereco->save();
-                        //     DB::commit();
-                        // } catch (\Exception $e) {
-                        //     Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarEndereco', 'message' => $e->getMessage()]);
-                        //     DB::rollback();
-                        //     $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
-                        //     session()->forget('cart');
-                        //     return redirect()->route('home');
-                        // }
+                        try {
+                            DB::beginTransaction();
+                            $endereco->save();
+                            DB::commit();
+                        } catch (\Exception $e) {
+                            Log::error("ERRO", ['file' => 'ProdutoController.PagSeguroCheckout.CriarEndereco', 'message' => $e->getMessage()]);
+                            DB::rollback();
+                            $request->session()->flash('err', 'erro ao tentar iniciar pagamento');
+                            session()->forget('cart');
+                            return redirect()->route('home');
+                        }
 
                         //criar pedido
                         $dateTimeAtual = new DateTime();
@@ -461,7 +473,7 @@ class PagSeguroController extends Controller
                 Log::info('Webhook processado com sucesso', ['reference_id' => $referenceId]);
                 // Se necessário, você pode adicionar lógica adicional para lidar com outros eventos, como pagamento confirmado, cancelado, etc.
             }
-        }else{
+        } else {
             Log::info('Não recebeu webhook');
         }
         // Responda para confirmar o recebimento do Webhook
