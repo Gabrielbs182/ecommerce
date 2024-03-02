@@ -25,13 +25,13 @@
 
                     @if ($prod->desconto > 0)
                         <div class="border border-danger rounded ml-2 mr-2 d-flex justify-content-center">
-                            <p class="text-danger mt-3">3 x de <b>R$
+                            <p class="text-danger mt-3">3x de <b>R$
                                     {{ number_format($prod->valor - $prod->valor * ($prod->desconto / 100), 2, ',', '.') }}</b>
                                 </p>
                         </div>
                     @else
                         <div class="border border-danger rounded ml-2 mr-2 d-flex justify-content-center">
-                            <p class="text-danger mt-3">3 x de <b>R$
+                            <p class="text-danger mt-3">3x de <b>R$
                                     {{ number_format($prod->valor / 3, 2, ',', '.') }}</b></p>
                         </div>
                     @endif
