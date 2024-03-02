@@ -819,7 +819,9 @@ class ProdutoController extends Controller
         $motoboyCariacica = env('MOTOBOY_CARIACICA');
         $motoboyVV = env('MOTOBOY_VV');
         $data = [];
-        $listaProdutos = Produto::where('ativo', 1)->get();
+        $listaProdutos = Produto::where('ativo', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
         $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
         $data["categorias"] = $categorias;
@@ -844,7 +846,9 @@ class ProdutoController extends Controller
         $motoboyCariacica = env('MOTOBOY_CARIACICA');
         $motoboyVV = env('MOTOBOY_VV');
         $data = [];
-        $listaProdutos = Produto::where('ativo', 1)->where('categoria_id', $id)->get();
+        $listaProdutos = Produto::where('ativo', 1)->where('categoria_id', $id)
+            ->orderBy('created_at', 'desc')
+            ->get();
         $categorias = Categoria::all();
         $data["lista"] = $listaProdutos;
         $data["categorias"] = $categorias;

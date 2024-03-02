@@ -50,7 +50,7 @@
             padding: 10px; /* Ajuste o preenchimento conforme necessário */
         }
     </style>
-
+    <meta name="facebook-domain-verification" content="2q9pi2oocjb6nherzdll4l7znsazw0" />
 </head>
 
 <body>

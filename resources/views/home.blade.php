@@ -279,29 +279,19 @@
                 </nav>
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 410px;">
+                        <div class="carousel-item active">
                             <img class="img-fluid" src="{{ asset('img') }}/carousel-1.png" alt="Imagem">
                             
                         </div>
-                        <div class="carousel-item" style="height: 410px;">
+                        <div class="carousel-item">
                             <img class="img-fluid" src="{{ asset('img') }}/carousel-2.png" alt="Imagem">
                             
                         </div>
-                        <div class="carousel-item" style="height: 410px;">
+                        <div class="carousel-item">
                             <img class="img-fluid" src="{{ asset('img') }}/carousel-3.png" alt="Imagem">
                             
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-prev-icon mb-n2"></span>
-                        </div>
-                    </a>
-                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
-                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
-                            <span class="carousel-control-next-icon mb-n2"></span>
-                        </div>
-                    </a>
                 </div>
             </div>
         </div>
