@@ -732,11 +732,7 @@ class MelhorEnvioController extends Controller
                 $data = json_decode($response->getBody(), true);
 
                 // Imprimir dados como tabela HTML
-                echo '<table border="1">';
-                foreach ($data as $key => $value) {
-                    echo '<tr><td>' . $key . '</td><td>' . $value . '</td></tr>';
-                }
-                echo '</table>';
+                var_dump($data);
             } else {
                 // Exiba detalhes do erro
                 echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
