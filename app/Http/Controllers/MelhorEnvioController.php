@@ -150,7 +150,7 @@ class MelhorEnvioController extends Controller
                     ],
                 ]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.buscarRastreamento', 'message' => $e->getMessage()]);
             }
         }
     }
@@ -294,7 +294,7 @@ class MelhorEnvioController extends Controller
                                 'headers' => $headers,
                             ]);
                         } catch (\Exception $e) {
-                            Log::error("ERRO", ['file' => 'MelhorEnvioController.pagarFrete', 'message' => $e->getMessage()]);
+                            Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete_volumes', 'message' => $e->getMessage()]);
                         }
                     }
                 }
@@ -409,7 +409,7 @@ class MelhorEnvioController extends Controller
                             'headers' => $headers,
                         ]);
                     } catch (\Exception $e) {
-                        Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                        Log::error("ERRO", ['file' => 'MelhorEnvioController.lancarFrete', 'message' => $e->getMessage()]);
                     }
                 }
             }
@@ -484,7 +484,7 @@ class MelhorEnvioController extends Controller
                     'headers' => $headers,
                 ]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete2', 'message' => $e->getMessage()]);
             }
         }
         $responseJson = json_decode($response->getBody(), true);
@@ -593,7 +593,7 @@ class MelhorEnvioController extends Controller
                     'headers' => $headers,
                 ]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete', 'message' => $e->getMessage()]);
             }
         }
 
@@ -750,7 +750,7 @@ class MelhorEnvioController extends Controller
                     ],
                 ]);
             } catch (\Exception $e) {
-                Log::error("ERRO", ['file' => 'MelhorEnvioController.gerarEtiqueta', 'message' => $e->getMessage()]);
+                Log::error("ERRO", ['file' => 'MelhorEnvioController.melhorInfo', 'message' => $e->getMessage()]);
             }
         }
     }
