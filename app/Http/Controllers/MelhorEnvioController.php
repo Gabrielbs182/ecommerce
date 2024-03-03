@@ -730,9 +730,10 @@ class MelhorEnvioController extends Controller
             // Verifique se a solicitação foi bem-sucedida (código de status 200)
             if ($statusCode === 200) {
                 $data = json_decode($response->getBody(), true);
-
-                // Imprimir dados como tabela HTML
-                var_dump($data);
+                // Faça algo com os dados aqui
+                echo '<pre>';
+                print_r($data);
+                echo '</pre>';
             } else {
                 // Exiba detalhes do erro
                 echo "Erro na requisição: {$statusCode} - {$response->getBody()}";
