@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
+            <div class="col-lg-3">
                 <a href="{{ route('home') }}" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
                             class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
@@ -157,8 +157,7 @@
                     <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
                             class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
                 </a>
-                <p>Em nossa loja o universo da moda em movimento, onde cada passo é uma declaração de estilo e
-                    personalidade!</p>
+                <p>Seu estilo, nossa batida.</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>contato@urbeatstore.com.br</p>
                 <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>27 99665-8538</p>
             </div>
