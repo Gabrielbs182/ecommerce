@@ -216,9 +216,9 @@
                     <h6 class="m-0" style="color: #e63412;">Categorias</h6>
                     <i class="fa fa-angle-down text-dark"></i>
                 </a>
-                <nav class="show navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
+                <nav class="navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0"
                     id="navbar-vertical">
-                    <div class="navbar-nav w-100 overflow-hidden" style="height: 410px">
+                    <div class="navbar-nav w-100 overflow-hidden">
                         @if (isset($categorias))
                             @foreach ($categorias as $c)
                                 <a href="{{ route('produto.categoria', $c->id) }}"
