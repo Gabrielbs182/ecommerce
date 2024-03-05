@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="row align-items-center py-3 px-xl-5">
-            <div class="col-lg-3">
+            <div class="col-lg-3 d-none d-lg-block">
                 <a href="{{ route('home') }}" class="text-decoration-none">
                     <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
                             class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
