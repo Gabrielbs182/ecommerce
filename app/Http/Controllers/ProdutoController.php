@@ -97,7 +97,11 @@ class ProdutoController extends Controller
     public function todosPedidos()
     {
         $data = [];
-        $pedidos = Pedido::all();
+        
+        $pedidos = Pedido::join('usuarios', 'pedidos.usuario_id', '=', 'usuarios.id')
+            ->select('pedidos.*', 'usuarios.nome', 'usuarios.email', 'usuarios.telefone')
+            ->get();
+
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
