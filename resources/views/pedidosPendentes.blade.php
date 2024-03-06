@@ -123,6 +123,9 @@
                     <thead>
                         <tr>
                             <th>Código</th>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Telefone</th>
                             <th>Data do pedido</th>
                             <th>Status</th>
                             <th>Status Envio</th>
@@ -135,6 +138,9 @@
                         @foreach ($lista as $p)
                             <tr>
                                 <td>{{ $p->id }}</td>
+                                <td>{{ $p->nome }}</td>
+                                <td>{{ $p->email }}</td>
+                                <td>{{ $p->telefone }}</td>
                                 <td>{{ date('d/m/Y H:i', strtotime($p->datapedido)) }}</td>
                                 <td>{{ $p->status }}</td>
                                 <td>{{ $p->status_env }}</td>

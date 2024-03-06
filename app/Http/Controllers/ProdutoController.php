@@ -81,8 +81,13 @@ class ProdutoController extends Controller
     public function pedidosPendentes()
     {
         $data = [];
-        $pedidos = Pedido::where('status_env', 'Envio iniciado')
-            ->orWhere('status_env', 'Preparando encomenda')->get();
+        $pedidos = Pedido::join('usuarios', 'pedidos.usuario_id', '=', 'usuarios.id')
+            ->where(function ($query) {
+                $query->where('status_env', 'Envio iniciado')
+                    ->orWhere('status_env', 'Preparando encomenda');
+            })
+            ->select('pedidos.*', 'usuarios.nome', 'usuarios.email', 'usuarios.telefone')
+            ->get();
         if (isset($pedidos)) {
             $data["lista"] = $pedidos;
         }
