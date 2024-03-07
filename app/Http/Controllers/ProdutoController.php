@@ -84,7 +84,8 @@ class ProdutoController extends Controller
         $pedidos = Pedido::join('usuarios', 'pedidos.usuario_id', '=', 'usuarios.id')
             ->where(function ($query) {
                 $query->where('status_env', 'Envio iniciado')
-                    ->orWhere('status_env', 'Preparando encomenda');
+                    ->orWhere('status_env', 'Preparando encomenda')
+                    ->orWhere('status_env', 'Pendente de acompanhamento');
             })
             ->select('pedidos.*', 'usuarios.nome', 'usuarios.email', 'usuarios.telefone')
             ->get();
