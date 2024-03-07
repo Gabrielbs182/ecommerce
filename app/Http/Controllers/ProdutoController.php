@@ -85,7 +85,7 @@ class ProdutoController extends Controller
             ->where(function ($query) {
                 $query->where('status_env', 'Envio iniciado')
                     ->orWhere('status_env', 'Preparando encomenda')
-                    ->orWhere('status_env', 'Pendente de acompanhamento');
+                    ->orWhere('status_env', 'Erro na geração de etiqueta');
             })
             ->select('pedidos.*', 'usuarios.nome', 'usuarios.email', 'usuarios.telefone')
             ->get();
