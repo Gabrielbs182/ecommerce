@@ -130,7 +130,7 @@ Route::match(['get', 'post'], '/cadastrar', [ClienteController::class, 'cadastra
 Route::match(['get', 'post'], '/{idcategoria}/categoria', [ProdutoController::class, 'categoria'])
     ->name('categoria_por_id');
 Route::match(['get', 'post'], '/carrinho', [ProdutoController::class, 'verCarrinho'])
-    ->name('ver_carrinho')->middleware(['isVerified']);
+    ->name('ver_carrinho');
 Route::get('/compras/detalhes/{idproduto}', [ProdutoController::class, 'detalhes'])
     ->name('detalhes')->middleware('isVerified');
 Route::match(['get'], '/configuracoes', [ProdutoController::class, 'configuracoes'])
