@@ -145,19 +145,19 @@ function calcularFrete() {
 
             if (cepInteiro >= 10000000 && cepInteiro <= 39999999) {
                 if (motoboy == 2) {
-                    if (cepInteiro >= 29140001 && cepInteiro <= 29159999) {
+                    if (cepInteiro >= 29140001 && cepInteiro <= 29159999 && motoboyCariacica > 0) {
                         linha = montarLinhaEnvioMotoboy('motoboyCariacica', motoboyCariacica);
                         console.log(motoboyCariacica);
                         linhas += linha;
-                    } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999) {
+                    } else if (cepInteiro >= 29160001 && cepInteiro <= 29184999 && motoboySerra > 0) {
                         console.log("Serra.");
                         linha = montarLinhaEnvioMotoboy('motoboySerra', motoboySerra);
                         linhas += linha;
-                    } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999) {
+                    } else if (cepInteiro >= 29000001 && cepInteiro <= 29099999 && motoboyVix > 0) {
                         console.log("Vitória.");
                         linha = montarLinhaEnvioMotoboy('motoboyVix', motoboyVix);
                         linhas += linha;
-                    } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999) {
+                    } else if (cepInteiro >= 29100001 && cepInteiro <= 29129999 && motoboyVV > 0) {
                         console.log("Vila velha.");
                         linha = montarLinhaEnvioMotoboy('motoboyVV', motoboyVV);
                         linhas += linha;
