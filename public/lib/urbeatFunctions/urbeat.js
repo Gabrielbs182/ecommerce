@@ -23,8 +23,8 @@ function buscarProduto(id) {
         $('#comprar').empty();
         $('#comprarButton').empty();
         $('#idProduto').empty();
-        $('#idProduto').val(produto[0].id);
-        $('#descricaoProdModal').append(produto[0].descricao);
+        var descricaoHtml = produto[0].descricao.replace(/\n/g, '<br>');
+        $('#descricaoProdModal').append(descricaoHtml);
         $('#primeiroCarrosel').append(foto);
         $('#segundoCarrosel').append(foto2);
         $('#terceiroCarrosel').append(foto3);
