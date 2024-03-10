@@ -23,7 +23,9 @@ function buscarProduto(id) {
         $('#comprar').empty();
         $('#comprarButton').empty();
         $('#idProduto').empty();
-        var descricaoHtml = produto[0].descricao.replace(/\n/g, '<br>');
+        if (produto[0].descricao)
+            var descricaoHtml = produto[0].descricao || ''; // Caso a descrição seja nula ou undefined, assume uma string vazia
+        descricaoHtml = descricaoHtml.replace(/\n/g, '<br>');
         $('#descricaoProdModal').append(descricaoHtml);
         $('#primeiroCarrosel').append(foto);
         $('#segundoCarrosel').append(foto2);
