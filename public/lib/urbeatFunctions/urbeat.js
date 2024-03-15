@@ -172,8 +172,8 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (total >= 299 && frete299 == 2 && cepInteiro >= 10000000 && cepInteiro <= 39999999) {
-                        if (check == 0 && !(cepInteiro >= 10000000 && cepInteiro <= 39999999)) {
+                    if (total >= 299 && frete299 == 2 && cepInteiro >= 01000000 && cepInteiro <= 39999999) {
+                        if (check == 0 && !(cepInteiro >= 01000000 && cepInteiro <= 39999999)) {
                             linha = montarLinhaEnvio(transportadora, 2);
                             linhas += linha;
                             check = 1;
@@ -181,8 +181,8 @@ function calcularFrete() {
                             linha = montarLinhaEnvio(transportadora, 3);
                             linhas += linha;
                         }
-                    } else if (freteFixo == 2 && cepInteiro >= 10000000 && cepInteiro <= 39999999) {
-                        if (check == 0 && !(cepInteiro >= 10000000 && cepInteiro <= 39999999)) {
+                    } else if (freteFixo == 2 && cepInteiro >= 01000000 && cepInteiro <= 39999999) {
+                        if (check == 0 && !(cepInteiro >= 01000000 && cepInteiro <= 39999999)) {
                             linha = montarLinhaEnvio(transportadora, 4);
                             linhas += linha;
                             check = 1;
@@ -191,7 +191,7 @@ function calcularFrete() {
                             linhas += linha;
                         }
                     } else {
-                        if (check == 0 && !(cepInteiro >= 10000000 && cepInteiro <= 39999999)) {
+                        if (check == 0 && !(cepInteiro >= 01000000 && cepInteiro <= 39999999)) {
                             linha = montarLinhaEnvio(transportadora, 0);
                             linhas += linha;
                             check = 1;
