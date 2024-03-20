@@ -158,15 +158,17 @@
                         <a href="{{ route('pedido.finalizar', $p->id) }}" class="edit">Finalizar</a>
                     </td>
                     @endif
-                    @if (Route::is('pedidos.todos') && ($p->status <> "Pagamento aprovado"))
                     <td>
+                    @if (Route::is('pedidos.todos') && ($p->status <> "Pagamento aprovado"))
+                    
                     <form method="POST" action="{{ route('pedido.excluir', $p->id) }}">
                         @csrf
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-danger float-right mt-3">Excluir</button>
                     </form>
-                </td>
+                
                     @endif
+                </td>
                 </tr>
                 @endforeach
             </tbody>
