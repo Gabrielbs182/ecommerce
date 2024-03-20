@@ -362,6 +362,16 @@ class ProdutoController extends Controller
         }
     }
 
+    public function deletePedido($id, Request $request)
+    {
+        $pedido = Pedido::find($id);
+        $pedido->delete();
+        $message = 'Pedido excluido.';
+        $status = 'ok';
+        $request->session()->flash($status, $message);
+        return redirect()->route('pedidos.todos');
+    }
+
     public function deleteCupom($id, Request $request)
     {
         $cupom = Cupom::find($id);
@@ -593,7 +603,7 @@ class ProdutoController extends Controller
             $produto->ativo = 1;
             $produto->save();
 
-            for ($i = 29; $i <= 39; $i++) {
+            for ($i = 29; $i <= 43; $i++) {
                 $estoque = new Estoque([
                     'quantidade' => 0,
                     'numero' => $i,

@@ -107,6 +107,8 @@ Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
     ->name('pedidos.pendentes')->middleware('IsAdmin');
 Route::get('/pedidos/todos', [ProdutoController::class, 'todosPedidos'])
     ->name('pedidos.todos')->middleware('IsAdmin');
+Route::post('/pedido/{id}', [ProdutoController::class, 'deletePedido'])
+    ->name('pedido.excluir')->middleware('IsAdmin');
 Route::get('/estoque/produto/{id}', [ProdutoController::class, 'estoqueProduto'])
     ->name('estoque.index')->middleware('IsAdmin');
 Route::get('/categoria/editar/{id}', [ProdutoController::class, 'editarCategoria'])
