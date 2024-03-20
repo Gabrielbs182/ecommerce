@@ -159,11 +159,13 @@
                     </td>
                     @endif
                     @if (Route::is('pedidos.todos'))
+                    <td>
                     <form method="POST" action="{{ route('pedido.excluir', $p->id) }}">
                         @csrf
                         {{ method_field('DELETE') }}
                         <button type="submit" class="btn btn-danger float-right mt-3">Excluir</button>
                     </form>
+                </td>
                     @endif
                 </tr>
                 @endforeach
