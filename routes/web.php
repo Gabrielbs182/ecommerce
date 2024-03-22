@@ -105,7 +105,7 @@ Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria']
     ->name('produto.categoria');
 
 Route::get('/email/{id}', [ProdutoController::class, 'email'])
-    ->name('email.teste')->middleware('isAdmin');
+    ->name('email.teste')->middleware('IsAdmin');
 
 Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
     ->name('pedidos.pendentes')->middleware('IsAdmin');
