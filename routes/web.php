@@ -103,6 +103,10 @@ Route::get('/cupom/cadastrar', [ProdutoController::class, 'cadastrarCupom'])
     ->name('cupom.cadastrar')->middleware('IsAdmin');
 Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria'])
     ->name('produto.categoria');
+
+    Route::get('/email/{id}', [ProdutoController::class, 'email'])
+    ->name('email.teste')->middleware('isAdmin');
+
 Route::get('/pedidos/pendentes', [ProdutoController::class, 'pedidosPendentes'])
     ->name('pedidos.pendentes')->middleware('IsAdmin');
 Route::get('/pedidos/todos', [ProdutoController::class, 'todosPedidos'])
