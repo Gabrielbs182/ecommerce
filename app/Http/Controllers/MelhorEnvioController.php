@@ -224,8 +224,8 @@ class MelhorEnvioController extends Controller
                         'note' => 'teste',
                     ],
                     'options' => [
-                        'receipt' => true,
-                        'own_hand' => true,
+                        'receipt' => false,
+                        'own_hand' => false,
                         'reverse' => true,
                         'non_commercial' => true,
                         'insurance_value' => 180,
@@ -339,8 +339,8 @@ class MelhorEnvioController extends Controller
                         'note' => 'teste',
                     ],
                     'options' => [
-                        'receipt' => true,
-                        'own_hand' => true,
+                        'receipt' => false,
+                        'own_hand' => false,
                         'reverse' => true,
                         'non_commercial' => true,
                         'insurance_value' => 180,
@@ -452,7 +452,7 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => true, 'own_hand' => true],
+            'options' => ['receipt' => false, 'own_hand' => false],
             'products' => $products
         ];
 
@@ -560,7 +560,7 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => true, 'own_hand' => true],
+            'options' => ['receipt' => false, 'own_hand' => false],
             'products' => $products
         ];
 
