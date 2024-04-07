@@ -611,6 +611,8 @@ function adicionarCarrinho(id) {
                         });
                         $('#exampleModalCenter').modal('hide');
 
+                        $('html, body').animate({scrollTop:0}, 'slow');
+
                         carregarCarrinho();
 
                         $('#loadingSpinner').hide();

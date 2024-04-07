@@ -157,8 +157,8 @@
 
             <div class="col-lg-3 col-6 text-right">
                 @if (Route::is('home') or Route::is('produto.categoria'))
-                    <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
-                            style="color: #e63412;"></i>
+                    <a class="btn border" onclick="abrirCarrinho()"><i
+                            class="fas fa-shopping-cart" style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
                             @if (isset($quantidadeCarrinho))
                                 {{ $quantidadeCarrinho }}
@@ -166,6 +166,9 @@
                                 0
                             @endif
                         </span></a>
+
+                    <a href="#" id="popover" data-toggle="popover" title="Popover Header"
+                        data-content="Some content inside the popover"></a>
                 @endif
 
 
@@ -179,8 +182,9 @@
         <div class="row px-xl-5 pt-5">
             <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
                 <a href="" class="text-decoration-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}" alt="..."
-                            class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat</h1>
+                    <h1 class="m-0 display-5 font-weight-semi-bold"><img src="{{ asset('URBEAT.png') }}"
+                            alt="..." class="img-flui img-thumbnail pr-1" width="100" height="100">Urbeat
+                    </h1>
                 </a>
                 <p>Seu estilo, nossa batida.</p>
                 <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>contato@urbeatstore.com.br</p>
@@ -248,6 +252,12 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+        });
+    </script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"
