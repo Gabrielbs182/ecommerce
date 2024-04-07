@@ -153,7 +153,10 @@
                     </form>
                 @endif
             </div>
-            <div class="col-lg-3 col-6 text-right fixed-top ml-5">
+            <div class="col-lg-3 col-6 text-right" style="position: fixed;
+            right: 30px;
+            bottom: 30px;
+            z-index: 11;">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a class="btn border" onclick="abrirCarrinho()"><i
                             class="fas fa-shopping-cart" style="color: #e63412;"></i>
