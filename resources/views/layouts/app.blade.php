@@ -156,15 +156,15 @@
             <div class="col-lg-3 col-6 text-right"
                 style="position: fixed;
             right: 30px;
-            bottom: 30px;
+            top: 30px;
             z-index: 11;
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a href="#" data-html="true" id="popover" data-placement="bottom" data-toggle="popover"
                         title="Produto adicionado" data-content="Some content inside the popover"></a>
-                    <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
-                            style="color: #e63412; background-color: #fff;
-                                border-radius: 10px;"></i>
+                    <a class="btn border" onclick="abrirCarrinho()" style="background-color: #fff;
+                    border-radius: 10px;"><i class="fas fa-shopping-cart"
+                            style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
                             @if (isset($quantidadeCarrinho))
                                 {{ $quantidadeCarrinho }}
