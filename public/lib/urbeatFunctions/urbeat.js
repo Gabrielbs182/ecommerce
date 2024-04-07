@@ -611,9 +611,14 @@ function adicionarCarrinho(id) {
                         });
                         $('#exampleModalCenter').modal('hide');
 
-                        $('html, body').animate({scrollTop:0}, 'slow');
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
 
-                        $('#popover').popover('show')
+                        // Mostrar popover com o nome do produto
+                        $('#popover').attr('data-content', 'Produto adicionado: ' + produto.nome);
+                        $('#popover').popover('show');
+
+                        // Adicionar botão ao popover para abrir o carrinho
+                        $('#popover').attr('data-content', 'Produto adicionado: ' + produto.nome + '<br><button class="btn btn-primary" onclick="abrirCarrinho()">Abrir Carrinho</button>');
 
                         carregarCarrinho();
 
