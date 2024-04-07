@@ -167,7 +167,7 @@
                             @endif
                         </span></a>
 
-                    <a href="#" id="popover" data-toggle="popover" title="Popover Header"
+                    <a href="#" id="popover" data-placement="bottom" data-toggle="popover" title="Popover Header"
                         data-content="Some content inside the popover"></a>
                 @endif
 
