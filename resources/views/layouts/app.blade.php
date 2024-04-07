@@ -153,8 +153,6 @@
                     </form>
                 @endif
             </div>
-
-
             <div class="col-lg-3 col-6 text-right">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a class="btn border" onclick="abrirCarrinho()"><i
@@ -169,11 +167,7 @@
                         <a href="#" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
                         data-content="Some content inside the popover"></a>
                     </a>
-
-                    
                 @endif
-
-
             </div>
         </div>
     </div>
