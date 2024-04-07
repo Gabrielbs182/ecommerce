@@ -614,6 +614,8 @@ function adicionarCarrinho(id) {
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
 
                         $.getJSON('/produto/buscar/' + id, function (produto) {
+
+                            console.log(produto);
                             // Adicionar botão ao popover para abrir o carrinho
                             $('#popover').attr('title', 'Produto adicionado ao carrinho');
                             $('#popover').attr('data-content', 'Produto adicionado: ' + produto.nome + '<br><button class="btn btn-primary" onclick="abrirCarrinho()">Abrir Carrinho</button>');
