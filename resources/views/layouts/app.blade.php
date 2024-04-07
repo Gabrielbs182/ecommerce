@@ -160,9 +160,12 @@
             z-index: 11;
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
-                    <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
+                    <a href="#" id="popover" data-html="true" data-placement="left" data-toggle="popover"
+                        title="Produto adicionado ao carrinho" data-trigger="focus"
+                        data-original-title="Produto adicionado" aria-describedby="popover666049"></a>
+                    {{-- <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
                         title="Produto adicionado" data-trigger="focus"
-                        data-content="Some content inside the popover"></a>
+                        data-content="Some content inside the popover"></a> --}}
                     <a class="btn border border-primary rounded" onclick="abrirCarrinho()"
                         style="background-color: #fff;"><i class="fas fa-shopping-cart" style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">

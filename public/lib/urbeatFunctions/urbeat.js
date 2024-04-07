@@ -615,10 +615,19 @@ function adicionarCarrinho(id) {
 
                         $.getJSON('/produto/buscar/' + id, function (produto) {
 
+                            var conteudoPopover = 'Produto adicionado: ' + produto[0].nome + '<br><a href="#" id="mostrarCarrinho" class="btn btn-sm btn-primary float-right mb-1">Mostrar Carrinho</a>';
+
                             // Adicionar botão ao popover para abrir o carrinho
                             $('#popover').attr('title', 'Produto adicionado ao carrinho');
-                            $('#popover').attr('data-content', 'Produto adicionado: ' + produto[0].nome + '<br><a href="#" onclick="abrirCarrinho()" class="btn btn-sm btn-primary float-right mb-1">Mostrar Carrinho</a>');
+                            $('#popover').attr('data-content', conteudoPopover);
                             $('#popover').popover('show');
+
+                            // Adicionar manipulador de evento para o botão dentro do popover
+                            $('#popover').on('shown.bs.popover', function () {
+                                $('#mostrarCarrinho').click(function () {
+                                    abrirCarrinho();
+                                });
+                            });
                         });
 
                         carregarCarrinho();
