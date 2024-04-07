@@ -153,19 +153,19 @@
                     </form>
                 @endif
             </div>
-            <div class="col-lg-3 col-6 text-right">
+            <div class="col-lg-3 col-6 text-right fixed-top">
                 @if (Route::is('home') or Route::is('produto.categoria'))
-                    <a class="btn border" onclick="abrirCarrinho()"><i
-                            class="fas fa-shopping-cart" style="color: #e63412;"></i>
-                        <span class="badge" id="quantidade-carrinho">
+                    <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
+                            style="color: #e63412;"></i>
+                        <span class="badge" id="quantidade-carrinho" data-html="true" id="popover"
+                            data-placement="bottom" data-toggle="popover" title="Produto adicionado"
+                            data-content="Some content inside the popover">
                             @if (isset($quantidadeCarrinho))
                                 {{ $quantidadeCarrinho }}
                             @else
                                 0
                             @endif
                         </span>
-                        <a href="#" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
-                        data-content="Some content inside the popover"></a>
                     </a>
                 @endif
             </div>
