@@ -158,12 +158,11 @@
             right: 30px;
             top: 50px;
             z-index: 11;
-            border-radius: 1px;
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
                         title="Produto adicionado" data-content="Some content inside the popover"></a>
-                    <a class="btn border" onclick="abrirCarrinho()" style="background-color: #fff;
+                    <a class="btn border rounded" onclick="abrirCarrinho()" style="background-color: #fff;
                     border-radius: 10px;"><i class="fas fa-shopping-cart"
                             style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
