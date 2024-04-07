@@ -617,7 +617,7 @@ function adicionarCarrinho(id) {
 
                             // Adicionar botão ao popover para abrir o carrinho
                             $('#popover').attr('title', 'Produto adicionado ao carrinho');
-                            $('#popover').attr('data-content', 'Produto adicionado: ' + produto[0].nome + '<br><a href="#" onclick="abrirCarrinho()" class="badge badge-primary">Primary</a>');
+                            $('#popover').attr('data-content', 'Produto adicionado: ' + produto[0].nome + '<br><a href="#" onclick="abrirCarrinho()" class="badge badge-primary float-right">Mostrar Carrinho</a>');
                             $('#popover').popover('show');
                         });
 
