@@ -165,10 +165,12 @@
                             @else
                                 0
                             @endif
-                        </span></a>
-
-                    <a href="#" class="position-fixed mt-2" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
+                        </span>
+                        <a href="#" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
                         data-content="Some content inside the popover"></a>
+                    </a>
+
+                    
                 @endif
 
 
