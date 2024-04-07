@@ -161,9 +161,9 @@
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
-                        title="Produto adicionado" data-content="Some content inside the popover"></a>
-                    <a class="btn border border-primary rounded" onclick="abrirCarrinho()" style="background-color: #fff;"><i
-                            class="fas fa-shopping-cart" style="color: #e63412;"></i>
+                        title="Produto adicionado" data-trigger="focus" data-content="Some content inside the popover"></a>
+                    <a class="btn border border-primary rounded" onclick="abrirCarrinho()"
+                        style="background-color: #fff;"><i class="fas fa-shopping-cart" style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
                             @if (isset($quantidadeCarrinho))
                                 {{ $quantidadeCarrinho }}
@@ -257,6 +257,10 @@
     <script>
         $(document).ready(function() {
             $('[data-toggle="popover"]').popover();
+
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            })
         });
     </script>
 
