@@ -613,6 +613,8 @@ function adicionarCarrinho(id) {
 
                         $('html, body').animate({scrollTop:0}, 'slow');
 
+                        $('#popover').popover('show')
+
                         carregarCarrinho();
 
                         $('#loadingSpinner').hide();
