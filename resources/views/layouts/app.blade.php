@@ -167,7 +167,7 @@
                             @endif
                         </span></a>
 
-                    <a href="#" class="position-fixed" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
+                    <a href="#" class="position-fixed mt-2" data-html="true" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado"
                         data-content="Some content inside the popover"></a>
                 @endif
 
