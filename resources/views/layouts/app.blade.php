@@ -167,7 +167,7 @@
                             @endif
                         </span></a>
 
-                    <a href="#" id="popover" data-placement="bottom" data-toggle="popover" title="Popover Header"
+                    <a href="#" id="popover" data-placement="bottom" data-toggle="popover" title="Produto adicionado ao carrinho"
                         data-content="Some content inside the popover"></a>
                 @endif
 
