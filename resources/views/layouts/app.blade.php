@@ -161,7 +161,8 @@
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
                     <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
-                        title="Produto adicionado" data-trigger="focus" data-content="Some content inside the popover"></a>
+                        title="Produto adicionado" data-trigger="focus"
+                        data-content="Some content inside the popover"></a>
                     <a class="btn border border-primary rounded" onclick="abrirCarrinho()"
                         style="background-color: #fff;"><i class="fas fa-shopping-cart" style="color: #e63412;"></i>
                         <span class="badge" id="quantidade-carrinho">
@@ -261,6 +262,14 @@
             $('.popover-dismiss').popover({
                 trigger: 'focus'
             })
+
+            $('body').on('click', function(e) {
+                //did not click a popover toggle or popover
+                if ($(e.target).data('toggle') !== 'popover' &&
+                    $(e.target).parents('.popover.in').length === 0) {
+                    $('[data-toggle="popover"]').popover('hide');
+                }
+            });
         });
     </script>
 
