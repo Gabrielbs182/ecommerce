@@ -158,23 +158,26 @@
             right: 30px;
             bottom: 30px;
             z-index: 11;
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 20px;">
+            ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
-                    <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
-                            style="color: #e63412;"></i>
-                        <span class="badge" id="quantidade-carrinho">
-                            @if (isset($quantidadeCarrinho))
-                                {{ $quantidadeCarrinho }}
-                            @else
-                                0
-                            @endif
-                            <a href="#" data-html="true" id="popover" data-placement="bottom"
-                                data-toggle="popover" title="Produto adicionado"
-                                data-content="Some content inside the popover"></a>
-                        </span>
-                    </a>
+                    <div style="background-color: #fff;
+                border-radius: 10px;">
+
+
+                        <a class="btn border" onclick="abrirCarrinho()"><i class="fas fa-shopping-cart"
+                                style="color: #e63412;"></i>
+                            <span class="badge" id="quantidade-carrinho">
+                                @if (isset($quantidadeCarrinho))
+                                    {{ $quantidadeCarrinho }}
+                                @else
+                                    0
+                                @endif
+                                <a href="#" data-html="true" id="popover" data-placement="bottom"
+                                    data-toggle="popover" title="Produto adicionado"
+                                    data-content="Some content inside the popover"></a>
+                            </span>
+                        </a>
+                    </div>
                 @endif
             </div>
         </div>
