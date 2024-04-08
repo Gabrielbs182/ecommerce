@@ -73,8 +73,9 @@
                                     </div>
                                 </div>
                                 <div id="comprar">
+                                    <input type="hidden" value="" id="idProduto">
+
                                     <div class="form-row">
-                                        <input type="hidden" value="" id="idProduto">
                                         <div class="form-group col-md-6">
                                             <label for="tamanhoModal">Tamanho</label>
                                             <select id="tamanhoModal" class="form-control" disabled
