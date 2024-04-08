@@ -578,6 +578,8 @@ function adicionarCarrinho(id) {
             quantidade += parseInt($item.quantidade);
         }
         // Restante do seu código...
+        console.log(quantidade);
+        console.log(estoque);
         if (parseInt(quantidade) > parseInt(estoque)) {
             $('#inputZip').val('');
             var alerta =
