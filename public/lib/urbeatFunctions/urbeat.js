@@ -419,11 +419,15 @@ function buscarCupom() {
 };
 
 function buscarEstoque() {
+    console.log('buscando estoque.');
     $('#loadingSpinner').show();
     var numero = $('#tamanhoModal').val()
     var idProduto = $('#idProduto').val()
+    console.log('Produto = ' + idProduto);
+    console.log('Numero = ' + numero);
     $.getJSON('/estoqueNumero/' + idProduto + '/' + numero, function (estoque) {
         $('#estoque').val(estoque[0].quantidade);
+        console.log('quantidade = ' + estoque[0].quantidade);
         $('#loadingSpinner').hide();
     });
 };
