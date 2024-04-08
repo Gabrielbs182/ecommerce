@@ -186,8 +186,8 @@
                         title="Produto adicionado ao carrinho" data-trigger="focus"
                         data-original-title="Produto adicionado" aria-describedby="popover666049"
                         style="position: fixed;
-            right: 20px;
-            top: 60px;
+            right: 65px;
+            top: 100px;
             z-index: 11;></a>
                 </div>
             @endif
