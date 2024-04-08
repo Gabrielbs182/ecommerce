@@ -562,6 +562,7 @@ function buscarEstoqueCarrinho(id, callback) {
 }
 
 function adicionarCarrinho(id) {
+    buscarEstoque();
     $('#loadingSpinner').show();
     var token = $('meta[name="csrf-token"]').attr('content');
     var estoque = $('#estoque').val();
