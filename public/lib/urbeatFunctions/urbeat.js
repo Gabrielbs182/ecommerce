@@ -521,9 +521,7 @@ function carregarCarrinho() {
 
             total = total*1;
 
-            total = total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
-
-            var totalBrasileiro = total.toFixed(2);
+            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             $('#totalCarrinho').empty();
             $('#totalCarrinho').append(totalBrasileiro);
