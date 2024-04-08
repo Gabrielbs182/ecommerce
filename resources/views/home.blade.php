@@ -48,6 +48,7 @@
                                         <img class="w-100 h-100" src="{{ asset('images/2_5.png') }}" alt="Image">
                                     </div>
                                 </div>
+                                
                                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                                     <i class="fa fa-2x fa-angle-left text-dark"></i>
                                 </a>
@@ -58,6 +59,7 @@
                         </div>
                         <div class="col-md-6 ml-auto scrollable-div">
                             <form>
+                                <input type="hidden" value="" id="idProduto">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <h1 class="display-4 font-weight-light" id="nomeProdModal">Tenis X</h1>
@@ -73,8 +75,6 @@
                                     </div>
                                 </div>
                                 <div id="comprar">
-                                    <input type="hidden" value="" id="idProduto">
-
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label for="tamanhoModal">Tamanho</label>
