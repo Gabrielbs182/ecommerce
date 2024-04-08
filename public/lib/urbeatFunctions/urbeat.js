@@ -488,13 +488,14 @@ function carregarCarrinho() {
                         valor = item.valor;
                     }
 
-                    valorUnitario = String(valor).replace('.', ',');
-                    var valorUnitarioBrasileiro = parseFloat(valorUnitario.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    valorUnitario = valor;
+                    var valorUnitarioBrasileiro = valorUnitario.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
-                    valorTotal = String(valor * item.quantidade).replace('.', ',');
-                    var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    valorTotal = valor * item.quantidade;
+                    var valorTotalBrasileiro = valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
                     total += valor * item.quantidade;
+
                     var itemCarrinho =
                         '<tr>' +
                         '<td class="w-20 align-middle text-center">' +
@@ -503,8 +504,8 @@ function carregarCarrinho() {
                         '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                         'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
                         '</td>' +
-                        '<td class="align-middle text-center"> R$' + valorUnitarioBrasileiro + '</td>' +
-                        '<td class="align-middle text-center"> R$' + valorTotalBrasileiro +
+                        '<td class="align-middle text-center"> ' + valorUnitarioBrasileiro + '</td>' +
+                        '<td class="align-middle text-center"> ' + valorTotalBrasileiro +
                         '</td>' +
                         '<td class="align-middle text-center">' +
                         '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
@@ -518,7 +519,7 @@ function carregarCarrinho() {
                 }
             }
 
-            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var totalBrasileiro = total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
             $('#totalCarrinho').empty();
             $('#totalCarrinho').append(totalBrasileiro);
