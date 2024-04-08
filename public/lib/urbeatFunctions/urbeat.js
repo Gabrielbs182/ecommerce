@@ -519,6 +519,8 @@ function carregarCarrinho() {
                 }
             }
 
+            total = total*1;
+
             var totalBrasileiro = total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
             $('#totalCarrinho').empty();
