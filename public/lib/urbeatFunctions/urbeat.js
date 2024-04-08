@@ -596,7 +596,7 @@ function adicionarCarrinho(id) {
                 '</div>';
             $('#modalAlert').append(alerta);
             $('#loadingSpinner').hide();
-            $('#modalbody').modal('toggle');
+            ('#exampleModalCenter').modal('hide');
         } else {
 
             $.getJSON('/produto/buscar/' + id, function (produto) {
