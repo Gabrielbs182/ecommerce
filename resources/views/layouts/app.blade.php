@@ -153,31 +153,37 @@
                     </form>
                 @endif
             </div>
-            <div class="col-lg-3 col-6 text-right"
-                style="position: fixed;
+            <div class="row">
+                <div class="col-lg-3 col-6 text-right"
+                    style="position: fixed;
             right: 20px;
             top: 60px;
             z-index: 11;
             ">
-                @if (Route::is('home') or Route::is('produto.categoria'))
+                    @if (Route::is('home') or Route::is('produto.categoria'))
+                        {{-- <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
+                        title="Produto adicionado" data-trigger="focus"
+                        data-content="Some content inside the popover"></a> --}}
+                        <a class="btn border border-primary rounded" onclick="abrirCarrinho()"
+                            style="background-color: #fff;"><i class="fas fa-shopping-cart" style="color: #e63412;"></i>
+                            <span class="badge" id="quantidade-carrinho">
+                                @if (isset($quantidadeCarrinho))
+                                    {{ $quantidadeCarrinho }}
+                                @else
+                                    0
+                                @endif
+                            </span>
+                        </a>
+                    @endif
+                </div>
+            </div>
+            @if (Route::is('home') or Route::is('produto.categoria'))
+                <div class="row">
                     <a href="#" id="popover" data-html="true" data-placement="bottom" data-toggle="popover"
                         title="Produto adicionado ao carrinho" data-trigger="focus"
                         data-original-title="Produto adicionado" aria-describedby="popover666049"></a>
-                    {{-- <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
-                        title="Produto adicionado" data-trigger="focus"
-                        data-content="Some content inside the popover"></a> --}}
-                    <a class="btn border border-primary rounded" onclick="abrirCarrinho()"
-                        style="background-color: #fff;"><i class="fas fa-shopping-cart" style="color: #e63412;"></i>
-                        <span class="badge" id="quantidade-carrinho">
-                            @if (isset($quantidadeCarrinho))
-                                {{ $quantidadeCarrinho }}
-                            @else
-                                0
-                            @endif
-                        </span>
-                    </a>
-                @endif
-            </div>
+                </div>
+            @endif
         </div>
     </div>
     <!-- Topbar End -->
