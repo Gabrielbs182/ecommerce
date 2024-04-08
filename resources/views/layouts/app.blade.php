@@ -188,7 +188,7 @@
                         style="position: fixed;
             right: 65px;
             top: 100px;
-            z-index: 11;></a>
+            z-index: 11;"></a>
                 </div>
             @endif
         </div>
