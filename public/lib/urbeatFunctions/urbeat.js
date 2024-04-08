@@ -32,7 +32,7 @@ function buscarProduto(id) {
         $('#quartoCarrosel').append(foto4);
         $('#quintoCarrosel').append(foto5);
         $('#nomeProdModal').append(produto[0].nome);
-        $('#idProduto').append(produto[0].id);
+        $('#idProduto').val() = produto[0].id;
         var valComDesconto = produto[0].valor - (produto[0].valor * (produto[0].desconto / 100));
         console.log(valComDesconto);
         var val = String(valComDesconto).replace('.', ',');
