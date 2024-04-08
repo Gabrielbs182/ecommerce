@@ -58,7 +58,6 @@
                         </div>
                         <div class="col-md-6 ml-auto scrollable-div">
                             <form>
-                                <input type="hidden" value="" id="idProduto">
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <h1 class="display-4 font-weight-light" id="nomeProdModal">Tenis X</h1>
@@ -75,6 +74,7 @@
                                 </div>
                                 <div id="comprar">
                                     <div class="form-row">
+                                        <input type="hidden" value="" id="idProduto">
                                         <div class="form-group col-md-6">
                                             <label for="tamanhoModal">Tamanho</label>
                                             <select id="tamanhoModal" class="form-control" disabled
