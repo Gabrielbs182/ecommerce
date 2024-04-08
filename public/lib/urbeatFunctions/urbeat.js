@@ -489,10 +489,10 @@ function carregarCarrinho() {
                     }
 
                     valorUnitario = String(valor).replace('.', ',');
-                    var valorUnitarioBrasileiro = parseFloat(valorUnitario.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                    var valorUnitarioBrasileiro = parseFloat(valorUnitario.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                     valorTotal = String(valor * item.quantidade).replace('.', ',');
-                    var valorTotalBrasileiro = parseFloat(valorTotal.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+                    var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
                     total += valor * item.quantidade;
                     var itemCarrinho =
@@ -518,7 +518,7 @@ function carregarCarrinho() {
                 }
             }
 
-            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
             $('#totalCarrinho').empty();
             $('#totalCarrinho').append(totalBrasileiro);
