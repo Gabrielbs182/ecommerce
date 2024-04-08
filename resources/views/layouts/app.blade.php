@@ -94,6 +94,9 @@
         <!-- Coloque aqui a animação de carregamento (pode ser um gif, ícone animado, etc.) -->
         <img src="{{ asset('loading.gif') }}" alt="Carregando...">
     </div>
+    <div id="modalAlert">
+
+    </div>
     <!-- Topbar Start -->
     <div class="container-fluid">
         @if ($message = Session::get('err'))
