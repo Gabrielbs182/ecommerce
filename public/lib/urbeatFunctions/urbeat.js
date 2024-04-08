@@ -487,8 +487,13 @@ function carregarCarrinho() {
                     } else {
                         valor = item.valor;
                     }
+
                     valorUnitario = String(valor).replace('.', ',');
+                    var valorUnitarioBrasileiro = parseFloat(valorUnitario.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
                     valorTotal = String(valor * item.quantidade).replace('.', ',');
+                    var valorTotalBrasileiro = parseFloat(valorTotal.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
                     total += valor * item.quantidade;
                     var itemCarrinho =
                         '<tr>' +
@@ -498,8 +503,8 @@ function carregarCarrinho() {
                         '.png")" class="img-fluid img-thumbnail" width="100" height="100" ' +
                         'alt="Produto" >' + item.nome + '/' + item.numero + ' x ' + item.quantidade +
                         '</td>' +
-                        '<td class="align-middle text-center"> R$' + valorUnitario + '</td>' +
-                        '<td class="align-middle text-center"> R$' + valorTotal +
+                        '<td class="align-middle text-center"> R$' + valorUnitarioBrasileiro + '</td>' +
+                        '<td class="align-middle text-center"> R$' + valorTotalBrasileiro +
                         '</td>' +
                         '<td class="align-middle text-center">' +
                         '<a href="#" class="btn btn-danger btn-sm" onclick="removerProdutoCarrinho(' +
@@ -513,8 +518,10 @@ function carregarCarrinho() {
                 }
             }
 
+            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
             $('#totalCarrinho').empty();
-            $('#totalCarrinho').append(total);
+            $('#totalCarrinho').append(totalBrasileiro);
             $('#loadingSpinner').hide();
         } else {
             console.error('O JSON retornado não é um array:', data);
