@@ -489,7 +489,7 @@ function carregarCarrinho() {
                     }
 
                     valorUnitario = valor;
-                    var valorUnitarioBrasileiro = valorUnitario.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+                    var valorUnitarioBrasileiro = parseFloat(valorUnitario.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}));
 
                     valorTotal = valor * item.quantidade;
                     var valorTotalBrasileiro = valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
