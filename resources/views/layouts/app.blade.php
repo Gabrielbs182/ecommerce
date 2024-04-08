@@ -155,12 +155,12 @@
             </div>
             <div class="col-lg-3 col-6 text-right"
                 style="position: fixed;
-            right: 30px;
-            top: 50px;
+            right: 20px;
+            top: 60px;
             z-index: 11;
             ">
                 @if (Route::is('home') or Route::is('produto.categoria'))
-                    <a href="#" id="popover" data-html="true" data-placement="left" data-toggle="popover"
+                    <a href="#" id="popover" data-html="true" data-placement="bottom" data-toggle="popover"
                         title="Produto adicionado ao carrinho" data-trigger="focus"
                         data-original-title="Produto adicionado" aria-describedby="popover666049"></a>
                     {{-- <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
