@@ -844,6 +844,7 @@ class ProdutoController extends Controller
     public function index()
     {
         $frete299 = env('FRETE_GRATIS299');
+        $freteBrasil = env('FRETE_BRASIL');
         $freteFixo = env('FRETE_FIXO');
         $motoboy = env('MOTOBOY');
         $motoboyVix = env('MOTOBOY_VIX');
@@ -859,6 +860,7 @@ class ProdutoController extends Controller
         $data["categorias"] = $categorias;
         $data["fotos"] = $this->buscarFotosBanner();
         $data["frete299"] = $frete299;
+        $data["freteBrasil"] = $freteBrasil;
         $data["freteFixo"] = $freteFixo;
         $data["motoboy"] = $motoboy;
         $data["motoboyVix"] = $motoboyVix;
