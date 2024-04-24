@@ -293,7 +293,7 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
-        $this->AtualizarVariaveisAmbiente('FRETE_BRASIL', $FRETE_GRATIS299);
+        $this->AtualizarVariaveisAmbiente('FRETE_BRASIL', $FRETE_BRASIL);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_VIX', $MOTOBOY_VIX);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_SERRA', $MOTOBOY_SERRA);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_VV', $MOTOBOY_VV);
