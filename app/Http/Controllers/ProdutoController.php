@@ -158,6 +158,7 @@ class ProdutoController extends Controller
         $melhorUserAgent = env('USER_AGENT');
         $freteFixo = env('FRETE_FIXO');
         $freteGratis299 = env('FRETE_GRATIS299');
+        $freteBrasil = env('FRETE_BRASIL');
         $motoboyVix = env('MOTOBOY_VIX');
         $motoboySerra = env('MOTOBOY_SERRA');
         $motoboyVV = env('MOTOBOY_VV');
@@ -166,6 +167,7 @@ class ProdutoController extends Controller
         $data = [];
         $data['freteFixo'] = $freteFixo;
         $data['freteGratis299'] = $freteGratis299;
+        $data['freteBrasil'] = $freteBrasil;
         $data['motoboyCariacica'] = $motoboyCariacica;
         $data['motoboyVV'] = $motoboyVV;
         $data['motoboySerra'] = $motoboySerra;
@@ -232,6 +234,7 @@ class ProdutoController extends Controller
 
         $freteFixo = 1;
         $freteGratis299 = 1;
+        $freteBrasil = 1;
         $motoboy = 1;
 
         $freteFixoTeste = $request->has('freteFixo');
@@ -248,6 +251,13 @@ class ProdutoController extends Controller
             $freteGratis299 = 1;
         }
 
+        $freteBrasilTeste = $request->has('freteBrasil');
+        if ($freteBrasilTeste) {
+            $freteBrasil = 2;
+        } else {
+            $freteBrasil = 1;
+        }
+
         $motoboyTeste = $request->has('motoboy');
         if ($motoboyTeste) {
             $motoboy = 2;
@@ -258,6 +268,7 @@ class ProdutoController extends Controller
         $MOTOBOY = $motoboy;
         $FRETE_FIXO = $freteFixo;
         $FRETE_GRATIS299 = $freteGratis299;
+        $FRETE_BRASIL = $freteBrasil;
         $MOTOBOY_VIX = $request->filled('motoboyVix') ? $request->input('motoboyVix') : '0';
         $MOTOBOY_SERRA = $request->filled('motoboySerra') ? $request->input('motoboySerra') : '0';
         $MOTOBOY_VV = $request->filled('motoboyVV') ? $request->input('motoboyVV') : '0';
@@ -282,6 +293,7 @@ class ProdutoController extends Controller
         $this->AtualizarVariaveisAmbiente('MOTOBOY', $MOTOBOY);
         $this->AtualizarVariaveisAmbiente('FRETE_FIXO', $FRETE_FIXO);
         $this->AtualizarVariaveisAmbiente('FRETE_GRATIS299', $FRETE_GRATIS299);
+        $this->AtualizarVariaveisAmbiente('FRETE_BRASIL', $FRETE_GRATIS299);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_VIX', $MOTOBOY_VIX);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_SERRA', $MOTOBOY_SERRA);
         $this->AtualizarVariaveisAmbienteComAspas('MOTOBOY_VV', $MOTOBOY_VV);

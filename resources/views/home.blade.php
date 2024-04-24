@@ -10,6 +10,7 @@
     <input type="hidden" value="" id="estoque">
     <input type="hidden" value="{{ $frete299 }}" id="frete299">
     <input type="hidden" value="{{ $freteFixo }}" id="freteFixo">
+    <input type="hidden" value="{{ $freteBrasil }}" id="freteFixo">
     <input type="hidden" value="{{ $motoboy }}" id="motoboy">
     <input type="hidden" value="{{ $motoboyVix }}" id="motoboyVix">
     <input type="hidden" value="{{ $motoboySerra }}" id="motoboySerra">

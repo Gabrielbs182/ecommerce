@@ -112,6 +112,7 @@ function calcularFrete() {
     var cepValue = document.getElementById("cep").value;
     var frete299 = document.getElementById("frete299").value;
     var freteFixo = document.getElementById("freteFixo").value;
+    var freteBrasil = document.getElementById("freteBrasil").value;
     var motoboy = document.getElementById("motoboy").value;
     var motoboyVix = document.getElementById("motoboyVix").value;
     var motoboySerra = document.getElementById("motoboySerra").value;
@@ -173,7 +174,11 @@ function calcularFrete() {
                 if ('error' in transportadora) {
                     console.log(transportadora.error);
                 } else {
-                    if (total >= 299 && frete299 == 2 && cepInteiro >= 01000000 && cepInteiro <= 39999999) {
+                    if (total >= 299 && freteBrasil == 2) {
+                        linha = montarLinhaEnvio(transportadora, 2);
+                        linhas += linha;
+                        check = 1;
+                    }else if (total >= 299 && frete299 == 2 && cepInteiro >= 01000000 && cepInteiro <= 39999999) {
                         if (check == 0 && !(cepInteiro >= 01000000 && cepInteiro <= 39999999)) {
                             linha = montarLinhaEnvio(transportadora, 2);
                             linhas += linha;
@@ -488,11 +493,11 @@ function carregarCarrinho() {
                         valor = item.valor;
                     }
 
-                    valorUnitario = valor*1;
-                    var valorUnitarioBrasileiro = valorUnitario.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+                    valorUnitario = valor * 1;
+                    var valorUnitarioBrasileiro = valorUnitario.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
                     valorTotal = valor * item.quantidade;
-                    var valorTotalBrasileiro = valorTotal.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
+                    var valorTotalBrasileiro = valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
                     total += valor * item.quantidade;
 
@@ -521,7 +526,7 @@ function carregarCarrinho() {
 
             total = parseFloat(total.toFixed(2));
 
-            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var totalBrasileiro = total.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
             $('#totalCarrinho').empty();
             $('#totalCarrinho').append(totalBrasileiro);
