@@ -50,9 +50,9 @@
                             </div>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" name="freteBrasil" type="checkbox" id="gridCheck2"
+                                    <input class="form-check-input" name="freteBrasil" type="checkbox" id="gridCheck4"
                                         @if ($freteBrasil == 2) checked @endif>
-                                    <label class="form-check-label" for="gridCheck2">
+                                    <label class="form-check-label" for="gridCheck4">
                                         Frete Grátis acima de 299 - Brasil
                                     </label>
                                 </div>
