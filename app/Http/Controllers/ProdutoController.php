@@ -873,6 +873,7 @@ class ProdutoController extends Controller
     public function verCategoria($id)
     {
         $frete299 = env('FRETE_GRATIS299');
+        $freteBrasil = env('FRETE_BRASIL');
         $freteFixo = env('FRETE_FIXO');
         $motoboy = env('MOTOBOY');
         $motoboyVix = env('MOTOBOY_VIX');
@@ -889,6 +890,7 @@ class ProdutoController extends Controller
         $data["fotos"] = $this->buscarFotosBanner();
         $data["frete299"] = $frete299;
         $data["freteFixo"] = $freteFixo;
+        $data["freteBrasil"] = $freteBrasil;
         $data["motoboy"] = $motoboy;
         $data["motoboyVix"] = $motoboyVix;
         $data["motoboySerra"] = $motoboySerra;
