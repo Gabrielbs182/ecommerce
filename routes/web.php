@@ -138,7 +138,7 @@ Route::match(['get', 'post'], '/{idcategoria}/categoria', [ProdutoController::cl
 Route::match(['get', 'post'], '/carrinho', [ProdutoController::class, 'verCarrinho'])
     ->name('ver_carrinho');
 Route::get('/compras/detalhes/{idproduto}', [ProdutoController::class, 'detalhes'])
-    ->name('detalhes')->middleware('isVerified');
+    ->name('detalhes');
 Route::match(['get'], '/configuracoes', [ProdutoController::class, 'configuracoes'])
     ->name('configuracoes')->middleware('IsAdmin');
 Route::get('/produtos', [ProdutoController::class, 'produtos'])->name('produtos')->middleware('IsAdmin');
@@ -172,21 +172,21 @@ Route::match(['get', 'post'], '/logar', [UsuarioController::class, 'logar'])
 Route::get('/sair', [UsuarioController::class, 'sair'])
     ->name('sair');
 Route::match(['get', 'post'], '/cliente/cadastrar', [ClienteController::class, 'cadastrarCliente'])
-    ->name('cadastrar_cliente')->middleware('isVerified');
+    ->name('cadastrar_cliente');
 Route::match(['get', 'post'], '/carrinho/adicionar/{idProduto}/{quantidade}/{numero}', [ProdutoController::class, 'adicionarCarrinho'])
     ->name('adicionar_carrinho');
 Route::match(['get', 'post'], '/{indice}/excluirCarrinho', [ProdutoController::class, 'excluirCarrinho'])
     ->name('excluirCarrinho');
 Route::post('/carrinho/finalizar', [ProdutoController::class, 'finalizar'])
-    ->name('carrinho_finalizar')->middleware('isVerified');;
+    ->name('carrinho_finalizar');;
 Route::get('/compras/historico', [ProdutoController::class, 'historico'])
     ->name('compra_historico')->middleware(['auth', 'verified']);
 Route::get('/compras/detalhes/{id}', [ProdutoController::class, 'compra_detalhes'])
     ->name('compra_detalhes');
 Route::match(['get', 'post'], '/pagar', [PagSeguroController::class, 'PagSeguroCheckout'])
-    ->name('pagar')->middleware('isVerified');
+    ->name('pagar');
 Route::get('/pagbank/consultar/{idCheckout}', [ProdutoController::class, 'consultarCheckout'])
-    ->name('consultarCheckout')->middleware('isVerified');
+    ->name('consultarCheckout');
 Route::get('/atualizar-quantidade-carrinho', [ProdutoController::class, 'atualizarQuantidadeCarrinho'])->name('atualizar_quantidade_carrinho');
 Route::get('/buscarItemCarrinho/{id}/{numero}', [ProdutoController::class, 'buscarItemCarrinho'])->name('buscarItemCarrinho');
 Route::post('/configuracoes/update', [ProdutoController::class, 'configuracoesUpdate'])->name('configuracoes.update')->middleware('IsAdmin');;
