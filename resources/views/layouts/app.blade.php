@@ -128,7 +128,7 @@
                     <a class="text-dark px-2" href="https://www.facebook.com/mulherurbanastore?mibextid=uzlsIk">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a class="text-dark px-2" href="https://instagram.com/use_mulherurbana?igshid=MzRlODBiNWFlZA==">
+                    <a class="text-dark px-2" href="https://www.instagram.com/urbeatstoreoficial?igsh=MWswbTN5a2RqcmRtcQ==">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
