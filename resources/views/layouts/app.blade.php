@@ -125,7 +125,7 @@
                     <a class="text-dark px-2" href="https://wa.me/5527996658538">
                         <i class="fa-brands fa-whatsapp"></i>
                     </a>
-                    <a class="text-dark px-2" href="https://www.facebook.com/mulherurbanastore?mibextid=uzlsIk">
+                    <a class="text-dark px-2" href="https://www.facebook.com/profile.php?id=61560115570125&mibextid=LQQJ4d">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                     <a class="text-dark px-2" href="https://www.instagram.com/urbeatstoreoficial?igsh=MWswbTN5a2RqcmRtcQ==">
