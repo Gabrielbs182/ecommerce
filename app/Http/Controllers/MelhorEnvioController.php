@@ -228,7 +228,6 @@ class MelhorEnvioController extends Controller
                         'own_hand' => false,
                         'reverse' => true,
                         'non_commercial' => true,
-                        'insurance_value' => 180,
                         'tags' => [
                             [
                                 'tag' => '187723',
@@ -343,7 +342,6 @@ class MelhorEnvioController extends Controller
                         'own_hand' => false,
                         'reverse' => true,
                         'non_commercial' => true,
-                        'insurance_value' => 180,
                         'tags' => [
                             [
                                 'tag' => '187723',
@@ -452,7 +450,8 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => false, 'own_hand' => false],
+            'options' => ['receipt' => false, 'own_hand' => false, 'reverse' => true,
+            'non_commercial' => true],
             'products' => $products
         ];
 
@@ -470,6 +469,9 @@ class MelhorEnvioController extends Controller
                 'json' => $postData,
                 'headers' => $headers,
             ]);
+
+            Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
         } catch (\Exception $e) {
             try {
                 $this->refreshToken();
@@ -485,6 +487,9 @@ class MelhorEnvioController extends Controller
                     'json' => $postData,
                     'headers' => $headers,
                 ]);
+
+                Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete2', 'message' => $e->getMessage()]);
             }
@@ -560,7 +565,8 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => false, 'own_hand' => false],
+            'options' => ['receipt' => false, 'own_hand' => false, 'reverse' => true,
+            'non_commercial' => true],
             'products' => $products
         ];
 
