@@ -86,7 +86,7 @@
                         var asset = $('#asset').val();
                         var itemCarrinho =
                             '<tr>' +
-                            '<td class="align-middle text-center"> ' + item.logradouro + '</td>' +
+                            '<td class="align-middle text-center"> ' + item.logradouro + '-' + item.numero + '</td>' +
                             '<td class="align-middle text-center"> ' + item.bairro + '</td>' +
                             '<td class="align-middle text-center"> ' + item.complemento + '</td>' +
                             '<td class="align-middle text-center"> ' + item.cep + '</td>' +
