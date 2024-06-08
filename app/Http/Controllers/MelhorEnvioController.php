@@ -450,8 +450,10 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => false, 'own_hand' => false, 'reverse' => true,
-            'non_commercial' => true],
+            'options' => [
+                'receipt' => false, 'own_hand' => false, 'reverse' => true,
+                'non_commercial' => true
+            ],
             'products' => $products
         ];
 
@@ -565,8 +567,10 @@ class MelhorEnvioController extends Controller
         $postData = [
             'from' => ['postal_code' => env('MELHORENVIO_POSTAL_CODE')],
             'to' => ['postal_code' => $cep],
-            'options' => ['receipt' => false, 'own_hand' => false, 'reverse' => true,
-            'non_commercial' => true],
+            'options' => [
+                'receipt' => false, 'own_hand' => false, 'reverse' => true,
+                'non_commercial' => true
+            ],
             'products' => $products
         ];
 
@@ -584,6 +588,8 @@ class MelhorEnvioController extends Controller
                 'json' => $postData,
                 'headers' => $headers,
             ]);
+            Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
         } catch (\Exception $e) {
             try {
                 //REFAZENDO REQUISIÇÃO DO POST CASO O POST TENHA SIDO NEGADO.
@@ -600,6 +606,9 @@ class MelhorEnvioController extends Controller
                     'json' => $postData,
                     'headers' => $headers,
                 ]);
+
+                Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete', 'message' => $e->getMessage()]);
             }
