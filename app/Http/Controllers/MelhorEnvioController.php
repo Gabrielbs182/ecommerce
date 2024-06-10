@@ -275,6 +275,8 @@ class MelhorEnvioController extends Controller
                             'json' => $requestData,
                             'headers' => $headers,
                         ]);
+
+                        log::info('Frete lançado', $response);
                     } catch (\Exception $e) {
                         try {
                             $this->refreshToken();
@@ -391,6 +393,9 @@ class MelhorEnvioController extends Controller
                         'json' => $requestData,
                         'headers' => $headers,
                     ]);
+
+                    log::info('Frete lançado', $response);
+                    
                 } catch (\Exception $e) {
                     try {
                         $this->refreshToken();
