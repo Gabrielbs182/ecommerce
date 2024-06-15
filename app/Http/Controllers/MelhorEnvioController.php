@@ -474,7 +474,6 @@ class MelhorEnvioController extends Controller
 
             Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
             Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
-            Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
         } catch (\Exception $e) {
             try {
                 $this->refreshToken();
@@ -493,7 +492,6 @@ class MelhorEnvioController extends Controller
 
                 Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
                 Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
-                Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete2', 'message' => $e->getMessage()]);
             }
@@ -592,7 +590,6 @@ class MelhorEnvioController extends Controller
             ]);
             Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
             Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
-            Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
         } catch (\Exception $e) {
             try {
                 //REFAZENDO REQUISIÇÃO DO POST CASO O POST TENHA SIDO NEGADO.
@@ -612,7 +609,6 @@ class MelhorEnvioController extends Controller
 
                 Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
                 Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
-                Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete', 'message' => $e->getMessage()]);
             }
