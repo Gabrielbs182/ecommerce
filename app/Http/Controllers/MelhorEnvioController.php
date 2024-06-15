@@ -271,10 +271,12 @@ class MelhorEnvioController extends Controller
 
                     // Fazer a requisição POST
                     try {
+                        Log::info('Payload da Requisição melhor envio:', ['payload' => $requestData]);
                         $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
                             'json' => $requestData,
                             'headers' => $headers,
                         ]);
+                        Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
                     } catch (\Exception $e) {
                         try {
                             $this->refreshToken();
@@ -469,6 +471,10 @@ class MelhorEnvioController extends Controller
                 'json' => $postData,
                 'headers' => $headers,
             ]);
+
+            Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
         } catch (\Exception $e) {
             try {
                 $this->refreshToken();
@@ -485,6 +491,9 @@ class MelhorEnvioController extends Controller
                     'headers' => $headers,
                 ]);
 
+                Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete2', 'message' => $e->getMessage()]);
             }
@@ -581,6 +590,9 @@ class MelhorEnvioController extends Controller
                 'json' => $postData,
                 'headers' => $headers,
             ]);
+            Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
+            Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
         } catch (\Exception $e) {
             try {
                 //REFAZENDO REQUISIÇÃO DO POST CASO O POST TENHA SIDO NEGADO.
@@ -598,6 +610,9 @@ class MelhorEnvioController extends Controller
                     'headers' => $headers,
                 ]);
 
+                Log::info('Payload do envio melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da resposta melhor envio orçamento:', ['payload' => $postData]);
+                Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
             } catch (\Exception $e) {
                 Log::error("ERRO", ['file' => 'MelhorEnvioController.calcularFrete', 'message' => $e->getMessage()]);
             }
