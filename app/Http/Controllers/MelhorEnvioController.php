@@ -391,10 +391,12 @@ class MelhorEnvioController extends Controller
 
                 // Fazer a requisição POST
                 try {
+                    Log::info('Payload da Requisição melhor envio:', ['payload' => $requestData]);
                     $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/cart', [
                         'json' => $requestData,
                         'headers' => $headers,
                     ]);
+                    Log::info('Payload da Resposta melhor envio:', ['payload' => $response]);
                 } catch (\Exception $e) {
                     try {
                         $this->refreshToken();
@@ -466,10 +468,12 @@ class MelhorEnvioController extends Controller
         try {
 
             // Fazer a requisição POST
+            Log::info('Payload da Requisição melhor envio Orçamento:', ['payload' => $postData]);
             $response = $client->request('POST', 'https://melhorenvio.com.br/api/v2/me/shipment/calculate', [
                 'json' => $postData,
                 'headers' => $headers,
             ]);
+            Log::info('Payload da Resposta melhor envio Orçamento:', ['payload' => $response]);
         } catch (\Exception $e) {
             try {
                 $this->refreshToken();
