@@ -402,7 +402,6 @@ class PagSeguroController extends Controller
                 if ($pedido->status_pag == 'DECLINED' or $pedido->status_pag == 'CANCELED') {
                     $pedido->status = 'Cancelado';
                     $pedido->save();
-                    $produtoController->email($pedido->id);
                     // $this->InativarCheckout($pedido->cod_checkout);
                 } else if ($pedido->status_pag == 'PAID') {
                     if ($pedido->status != 'Pagamento aprovado') {
