@@ -326,7 +326,8 @@ class PagSeguroController extends Controller
                         $pedido->cod_entrega = $idFrete;
                         $pedido->total = $total;
                         if($cupom){
-                            $pedido->cupom = $cupom;
+                            $pedido->cupom = $cupom->nome;
+                            $pedido->idCupom = $idCupom;
                         }
                         try {
                             DB::beginTransaction();
