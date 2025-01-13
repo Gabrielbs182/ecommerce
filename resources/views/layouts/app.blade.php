@@ -146,7 +146,7 @@
                 @if (Route::is('home') or Route::is('produto.categoria') or Route::is('produto.pesquisa'))
                     <form action="{{ route('produto.pesquisa', '') }}" method="GET">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar...">
+                            <input type="text" name="nome" class="form-control" placeholder="Buscar...">
 
                             <div class="input-group-append">
                                 <button type="submit" class="input-group-text bg-transparent text-primary" style="border: none;">
