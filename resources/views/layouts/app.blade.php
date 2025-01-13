@@ -143,15 +143,22 @@
             </div>
 
             <div class="col-lg-6 col-6 text-left">
-                @if (Route::is('home') or Route::is('produto.categoria'))
-                    <form action="">
+                @if (Route::is('home') or Route::is('produto.categoria') or Route::is('produto.pesquisa'))
+                    <form action="{{ route('produto.pesquisa', '') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Buscar...">
+
                             <div class="input-group-append">
+                                <button type="submit" class="input-group-text bg-transparent text-primary" style="border: none;">
+                                    <i class="fa fa-search" style="color: #e63412;"></i>
+                                </button>
+                            </div>
+
+                            {{-- <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <i class="fa fa-search" style="color: #e63412;"></i>
                                 </span>
-                            </div>
+                            </div> --}}
                         </div>
                     </form>
                 @endif
@@ -163,7 +170,7 @@
             top: 60px;
             z-index: 11;
             ">
-                    @if (Route::is('home') or Route::is('produto.categoria'))
+                    @if (Route::is('home') or Route::is('produto.categoria') or Route::is('produto.pesquisa'))
                         {{-- <a href="#" data-html="true" id="popover" data-placement="left" data-toggle="popover"
                         title="Produto adicionado" data-trigger="focus"
                         data-content="Some content inside the popover"></a> --}}
@@ -180,7 +187,7 @@
                     @endif
                 </div>
             </div>
-            @if (Route::is('home') or Route::is('produto.categoria'))
+            @if (Route::is('home') or Route::is('produto.categoria') or Route::is('produto.pesquisa'))
                 <div class="row">
                     <a href="#" id="popover" data-html="true" data-placement="bottom" data-toggle="popover"
                         title="Produto adicionado ao carrinho" data-trigger="focus"

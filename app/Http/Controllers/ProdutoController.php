@@ -899,6 +899,35 @@ class ProdutoController extends Controller
         return view("home", $data);
     }
 
+    public function pesquisaProduto($nome)
+    {
+        $frete299 = env('FRETE_GRATIS299');
+        $freteBrasil = env('FRETE_BRASIL');
+        $freteFixo = env('FRETE_FIXO');
+        $motoboy = env('MOTOBOY');
+        $motoboyVix = env('MOTOBOY_VIX');
+        $motoboySerra = env('MOTOBOY_SERRA');
+        $motoboyCariacica = env('MOTOBOY_CARIACICA');
+        $motoboyVV = env('MOTOBOY_VV');
+        $data = [];
+        $listaProdutos = Produto::where('nome', 'like', '%' . $nome . '%')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $categorias = Categoria::all();
+        $data["lista"] = $listaProdutos;
+        $data["categorias"] = $categorias;
+        $data["fotos"] = $this->buscarFotosBanner();
+        $data["frete299"] = $frete299;
+        $data["freteFixo"] = $freteFixo;
+        $data["freteBrasil"] = $freteBrasil;
+        $data["motoboy"] = $motoboy;
+        $data["motoboyVix"] = $motoboyVix;
+        $data["motoboySerra"] = $motoboySerra;
+        $data["motoboyCariacica"] = $motoboyCariacica;
+        $data["motoboyVV"] = $motoboyVV;
+        return view("home", $data);
+    }
+
     public function categoria($idcategoria = 0)
     {
         $data = [];
