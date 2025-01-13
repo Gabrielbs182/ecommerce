@@ -325,6 +325,9 @@ class PagSeguroController extends Controller
                         $pedido->endereco_id = $endereco->id;
                         $pedido->cod_entrega = $idFrete;
                         $pedido->total = $total;
+                        if($cupom){
+                            $pedido->idCupom = $cupom;
+                        }
                         try {
                             DB::beginTransaction();
                             $pedido->save();
