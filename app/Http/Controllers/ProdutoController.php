@@ -899,8 +899,9 @@ class ProdutoController extends Controller
         return view("home", $data);
     }
 
-    public function pesquisaProduto($nome)
+    public function pesquisaProduto(Request $request)
     {
+        $nome = $request->input('nome');
         $frete299 = env('FRETE_GRATIS299');
         $freteBrasil = env('FRETE_BRASIL');
         $freteFixo = env('FRETE_FIXO');

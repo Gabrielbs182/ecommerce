@@ -105,8 +105,7 @@ Route::get('/cupom/cadastrar', [ProdutoController::class, 'cadastrarCupom'])
 Route::get('/produto/categoria/{id}', [ProdutoController::class, 'verCategoria'])
     ->name('produto.categoria');
 
-Route::get('/produto/pesquisa/{nome}', [ProdutoController::class, 'pesquisaProduto'])
-    ->name('produto.pesquisa');
+Route::get('/produto/pesquisa', [ProdutoController::class, 'pesquisaProduto'])->name('produto.pesquisa');
 
 Route::get('/email/{id}', [ProdutoController::class, 'email'])
     ->name('email.teste')->middleware('IsAdmin');
